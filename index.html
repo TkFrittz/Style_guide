@@ -92,7 +92,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="sub">Style guide</div>
     </div>
     <div class="side-nav">
-      <a class="cta" href="dashboard.html">Dashboard example →</a>
+      <a class="cta" href="dashboard.html">Dashboard example</a>
       <a href="#overview">Overview</a>
       <div class="grp">Foundations</div>
       <a href="#color">Color</a>
@@ -126,19 +126,20 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <div class="cover" id="overview">
       <div class="swatches"><div></div><div></div><div></div></div>
       <h1>Shield Legal</h1>
-      <div class="tagline">A style guide that directly follows Ant Design's real design tokens — color system, spacing, radius, shadow, and type scale — with Shield Legal's own blue as the one customization.</div>
-      <div class="cta-row"><a class="btn btn-primary" href="dashboard.html">See the dashboard example →</a></div>
+      <div class="tagline">Ant Design's tokens and components, recolored with Shield Legal blue.</div>
+      <div class="cta-row"><a class="btn btn-primary" href="dashboard.html">See the dashboard example</a></div>
     </div>
 
     <section>
       <h2>Overview</h2>
-      <p class="lede">Every foundation on this page is Ant Design v5's actual default value, sourced and verified — not an approximation of Ant Design's look. The single deliberate customization is color: Shield Legal's brand blue (<code>#18ABED</code>) replaces Ant Design's own default blue as the seed for the primary ramp, generated with Ant Design's own palette algorithm. Everything else — the neutral grays, the functional colors' structure, the spacing and radius scales, the shadow formulas, the type scale, and each component's proportions — is Ant Design's, unchanged.</p>
-      <p class="lede">Every component below is live — click the buttons, open the select, toggle the switch, dismiss the tag and alert, page through the pagination. This is a plain, self-contained site: three files (this page, a stylesheet, a small script), no build step, no external fonts, no framework. Open <code>dashboard.html</code> to see the same components assembled into a real screen.</p>
+      <p class="lede">Spacing, radius, shadow, and type scale are Ant Design v5's defaults, unchanged. Color is Ant's palette-generation algorithm run against Shield Legal blue (<code>#18ABED</code>) instead of Ant's default blue — same process, different seed color.</p>
+      <p class="lede">A few things aren't stock Ant. <code>brand-blue-dark</code> sits one ramp step past where Ant's convention would put it, because that's where our blue clears 4.5:1 text contrast (Ant's default blue doesn't need the extra step — ours does). Three of the four status colors are darker for the same reason. <code>label</code>, <code>overline</code>, and <code>radius-full</code> are tokens we added; Ant doesn't have them.</p>
+      <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag. <code>dashboard.html</code> puts the same components into an actual screen.</p>
     </section>
 
     <section id="color">
       <h2>Color</h2>
-      <p class="lede">Shield Legal's blue, expanded into a 10-step ramp with Ant Design's own palette generator. Step 6 is the seed (<code>#18ABED</code>); every other step is derived from it.</p>
+      <p class="lede">Shield Legal blue run through Ant's palette generator as the seed. Step 6 is the seed color (<code>#18ABED</code>); the rest are generated from it.</p>
       <div class="ramp">
         <div class="sw"><div class="fill" style="background:var(--blue-1)"></div><div class="meta"><b>blue-1</b><span>#E6FBFF · 1.1:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-2)"></div><div class="meta"><b>blue-2</b><span>#BDF3FF · 1.2:1</span></div></div>
@@ -151,9 +152,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is the logo and large-graphic color — 2.6:1, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) carries every button, link, and selected state. Ant Design's own convention would use the base color directly, or step 7 for an active state; both fall under a 4.5:1 text floor, so this system's action color sits one step further down the ramp than Ant Design's own default pattern.</p>
+      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only — 2.6:1 contrast, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) is the action color: buttons, links, selected state. Ant's convention is to use the base color, or step 7, for this. Both are under 4.5:1, so we use step 8 instead.</p>
 
-      <h3 class="sub">Neutral colors — Ant Design's colorText / colorFill / colorBg system, exact</h3>
+      <h3 class="sub">Neutral colors — Ant's colorText / colorFill / colorBg, unchanged</h3>
       <div class="neutral-grid">
         <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#F5F5F5</span></div>
@@ -172,12 +173,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #CF1322</div><div>bg #FFF1F0</div><div>border #FFA39E</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = brand-blue-dark</div><div>bg = blue-1</div><div>border = blue-3</div></div></div>
       </div>
-      <p class="lede">None of the three text colors above are Ant Design's own literal functional colors. Ant Design's actual defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1, and 3.3:1 against white, all well under a 4.5:1 text floor. (Amber/gold warning colors are a known, common accessibility weak point across design systems generally — Ant Design's is no exception.) Each token above is that same color's own Ant Design ramp, pushed to the first step that actually clears 4.5:1.</p>
+      <p class="lede">These aren't Ant's default colors. Ant's defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1, and 3.3:1 on white, all under our 4.5:1 floor. Each token above is the same Ant ramp, just a darker step.</p>
     </section>
 
     <section id="typography">
       <h2>Typography</h2>
-      <p class="lede">Every size and line-height below is Ant Design's own Typography scale, unchanged. The typeface is Ant Design's own default system-font stack — no custom webfont.</p>
+      <p class="lede">Sizes and line-heights match Ant's type scale exactly. Font stack is Ant's default system fonts — no webfont.</p>
       <div class="type-row"><span class="tag">h1</span><span class="sample" style="font-size:38px;line-height:46px;font-weight:600">Page titles</span><span class="meta">38 / 46 · 600</span></div>
       <div class="type-row"><span class="tag">h2</span><span class="sample" style="font-size:30px;line-height:38px;font-weight:600">Section headings</span><span class="meta">30 / 38 · 600</span></div>
       <div class="type-row"><span class="tag">h3</span><span class="sample" style="font-size:24px;line-height:32px;font-weight:600">Subsection headings</span><span class="meta">24 / 32 · 600</span></div>
@@ -189,7 +190,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="spacing">
       <h2>Spacing &amp; radius</h2>
-      <p class="lede">Ant Design's full 8-step padding/margin scale, value for value.</p>
+      <p class="lede">Ant's full 8-step padding/margin scale.</p>
       <div class="scale-row"><span class="lbl">space-1 · 4</span><div class="bar" style="width:4px"></div></div>
       <div class="scale-row"><span class="lbl">space-2 · 8</span><div class="bar" style="width:8px"></div></div>
       <div class="scale-row"><span class="lbl">space-3 · 12</span><div class="bar" style="width:12px"></div></div>
@@ -199,7 +200,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="scale-row"><span class="lbl">space-7 · 32</span><div class="bar" style="width:32px"></div></div>
       <div class="scale-row"><span class="lbl">space-8 · 48</span><div class="bar" style="width:48px"></div></div>
 
-      <h3 class="sub">Radius — <code>borderRadiusXS/SM/base/LG</code> exactly, plus Shield's own pill</h3>
+      <h3 class="sub">Radius — matches <code>borderRadiusXS/SM/base/LG</code>; <code>radius-full</code> is ours</h3>
       <div class="radius-row">
         <div><div class="box" style="border-radius:var(--radius-xs)"></div><span>xs · 2</span></div>
         <div><div class="box" style="border-radius:var(--radius-sm)"></div><span>sm · 4</span></div>
@@ -211,7 +212,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="shadow">
       <h2>Shadow</h2>
-      <p class="lede">Ant Design's real layered formulas — three stacked shadows, not one.</p>
+      <p class="lede">Ant's layered shadow formulas — three stacked shadows, not one.</p>
       <div class="shadow-row">
         <div class="shadow-box" style="box-shadow:var(--shadow-sm)">shadow-sm</div>
         <div class="shadow-box" style="box-shadow:var(--shadow-md)">shadow-md</div>
@@ -220,7 +221,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="button">
       <h2>Button <span class="live-badge">Live</span></h2>
-      <p class="lede">Ant Design's own five variants. Primary fills with <code>brand-blue-dark</code>, not the base brand color — see Color, above. Hover and press every button below.</p>
+      <p class="lede">Ant's five variants. Primary uses <code>brand-blue-dark</code>, not the base brand color — see Color.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
           <button class="btn btn-primary">Primary</button>
@@ -231,7 +232,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <button class="btn btn-danger">Danger</button>
           <button class="btn btn-primary" disabled>Disabled</button>
         </div>
-        <div class="demo-row"><span class="demo-label">Sizes — 24 / 32 / 40px, Ant Design's control-height scale</span>
+        <div class="demo-row"><span class="demo-label">Sizes — 24 / 32 / 40px, Ant's control-height scale</span>
           <button class="btn btn-primary btn-sm">Small</button>
           <button class="btn btn-primary">Default</button>
           <button class="btn btn-primary btn-lg">Large</button>
@@ -243,7 +244,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section id="input">
       <h2>Input <span class="live-badge">Live</span></h2>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">Click in — real focus ring, real hover</span>
+        <div class="demo-row"><span class="demo-label">States</span>
           <input class="in" placeholder="Type here">
           <input class="in in-disabled" placeholder="Disabled" disabled>
         </div>
@@ -365,7 +366,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="modal">
       <h2>Modal <span class="live-badge">Live</span></h2>
-      <p class="lede">520px default, 720px wide. No header/footer divider — Ant Design removed the v4-era bordered look in v5.</p>
+      <p class="lede">520px default, 720px wide. No header/footer divider — Ant dropped that in v5.</p>
       <div class="demo">
         <button class="btn btn-danger" onclick="sgOpenModal('demo-modal')">Delete partner…</button>
       </div>
@@ -382,7 +383,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <h2>Tooltip <span class="live-badge">Live</span></h2>
       <div class="demo">
         <span class="icon-box" data-tip="Assign a technical contact" style="cursor:default">i</span>
-        <p class="spec">bg-spotlight · 250px max-width (Ant Design's own default) · hover to see it</p>
+        <p class="spec">bg-spotlight · 250px max-width (Ant's default) · hover to see it</p>
       </div>
     </section>
 
@@ -397,7 +398,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <button class="pg-item" data-page="4" onclick="sgSetPage('pg-demo',4,4)">4</button>
           <button class="pg-item" data-next onclick="sgPageNext('pg-demo')">›</button>
         </div>
-        <p class="spec">The active item is outlined, never filled — Ant Design's own distinctive treatment.</p>
+        <p class="spec">The active item is outlined, not filled — that's Ant's pagination style.</p>
       </div>
     </section>
 
@@ -429,7 +430,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     </section>
   </div>
 </div>
-<footer>Shield Legal — internal style guide. Directly follows Ant Design v5's design tokens; Shield Legal blue is the one customization.</footer>
+<footer>Shield Legal internal style guide. Built on Ant Design v5 tokens; Shield Legal blue is the customization.</footer>
 <script src="shield.js"></script>
 </body>
 </html>
