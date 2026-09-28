@@ -59,13 +59,6 @@
   --info-bg: var(--blue-1);
   --info-border: var(--blue-3);
 
-  /* ---- sidebar (permanently dark navy, both modes) ---- */
-  --sider-bg: #101a28;
-  --sider-item-color: #aeb9c7;
-  --sider-item-hover-color: #ffffff;
-  --sider-item-selected-bg: #223450;
-  --sider-item-selected-color: #ffffff;
-
   /* ---- spacing ---- */
   --space-1: 4px;
   --space-2: 8px;

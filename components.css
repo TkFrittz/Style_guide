@@ -392,16 +392,17 @@ table.sl-table tbody tr:hover { background: var(--fill-quaternary); }
 /* ---------- Menu (sidebar nav) ---------- */
 .sl-menu { display: flex; flex-direction: column; gap: 2px; }
 .sl-menu-group-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.35);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-quaternary);
   padding: 14px 16px 6px;
 }
 .sl-menu-item {
   height: 40px; padding: 0 16px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 10px;
-  font-size: 14px; color: var(--sider-item-color); cursor: pointer; background: none; border: none; width: 100%; text-align: left;
+  font-size: 14px; color: var(--text-secondary); cursor: pointer; background: none; border: none; width: 100%; text-align: left;
   font-family: var(--font-body); justify-content: space-between;
 }
-.sl-menu-item:hover { background: rgba(255, 255, 255, 0.06); color: var(--sider-item-hover-color); }
-.sl-menu-item.on { background: var(--sider-item-selected-bg); color: var(--sider-item-selected-color); font-weight: 600; }
+.sl-menu-item:hover { background: var(--fill-secondary); color: var(--text); }
+.sl-menu-item.on { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
+:root[data-theme="dark"] .sl-menu-item.on { background: rgba(24, 171, 237, 0.16); }
 .sl-menu-item .sl-menu-item-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .sl-menu-item svg { flex-shrink: 0; opacity: 0.85; }
 

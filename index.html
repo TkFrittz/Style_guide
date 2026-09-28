@@ -35,7 +35,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .cover .swatches{display:flex;height:56px;border-radius:var(--radius-lg);overflow:hidden;margin-bottom:28px}
 .cover .swatches div:nth-child(1){flex:5;background:var(--blue-6)}
 .cover .swatches div:nth-child(2){flex:3;background:var(--blue-8)}
-.cover .swatches div:nth-child(3){flex:2;background:var(--sider-bg)}
+.cover .swatches div:nth-child(3){flex:2;background:var(--blue-10)}
 .cover .cover-logo{width:56px;height:56px;display:block;margin-bottom:16px}
 .cover h1{font-family:var(--font-heading);font-size:40px;line-height:1.15;letter-spacing:-.01em}
 .cover .tagline{font-size:15px;color:var(--text-secondary);margin-top:8px;max-width:560px}
@@ -57,9 +57,6 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .func-card .head{padding:14px 16px;font-weight:600;font-size:13.5px}
 .func-card .body{padding:10px 16px 14px;font-size:12px;font-family:var(--font-mono);background:var(--bg-container);color:var(--text-tertiary)}
 .func-card .body div{padding:2px 0}
-.sidebar-swatch{border-radius:var(--radius-lg);background:var(--sider-bg);padding:16px 18px;margin:16px 0;display:flex;flex-wrap:wrap;gap:24px}
-.sidebar-swatch .item{font-size:12px;font-family:var(--font-mono)}
-.sidebar-swatch .item b{display:block;font-family:var(--font-body);font-size:12.5px;margin-bottom:6px}
 
 /* ---- type scale ---- */
 .type-row{display:flex;align-items:baseline;gap:20px;padding:14px 0;border-bottom:1px solid var(--border-secondary)}
@@ -204,7 +201,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section>
       <h2>Overview</h2>
       <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Engineering blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>sl-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
-      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, a permanently-dark navy sidebar, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar.</p>
+      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar (the sidebar's own background themes with it, same as every other surface).</p>
       <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
@@ -246,15 +243,6 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = brand-blue-dark</div><div>bg = blue-1</div><div>border = blue-3</div></div></div>
       </div>
       <p class="lede">All four clear 4.5:1 on their own background. Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; each token above is the same ramp pushed to a darker step instead.</p>
-
-      <h3 class="sub">Sidebar — permanently dark navy, in both themes</h3>
-      <div class="sidebar-swatch">
-        <div class="item" style="color:#fff"><b>sider-bg</b>#101A28</div>
-        <div class="item" style="color:var(--sider-item-color)"><b style="color:#fff">sider-item-color</b>#AEB9C7</div>
-        <div class="item" style="color:#fff"><b>sider-item-selected-bg</b>#223450</div>
-        <div class="item" style="color:#fff"><b>sider-item-selected-color</b>#FFFFFF</div>
-      </div>
-      <p class="lede">The one surface that doesn't theme — see it live in the <a href="#menu">Menu</a> section below.</p>
     </section>
 
     <section id="typography">
@@ -630,11 +618,6 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="sl-text">Notifications</span><span class="sl-badge-count">3</span>
         </div>
         <p class="spec">Unlike the dot, count doesn't corner-overlay anything — it renders as a plain inline chip meant to sit right after a label. This is the exact markup behind the "Offers" count in the <a href="#menu">Menu</a> section below.</p>
-
-        <div class="demo-row" style="margin-top:22px"><span class="demo-label">Badge — count, on-dark</span>
-          <span style="background:var(--sider-bg);padding:8px 12px;border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:8px"><span style="color:#fff;font-size:14px">Offers</span><span class="sl-badge-count on-dark">12</span></span>
-        </div>
-        <p class="spec">The same count chip, recolored for the permanently-dark sidebar — use <code>on-dark</code> only against <code>sider-bg</code>, never on a light surface.</p>
       </div>
     </section>
 
@@ -869,8 +852,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="menu">
       <h2>Menu <span class="live-badge">Live</span></h2>
-      <p class="lede">The sidebar nav — permanently dark navy, in both light and dark theme.</p>
-      <div class="demo" style="background:var(--sider-bg);border-color:var(--sider-bg)">
+      <p class="lede">The sidebar nav — themed like every other surface (<code>bg-container</code>), not a fixed dark panel. Selected uses <code>blue-1</code> / <code>brand-blue-dark</code>, the same pairing <a href="#select">Select</a> uses for its selected option.</p>
+      <div class="demo">
         <nav class="sl-menu" style="width:220px">
           <div class="sl-menu-group-label">Platform</div>
           <button class="sl-menu-item on" onclick="sgSelectMenuItem(this)">
@@ -882,7 +865,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <div class="sl-menu-group-label">Orders</div>
           <button class="sl-menu-item" onclick="sgSelectMenuItem(this)">
             <span class="sl-menu-item-main"><svg class="sl-icon" width="11.25" height="15" viewBox="0 0 384 512" fill="currentColor"><path d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM120 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg>Offers</span>
-            <span class="sl-badge-count on-dark">12</span>
+            <span class="sl-badge-count">12</span>
           </button>
           <button class="sl-menu-item" onclick="sgSelectMenuItem(this)">
             <span class="sl-menu-item-main"><svg class="sl-icon" width="18.75" height="15" viewBox="0 0 640 512" fill="currentColor"><path d="M24-16C10.7-16 0-5.3 0 8S10.7 32 24 32l45.3 0c3.9 0 7.2 2.8 7.9 6.6l52.1 286.3c6.2 34.2 36 59.1 70.8 59.1L456 384c13.3 0 24-10.7 24-24s-10.7-24-24-24l-255.9 0c-11.6 0-21.5-8.3-23.6-19.7l-5.1-28.3 303.6 0c30.8 0 57.2-21.9 62.9-52.2L568.9 69.9C572.6 50.2 557.5 32 537.4 32l-412.7 0-.4-2c-4.8-26.6-28-46-55.1-46L24-16zM208 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm224 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>Campaigns</span>
