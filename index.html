@@ -27,6 +27,7 @@ section > h2{font-family:var(--font-heading);font-size:24px;line-height:32px;pad
 section p.lede{font-size:14.5px;color:var(--text-secondary);max-width:640px}
 h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:var(--text)}
 .live-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--success);background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-full);padding:2px 9px}
+.live-badge.new{color:var(--info);background:var(--info-bg);border-color:var(--info-border)}
 
 /* ---- cover ---- */
 .cover{padding:64px 48px 40px;border-bottom:1px solid var(--border-secondary)}
@@ -78,7 +79,11 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .radius-row .box{width:64px;height:64px;background:var(--fill-secondary);border:1px solid var(--border)}
 .radius-row span{display:block;font-size:11px;font-family:var(--font-mono);color:var(--text-tertiary);margin-top:8px}
 .shadow-row{display:flex;gap:32px;margin:24px 0 8px;flex-wrap:wrap}
-.shadow-box{width:160px;height:100px;background:var(--bg-container);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)}
+.shadow-col{display:flex;flex-direction:column;align-items:center;gap:10px}
+.shadow-box{width:160px;height:100px;background:var(--bg-container);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;box-sizing:border-box;font-size:12.5px;color:var(--text-secondary);font-family:var(--font-mono)}
+.shadow-box.shadow-hover{color:var(--text-tertiary);box-shadow:var(--shadow-sm);transition:box-shadow .2s ease,color .2s ease;cursor:default}
+.shadow-box.shadow-hover:hover{box-shadow:var(--shadow-md);color:var(--text-secondary)}
+.shadow-caption{font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono);text-align:center}
 
 /* ---- icon grid ---- */
 .icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:4px;margin:16px 0}
@@ -105,6 +110,22 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .spec code{margin-right:4px}
 .field{width:220px}
 .field-wide{width:320px}
+
+/* ---- file upload (proposed — does not exist in ui.css/Input.jsx yet;
+   styled to match the existing token system for review) ---- */
+.sg-upload-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.sg-upload-dropzone{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 20px;border:1px dashed var(--border);border-radius:var(--radius-lg);background:var(--bg-container);cursor:pointer;text-align:center;transition:border-color .15s ease,background-color .15s ease}
+.sg-upload-dropzone:hover,.sg-upload-dropzone.drag{border-color:var(--brand-blue);background:var(--blue-1)}
+.sg-upload-dropzone svg{color:var(--text-tertiary)}
+.sg-upload-title{font-size:14px;color:var(--text)}
+.sg-upload-hint{font-size:12px;color:var(--text-tertiary)}
+.sg-upload-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.sg-upload-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-container);font-size:12.5px}
+.sg-upload-item svg{color:var(--text-tertiary);flex-shrink:0}
+.sg-upload-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.sg-upload-size{color:var(--text-tertiary);font-family:var(--font-mono);font-size:11px}
+.sg-upload-remove{background:none;border:none;padding:2px;color:var(--text-tertiary);cursor:pointer;border-radius:var(--radius-xs);display:flex}
+.sg-upload-remove:hover{color:var(--error);background:var(--fill-secondary)}
 
 footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-secondary)}
 </style>
@@ -179,7 +200,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section>
       <h2>Overview</h2>
       <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Legal blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>sl-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
-      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of hand-drawn stroke icons replacing <code>@ant-design/icons</code>, a permanently-dark navy sidebar, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar.</p>
+      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of LLM-generated stroke icons (Feather/Lucide-style, see <a href="#icons">Icons</a>) replacing <code>@ant-design/icons</code>, a permanently-dark navy sidebar, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar.</p>
       <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
@@ -266,7 +287,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <section id="spacing">
       <h2>Spacing &amp; radius</h2>
-      <p class="lede">The full 8-step padding/margin scale, unchanged since the Ant Design days.</p>
+      <p class="lede">Source: Ant Design v5's own preset tokens — <code>marginXXS…marginXXL</code> / <code>paddingXXS…paddingXXL</code> for the spacing scale (4 / 8 / 12 / 16 / 20 / 24 / 32 / 48), <code>borderRadiusXS / SM / borderRadius / LG</code> for radius (2 / 4 / 6 / 8). Both scales were kept unchanged when Ant Design's own code was removed from the app.</p>
       <div class="scale-row"><span class="lbl">space-1 · 4</span><div class="bar" style="width:4px"></div></div>
       <div class="scale-row"><span class="lbl">space-2 · 8</span><div class="bar" style="width:8px"></div></div>
       <div class="scale-row"><span class="lbl">space-3 · 12</span><div class="bar" style="width:12px"></div></div>
@@ -284,20 +305,33 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div><div class="box" style="border-radius:var(--radius-lg)"></div><span>lg · 8 · cards, modals</span></div>
         <div><div class="box" style="border-radius:var(--radius-full)"></div><span>full · pill / switch</span></div>
       </div>
+      <p class="lede" style="margin-top:8px"><code>radius-full</code> is Shield's own addition — Ant Design has no pill-radius token, this was added for switches, segmented controls and pill tags.</p>
     </section>
 
     <section id="shadow">
       <h2>Shadow</h2>
-      <p class="lede">Layered shadow formulas — three stacked shadows per level, not one blur.</p>
-      <div class="shadow-row">
-        <div class="shadow-box" style="box-shadow:var(--shadow-sm)">shadow-sm · cards</div>
-        <div class="shadow-box" style="box-shadow:var(--shadow-md)">shadow-md · modals, panels</div>
+      <p class="lede">Layered shadow formulas — three stacked shadows per level, not one blur. Hover the third box to feel the sm → md jump the same way a Card or Statistic tile does.</p>
+      <div class="demo" style="background:var(--bg-layout)">
+        <div class="shadow-row">
+          <div class="shadow-col">
+            <div class="shadow-box" style="box-shadow:var(--shadow-sm)">shadow-sm</div>
+            <span class="shadow-caption">cards, KPI tiles</span>
+          </div>
+          <div class="shadow-col">
+            <div class="shadow-box" style="box-shadow:var(--shadow-md)">shadow-md</div>
+            <span class="shadow-caption">modals, dropdown &amp; select panels</span>
+          </div>
+          <div class="shadow-col">
+            <div class="shadow-box shadow-hover">Hover me</div>
+            <span class="shadow-caption">sm → md transition on hover</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="icons">
       <h2>Icons</h2>
-      <p class="lede">Hand-drawn, stroke-based line icons replacing <code>@ant-design/icons</code> — 24×24 viewbox, 2px stroke, round caps and joins, <code>currentColor</code>, no fills. Every icon in the app's set:</p>
+      <p class="lede">Not hand-drawn, and not from a licensed icon package either — these are LLM-generated inline SVGs, written to match the visual convention of open-source stroke-icon sets like <a href="https://feathericons.com" target="_blank" rel="noopener">Feather Icons</a> and its maintained fork <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> (both MIT-licensed): 24×24 viewbox, 2px stroke, round caps and joins, <code>currentColor</code>, no fill. They replaced <code>@ant-design/icons</code> when Ant Design was removed. Every icon in the app's set:</p>
       <div class="demo">
         <div class="icon-grid">
           <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span>Search</span></div>
@@ -337,11 +371,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
         <div class="spec"><code>viewBox 0 0 24 24</code><code>stroke-width 2</code><code>round caps/joins</code><code>fill none</code></div>
       </div>
+      <p class="lede"><b style="color:var(--text)">Adding a new one:</b> ask an LLM for an SVG path in this exact spec, or pull the closest equivalent from Feather/Lucide and restyle its path data to match (round joins, no fill, 2px stroke, 24×24 box) — either way, the result is a new <code>icon(name, paths)</code> export in <code>icons.jsx</code>.</p>
     </section>
 
     <section id="layout">
       <h2>Grid &amp; Space</h2>
-      <p class="lede"><code>Row</code>/<code>Col</code> is a 24-unit percentage grid with per-breakpoint CSS custom properties (<code>--col-xs/sm/md/lg/xl</code>) rather than static span classes — resize the window to see it reflow.</p>
+      <p class="lede">Source: Ant Design v5's <code>Row</code>/<code>Col</code> Grid (a 24-unit column system with <code>xs/sm/md/lg/xl</code> responsive breakpoints) and its <code>Space</code>/<code>Divider</code> components — kept as the layout primitives after Ant Design's own code was removed. This version reproduces the same 24-unit percentage grid with per-breakpoint CSS custom properties (<code>--col-xs/sm/md/lg/xl</code>) rather than static span classes — resize the window to see it reflow.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Row · Col span=24/12/8/6 (resize to see breakpoints fall back)</span></div>
         <div class="grid-demo">
@@ -439,6 +474,20 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="sl-input-wrap" style="width:120px"><input class="sl-input" type="number" value="12" min="0" step="1"></span>
         </div>
         <div class="spec"><code>height 32</code><code>border → blue-5 on hover</code><code>focus → brand-blue + 2px ring</code></div>
+
+        <h3 class="sub">File upload <span class="live-badge new">Proposed</span></h3>
+        <p class="lede" style="margin:0 0 12px">Doesn't exist in <code>Input.jsx</code>/<code>ui.css</code> yet — there's no Upload component in the app today. This is styled to match the existing token system (dashed border, radius-lg, blue-1 hover highlight) for review before it gets built for real.</p>
+        <div class="demo-row">
+          <div style="width:100%">
+            <input type="file" id="upload-input" class="sg-upload-input" multiple onchange="sgHandleUpload(this)">
+            <label for="upload-input" class="sg-upload-dropzone" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="sgHandleDrop(event,this)">
+              <svg class="sl-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/><path d="M3 9h5a1 1 0 0 1 1 1v1a3 3 0 0 0 6 0v-1a1 1 0 0 1 1-1h5"/></svg>
+              <span class="sg-upload-title">Click or drag files to this area to upload</span>
+              <span class="sg-upload-hint">Retainer agreements, PDFs, up to 25MB each.</span>
+            </label>
+            <div class="sg-upload-list" id="upload-list"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -560,18 +609,28 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section id="avatar">
       <h2>Avatar &amp; Badge</h2>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">Avatar — sizes 24 / 32 (default) / 40</span>
+        <div class="demo-row"><span class="demo-label">Avatar — sizes</span>
           <span class="sl-avatar" style="width:24px;height:24px;font-size:10px">JT</span>
           <span class="sl-avatar" style="width:32px;height:32px;font-size:13px">JT</span>
           <span class="sl-avatar" style="width:40px;height:40px;font-size:16px">JT</span>
           <span class="sl-avatar" style="width:32px;height:32px"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4.2"/><path d="M4 20a8 8 0 0 1 16 0"/></svg></span>
         </div>
-        <div class="demo-row"><span class="demo-label">Badge — dot &amp; count</span>
+        <p class="spec"><code>24</code> dense rows &amp; table cells &nbsp; <code>32</code> default — headers, menus, most lists &nbsp; <code>40</code> profile headers &amp; detail panels &nbsp; <code>icon fallback</code> no name/initials yet, e.g. an unassigned contact</p>
+
+        <div class="demo-row" style="margin-top:22px"><span class="demo-label">Badge — dot</span>
           <span class="sl-badge-wrap"><span class="sl-avatar" style="width:32px;height:32px">JT</span><span class="sl-badge-dot"></span></span>
-          <span class="sl-badge-wrap"><span class="sl-avatar" style="width:32px;height:32px">JT</span></span>
-          <span class="sl-badge-count">3</span>
-          <span style="background:var(--sider-bg);padding:8px 10px;border-radius:var(--radius-md);display:inline-flex"><span class="sl-badge-count on-dark">12</span></span>
         </div>
+        <p class="spec">A corner-overlaid marker with no number — means "something here needs attention," not "how many." Always paired with an avatar or icon, never used on its own.</p>
+
+        <div class="demo-row" style="margin-top:22px"><span class="demo-label">Badge — count</span>
+          <span class="sl-text">Notifications</span><span class="sl-badge-count">3</span>
+        </div>
+        <p class="spec">Unlike the dot, count doesn't corner-overlay anything — it renders as a plain inline chip meant to sit right after a label. This is the exact markup behind the "Offers" count in the <a href="#menu">Menu</a> section below.</p>
+
+        <div class="demo-row" style="margin-top:22px"><span class="demo-label">Badge — count, on-dark</span>
+          <span style="background:var(--sider-bg);padding:8px 12px;border-radius:var(--radius-md);display:inline-flex;align-items:center;gap:8px"><span style="color:#fff;font-size:14px">Offers</span><span class="sl-badge-count on-dark">12</span></span>
+        </div>
+        <p class="spec">The same count chip, recolored for the permanently-dark sidebar — use <code>on-dark</code> only against <code>sider-bg</code>, never on a light surface.</p>
       </div>
     </section>
 

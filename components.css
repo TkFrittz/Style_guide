@@ -231,7 +231,7 @@
 .sl-card-body { padding: var(--space-5) var(--space-6); }
 
 /* ---------- Table ---------- */
-.sl-table-scroll { overflow-x: auto; }
+.sl-table-scroll { overflow-x: auto; overflow-y: hidden; }
 table.sl-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 table.sl-table th {
   text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
@@ -342,7 +342,7 @@ table.sl-table tbody tr:hover { background: var(--fill-quaternary); }
 @media (max-width: 520px) { .sl-stats { grid-template-columns: 1fr; } }
 
 /* ---------- Tabs ---------- */
-.sl-tabs-bar { display: flex; gap: 28px; border-bottom: 1px solid var(--border-secondary); overflow-x: auto; }
+.sl-tabs-bar { display: flex; gap: 28px; border-bottom: 1px solid var(--border-secondary); overflow-x: auto; overflow-y: hidden; }
 .sl-tab {
   padding: 0 0 12px; font-size: 14px; color: var(--text-secondary); position: relative; cursor: pointer;
   background: none; border: none; font-family: var(--font-body); white-space: nowrap;

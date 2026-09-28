@@ -216,6 +216,44 @@ function sgTogglePassword(btn) {
   btn.textContent = input.type === "password" ? "👁" : "🙈";
 }
 
+/* ---------- File upload (proposed component, not in ui.css yet) ---------- */
+function sgFormatFileSize(bytes) {
+  if (bytes > 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + " MB";
+  return Math.max(1, Math.round(bytes / 1024)) + " KB";
+}
+function sgRenderUploadFiles(files) {
+  const list = document.getElementById("upload-list");
+  if (!list) return;
+  Array.from(files).forEach((f) => {
+    const item = document.createElement("div");
+    item.className = "sg-upload-item";
+    const icon = document.createElement("span");
+    icon.innerHTML = '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>';
+    const name = document.createElement("span");
+    name.className = "sg-upload-name";
+    name.textContent = f.name;
+    const size = document.createElement("span");
+    size.className = "sg-upload-size";
+    size.textContent = sgFormatFileSize(f.size);
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "sg-upload-remove";
+    remove.innerHTML = '<svg class="sl-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    remove.onclick = () => item.remove();
+    item.append(icon, name, size, remove);
+    list.appendChild(item);
+  });
+}
+function sgHandleUpload(input) {
+  sgRenderUploadFiles(input.files);
+  input.value = "";
+}
+function sgHandleDrop(e, zone) {
+  e.preventDefault();
+  zone.classList.remove("drag");
+  if (e.dataTransfer && e.dataTransfer.files) sgRenderUploadFiles(e.dataTransfer.files);
+}
+
 /* ---------- Toast ---------- */
 let sgToastId = 0;
 function sgPushToast(type, msg) {
