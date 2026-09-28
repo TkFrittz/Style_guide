@@ -1,4 +1,4 @@
-/* Shield Legal — style guide interactivity.
+/* Shield Engineering — style guide interactivity.
    Vanilla JS, no dependencies, no build step. Every helper here drives the
    same class names and states the real sl-* component library uses in the
    Poom app (src/components/ui/*.jsx) — this is a live rendering of that

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Shield Legal — Style Guide</title>
+<title>Shield Engineering — Style Guide</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap">
@@ -12,7 +12,8 @@
 /* ---- page-specific layout (the style guide's own chrome, not shipped component styles) ---- */
 .shell{display:flex;min-height:100vh}
 .side{width:240px;flex-shrink:0;background:var(--bg-container);border-right:1px solid var(--border-secondary);position:sticky;top:0;height:100vh;overflow-y:auto}
-.side-brand{padding:24px 24px 14px;border-bottom:1px solid var(--border-secondary);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.side-brand{padding:24px 24px 14px;border-bottom:1px solid var(--border-secondary);display:flex;align-items:center;gap:12px}
+.side-brand .brand-logo{width:28px;height:28px;flex-shrink:0}
 .side-brand .mark{font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--text)}
 .side-brand .mark span{color:var(--brand-blue-dark)}
 .side-brand .sub{font-size:12px;color:var(--text-tertiary);margin-top:2px}
@@ -35,6 +36,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .cover .swatches div:nth-child(1){flex:5;background:var(--blue-6)}
 .cover .swatches div:nth-child(2){flex:3;background:var(--blue-8)}
 .cover .swatches div:nth-child(3){flex:2;background:var(--sider-bg)}
+.cover .cover-logo{width:56px;height:56px;display:block;margin-bottom:16px}
 .cover h1{font-family:var(--font-heading);font-size:40px;line-height:1.15;letter-spacing:-.01em}
 .cover .tagline{font-size:15px;color:var(--text-secondary);margin-top:8px;max-width:560px}
 
@@ -134,8 +136,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 <div class="shell">
   <nav class="side">
     <div class="side-brand">
+      <img class="brand-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering">
       <div>
-        <div class="mark">Shield<span>Legal</span></div>
+        <div class="mark">Shield<span>Engineering</span></div>
         <div class="sub">Style guide</div>
       </div>
     </div>
@@ -193,20 +196,21 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
   <div class="main">
     <div class="cover" id="overview">
       <div class="swatches"><div></div><div></div><div></div></div>
-      <h1>Shield Legal</h1>
-      <div class="tagline">A hand-rolled component library — plain CSS, no framework — in Shield Legal's own visual language.</div>
+      <img class="cover-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo">
+      <h1>Shield Engineering</h1>
+      <div class="tagline">A hand-rolled component library — plain CSS, no framework — in Shield Engineering's own visual language.</div>
     </div>
 
     <section>
       <h2>Overview</h2>
-      <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Legal blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>sl-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
+      <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Engineering blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>sl-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
       <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of <a href="#icons">Feather Icons</a> replacing <code>@ant-design/icons</code>, a permanently-dark navy sidebar, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar.</p>
       <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
     <section id="color">
       <h2>Color</h2>
-      <p class="lede">Shield Legal blue run through Ant's palette generator as the seed, kept unchanged when Ant Design itself was removed. Step 6 is the seed color (<code>#18ABED</code>); the rest are generated from it.</p>
+      <p class="lede">Shield Engineering blue run through Ant's palette generator as the seed, kept unchanged when Ant Design itself was removed. Step 6 is the seed color (<code>#18ABED</code>); the rest are generated from it.</p>
       <div class="ramp">
         <div class="sw"><div class="fill" style="background:var(--blue-1)"></div><div class="meta"><b>blue-1</b><span>#E6FBFF · 1.1:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-2)"></div><div class="meta"><b>blue-2</b><span>#BDF3FF · 1.2:1</span></div></div>
@@ -889,7 +893,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
   </div>
 </div>
 <div class="sl-toast-stack"></div>
-<footer>Shield Legal internal style guide. Tokens and components ported directly from src/styles/tokens.css and src/styles/ui.css — this page renders the same classes the app ships.</footer>
+<footer>Shield Engineering internal style guide. Tokens and components ported directly from src/styles/tokens.css and src/styles/ui.css — this page renders the same classes the app ships.</footer>
 <script src="shield.js"></script>
 </body>
 </html>
