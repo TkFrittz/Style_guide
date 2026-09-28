@@ -27,7 +27,7 @@ function sgSegPick(el, group) {
 }
 
 /* ---------- Checkbox ---------- */
-const SG_CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>';
+const SG_CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 function sgToggleCheckbox(el) {
   if (el.classList.contains("disabled")) return;
   const on = el.classList.toggle("on");
@@ -83,7 +83,7 @@ function sgSelectPick(id, value, label) {
     const chip = document.createElement("span");
     chip.className = "sl-select-tag";
     chip.dataset.chip = value;
-    chip.innerHTML = label + ' <button type="button" class="sl-select-tag-remove" onclick="sgSelectRemoveChip(\'' + id + '\',\'' + value + '\')"><svg class="sl-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+    chip.innerHTML = label + ' <button type="button" class="sl-select-tag-remove" onclick="sgSelectRemoveChip(\'' + id + '\',\'' + value + '\')"><svg class="sl-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
     box.insertBefore(chip, box.querySelector(".sl-select-search"));
     root.querySelector('.sl-select-opt[data-value="' + value + '"]').classList.add("selected");
     const search = root.querySelector(".sl-select-search");
@@ -190,7 +190,7 @@ function sgSetStep(groupId, index) {
     else if (i === index) s.classList.add("current");
     const dot = s.querySelector(".sl-step-dot");
     dot.innerHTML = i < index
-      ? '<svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>'
+      ? '<svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
       : String(i + 1);
   });
   lines.forEach((l, i) => l.classList.toggle("done", i < index));
@@ -228,7 +228,7 @@ function sgRenderUploadFiles(files) {
     const item = document.createElement("div");
     item.className = "sg-upload-item";
     const icon = document.createElement("span");
-    icon.innerHTML = '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>';
+    icon.innerHTML = '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>';
     const name = document.createElement("span");
     name.className = "sg-upload-name";
     name.textContent = f.name;
@@ -238,7 +238,7 @@ function sgRenderUploadFiles(files) {
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "sg-upload-remove";
-    remove.innerHTML = '<svg class="sl-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    remove.innerHTML = '<svg class="sl-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
     remove.onclick = () => item.remove();
     item.append(icon, name, size, remove);
     list.appendChild(item);
@@ -263,8 +263,8 @@ function sgPushToast(type, msg) {
   el.className = "sl-toast " + type;
   el.id = id;
   const icon = type === "success"
-    ? '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>'
-    : '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg>';
+    ? '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    : '<svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
   el.innerHTML = icon + "<span>" + msg + "</span>";
   stack.appendChild(el);
   setTimeout(() => {
