@@ -4,26 +4,28 @@
 <meta charset="utf-8">
 <title>Shield Legal — Style Guide</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="shield-tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
 <style>
-/* ---- page-specific layout (the style guide's own chrome, not shared component styles) ---- */
+/* ---- page-specific layout (the style guide's own chrome, not shipped component styles) ---- */
 .shell{display:flex;min-height:100vh}
-.side{width:236px;flex-shrink:0;background:var(--bg-container);border-right:1px solid var(--border-secondary);position:sticky;top:0;height:100vh;overflow-y:auto}
-.side-brand{padding:24px 24px 16px;border-bottom:1px solid var(--border-secondary)}
-.side-brand .mark{font-size:18px;font-weight:700;color:var(--text)}
+.side{width:240px;flex-shrink:0;background:var(--bg-container);border-right:1px solid var(--border-secondary);position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{padding:24px 24px 14px;border-bottom:1px solid var(--border-secondary);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.side-brand .mark{font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--text)}
 .side-brand .mark span{color:var(--brand-blue-dark)}
 .side-brand .sub{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.side-theme{padding:14px 24px;border-bottom:1px solid var(--border-secondary)}
 .side-nav{padding:12px}
 .side-nav .grp{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-quaternary);padding:14px 12px 6px}
 .side-nav a{display:block;padding:6px 12px;border-radius:var(--radius-md);font-size:13.5px;color:var(--text-secondary);text-decoration:none}
 .side-nav a:hover{background:var(--fill-secondary);color:var(--text)}
-.side-nav a.cta{background:var(--brand-blue-dark);color:#fff;font-weight:600;margin-bottom:4px}
-.side-nav a.cta:hover{background:var(--blue-7);color:#fff}
-.main{flex:1;min-width:0;max-width:920px;margin:0 auto;padding:56px 48px 120px}
+.main{flex:1;min-width:0;max-width:960px;margin:0 auto;padding:56px 48px 120px}
 section{margin-bottom:64px;scroll-margin-top:24px}
-section > h2{font-size:24px;line-height:32px;padding-bottom:12px;border-bottom:1px solid var(--border-secondary);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+section > h2{font-family:var(--font-heading);font-size:24px;line-height:32px;padding-bottom:12px;border-bottom:1px solid var(--border-secondary);margin-bottom:20px;display:flex;align-items:center;gap:10px}
 section p.lede{font-size:14.5px;color:var(--text-secondary);max-width:640px}
-h3.sub{font-size:16px;margin:28px 0 12px;color:var(--text)}
+h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:var(--text)}
 .live-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--success);background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-full);padding:2px 9px}
 
 /* ---- cover ---- */
@@ -31,10 +33,9 @@ h3.sub{font-size:16px;margin:28px 0 12px;color:var(--text)}
 .cover .swatches{display:flex;height:56px;border-radius:var(--radius-lg);overflow:hidden;margin-bottom:28px}
 .cover .swatches div:nth-child(1){flex:5;background:var(--blue-6)}
 .cover .swatches div:nth-child(2){flex:3;background:var(--blue-8)}
-.cover .swatches div:nth-child(3){flex:2;background:rgba(0,0,0,.88)}
-.cover h1{font-size:40px;line-height:1.15;letter-spacing:-.01em}
-.cover .tagline{font-size:15px;color:var(--text-secondary);margin-top:8px;max-width:520px}
-.cover .cta-row{margin-top:20px;display:flex;gap:10px}
+.cover .swatches div:nth-child(3){flex:2;background:var(--sider-bg)}
+.cover h1{font-family:var(--font-heading);font-size:40px;line-height:1.15;letter-spacing:-.01em}
+.cover .tagline{font-size:15px;color:var(--text-secondary);margin-top:8px;max-width:560px}
 
 /* ---- swatch grids ---- */
 .ramp{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-3);margin:16px 0}
@@ -53,33 +54,57 @@ h3.sub{font-size:16px;margin:28px 0 12px;color:var(--text)}
 .func-card .head{padding:14px 16px;font-weight:600;font-size:13.5px}
 .func-card .body{padding:10px 16px 14px;font-size:12px;font-family:var(--font-mono);background:var(--bg-container);color:var(--text-tertiary)}
 .func-card .body div{padding:2px 0}
+.sidebar-swatch{border-radius:var(--radius-lg);background:var(--sider-bg);padding:16px 18px;margin:16px 0;display:flex;flex-wrap:wrap;gap:24px}
+.sidebar-swatch .item{font-size:12px;font-family:var(--font-mono)}
+.sidebar-swatch .item b{display:block;font-family:var(--font-body);font-size:12.5px;margin-bottom:6px}
 
 /* ---- type scale ---- */
 .type-row{display:flex;align-items:baseline;gap:20px;padding:14px 0;border-bottom:1px solid var(--border-secondary)}
 .type-row:last-child{border-bottom:none}
-.type-row .tag{width:76px;flex-shrink:0;font-size:11px;font-family:var(--font-mono);color:var(--text-tertiary);padding-top:6px}
+.type-row .tagcell{width:76px;flex-shrink:0;font-size:11px;font-family:var(--font-mono);color:var(--text-tertiary);padding-top:6px}
 .type-row .sample{flex:1}
-.type-row .meta{width:150px;flex-shrink:0;font-size:11.5px;color:var(--text-tertiary);text-align:right;font-family:var(--font-mono);padding-top:6px}
+.type-row .meta{width:160px;flex-shrink:0;font-size:11.5px;color:var(--text-tertiary);text-align:right;font-family:var(--font-mono);padding-top:6px}
+.font-cards{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:16px 0}
+.font-card{border:1px solid var(--border-secondary);border-radius:var(--radius-lg);padding:20px 22px;background:var(--bg-container)}
+.font-card .sample{font-size:32px;margin:6px 0}
+.font-card .weights{font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)}
 
 /* ---- spacing / radius / shadow ---- */
 .scale-row{display:flex;align-items:center;gap:16px;padding:8px 0}
 .scale-row .bar{background:var(--brand-blue-dark);border-radius:2px;height:16px}
 .scale-row .lbl{width:70px;font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)}
-.radius-row{display:flex;gap:24px;align-items:flex-end;margin:16px 0}
+.radius-row{display:flex;gap:24px;align-items:flex-end;margin:16px 0;flex-wrap:wrap}
 .radius-row div{text-align:center}
 .radius-row .box{width:64px;height:64px;background:var(--fill-secondary);border:1px solid var(--border)}
 .radius-row span{display:block;font-size:11px;font-family:var(--font-mono);color:var(--text-tertiary);margin-top:8px}
-.shadow-row{display:flex;gap:32px;margin:24px 0 8px}
+.shadow-row{display:flex;gap:32px;margin:24px 0 8px;flex-wrap:wrap}
 .shadow-box{width:160px;height:100px;background:var(--bg-container);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)}
+
+/* ---- icon grid ---- */
+.icon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:4px;margin:16px 0}
+.icon-cell{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border-radius:var(--radius-md);color:var(--text-secondary)}
+.icon-cell:hover{background:var(--fill-secondary);color:var(--brand-blue-dark)}
+.icon-cell span{font-size:11px;font-family:var(--font-mono);text-align:center;color:var(--text-tertiary)}
+
+/* ---- layout demo ---- */
+.grid-demo{display:flex;flex-wrap:wrap;gap:8px;width:100%}
+.grid-block{background:var(--info-bg);border:1px solid var(--info-border);color:var(--info);border-radius:var(--radius-sm);padding:10px;text-align:center;font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
+.g-24{flex:0 0 100%}
+.g-12{flex:0 0 calc(50% - 4px)}
+.g-8{flex:0 0 calc(33.333% - 6px)}
+.g-6{flex:0 0 calc(25% - 6px)}
+@media (max-width: 700px){.g-12,.g-8,.g-6{flex:0 0 100%}}
 
 /* ---- component demo shells ---- */
 .demo{border:1px solid var(--border-secondary);border-radius:var(--radius-lg);background:var(--bg-container);padding:24px;margin:14px 0;position:relative}
 .demo-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .demo-row:last-child{margin-bottom:0}
+.demo-row.stack{align-items:stretch;flex-direction:column;gap:10px}
 .demo-label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-tertiary);width:100%}
 .spec{font-size:12.5px;color:var(--text-tertiary);margin-top:10px}
 .spec code{margin-right:4px}
-.demo .sel-face .label{pointer-events:none}
+.field{width:220px}
+.field-wide{width:320px}
 
 footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-secondary)}
 </style>
@@ -88,37 +113,59 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 <div class="shell">
   <nav class="side">
     <div class="side-brand">
-      <div class="mark">Shield<span>Legal</span></div>
-      <div class="sub">Style guide</div>
+      <div>
+        <div class="mark">Shield<span>Legal</span></div>
+        <div class="sub">Style guide</div>
+      </div>
+    </div>
+    <div class="side-theme">
+      <div class="sl-seg" data-theme-seg>
+        <button type="button" data-mode="light" class="on" onclick="sgSetTheme('light')">
+          <svg class="sl-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          Light
+        </button>
+        <button type="button" data-mode="dark" onclick="sgSetTheme('dark')">
+          <svg class="sl-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7.2 7.2 0 0 0 21 12.8Z"/></svg>
+          Dark
+        </button>
+      </div>
     </div>
     <div class="side-nav">
-      <a class="cta" href="dashboard.html">Dashboard example</a>
       <a href="#overview">Overview</a>
       <div class="grp">Foundations</div>
       <a href="#color">Color</a>
       <a href="#typography">Typography</a>
       <a href="#spacing">Spacing &amp; radius</a>
       <a href="#shadow">Shadow</a>
+      <a href="#icons">Icons</a>
+      <div class="grp">Layout</div>
+      <a href="#layout">Grid &amp; Space</a>
       <div class="grp">General</div>
       <a href="#button">Button</a>
       <div class="grp">Data entry</div>
       <a href="#input">Input</a>
       <a href="#select">Select</a>
-      <a href="#checkbox">Checkbox &amp; Radio</a>
-      <a href="#switch">Switch</a>
+      <a href="#checkbox">Checkbox, Radio &amp; Switch</a>
       <div class="grp">Data display</div>
-      <a href="#tag">Tag &amp; Badge</a>
-      <a href="#avatar">Avatar</a>
+      <a href="#tag">Tag &amp; Pill</a>
+      <a href="#avatar">Avatar &amp; Badge</a>
       <a href="#card">Card</a>
       <a href="#table">Table</a>
+      <a href="#descriptions">Descriptions</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#statistic">Statistic</a>
       <div class="grp">Feedback</div>
       <a href="#alert">Alert</a>
       <a href="#modal">Modal</a>
-      <a href="#tooltip">Tooltip</a>
+      <a href="#empty">Empty</a>
+      <a href="#skeleton">Skeleton &amp; Spin</a>
+      <a href="#toast">Toast</a>
       <div class="grp">Navigation</div>
-      <a href="#pagination">Pagination</a>
-      <a href="#menu">Menu</a>
+      <a href="#steps">Steps</a>
       <a href="#tabs">Tabs</a>
+      <a href="#collapse">Collapse</a>
+      <a href="#dropdown">Dropdown</a>
+      <a href="#menu">Menu</a>
     </div>
   </nav>
 
@@ -126,20 +173,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <div class="cover" id="overview">
       <div class="swatches"><div></div><div></div><div></div></div>
       <h1>Shield Legal</h1>
-      <div class="tagline">Ant Design's tokens and components, recolored with Shield Legal blue.</div>
-      <div class="cta-row"><a class="btn btn-primary" href="dashboard.html">See the dashboard example</a></div>
+      <div class="tagline">A hand-rolled component library — plain CSS, no framework — in Shield Legal's own visual language.</div>
     </div>
 
     <section>
       <h2>Overview</h2>
-      <p class="lede">Spacing, radius, shadow, and type scale are Ant Design v5's defaults, unchanged. Color is Ant's palette-generation algorithm run against Shield Legal blue (<code>#18ABED</code>) instead of Ant's default blue — same process, different seed color.</p>
-      <p class="lede">A few things aren't stock Ant. <code>brand-blue-dark</code> sits one ramp step past where Ant's convention would put it, because that's where our blue clears 4.5:1 text contrast (Ant's default blue doesn't need the extra step — ours does). Three of the four status colors are darker for the same reason. <code>label</code>, <code>overline</code>, and <code>radius-full</code> are tokens we added; Ant doesn't have them.</p>
-      <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag. <code>dashboard.html</code> puts the same components into an actual screen.</p>
+      <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Legal blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>sl-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
+      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of hand-drawn stroke icons replacing <code>@ant-design/icons</code>, a permanently-dark navy sidebar, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar.</p>
+      <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
     <section id="color">
       <h2>Color</h2>
-      <p class="lede">Shield Legal blue run through Ant's palette generator as the seed. Step 6 is the seed color (<code>#18ABED</code>); the rest are generated from it.</p>
+      <p class="lede">Shield Legal blue run through Ant's palette generator as the seed, kept unchanged when Ant Design itself was removed. Step 6 is the seed color (<code>#18ABED</code>); the rest are generated from it.</p>
       <div class="ramp">
         <div class="sw"><div class="fill" style="background:var(--blue-1)"></div><div class="meta"><b>blue-1</b><span>#E6FBFF · 1.1:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-2)"></div><div class="meta"><b>blue-2</b><span>#BDF3FF · 1.2:1</span></div></div>
@@ -152,19 +198,20 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only — 2.6:1 contrast, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) is the action color: buttons, links, selected state. Ant's convention is to use the base color, or step 7, for this. Both are under 4.5:1, so we use step 8 instead.</p>
+      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only — 2.6:1 contrast, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) is the action color: buttons, links, selected state, focus rings.</p>
 
-      <h3 class="sub">Neutral colors — Ant's colorText / colorFill / colorBg, unchanged</h3>
+      <h3 class="sub">Neutral colors — light / dark</h3>
       <div class="neutral-grid">
-        <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#F5F5F5</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--fill-quaternary)"></div><b>fill-quaternary</b><span>rgba(0,0,0,.02)</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--fill-secondary)"></div><b>fill-secondary</b><span>rgba(0,0,0,.06)</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#F0F0F0</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--border)"></div><b>border</b><span>#D9D9D9</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b style="color:#fff;background:var(--bg-spotlight);display:inline-block;padding:0 4px;border-radius:3px">bg-spotlight</b><span>rgba(0,0,0,.85)</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgba(0,0,0,.88) · 16.5:1</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF · #141414</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#F5F5F5 · #000000</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--fill-secondary)"></div><b>fill-secondary</b><span>rgba(0,0,0,.06) · rgba(255,255,255,.12)</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#F0F0F0 · #303030</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgba(0,0,0,.88) · rgba(255,255,255,.85)</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>.65 · .65</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>.45 · .45</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b>bg-spotlight</b><span>toast / tooltip surface</span></div>
       </div>
+      <p class="lede">Toggle the sidebar theme control — every swatch, card and demo on this page repaints from the same tokens, the same way the app itself does when <code>ThemeModeProvider</code> flips <code>document.documentElement.dataset.theme</code>.</p>
 
       <h3 class="sub">Functional colors — one bg/border/text formula, four moods</h3>
       <div class="func-row">
@@ -173,24 +220,53 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #CF1322</div><div>bg #FFF1F0</div><div>border #FFA39E</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = brand-blue-dark</div><div>bg = blue-1</div><div>border = blue-3</div></div></div>
       </div>
-      <p class="lede">These aren't Ant's default colors. Ant's defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1, and 3.3:1 on white, all under our 4.5:1 floor. Each token above is the same Ant ramp, just a darker step.</p>
+      <p class="lede">All four clear 4.5:1 on their own background. Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; each token above is the same ramp pushed to a darker step instead.</p>
+
+      <h3 class="sub">Sidebar — permanently dark navy, in both themes</h3>
+      <div class="sidebar-swatch">
+        <div class="item" style="color:#fff"><b>sider-bg</b>#101A28</div>
+        <div class="item" style="color:var(--sider-item-color)"><b style="color:#fff">sider-item-color</b>#AEB9C7</div>
+        <div class="item" style="color:#fff"><b>sider-item-selected-bg</b>#223450</div>
+        <div class="item" style="color:#fff"><b>sider-item-selected-color</b>#FFFFFF</div>
+      </div>
+      <p class="lede">The one surface that doesn't theme — see it live in the <a href="#menu">Menu</a> section below.</p>
     </section>
 
     <section id="typography">
       <h2>Typography</h2>
-      <p class="lede">Sizes and line-heights match Ant's type scale exactly. Font stack is Ant's default system fonts — no webfont.</p>
-      <div class="type-row"><span class="tag">h1</span><span class="sample" style="font-size:38px;line-height:46px;font-weight:600">Page titles</span><span class="meta">38 / 46 · 600</span></div>
-      <div class="type-row"><span class="tag">h2</span><span class="sample" style="font-size:30px;line-height:38px;font-weight:600">Section headings</span><span class="meta">30 / 38 · 600</span></div>
-      <div class="type-row"><span class="tag">h3</span><span class="sample" style="font-size:24px;line-height:32px;font-weight:600">Subsection headings</span><span class="meta">24 / 32 · 600</span></div>
-      <div class="type-row"><span class="tag">h4</span><span class="sample" style="font-size:20px;line-height:28px;font-weight:600">Card &amp; panel titles</span><span class="meta">20 / 28 · 600</span></div>
-      <div class="type-row"><span class="tag">body-lg</span><span class="sample" style="font-size:16px;line-height:24px">Lead paragraphs, emphasized body text</span><span class="meta">16 / 24 · 400</span></div>
-      <div class="type-row"><span class="tag">body</span><span class="sample" style="font-size:14px;line-height:22px">Default body text</span><span class="meta">14 / 22 · 400</span></div>
-      <div class="type-row"><span class="tag">caption</span><span class="sample" style="font-size:12px;line-height:20px;color:var(--text-secondary)">Captions, helper text, timestamps</span><span class="meta">12 / 20 · 400</span></div>
+      <p class="lede">Catamaran carries headings and the brand mark; Lexend carries body copy and every control. Both load from Google Fonts as variable-weight families — no system-font fallback in normal use, just a same-shape fallback stack if the network request fails.</p>
+      <div class="font-cards">
+        <div class="font-card">
+          <div class="spec" style="margin:0">--font-heading</div>
+          <div class="sample" style="font-family:var(--font-heading);font-weight:700">Catamaran</div>
+          <div class="weights">weights loaded: 500 · 600 · 700 · 800</div>
+        </div>
+        <div class="font-card">
+          <div class="spec" style="margin:0">--font-body</div>
+          <div class="sample" style="font-family:var(--font-body);font-weight:400">Lexend</div>
+          <div class="weights">weights loaded: 400 · 500 · 600 · 700</div>
+        </div>
+      </div>
+      <h3 class="sub">Title — <code>sl-title h1..h5</code></h3>
+      <div class="type-row"><span class="tagcell">h1</span><span class="sample sl-title h1">Page titles</span><span class="meta">38 / 46 · 600</span></div>
+      <div class="type-row"><span class="tagcell">h2</span><span class="sample sl-title h2">Section headings</span><span class="meta">30 / 38 · 600</span></div>
+      <div class="type-row"><span class="tagcell">h3</span><span class="sample sl-title h3">Subsection headings</span><span class="meta">24 / 32 · 600</span></div>
+      <div class="type-row"><span class="tagcell">h4</span><span class="sample sl-title h4">Card &amp; panel titles</span><span class="meta">20 / 28 · 600</span></div>
+      <div class="type-row"><span class="tagcell">h5</span><span class="sample sl-title h5">Inline emphasis titles</span><span class="meta">16 / 24 · 600</span></div>
+      <h3 class="sub">Text — <code>sl-text</code> variants, all at the 14px body size</h3>
+      <div class="type-row"><span class="tagcell">default</span><span class="sample sl-text">Default body copy</span><span class="meta">14 / 22 · 400</span></div>
+      <div class="type-row"><span class="tagcell">secondary</span><span class="sample sl-text secondary">Secondary — captions, helper text</span><span class="meta">.65 opacity</span></div>
+      <div class="type-row"><span class="tagcell">tertiary</span><span class="sample sl-text tertiary">Tertiary — placeholders, timestamps</span><span class="meta">.45 opacity</span></div>
+      <div class="type-row"><span class="tagcell">strong</span><span class="sample sl-text strong">Strong — emphasized inline text</span><span class="meta">weight 600</span></div>
+      <div class="type-row"><span class="tagcell">success</span><span class="sample sl-text success">Success text</span><span class="meta">var(--success)</span></div>
+      <div class="type-row"><span class="tagcell">warning</span><span class="sample sl-text warning">Warning text</span><span class="meta">var(--warning)</span></div>
+      <div class="type-row"><span class="tagcell">danger</span><span class="sample sl-text danger">Danger text</span><span class="meta">var(--error)</span></div>
+      <div class="type-row"><span class="tagcell">code</span><span class="sample sl-text code">order.status</span><span class="meta">12.5 · mono</span></div>
     </section>
 
     <section id="spacing">
       <h2>Spacing &amp; radius</h2>
-      <p class="lede">Ant's full 8-step padding/margin scale.</p>
+      <p class="lede">The full 8-step padding/margin scale, unchanged since the Ant Design days.</p>
       <div class="scale-row"><span class="lbl">space-1 · 4</span><div class="bar" style="width:4px"></div></div>
       <div class="scale-row"><span class="lbl">space-2 · 8</span><div class="bar" style="width:8px"></div></div>
       <div class="scale-row"><span class="lbl">space-3 · 12</span><div class="bar" style="width:12px"></div></div>
@@ -200,42 +276,126 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="scale-row"><span class="lbl">space-7 · 32</span><div class="bar" style="width:32px"></div></div>
       <div class="scale-row"><span class="lbl">space-8 · 48</span><div class="bar" style="width:48px"></div></div>
 
-      <h3 class="sub">Radius — matches <code>borderRadiusXS/SM/base/LG</code>; <code>radius-full</code> is ours</h3>
+      <h3 class="sub">Radius</h3>
       <div class="radius-row">
         <div><div class="box" style="border-radius:var(--radius-xs)"></div><span>xs · 2</span></div>
         <div><div class="box" style="border-radius:var(--radius-sm)"></div><span>sm · 4</span></div>
-        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6</span></div>
-        <div><div class="box" style="border-radius:var(--radius-lg)"></div><span>lg · 8</span></div>
-        <div><div class="box" style="border-radius:var(--radius-full)"></div><span>full · pill</span></div>
+        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6 · buttons, inputs</span></div>
+        <div><div class="box" style="border-radius:var(--radius-lg)"></div><span>lg · 8 · cards, modals</span></div>
+        <div><div class="box" style="border-radius:var(--radius-full)"></div><span>full · pill / switch</span></div>
       </div>
     </section>
 
     <section id="shadow">
       <h2>Shadow</h2>
-      <p class="lede">Ant's layered shadow formulas — three stacked shadows, not one.</p>
+      <p class="lede">Layered shadow formulas — three stacked shadows per level, not one blur.</p>
       <div class="shadow-row">
-        <div class="shadow-box" style="box-shadow:var(--shadow-sm)">shadow-sm</div>
-        <div class="shadow-box" style="box-shadow:var(--shadow-md)">shadow-md</div>
+        <div class="shadow-box" style="box-shadow:var(--shadow-sm)">shadow-sm · cards</div>
+        <div class="shadow-box" style="box-shadow:var(--shadow-md)">shadow-md · modals, panels</div>
+      </div>
+    </section>
+
+    <section id="icons">
+      <h2>Icons</h2>
+      <p class="lede">Hand-drawn, stroke-based line icons replacing <code>@ant-design/icons</code> — 24×24 viewbox, 2px stroke, round caps and joins, <code>currentColor</code>, no fills. Every icon in the app's set:</p>
+      <div class="demo">
+        <div class="icon-grid">
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><span>Search</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span>Plus</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>Edit</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg><span>Delete</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span>Logout</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg><span>Down</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg><span>Download</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span>Arrow left</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Arrow right</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg><span>Copy</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg><span>Database</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M4 21h16"/></svg><span>Export</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg><span>File text</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M6 15.5 15.5 6a2.1 2.1 0 0 1 3 3L9 18l-4 1Z"/></svg><span>Form</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg><span>Import</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l2-6h14l2 6"/><path d="M3 9v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/><path d="M3 9h5a1 1 0 0 1 1 1v1a3 3 0 0 0 6 0v-1a1 1 0 0 1 1-1h5"/></svg><span>Inbox</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Lock</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Mail</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.5-2 5-2 5s3.5-.5 5-2c.8-.8.8-2.2 0-3s-2.2-.8-3 0Z"/><path d="M12 15l-3-3c1-4 4.5-9 9-10 -1 4.5-6 8-6 8l-3 3 3 2Z"/><circle cx="15" cy="9" r="1"/></svg><span>Rocket</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg><span>Save</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><span>Cart</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M15.5 20a4 4 0 0 1 6.7-3.1"/></svg><span>Team</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8v6h6"/><path d="M3.5 14A8.5 8.5 0 1 0 6 6.3L3 9"/></svg><span>Undo</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 21h16"/></svg><span>Upload</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4.2"/><path d="M4 20a8 8 0 0 1 16 0"/></svg><span>User</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg><span>Appstore</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg><span>Check</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Close</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.6v.2" stroke-width="2.4"/></svg><span>Info circle</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><span>Check circle</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 22 20H2Z"/><path d="M12 10v4"/><path d="M12 17v.2" stroke-width="2.4"/></svg><span>Warning</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg><span>Close circle</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span>Sun</span></div>
+          <div class="icon-cell"><svg class="sl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7.2 7.2 0 0 0 21 12.8Z"/></svg><span>Moon</span></div>
+        </div>
+        <div class="spec"><code>viewBox 0 0 24 24</code><code>stroke-width 2</code><code>round caps/joins</code><code>fill none</code></div>
+      </div>
+    </section>
+
+    <section id="layout">
+      <h2>Grid &amp; Space</h2>
+      <p class="lede"><code>Row</code>/<code>Col</code> is a 24-unit percentage grid with per-breakpoint CSS custom properties (<code>--col-xs/sm/md/lg/xl</code>) rather than static span classes — resize the window to see it reflow.</p>
+      <div class="demo">
+        <div class="demo-row"><span class="demo-label">Row · Col span=24/12/8/6 (resize to see breakpoints fall back)</span></div>
+        <div class="grid-demo">
+          <div class="grid-block g-24">span 24</div>
+          <div class="grid-block g-12">span 12</div>
+          <div class="grid-block g-12">span 12</div>
+          <div class="grid-block g-8">span 8</div>
+          <div class="grid-block g-8">span 8</div>
+          <div class="grid-block g-8">span 8</div>
+          <div class="grid-block g-6">span 6</div>
+          <div class="grid-block g-6">span 6</div>
+          <div class="grid-block g-6">span 6</div>
+          <div class="grid-block g-6">span 6</div>
+        </div>
+        <div class="spec"><code>flex-basis via CSS var</code><code>24-unit grid</code></div>
+      </div>
+      <div class="demo">
+        <div class="demo-row"><span class="demo-label">Space — horizontal, gap 8</span>
+          <div class="sl-space" style="gap:8px"><button class="sl-btn sl-btn-default">One</button><button class="sl-btn sl-btn-default">Two</button><button class="sl-btn sl-btn-default">Three</button></div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Space — vertical, gap 8</span>
+          <div class="sl-space vertical" style="gap:8px;width:160px"><button class="sl-btn sl-btn-default block">One</button><button class="sl-btn sl-btn-default block">Two</button></div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Divider</span>
+          <div style="width:100%"><span class="sl-text">Above</span><hr class="sl-divider"><span class="sl-text">Below</span></div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Divider — labeled</span>
+          <div style="width:100%"><div class="sl-divider-labeled"><span></span><span class="sl-text secondary">or</span><span></span></div></div>
+        </div>
       </div>
     </section>
 
     <section id="button">
       <h2>Button <span class="live-badge">Live</span></h2>
-      <p class="lede">Ant's five variants. Primary uses <code>brand-blue-dark</code>, not the base brand color — see Color.</p>
+      <p class="lede">Five variants. Primary fills with <code>brand-blue-dark</code>, not the base brand color — see Color, above.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
-          <button class="btn btn-primary">Primary</button>
-          <button class="btn btn-default">Default</button>
-          <button class="btn btn-dashed">Dashed</button>
-          <button class="btn btn-text">Text</button>
-          <button class="btn btn-link">Link</button>
-          <button class="btn btn-danger">Danger</button>
-          <button class="btn btn-primary" disabled>Disabled</button>
+          <button class="sl-btn sl-btn-primary">Primary</button>
+          <button class="sl-btn sl-btn-default">Default</button>
+          <button class="sl-btn sl-btn-dashed">Dashed</button>
+          <button class="sl-btn sl-btn-text">Text</button>
+          <button class="sl-btn sl-btn-link">Link</button>
+          <button class="sl-btn sl-btn-danger">Danger</button>
+          <button class="sl-btn sl-btn-default sl-btn-danger">Danger (default)</button>
+          <button class="sl-btn sl-btn-primary" disabled>Disabled</button>
         </div>
-        <div class="demo-row"><span class="demo-label">Sizes — 24 / 32 / 40px, Ant's control-height scale</span>
-          <button class="btn btn-primary btn-sm">Small</button>
-          <button class="btn btn-primary">Default</button>
-          <button class="btn btn-primary btn-lg">Large</button>
+        <div class="demo-row"><span class="demo-label">Sizes — 24 / 32 / 40px</span>
+          <button class="sl-btn sl-btn-primary sm">Small</button>
+          <button class="sl-btn sl-btn-primary">Default</button>
+          <button class="sl-btn sl-btn-primary lg">Large</button>
+        </div>
+        <div class="demo-row"><span class="demo-label">Loading &amp; icon</span>
+          <button class="sl-btn sl-btn-primary"><span class="sl-spinner" style="width:14px;height:14px;border-width:2px"></span>Saving…</button>
+          <button class="sl-btn sl-btn-default"><svg class="sl-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add product</button>
         </div>
         <div class="spec"><code>radius-md</code><code>height 32</code><code>padding 4 15</code></div>
       </div>
@@ -244,87 +404,173 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section id="input">
       <h2>Input <span class="live-badge">Live</span></h2>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">States</span>
-          <input class="in" placeholder="Type here">
-          <input class="in in-disabled" placeholder="Disabled" disabled>
+        <div class="demo-row"><span class="demo-label">Basic</span>
+          <span class="sl-input-wrap field"><input class="sl-input" placeholder="Type here"></span>
+          <span class="sl-input-wrap field"><input class="sl-input" placeholder="Disabled" disabled></span>
         </div>
-        <div class="demo-row">
-          <div><input class="in in-error" value="invalid@"><div class="hint" style="color:var(--error);margin-top:4px">Enter a valid email address.</div></div>
+        <div class="demo-row"><span class="demo-label">Search — prefix icon</span>
+          <span class="sl-input-wrap field">
+            <span class="sl-input-icon prefix"><svg class="sl-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
+            <input class="sl-input has-prefix" placeholder="Search partners…">
+          </span>
         </div>
-        <div class="spec"><code>height 32</code><code>border → border</code><code>focus → brand-blue + ring</code></div>
+        <div class="demo-row"><span class="demo-label">Password — suffix toggle</span>
+          <span class="sl-input-wrap field">
+            <input class="sl-input has-suffix" type="password" value="hunter2" id="pw-demo">
+            <span class="sl-input-icon suffix clearable" style="pointer-events:auto;cursor:pointer" onclick="sgTogglePassword(this)">👁</span>
+          </span>
+        </div>
+        <div class="demo-row"><span class="demo-label">Clearable</span>
+          <span class="sl-input-wrap field">
+            <input class="sl-input has-suffix" value="Consumer Finance" oninput="this.nextElementSibling.style.display = this.value ? '' : 'none'">
+            <span class="sl-input-icon suffix clearable" onclick="sgClearInput(this)"><svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg></span>
+          </span>
+        </div>
+        <div class="demo-row"><span class="demo-label">Error state</span>
+          <div>
+            <span class="sl-input-wrap field"><input class="sl-input error" value="invalid@"></span>
+            <div class="sl-text danger" style="font-size:12px;margin-top:4px">Enter a valid email address.</div>
+          </div>
+        </div>
+        <div class="demo-row"><span class="demo-label">TextArea</span>
+          <textarea class="sl-textarea field-wide" placeholder="Notes for this order…"></textarea>
+        </div>
+        <div class="demo-row"><span class="demo-label">InputNumber</span>
+          <span class="sl-input-wrap" style="width:120px"><input class="sl-input" type="number" value="12" min="0" step="1"></span>
+        </div>
+        <div class="spec"><code>height 32</code><code>border → blue-5 on hover</code><code>focus → brand-blue + 2px ring</code></div>
       </div>
     </section>
 
     <section id="select">
       <h2>Select <span class="live-badge">Live</span></h2>
-      <div class="demo" style="min-height:180px">
-        <div class="demo-row"><span class="demo-label">Click to open</span>
-          <div class="selectbox" id="sel-demo">
-            <div class="sel-face" onclick="sgToggleSelect('sel-demo')"><span class="label">Consumer Finance</span><span class="car">▾</span></div>
-            <div class="sel-panel">
-              <div class="sel-opt" data-value="mt" onclick="sgPickOption('sel-demo','mt',this.textContent)">Mass Tort Intake</div>
-              <div class="sel-opt active" data-value="cf" onclick="sgPickOption('sel-demo','cf',this.textContent)">Consumer Finance</div>
-              <div class="sel-opt" data-value="pl" onclick="sgPickOption('sel-demo','pl',this.textContent)">Product Liability</div>
+      <p class="lede">A hand-rolled combobox, not a native <code>&lt;select&gt;</code> — search-as-you-type, grouped options, and a multi-select mode that grows into chips.</p>
+      <div class="demo" style="min-height:260px">
+        <div class="demo-row"><span class="demo-label">Single, searchable</span>
+          <div class="sl-select field-wide" id="sel-single">
+            <div class="sl-select-box">
+              <input class="sl-select-search" placeholder="Select a catalog…" autocomplete="off" oninput="sgSelectFilter('sel-single', this)" onfocus="sgSelectOpen('sel-single')" onclick="sgSelectOpen('sel-single')">
+              <span class="sl-select-arrow"><svg class="sl-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </div>
+            <div class="sl-select-panel">
+              <div class="sl-select-opt" data-value="mt" data-label="Mass Tort Intake" onmousedown="event.preventDefault();sgSelectPick('sel-single','mt','Mass Tort Intake')">Mass Tort Intake</div>
+              <div class="sl-select-opt selected" data-value="cf" data-label="Consumer Finance" onmousedown="event.preventDefault();sgSelectPick('sel-single','cf','Consumer Finance')">Consumer Finance</div>
+              <div class="sl-select-opt" data-value="pl" data-label="Product Liability" onmousedown="event.preventDefault();sgSelectPick('sel-single','pl','Product Liability')">Product Liability</div>
+              <div class="sl-select-empty" style="display:none">No matches</div>
             </div>
           </div>
         </div>
-        <div class="spec"><code>shadow-md</code><code>selected → blue-1 / brand-blue-dark</code></div>
+        <div class="demo-row"><span class="demo-label">Grouped options</span>
+          <div class="sl-select field-wide" id="sel-grouped">
+            <div class="sl-select-box">
+              <input class="sl-select-search" placeholder="Assign a role contact…" autocomplete="off" oninput="sgSelectFilter('sel-grouped', this)" onfocus="sgSelectOpen('sel-grouped')" onclick="sgSelectOpen('sel-grouped')">
+              <span class="sl-select-arrow"><svg class="sl-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </div>
+            <div class="sl-select-panel">
+              <div class="sl-select-group-label">Business contacts</div>
+              <div class="sl-select-opt" data-value="jt" data-label="J. Turner" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','jt','J. Turner')">J. Turner</div>
+              <div class="sl-select-opt" data-value="mh" data-label="M. Harlow" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','mh','M. Harlow')">M. Harlow</div>
+              <div class="sl-select-group-label">Technical contacts</div>
+              <div class="sl-select-opt" data-value="rv" data-label="R. Vance" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','rv','R. Vance')">R. Vance</div>
+              <div class="sl-select-empty" style="display:none">No matches</div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Multiple — grows into chips</span>
+          <div class="sl-select multiple field-wide" id="sel-multi">
+            <div class="sl-select-box">
+              <span class="sl-select-tag" data-chip="funding">Funding partner <button type="button" class="sl-select-tag-remove" onclick="sgSelectRemoveChip('sel-multi','funding')"><svg class="sl-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span>
+              <input class="sl-select-search" placeholder="Add co-counsel…" autocomplete="off" oninput="sgSelectFilter('sel-multi', this)" onfocus="sgSelectOpen('sel-multi')" onclick="sgSelectOpen('sel-multi')">
+            </div>
+            <div class="sl-select-panel">
+              <div class="sl-select-opt selected" data-value="funding" data-label="Funding partner" onmousedown="event.preventDefault();sgSelectPick('sel-multi','funding','Funding partner')">Funding partner</div>
+              <div class="sl-select-opt" data-value="cocounsel" data-label="Co-counsel" onmousedown="event.preventDefault();sgSelectPick('sel-multi','cocounsel','Co-counsel')">Co-counsel</div>
+              <div class="sl-select-opt" data-value="referring" data-label="Referring firm" onmousedown="event.preventDefault();sgSelectPick('sel-multi','referring','Referring firm')">Referring firm</div>
+              <div class="sl-select-empty" style="display:none">No matches</div>
+            </div>
+          </div>
+        </div>
+        <div class="spec"><code>panel → shadow-md</code><code>selected → blue-1 / brand-blue-dark</code><code>chips wrap the box</code></div>
       </div>
     </section>
 
     <section id="checkbox">
-      <h2>Checkbox &amp; Radio <span class="live-badge">Live</span></h2>
+      <h2>Checkbox, Radio &amp; Switch <span class="live-badge">Live</span></h2>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Checkbox — click to toggle</span>
-          <label class="crow"><span class="box" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
-          <label class="crow"><span class="box on" onclick="sgToggleCheckbox(this)"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg></span>Checked</label>
-          <label class="crow"><span class="box disabled"></span><span style="color:var(--text-quaternary)">Disabled</span></label>
+          <label class="sl-check-row"><span class="sl-checkbox" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
+          <label class="sl-check-row"><span class="sl-checkbox on" onclick="sgToggleCheckbox(this)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg></span>Checked</label>
+          <label class="sl-check-row disabled"><span class="sl-checkbox disabled"></span>Disabled</label>
         </div>
         <div class="demo-row"><span class="demo-label">Radio — pick one</span>
-          <label class="crow"><span class="radio on" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
-          <label class="crow"><span class="radio" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
+          <label class="sl-check-row"><span class="sl-radio on" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
+          <label class="sl-check-row"><span class="sl-radio" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
         </div>
-        <div class="spec"><code>16×16</code><code>radius-sm (box)</code><code>full (radio)</code></div>
-      </div>
-    </section>
-
-    <section id="switch">
-      <h2>Switch <span class="live-badge">Live</span></h2>
-      <div class="demo">
-        <div class="demo-row"><span class="demo-label">Click to toggle</span>
-          <span class="track on" onclick="sgToggleSwitch(this)"><span class="thumb"></span></span>
-          <span class="track" onclick="sgToggleSwitch(this)"><span class="thumb"></span></span>
-          <span class="track on disabled"><span class="thumb"></span></span>
+        <div class="demo-row"><span class="demo-label">Switch — default &amp; small</span>
+          <button type="button" class="sl-switch-track on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true"><span class="sl-switch-thumb"></span></button>
+          <button type="button" class="sl-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false"><span class="sl-switch-thumb"></span></button>
+          <button type="button" class="sl-switch-track sm on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true"><span class="sl-switch-thumb"></span></button>
+          <button type="button" class="sl-switch-track on" disabled role="switch" aria-checked="true"><span class="sl-switch-thumb"></span></button>
         </div>
-        <div class="spec"><code>44×22</code><code>on → brand-blue-dark</code></div>
+        <div class="demo-row"><span class="demo-label">Segmented</span>
+          <div class="sl-seg">
+            <button type="button" class="on" onclick="sgSegPick(this)">List</button>
+            <button type="button" onclick="sgSegPick(this)">Grid</button>
+          </div>
+        </div>
+        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → brand-blue-dark</code></div>
       </div>
     </section>
 
     <section id="tag">
-      <h2>Tag &amp; Badge <span class="live-badge">Live</span></h2>
+      <h2>Tag &amp; Pill <span class="live-badge">Live</span></h2>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">Tag — click × to remove</span>
-          <span class="tag">Mass Tort <button onclick="sgRemoveTag(this)">×</button></span>
-          <span class="tag t-success">Active</span>
-          <span class="tag t-warning">Pending</span>
-          <span class="tag t-error">Rejected</span>
-          <span class="tag t-info">Draft</span>
+        <div class="demo-row"><span class="demo-label">Tag — colors, click × to remove</span>
+          <span class="sl-tag">Mass Tort <button onclick="sgRemoveTag(this)">×</button></span>
+          <span class="sl-tag success">Active</span>
+          <span class="sl-tag warning">Paused</span>
+          <span class="sl-tag error">Rejected</span>
+          <span class="sl-tag processing">Draft</span>
+          <span class="sl-tag gold">Priority</span>
         </div>
-        <div class="demo-row"><span class="demo-label">Badge</span>
-          <span class="badge-wrap"><span class="icon-box"></span><span class="dot"></span></span>
-          <span class="badge-wrap"><span class="icon-box"></span><span class="count">3</span></span>
+        <div class="demo-row"><span class="demo-label">CheckableTag — click to toggle</span>
+          <span class="sl-tag checkable checked" onclick="sgToggleCheckableTag(this)">Consumer Finance</span>
+          <span class="sl-tag checkable" onclick="sgToggleCheckableTag(this)">Mass Tort</span>
+          <span class="sl-tag checkable" onclick="sgToggleCheckableTag(this)">Product Liability</span>
         </div>
-        <div class="spec"><code>tag → bg/border/text triple</code><code>badge count → min 20×20, full radius</code></div>
+        <div class="demo-row"><span class="demo-label">Pill</span>
+          <span class="sl-pill ok"><svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>Synced</span>
+          <span class="sl-pill warn"><svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 22 20H2Z"/><path d="M12 10v4"/></svg>Needs review</span>
+          <span class="sl-pill idle">Idle</span>
+        </div>
+        <h3 class="sub">StatusTag — the app-wide status → color mapping</h3>
+        <div class="demo-row">
+          <span class="sl-tag">Draft</span>
+          <span class="sl-tag processing">Internal Review</span>
+          <span class="sl-tag warning">Partner Signature</span>
+          <span class="sl-tag success">Approved</span>
+          <span class="sl-tag error">Rejected</span>
+          <span class="sl-tag warning">Paused</span>
+          <span class="sl-tag success">Completed</span>
+        </div>
+        <div class="spec"><code>tag → bg/border/text triple</code><code>gold → one-off, not in the functional set</code></div>
       </div>
     </section>
 
     <section id="avatar">
-      <h2>Avatar</h2>
+      <h2>Avatar &amp; Badge</h2>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">Sizes — 24 / 32 / 40</span>
-          <span class="avatar" style="width:24px;height:24px;font-size:10px">JT</span>
-          <span class="avatar" style="width:32px;height:32px;font-size:13px">JT</span>
-          <span class="avatar" style="width:40px;height:40px;font-size:16px">JT</span>
+        <div class="demo-row"><span class="demo-label">Avatar — sizes 24 / 32 (default) / 40</span>
+          <span class="sl-avatar" style="width:24px;height:24px;font-size:10px">JT</span>
+          <span class="sl-avatar" style="width:32px;height:32px;font-size:13px">JT</span>
+          <span class="sl-avatar" style="width:40px;height:40px;font-size:16px">JT</span>
+          <span class="sl-avatar" style="width:32px;height:32px"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4.2"/><path d="M4 20a8 8 0 0 1 16 0"/></svg></span>
+        </div>
+        <div class="demo-row"><span class="demo-label">Badge — dot &amp; count</span>
+          <span class="sl-badge-wrap"><span class="sl-avatar" style="width:32px;height:32px">JT</span><span class="sl-badge-dot"></span></span>
+          <span class="sl-badge-wrap"><span class="sl-avatar" style="width:32px;height:32px">JT</span></span>
+          <span class="sl-badge-count">3</span>
+          <span style="background:var(--sider-bg);padding:8px 10px;border-radius:var(--radius-md);display:inline-flex"><span class="sl-badge-count on-dark">12</span></span>
         </div>
       </div>
     </section>
@@ -333,104 +579,258 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <h2>Card <span class="live-badge">Live</span></h2>
       <div class="demo" style="background:var(--bg-layout)">
         <div class="demo-row">
-          <div class="card" style="width:220px"><div class="card-h">Bordered</div><div class="card-b">border-secondary outline, no shadow — the standard resting state.</div></div>
-          <div class="card elevated" style="width:220px"><div class="card-h">Elevated</div><div class="card-b">shadow-md instead of a border.</div></div>
-          <div class="card hoverable" style="width:220px"><div class="card-h">Hoverable</div><div class="card-b">Hover me — border-secondary until you do.</div></div>
+          <div class="sl-card bordered-shadow" style="width:220px">
+            <div class="sl-card-head"><span>Consumer Finance</span></div>
+            <div class="sl-card-body sl-text secondary" style="font-size:13.5px">Default — border-secondary + shadow-sm, the standard resting state.</div>
+          </div>
+          <div class="sl-card" style="width:220px">
+            <div class="sl-card-head"><span>Draft catalog</span></div>
+            <div class="sl-card-body sl-text secondary" style="font-size:13.5px">Borderless variant — no shadow, sits flush against a page.</div>
+          </div>
+          <div class="sl-card bordered-shadow sm" style="width:220px">
+            <div class="sl-card-head" style="min-height:40px;font-size:13.5px"><span>Compact</span><span class="sl-tag success">Active</span></div>
+            <div class="sl-card-body sl-text secondary" style="font-size:13px">Small size — tighter body padding, for dense layouts.</div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="table">
-      <h2>Table</h2>
+      <h2>Table <span class="live-badge">Live</span></h2>
       <div class="demo" style="padding:0">
-        <table>
-          <thead><tr><th>Order</th><th>Partner</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>ORD-501</td><td>Harlow &amp; Vance</td><td><span class="tag t-success">Active</span></td></tr>
-            <tr><td>ORD-498</td><td>Meridian Legal Group</td><td><span class="tag t-warning">Paused</span></td></tr>
-          </tbody>
-        </table>
+        <div class="sl-table-scroll">
+          <table class="sl-table">
+            <thead><tr><th>Order</th><th>Partner</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr class="clickable"><td>ORD-501</td><td>Harlow &amp; Vance</td><td><span class="sl-tag success">Active</span></td></tr>
+              <tr class="clickable"><td>ORD-498</td><td>Meridian Legal Group</td><td><span class="sl-tag warning">Paused</span></td></tr>
+              <tr class="clickable"><td>ORD-493</td><td>Consumer Finance Direct</td><td><span class="sl-tag processing">Internal Review</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="spec"><code>hover → fill-quaternary</code><code>headers → uppercase, 11px</code></div>
+    </section>
+
+    <section id="descriptions">
+      <h2>Descriptions</h2>
+      <div class="demo">
+        <div class="sl-desc">
+          <div class="sl-desc-row"><div class="sl-desc-label">Order ID</div><div class="sl-desc-value">ORD-501</div></div>
+          <div class="sl-desc-row"><div class="sl-desc-label">Partner</div><div class="sl-desc-value">Harlow &amp; Vance</div></div>
+          <div class="sl-desc-row"><div class="sl-desc-label">Status</div><div class="sl-desc-value"><span class="sl-tag success">Active</span></div></div>
+          <div class="sl-desc-row"><div class="sl-desc-label">Created</div><div class="sl-desc-value">2026-09-12</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline">
+      <h2>Timeline</h2>
+      <div class="demo">
+        <div class="sl-timeline">
+          <div class="sl-timeline-item"><div class="sl-timeline-content"><b class="sl-text strong">Offer created</b> — <span class="sl-text tertiary">Sep 12, 9:04 AM</span></div></div>
+          <div class="sl-timeline-item"><div class="sl-timeline-content"><b class="sl-text strong">Sent for internal review</b> — <span class="sl-text tertiary">Sep 14, 2:10 PM</span></div></div>
+          <div class="sl-timeline-item"><div class="sl-timeline-content"><b class="sl-text strong">Partner signature requested</b> — <span class="sl-text tertiary">Sep 18, 11:30 AM</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="statistic">
+      <h2>Statistic</h2>
+      <p class="lede">A CSS-grid KPI tile strip — <code>auto-fit</code>, not the 24-unit percentage grid, so tiles stay content-sized and never stretch into one full-width bar.</p>
+      <div class="demo" style="background:var(--bg-layout)">
+        <div class="sl-stats">
+          <div class="sl-stat hero"><div class="sl-stat-label">Active orders</div><div class="sl-stat-value">128</div><div class="sl-stat-sub">+12 this week</div></div>
+          <div class="sl-stat"><div class="sl-stat-label">Conversion rate</div><div class="sl-stat-value convert">34<small>%</small></div></div>
+          <div class="sl-stat"><div class="sl-stat-label">Blocked offers</div><div class="sl-stat-value bad">7</div><div class="sl-stat-extra">3 waiting on partner signature</div></div>
+          <div class="sl-stat"><div class="sl-stat-label">Leads in system</div><div class="sl-stat-value">276<small>total</small></div><div class="sl-stat-sub">47 qualified</div></div>
+        </div>
       </div>
     </section>
 
     <section id="alert">
       <h2>Alert <span class="live-badge">Live</span></h2>
       <div class="demo">
-        <div class="demo-row" style="flex-direction:column;align-items:stretch;gap:10px">
-          <div class="alert a-success">Order activated successfully.<button class="x" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="alert a-warning">This campaign is nearing capacity.<button class="x" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="alert a-error desc"><div><b>Unable to save changes</b><div class="alert-desc">Check the highlighted fields and try again.</div></div><button class="x" onclick="sgDismissAlert(this)">×</button></div>
+        <div class="demo-row stack">
+          <div class="sl-alert success"><span class="sl-alert-icon"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span><div class="sl-alert-body"><div class="sl-alert-title">Order activated successfully.</div></div><button class="sl-alert-close" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="sl-alert warning"><span class="sl-alert-icon"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 22 20H2Z"/><path d="M12 10v4"/><path d="M12 17v.2" stroke-width="2.4"/></svg></span><div class="sl-alert-body"><div class="sl-alert-title">This campaign is nearing capacity.</div></div><button class="sl-alert-close" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="sl-alert error"><span class="sl-alert-icon"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg></span><div class="sl-alert-body"><div class="sl-alert-title">Unable to save changes</div><div class="sl-alert-desc">Check the highlighted fields and try again.</div></div><button class="sl-alert-close" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="sl-alert info"><span class="sl-alert-icon"><svg class="sl-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.6v.2" stroke-width="2.4"/></svg></span><div class="sl-alert-body"><div class="sl-alert-title">Sample data — nothing here is saved.</div></div><button class="sl-alert-close" onclick="sgDismissAlert(this)">×</button></div>
         </div>
       </div>
     </section>
 
     <section id="modal">
       <h2>Modal <span class="live-badge">Live</span></h2>
-      <p class="lede">520px default, 720px wide. No header/footer divider — Ant dropped that in v5.</p>
+      <p class="lede">480px default, 720px wide. Destructive deletes use the type-to-confirm pattern below — the button stays disabled until the exact word is typed.</p>
       <div class="demo">
-        <button class="btn btn-danger" onclick="sgOpenModal('demo-modal')">Delete partner…</button>
+        <div class="demo-row">
+          <button class="sl-btn sl-btn-default" onclick="sgOpenModal('modal-basic')">Open modal</button>
+          <button class="sl-btn sl-btn-default" onclick="sgOpenModal('modal-wide')">Open wide modal</button>
+          <button class="sl-btn sl-btn-danger" onclick="sgOpenModal('modal-delete')">Delete partner…</button>
+        </div>
       </div>
-      <div class="ovl" id="demo-modal">
-        <div class="modal">
-          <div class="modal-h">Delete partner <button onclick="sgCloseModal('demo-modal')">×</button></div>
-          <div class="modal-b">Delete <b style="color:var(--text)">Meridian Legal Group</b>? This cannot be undone.</div>
-          <div class="modal-f"><button class="btn btn-default btn-sm" onclick="sgCloseModal('demo-modal')">Cancel</button><button class="btn btn-danger btn-sm" onclick="sgCloseModal('demo-modal')">Delete</button></div>
+
+      <div class="sl-modal-backdrop" id="modal-basic" onmousedown="sgModalBackdropClick(event,'modal-basic')">
+        <div class="sl-modal">
+          <div class="sl-modal-head"><h3>Assign role contact</h3><button class="sl-modal-close" onclick="sgCloseModal('modal-basic')">×</button></div>
+          <div class="sl-modal-body">Pick who handles business and technical contact for this offer.</div>
+          <div class="sl-modal-foot"><button class="sl-btn sl-btn-default" onclick="sgCloseModal('modal-basic')">Cancel</button><button class="sl-btn sl-btn-primary" onclick="sgCloseModal('modal-basic')">Save</button></div>
+        </div>
+      </div>
+
+      <div class="sl-modal-backdrop" id="modal-wide" onmousedown="sgModalBackdropClick(event,'modal-wide')">
+        <div class="sl-modal wide">
+          <div class="sl-modal-head"><h3>Offer schema</h3><button class="sl-modal-close" onclick="sgCloseModal('modal-wide')">×</button></div>
+          <div class="sl-modal-body">The wide variant (720px) is used for anything with its own internal layout — schema editors, multi-column forms.</div>
+          <div class="sl-modal-foot"><button class="sl-btn sl-btn-default" onclick="sgCloseModal('modal-wide')">Close</button></div>
+        </div>
+      </div>
+
+      <div class="sl-modal-backdrop" id="modal-delete" onmousedown="sgModalBackdropClick(event,'modal-delete')">
+        <div class="sl-modal">
+          <div class="sl-modal-head"><h3>Delete partner</h3><button class="sl-modal-close" onclick="sgCloseModal('modal-delete')">×</button></div>
+          <div class="sl-modal-body">
+            <p style="margin-top:0">Delete <b class="sl-text strong">Meridian Legal Group</b>? This cannot be undone.</p>
+            <p class="sl-text tertiary" style="font-size:12.5px">Type <code>Delete</code> to confirm.</p>
+            <span class="sl-input-wrap"><input class="sl-input" placeholder="Delete" oninput="sgDeleteConfirmInput(this,'modal-delete-btn')"></span>
+          </div>
+          <div class="sl-modal-foot"><button class="sl-btn sl-btn-default" onclick="sgCloseModal('modal-delete')">Cancel</button><button class="sl-btn sl-btn-danger" id="modal-delete-btn" disabled onclick="sgCloseModal('modal-delete')">Delete</button></div>
         </div>
       </div>
     </section>
 
-    <section id="tooltip">
-      <h2>Tooltip <span class="live-badge">Live</span></h2>
+    <section id="empty">
+      <h2>Empty</h2>
       <div class="demo">
-        <span class="icon-box" data-tip="Assign a technical contact" style="cursor:default">i</span>
-        <p class="spec">bg-spotlight · 250px max-width (Ant's default) · hover to see it</p>
+        <div class="sl-empty">
+          <svg class="sl-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="7" width="16" height="13" rx="1.5"/><path d="M4 11h16"/><path d="M9 15h6"/></svg>
+          <div class="sl-empty-desc">No orders match these filters.</div>
+        </div>
       </div>
     </section>
 
-    <section id="pagination">
-      <h2>Pagination <span class="live-badge">Live</span></h2>
+    <section id="skeleton">
+      <h2>Skeleton &amp; Spin</h2>
       <div class="demo">
-        <div class="pg" id="pg-demo" data-current="2" data-max="4">
-          <button class="pg-item muted" data-prev onclick="sgPagePrev('pg-demo')">‹</button>
-          <button class="pg-item" data-page="1" onclick="sgSetPage('pg-demo',1,4)">1</button>
-          <button class="pg-item active" data-page="2" onclick="sgSetPage('pg-demo',2,4)">2</button>
-          <button class="pg-item" data-page="3" onclick="sgSetPage('pg-demo',3,4)">3</button>
-          <button class="pg-item" data-page="4" onclick="sgSetPage('pg-demo',4,4)">4</button>
-          <button class="pg-item" data-next onclick="sgPageNext('pg-demo')">›</button>
+        <div class="demo-row stack">
+          <span class="sl-sk" style="width:60%;height:20px"></span>
+          <span class="sl-sk" style="width:90%;height:14px"></span>
+          <span class="sl-sk" style="width:40%;height:14px"></span>
         </div>
-        <p class="spec">The active item is outlined, not filled — that's Ant's pagination style.</p>
+        <div class="demo-row" style="margin-top:16px">
+          <span class="sl-spinner"></span>
+          <span class="sl-spinner" style="width:32px;height:32px;border-width:3px"></span>
+          <span class="sl-text secondary">Loading offers…</span>
+        </div>
       </div>
     </section>
 
-    <section id="menu">
-      <h2>Menu <span class="live-badge">Live</span></h2>
+    <section id="toast">
+      <h2>Toast <span class="live-badge">Live</span></h2>
+      <p class="lede">Pushed imperatively (<code>useToast()</code>), auto-dismisses after 3 seconds. Click to see it stack top-center.</p>
       <div class="demo">
-        <div class="menu" style="width:220px">
-          <div class="m-item on" onclick="sgSelectMenuItem(this)">Dashboard</div>
-          <div class="m-item" onclick="sgSelectMenuItem(this)">Partners</div>
-          <div class="m-item" onclick="sgSelectMenuItem(this)">Product Catalog</div>
+        <div class="demo-row">
+          <button class="sl-btn sl-btn-default" onclick="sgPushToast('success','Order activated.')">Trigger success</button>
+          <button class="sl-btn sl-btn-default" onclick="sgPushToast('error','Could not save changes.')">Trigger error</button>
         </div>
+      </div>
+    </section>
+
+    <section id="steps">
+      <h2>Steps <span class="live-badge">Live</span></h2>
+      <div class="demo">
+        <div class="demo-row"><span class="demo-label">Click a step to jump — Rail wraps this for offer stages</span></div>
+        <div class="sl-steps" id="steps-demo">
+          <div class="sl-step done"><button type="button" class="sl-step-btn clickable" onclick="sgSetStep('steps-demo',0)"><span class="sl-step-dot"><svg class="sl-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg></span><span class="sl-step-title">Documentation</span></button></div>
+          <span class="sl-step-line done"></span>
+          <div class="sl-step current"><button type="button" class="sl-step-btn clickable" onclick="sgSetStep('steps-demo',1)"><span class="sl-step-dot">2</span><span class="sl-step-title">Internal review</span></button></div>
+          <span class="sl-step-line"></span>
+          <div class="sl-step"><button type="button" class="sl-step-btn clickable" onclick="sgSetStep('steps-demo',2)"><span class="sl-step-dot">3</span><span class="sl-step-title">Partner signature</span></button></div>
+          <span class="sl-step-line"></span>
+          <div class="sl-step"><button type="button" class="sl-step-btn clickable" onclick="sgSetStep('steps-demo',3)"><span class="sl-step-dot">4</span><span class="sl-step-title">Approved</span></button></div>
+        </div>
+        <div class="spec"><code>done → filled, checkmark</code><code>current → outlined</code><code>compact → dots only, for dense rows</code></div>
       </div>
     </section>
 
     <section id="tabs">
       <h2>Tabs <span class="live-badge">Live</span></h2>
       <div class="demo">
-        <div class="tabs-bar" id="tabs-demo">
-          <button class="tab on" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline','pipeline')">Pipeline</button>
-          <button class="tab" data-tab="documents" onclick="sgShowTab('tabs-demo','documents','documents')">Documents</button>
-          <button class="tab" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts','contacts')">Contacts</button>
+        <div class="sl-tabs-bar" id="tabs-demo">
+          <button class="sl-tab on" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
+          <button class="sl-tab" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
+          <button class="sl-tab" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
         </div>
-        <div style="padding-top:16px;font-size:13.5px;color:var(--text-secondary)">
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="pipeline">Offer stages, blockers, and the current gate.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="documents" style="display:none">Retainer agreements and supporting files.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="contacts" style="display:none">Business and technical contacts for this offer.</div>
+        <div class="sl-tab-panel">
+          <div data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="sl-text secondary">Offer stages, blockers, and the current gate.</div>
+          <div data-tabpanel-group="tabs-demo" data-tabpanel="documents" class="sl-text secondary" style="display:none">Retainer agreements and supporting files.</div>
+          <div data-tabpanel-group="tabs-demo" data-tabpanel="contacts" class="sl-text secondary" style="display:none">Business and technical contacts for this offer.</div>
         </div>
+      </div>
+    </section>
+
+    <section id="collapse">
+      <h2>Collapse <span class="live-badge">Live</span></h2>
+      <p class="lede">Native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> — no JS required, matches glass-pane's expandable-row idiom elsewhere in the app.</p>
+      <div class="demo" style="padding:0 24px">
+        <details class="sl-collapse-item" open>
+          <summary>What happens when a change request is approved?</summary>
+          <div class="sl-collapse-body">The offer clones into a new priced version; the original freezes and stays visible in its history.</div>
+        </details>
+        <details class="sl-collapse-item">
+          <summary>Can a partner be removed after signature?</summary>
+          <div class="sl-collapse-body">Not directly — that requires a change request against the signed offer.</div>
+        </details>
+      </div>
+    </section>
+
+    <section id="dropdown">
+      <h2>Dropdown <span class="live-badge">Live</span></h2>
+      <div class="demo">
+        <div class="demo-row">
+          <div class="sl-dropdown">
+            <button class="sl-btn sl-btn-default" onclick="sgDropdownToggle(this)">Actions <svg class="sl-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="sl-dropdown-panel">
+              <button class="sl-dropdown-item">Duplicate offer</button>
+              <button class="sl-dropdown-item">Export as PDF</button>
+              <hr class="sl-divider" style="margin:4px 0">
+              <button class="sl-dropdown-item danger">Cancel offer</button>
+            </div>
+          </div>
+          <span class="sl-text tertiary" style="font-size:12.5px">Click trigger — outside click or Escape closes it</span>
+        </div>
+        <div class="spec"><code>panel → shadow-md, top-right anchored</code></div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <h2>Menu <span class="live-badge">Live</span></h2>
+      <p class="lede">The sidebar nav — permanently dark navy, in both light and dark theme.</p>
+      <div class="demo" style="background:var(--sider-bg);border-color:var(--sider-bg)">
+        <nav class="sl-menu" style="width:220px">
+          <div class="sl-menu-group-label">Platform</div>
+          <button class="sl-menu-item on" onclick="sgSelectMenuItem(this)">
+            <span class="sl-menu-item-main"><svg class="sl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>Product Catalog</span>
+          </button>
+          <button class="sl-menu-item" onclick="sgSelectMenuItem(this)">
+            <span class="sl-menu-item-main"><svg class="sl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M15.5 20a4 4 0 0 1 6.7-3.1"/></svg>Partners</span>
+          </button>
+          <div class="sl-menu-group-label">Orders</div>
+          <button class="sl-menu-item" onclick="sgSelectMenuItem(this)">
+            <span class="sl-menu-item-main"><svg class="sl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></svg>Offers</span>
+            <span class="sl-badge-count on-dark">12</span>
+          </button>
+          <button class="sl-menu-item" onclick="sgSelectMenuItem(this)">
+            <span class="sl-menu-item-main"><svg class="sl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Campaigns</span>
+          </button>
+        </nav>
       </div>
     </section>
   </div>
 </div>
-<footer>Shield Legal internal style guide. Built on Ant Design v5 tokens; Shield Legal blue is the customization.</footer>
+<div class="sl-toast-stack"></div>
+<footer>Shield Legal internal style guide. Tokens and components ported directly from src/styles/tokens.css and src/styles/ui.css — this page renders the same classes the app ships.</footer>
 <script src="shield.js"></script>
 </body>
 </html>

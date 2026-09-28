@@ -1,0 +1,184 @@
+/* =====================================================================
+   Shield Legal — design tokens
+   Ported directly from src/styles/tokens.css in the Poom (Shield Legal
+   Operations Platform) codebase — the hand-rolled "glass-pane" component
+   library that replaced Ant Design. Light values on :root, dark values
+   under :root[data-theme="dark"], toggled by the segmented control in
+   the sidebar below (same attribute-based mechanism the app itself uses).
+   ===================================================================== */
+
+:root {
+  /* ---- brand ramp (seed #18abed, antd 10-step palette methodology —
+     kept when Ant Design itself was removed, because the ramp and its
+     contrast math still hold) ---- */
+  --blue-1: #e6fbff;
+  --blue-2: #bdf3ff;
+  --blue-3: #94e8ff;
+  --blue-4: #6bdaff;
+  --blue-5: #41c6fa;
+  --blue-6: #18abed;
+  --blue-7: #0a85c7;
+  --blue-8: #0063a1;
+  --blue-9: #00477a;
+  --blue-10: #002e54;
+
+  /* brand-blue = logos/graphics only (2.6:1, not text-safe).
+     brand-blue-dark = the action color: buttons, links, selected state,
+     focus rings — the step that clears 4.5:1 text contrast. */
+  --brand-blue: var(--blue-6);
+  --brand-blue-dark: var(--blue-8);
+
+  /* ---- neutrals (light) ---- */
+  color-scheme: light;
+  --bg-container: #ffffff;
+  --bg-layout: #f5f5f5;
+  --bg-elevated: #ffffff;
+  --bg-spotlight: rgba(0, 0, 0, 0.85);
+  --text: rgba(0, 0, 0, 0.88);
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --text-tertiary: rgba(0, 0, 0, 0.45);
+  --text-quaternary: rgba(0, 0, 0, 0.25);
+  --border: #d9d9d9;
+  --border-secondary: #f0f0f0;
+  --fill: rgba(0, 0, 0, 0.15);
+  --fill-secondary: rgba(0, 0, 0, 0.06);
+  --fill-tertiary: rgba(0, 0, 0, 0.04);
+  --fill-quaternary: rgba(0, 0, 0, 0.02);
+
+  /* ---- functional ---- */
+  --success: #237804;
+  --success-bg: #f6ffed;
+  --success-border: #b7eb8f;
+  --warning: #874d00;
+  --warning-bg: #fffbe6;
+  --warning-border: #ffe58f;
+  --error: #cf1322;
+  --error-bg: #fff1f0;
+  --error-border: #ffa39e;
+  --info: var(--brand-blue-dark);
+  --info-bg: var(--blue-1);
+  --info-border: var(--blue-3);
+
+  /* ---- sidebar (permanently dark navy, both modes) ---- */
+  --sider-bg: #101a28;
+  --sider-item-color: #aeb9c7;
+  --sider-item-hover-color: #ffffff;
+  --sider-item-selected-bg: #223450;
+  --sider-item-selected-color: #ffffff;
+
+  /* ---- spacing ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+
+  /* ---- radius ---- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 999px;
+
+  /* ---- shadow — three stacked shadows, not one ---- */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 6px -1px rgba(0, 0, 0, 0.03),
+    0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  /* ---- type ----
+     Catamaran carries headings/brand, Lexend carries body/UI text — the
+     one visual departure from the old Ant-default-system-font guide.
+     Loaded via Google Fonts <link> in <head>, weights 500–800 / 400–700. */
+  --font-heading: "Catamaran", -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Lexend", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* ---- motion ---- */
+  --ease: cubic-bezier(0.25, 1, 0.35, 1);
+}
+
+/* ---- neutrals (dark) — antd's own dark-algorithm output, captured live ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-container: #141414;
+  --bg-layout: #000000;
+  --bg-elevated: #1f1f1f;
+  --bg-spotlight: rgba(255, 255, 255, 0.85);
+  --text: rgba(255, 255, 255, 0.85);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  --text-quaternary: rgba(255, 255, 255, 0.25);
+  --border: #424242;
+  --border-secondary: #303030;
+  --fill: rgba(255, 255, 255, 0.18);
+  --fill-secondary: rgba(255, 255, 255, 0.12);
+  --fill-tertiary: rgba(255, 255, 255, 0.08);
+  --fill-quaternary: rgba(255, 255, 255, 0.04);
+
+  --success: #35c235;
+  --success-bg: rgba(35, 120, 4, 0.15);
+  --success-border: rgba(183, 235, 143, 0.3);
+  --warning: #fab219;
+  --warning-bg: rgba(135, 77, 0, 0.15);
+  --warning-border: rgba(255, 229, 143, 0.3);
+  --error: #e66767;
+  --error-bg: rgba(207, 19, 34, 0.15);
+  --error-border: rgba(255, 163, 158, 0.3);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 6px -1px rgba(0, 0, 0, 0.25),
+    0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 6px 16px 0 rgba(0, 0, 0, 0.35), 0 3px 6px -4px rgba(0, 0, 0, 0.4),
+    0 9px 28px 8px rgba(0, 0, 0, 0.28);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg-layout); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg-layout);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5714285714;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text);
+  margin: 0;
+  font-weight: 600;
+}
+a { color: var(--brand-blue-dark); }
+code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--fill-tertiary);
+  padding: 1px 5px;
+  border-radius: var(--radius-xs);
+  color: var(--text);
+}
+button { font: inherit; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+:focus-visible {
+  outline: 2px solid var(--brand-blue-dark);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
