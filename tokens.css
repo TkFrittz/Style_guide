@@ -1,16 +1,40 @@
 /* =====================================================================
    Shield Engineering — design tokens
+   =====================================================================
+
+   WHAT THIS FILE IS
+   "Tokens" just means CSS variables (custom properties) — named values
+   like --brand-blue-dark that stand in for a raw color/size/shadow.
+   Every other file (components.css, and the <style> block inside
+   index.html) uses var(--some-token) instead of hardcoding colors or
+   sizes directly. That's what makes the whole page re-theme instantly:
+   change a value once here, and everything that reads that variable
+   updates everywhere it's used.
+
    Ported directly from src/styles/tokens.css in the Poom (Shield Legal
    Operations Platform) codebase — the hand-rolled "glass-pane" component
-   library that replaced Ant Design. Light values on :root, dark values
-   under :root[data-theme="dark"], toggled by the segmented control in
-   the sidebar below (same attribute-based mechanism the app itself uses).
+   library that replaced Ant Design. Light values live on :root; dark
+   values live under :root[data-theme="dark"] and override the light
+   ones. shield.js flips that data-theme attribute when you click the
+   Light/Dark toggle in the sidebar — see sgApplyTheme() in shield.js.
+
+   QUICK EDITS YOU CAN TRY
+   - Change --brand-blue-dark below to retheme every button, link, and
+     "selected" state on the whole page at once.
+   - Change --space-4 (or any --space-N) to retheme spacing gaps that
+     use var(--space-4) instead of a hardcoded "16px".
+   - Add a brand-new variable here (e.g. --radius-xl: 12px;) and then
+     reference it anywhere else as var(--radius-xl).
    ===================================================================== */
 
 :root {
-  /* ---- brand ramp (seed #18abed, antd 10-step palette methodology —
-     kept when Ant Design itself was removed, because the ramp and its
-     contrast math still hold) ---- */
+  /* ----------------------------------------------------------------
+     Brand blue ramp — a 10-step scale from very light (1) to very dark
+     (10). This isn't 10 unrelated colors; it's one seed color
+     (#18abed, step 6) run through Ant Design's palette-generation
+     algorithm, kept unchanged when Ant Design's own code was removed
+     because the ramp and its contrast math still hold up on their own.
+     ---------------------------------------------------------------- */
   --blue-1: #e6fbff;
   --blue-2: #bdf3ff;
   --blue-3: #94e8ff;
@@ -22,30 +46,52 @@
   --blue-9: #00477a;
   --blue-10: #002e54;
 
-  /* brand-blue = logos/graphics only (2.6:1, not text-safe).
-     brand-blue-dark = the action color: buttons, links, selected state,
-     focus rings — the step that clears 4.5:1 text contrast. */
+  /* Don't use --blue-6 or --blue-8 directly in new CSS — use the two
+     aliases below instead, so the *meaning* of the color stays clear:
+       --brand-blue      = step 6. Logos and large decorative graphics
+                            ONLY. Only 2.6:1 contrast against white —
+                            not safe to use for text.
+       --brand-blue-dark = step 8. The actual action color: buttons,
+                            links, the "selected" state, focus rings.
+                            This is the one that clears 4.5:1 text
+                            contrast, so it's the one that's readable. */
   --brand-blue: var(--blue-6);
   --brand-blue-dark: var(--blue-8);
 
-  /* ---- neutrals (light) ---- */
+  /* ----------------------------------------------------------------
+     Neutrals — light mode
+     These are the grays/whites/blacks everything sits on top of:
+     page backgrounds, card backgrounds, borders, and body text, each
+     at a few opacity steps (secondary/tertiary/quaternary = lighter
+     emphasis). color-scheme: light tells the browser's own UI (like
+     scrollbars and form controls) to render in light mode too.
+     ---------------------------------------------------------------- */
   color-scheme: light;
-  --bg-container: #ffffff;
-  --bg-layout: #f5f5f5;
-  --bg-elevated: #ffffff;
-  --bg-spotlight: rgba(0, 0, 0, 0.85);
-  --text: rgba(0, 0, 0, 0.88);
+  --bg-container: #ffffff;              /* cards, panels, inputs */
+  --bg-layout: #f5f5f5;                 /* the page background behind cards */
+  --bg-elevated: #ffffff;               /* modals, dropdowns — things that float above the page */
+  --bg-spotlight: rgba(0, 0, 0, 0.85);  /* dark surface used by toasts/tooltips, even in light mode */
+  --text: rgba(0, 0, 0, 0.88);          /* default body text color */
   --text-secondary: rgba(0, 0, 0, 0.65);
   --text-tertiary: rgba(0, 0, 0, 0.45);
   --text-quaternary: rgba(0, 0, 0, 0.25);
-  --border: #d9d9d9;
-  --border-secondary: #f0f0f0;
+  --border: #d9d9d9;                    /* visible borders — inputs, dividers you want noticeable */
+  --border-secondary: #f0f0f0;          /* quiet borders — table rows, section rules */
   --fill: rgba(0, 0, 0, 0.15);
-  --fill-secondary: rgba(0, 0, 0, 0.06);
-  --fill-tertiary: rgba(0, 0, 0, 0.04);
-  --fill-quaternary: rgba(0, 0, 0, 0.02);
+  --fill-secondary: rgba(0, 0, 0, 0.06);  /* hover backgrounds */
+  --fill-tertiary: rgba(0, 0, 0, 0.04);   /* disabled backgrounds, inline code */
+  --fill-quaternary: rgba(0, 0, 0, 0.02); /* the faintest background, e.g. table row hover */
 
-  /* ---- functional ---- */
+  /* ----------------------------------------------------------------
+     Functional colors — success / warning / error / info
+     Each mood is a matched set of three: a text color, a light
+     background, and a border — always used together (see the Tag or
+     Alert components in components.css for the pattern). All four
+     clear 4.5:1 contrast against their own background. That matters
+     because Ant Design's raw defaults (#52C41A, #FAAD14, #FF4D4F)
+     only measure 2.3:1 / 1.9:1 / 3.3:1 on white — each token below is
+     the same color ramp pushed to a darker, more readable step instead.
+     ---------------------------------------------------------------- */
   --success: #237804;
   --success-bg: #f6ffed;
   --success-border: #b7eb8f;
@@ -55,11 +101,16 @@
   --error: #cf1322;
   --error-bg: #fff1f0;
   --error-border: #ffa39e;
-  --info: var(--brand-blue-dark);
+  --info: var(--brand-blue-dark);  /* "info" reuses the brand color rather than inventing a 5th hue */
   --info-bg: var(--blue-1);
   --info-border: var(--blue-3);
 
-  /* ---- spacing ---- */
+  /* ----------------------------------------------------------------
+     Spacing scale — use these instead of random pixel values so gaps
+     stay consistent across the whole page. Named --space-1 .. --space-8
+     rather than by their pixel size, so the numbers can be nudged later
+     without renaming every place that uses them.
+     ---------------------------------------------------------------- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -69,32 +120,57 @@
   --space-7: 32px;
   --space-8: 48px;
 
-  /* ---- radius ---- */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-full: 999px;
+  /* ----------------------------------------------------------------
+     Corner radius scale
+     ---------------------------------------------------------------- */
+  --radius-xs: 2px;   /* tight corners — inline code, tiny chips */
+  --radius-sm: 4px;   /* tags, small controls */
+  --radius-md: 6px;   /* buttons, inputs — the most common radius */
+  --radius-lg: 8px;   /* cards, modals, dropdown panels */
+  --radius-full: 999px; /* pill shape — switches, segmented controls, pill tags.
+                           Shield's own addition; Ant Design has no equivalent token. */
 
-  /* ---- shadow — three stacked shadows, not one ---- */
+  /* ----------------------------------------------------------------
+     Shadows — each one is actually THREE shadows layered on top of
+     each other (comma-separated below), not a single blur. That's what
+     gives cards/modals their soft, slightly-3D look instead of a flat
+     drop shadow. --shadow-sm is the resting state (cards, KPI tiles);
+     --shadow-md is for things that float above the page (modals,
+     dropdown panels) — see the Shadow section of index.html to compare
+     them side by side, including the hover transition between the two.
+     ---------------------------------------------------------------- */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 6px -1px rgba(0, 0, 0, 0.03),
     0 2px 4px 0 rgba(0, 0, 0, 0.03);
   --shadow-md: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
     0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
-  /* ---- type ----
-     Catamaran carries headings/brand, Lexend carries body/UI text — the
-     one visual departure from the old Ant-default-system-font guide.
-     Loaded via Google Fonts <link> in <head>, weights 500–800 / 400–700. */
+  /* ----------------------------------------------------------------
+     Type — Catamaran carries headings/the brand mark, Lexend carries
+     body copy and every control. Both are loaded as webfonts via the
+     Google Fonts <link> tags in index.html's <head> (weights 500–800
+     for Catamaran, 400–700 for Lexend). The rest of each stack
+     (-apple-system, "Segoe UI", sans-serif) only kicks in if that
+     Google Fonts request fails — same shape, not a real fallback look.
+     ---------------------------------------------------------------- */
   --font-heading: "Catamaran", -apple-system, "Segoe UI", sans-serif;
   --font-body: "Lexend", -apple-system, "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* ---- motion ---- */
-  --ease: cubic-bezier(0.25, 1, 0.35, 1);
+  --ease: cubic-bezier(0.25, 1, 0.35, 1); /* the easing curve for hover/open transitions */
 }
 
-/* ---- neutrals (dark) — antd's own dark-algorithm output, captured live ---- */
+/* =====================================================================
+   Neutrals — dark mode
+   Everything in this block OVERRIDES the matching variable from :root
+   above, but only while <html data-theme="dark"> is set (toggled by
+   sgApplyTheme() in shield.js). Notice the brand blue ramp and the
+   spacing/radius/type scales are NOT repeated here — those stay the
+   same in both themes. Only colors that need to flip (backgrounds,
+   text, borders, functional colors, shadows) are redefined.
+   These are Ant Design's own dark-mode algorithm output, captured once
+   and pasted in as plain values — not computed live.
+   ===================================================================== */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg-container: #141414;
@@ -122,14 +198,28 @@
   --error-bg: rgba(207, 19, 34, 0.15);
   --error-border: rgba(255, 163, 158, 0.3);
 
+  /* Dark mode needs darker/stronger shadows to read against a near-black
+     background — the light-mode shadow values above would barely show up. */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 6px -1px rgba(0, 0, 0, 0.25),
     0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-md: 0 6px 16px 0 rgba(0, 0, 0, 0.35), 0 3px 6px -4px rgba(0, 0, 0, 0.4),
     0 9px 28px 8px rgba(0, 0, 0, 0.28);
 }
 
+/* =====================================================================
+   Base element styles
+   A handful of plain-HTML-element defaults (not component classes) that
+   apply across the whole page: box-sizing reset, body font, heading
+   font, link color, <code> styling, focus ring, etc. Everything below
+   still reads its values from the tokens above via var(...).
+   ===================================================================== */
+
+/* The classic reset: makes width/height/padding/border all add up the
+   way you'd expect, instead of padding/border adding extra size on top. */
 *, *::before, *::after { box-sizing: border-box; }
+
 html { background: var(--bg-layout); scroll-behavior: smooth; }
+
 body {
   margin: 0;
   background: var(--bg-layout);
@@ -138,15 +228,18 @@ body {
   font-size: 14px;
   line-height: 1.5714285714;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease; /* smooths the light/dark theme switch */
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--text);
   margin: 0;
   font-weight: 600;
 }
+
 a { color: var(--brand-blue-dark); }
+
 code {
   font-family: var(--font-mono);
   font-size: 12.5px;
@@ -155,19 +248,32 @@ code {
   border-radius: var(--radius-xs);
   color: var(--text);
 }
-button { font: inherit; }
+
+button { font: inherit; } /* without this, buttons default to the browser's system font, not Lexend */
+
 table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+
+/* The ring shown around whatever's focused when navigating by keyboard
+   (Tab key) — :focus-visible means it's skipped for a plain mouse click,
+   so it only appears when it's actually useful. */
 :focus-visible {
   outline: 2px solid var(--brand-blue-dark);
   outline-offset: 2px;
   border-radius: var(--radius-xs);
 }
-.tabular-nums { font-variant-numeric: tabular-nums; }
 
+.tabular-nums { font-variant-numeric: tabular-nums; } /* digits line up in fixed-width columns, e.g. in the Statistic tiles */
+
+/* A small "fade up" entrance used by modals and toasts when they appear. */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
 }
+
+/* Respect the OS-level "reduce motion" accessibility setting by making
+   every animation/transition effectively instant instead of disabling
+   them outright (disabling can break logic that waits for a transition
+   to finish). */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

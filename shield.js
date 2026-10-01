@@ -59,9 +59,9 @@ function sgApplyTheme(mode) {
   // windows, strict privacy settings) — if that happens we just don't
   // persist the choice, instead of crashing the page.
   try { localStorage.setItem(SG_THEME_KEY, mode); } catch {}
-  // Move the "on" highlight to whichever Light/Dark button matches.
+  // Move the "is-on" highlight to whichever Light/Dark button matches.
   document.querySelectorAll("[data-theme-seg] button").forEach((b) => {
-    b.classList.toggle("on", b.dataset.mode === mode);
+    b.classList.toggle("is-on", b.dataset.mode === mode);
   });
 }
 
@@ -81,11 +81,11 @@ function sgSetTheme(mode) { sgApplyTheme(mode); }
 /* ---------- Segmented control (generic "pick one of these buttons") ---------- */
 
 // Used by the standalone Segmented demo (List/Grid). Finds the group of
-// buttons this element belongs to (its closest .sl-seg ancestor), clears
-// "on" from all of them, then adds "on" to just the one that was clicked.
+// buttons this element belongs to (its closest .shield-segmented ancestor), clears
+// "is-on" from all of them, then adds "is-on" to just the one that was clicked.
 function sgSegPick(el) {
-  el.closest(".sl-seg").querySelectorAll("button").forEach((b) => b.classList.remove("on"));
-  el.classList.add("on");
+  el.closest(".shield-segmented").querySelectorAll("button").forEach((b) => b.classList.remove("is-on"));
+  el.classList.add("is-on");
 }
 
 
@@ -95,13 +95,13 @@ function sgSegPick(el) {
 // checkbox the first time it's checked (see sgToggleCheckbox below).
 const SG_CHECK_SVG = '<svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>';
 
-// Called by onclick="sgToggleCheckbox(this)" on a .sl-checkbox span.
-// Toggles the "on" (checked) class, and lazily adds the checkmark SVG
+// Called by onclick="sgToggleCheckbox(this)" on a .shield-checkbox span.
+// Toggles the "is-on" (checked) class, and lazily adds the checkmark SVG
 // the first time it's needed (components.css hides/shows it with
-// `.sl-checkbox svg { display: none }` / `.sl-checkbox.on svg { display: block }`).
+// `.shield-checkbox svg { display: none }` / `.shield-checkbox.is-on svg { display: block }`).
 function sgToggleCheckbox(el) {
   if (el.classList.contains("disabled")) return;
-  const on = el.classList.toggle("on");
+  const on = el.classList.toggle("is-on");
   if (on && !el.querySelector("svg")) el.innerHTML = SG_CHECK_SVG;
 }
 
@@ -109,36 +109,36 @@ function sgToggleCheckbox(el) {
 /* ---------- Radio (pick exactly one option within a named group) ---------- */
 
 // Each radio dot carries a data-group="..." attribute. Clicking one clears
-// "on" from every other radio sharing that same group name, then turns
+// "is-on" from every other radio sharing that same group name, then turns
 // this one on — that's what makes radios mutually exclusive.
 function sgSelectRadio(el) {
   const group = el.dataset.group;
-  document.querySelectorAll('.sl-radio[data-group="' + group + '"]').forEach((r) => r.classList.remove("on"));
-  el.classList.add("on");
+  document.querySelectorAll('.shield-radio[data-group="' + group + '"]').forEach((r) => r.classList.remove("is-on"));
+  el.classList.add("is-on");
 }
 
 
 /* ---------- Switch (on/off toggle) ---------- */
 
-// Called by onclick="sgToggleSwitch(this)" on a .sl-switch-track button.
-// Flips the "on" class (which components.css uses to slide the thumb and
+// Called by onclick="sgToggleSwitch(this)" on a .shield-switch-track button.
+// Flips the "is-on" class (which components.css uses to slide the thumb and
 // change the track color) and keeps the aria-checked attribute in sync
 // for screen readers.
 function sgToggleSwitch(el) {
   if (el.disabled) return;
-  el.classList.toggle("on");
-  el.setAttribute("aria-checked", el.classList.contains("on"));
+  el.classList.toggle("is-on");
+  el.setAttribute("aria-checked", el.classList.contains("is-on"));
 }
 
 
 /* ---------- Select — single + multiple, filter-as-you-type ----------
    This is a hand-rolled combobox, not a native <select>. Each one is a
    small widget made of:
-     .sl-select            the outer wrapper, identified by a unique id
-       .sl-select-box       the visible box (holds the text input, and
+     .shield-select            the outer wrapper, identified by a unique id
+       .shield-select-box       the visible box (holds the text input, and
                              — for multi-select — the chips)
-       .sl-select-panel      the dropdown list of options, shown/hidden
-                             via the .open class on .sl-select
+       .shield-select-panel      the dropdown list of options, shown/hidden
+                             via the .open class on .shield-select
    The functions below are all called with that wrapper's id (a string),
    which is how one shared set of functions can drive every Select on
    the page without getting them mixed up with each other. */
@@ -147,7 +147,7 @@ function sgToggleSwitch(el) {
 // (pass nothing to close all of them). Used so opening one select closes
 // any other one that happened to be open.
 function sgCloseAllSelects(except) {
-  document.querySelectorAll(".sl-select.open").forEach((s) => {
+  document.querySelectorAll(".shield-select.open").forEach((s) => {
     if (s !== except) s.classList.remove("open");
   });
 }
@@ -171,12 +171,12 @@ function sgSelectFilter(id, input) {
   sgCloseAllSelects(root);
   const q = input.value.trim().toLowerCase();
   let anyVisible = false;
-  root.querySelectorAll(".sl-select-opt").forEach((opt) => {
+  root.querySelectorAll(".shield-select-option").forEach((opt) => {
     const match = opt.dataset.label.toLowerCase().includes(q);
     opt.style.display = match ? "" : "none";
     if (match) anyVisible = true;
   });
-  const empty = root.querySelector(".sl-select-empty");
+  const empty = root.querySelector(".shield-select-empty");
   if (empty) empty.style.display = anyVisible ? "none" : "";
 }
 
@@ -190,21 +190,21 @@ function sgSelectPick(id, value, label) {
   const root = document.getElementById(id);
   const multiple = root.classList.contains("multiple");
   if (multiple) {
-    const box = root.querySelector(".sl-select-box");
+    const box = root.querySelector(".shield-select-box");
     if (box.querySelector('[data-chip="' + value + '"]')) return; // already added
     const chip = document.createElement("span");
-    chip.className = "sl-select-tag";
+    chip.className = "shield-select-tag";
     chip.dataset.chip = value;
     // The × button inside the chip calls sgSelectRemoveChip when clicked.
-    chip.innerHTML = label + ' <button type="button" class="sl-select-tag-remove" onclick="sgSelectRemoveChip(\'' + id + '\',\'' + value + '\')"><svg class="sl-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button>';
-    box.insertBefore(chip, box.querySelector(".sl-select-search"));
-    root.querySelector('.sl-select-opt[data-value="' + value + '"]').classList.add("selected");
-    const search = root.querySelector(".sl-select-search");
+    chip.innerHTML = label + ' <button type="button" class="shield-select-tag-remove" onclick="sgSelectRemoveChip(\'' + id + '\',\'' + value + '\')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button>';
+    box.insertBefore(chip, box.querySelector(".shield-select-search"));
+    root.querySelector('.shield-select-option[data-value="' + value + '"]').classList.add("selected");
+    const search = root.querySelector(".shield-select-search");
     search.value = "";
     search.focus();
   } else {
-    root.querySelectorAll(".sl-select-opt").forEach((o) => o.classList.toggle("selected", o.dataset.value === value));
-    const search = root.querySelector(".sl-select-search");
+    root.querySelectorAll(".shield-select-option").forEach((o) => o.classList.toggle("selected", o.dataset.value === value));
+    const search = root.querySelector(".shield-select-search");
     search.value = label;
     search.dataset.picked = label; // remembers the chosen label (see focusout handler below)
     root.classList.remove("open");
@@ -215,8 +215,8 @@ function sgSelectPick(id, value, label) {
 // Removes that one chip and un-marks the matching option in the panel.
 function sgSelectRemoveChip(id, value) {
   const root = document.getElementById(id);
-  root.querySelector('.sl-select-tag[data-chip="' + value + '"]')?.remove();
-  root.querySelector('.sl-select-opt[data-value="' + value + '"]')?.classList.remove("selected");
+  root.querySelector('.shield-select-tag[data-chip="' + value + '"]')?.remove();
+  root.querySelector('.shield-select-option[data-value="' + value + '"]')?.classList.remove("selected");
 }
 
 // Clears every chip/selection in a multi-select. (Not currently wired to
@@ -225,18 +225,18 @@ function sgSelectRemoveChip(id, value) {
 function sgSelectClear(e, id) {
   e.stopPropagation();
   const root = document.getElementById(id);
-  root.querySelectorAll(".sl-select-tag").forEach((t) => t.remove());
-  root.querySelectorAll(".sl-select-opt.selected").forEach((o) => o.classList.remove("selected"));
-  const search = root.querySelector(".sl-select-search");
+  root.querySelectorAll(".shield-select-tag").forEach((t) => t.remove());
+  root.querySelectorAll(".shield-select-option.selected").forEach((o) => o.classList.remove("selected"));
+  const search = root.querySelector(".shield-select-search");
   search.value = "";
   search.dataset.picked = "";
 }
 
-// Page-wide listener: if you click anywhere that ISN'T inside a .sl-select,
+// Page-wide listener: if you click anywhere that ISN'T inside a .shield-select,
 // close whichever one is open. This is what makes "click outside to close"
 // work without wiring a click handler onto every other element on the page.
 document.addEventListener("mousedown", (e) => {
-  if (!e.target.closest(".sl-select")) sgCloseAllSelects();
+  if (!e.target.closest(".shield-select")) sgCloseAllSelects();
 });
 
 // Page-wide listener: when a single-select's search input loses focus
@@ -247,10 +247,10 @@ document.addEventListener("mousedown", (e) => {
 // the "clear it" logic here would run before the pick logic and wipe out
 // a selection the instant it was made.
 document.addEventListener("focusout", (e) => {
-  const root = e.target.closest(".sl-select:not(.multiple)");
+  const root = e.target.closest(".shield-select:not(.multiple)");
   if (root && !root.classList.contains("multiple")) {
     setTimeout(() => {
-      const search = root.querySelector(".sl-select-search");
+      const search = root.querySelector(".shield-select-search");
       if (document.activeElement && root.contains(document.activeElement)) return;
       if (!search.dataset.picked) search.value = "";
     }, 150);
@@ -266,7 +266,7 @@ document.addEventListener("focusout", (e) => {
 // data-tabpanel-group gets hidden.
 function sgShowTab(groupId, tabId) {
   const group = document.getElementById(groupId);
-  group.querySelectorAll(".sl-tab").forEach((t) => t.classList.toggle("on", t.dataset.tab === tabId));
+  group.querySelectorAll(".shield-tab").forEach((t) => t.classList.toggle("is-on", t.dataset.tab === tabId));
   document.querySelectorAll('[data-tabpanel-group="' + groupId + '"]').forEach((p) => {
     p.style.display = p.dataset.tabpanel === tabId ? "" : "none";
   });
@@ -279,17 +279,17 @@ function sgShowTab(groupId, tabId) {
 // Closes any other open dropdown, then opens this one (or closes it, if
 // it was already open — a second click toggles it shut).
 function sgDropdownToggle(el) {
-  const root = el.closest(".sl-dropdown");
+  const root = el.closest(".shield-dropdown");
   const wasOpen = root.classList.contains("open");
-  document.querySelectorAll(".sl-dropdown.open").forEach((d) => d.classList.remove("open"));
+  document.querySelectorAll(".shield-dropdown.open").forEach((d) => d.classList.remove("open"));
   if (!wasOpen) root.classList.add("open");
 }
 
-// Page-wide listener: click anywhere outside a .sl-dropdown and close
+// Page-wide listener: click anywhere outside a .shield-dropdown and close
 // whichever one is open. Same "click outside" pattern as the Select above.
 document.addEventListener("mousedown", (e) => {
-  if (!e.target.closest(".sl-dropdown")) {
-    document.querySelectorAll(".sl-dropdown.open").forEach((d) => d.classList.remove("open"));
+  if (!e.target.closest(".shield-dropdown")) {
+    document.querySelectorAll(".shield-dropdown.open").forEach((d) => d.classList.remove("open"));
   }
 });
 
@@ -298,7 +298,7 @@ document.addEventListener("mousedown", (e) => {
 
 // Called by onclick="sgOpenModal('modal-id')" — adds the .open class,
 // which is what components.css uses to actually show the backdrop+dialog
-// (see .sl-modal-backdrop.open in components.css).
+// (see .shield-modal-backdrop.open in components.css).
 function sgOpenModal(id) { document.getElementById(id).classList.add("open"); }
 
 // Called by the × button, Cancel button, etc. — hides the modal again.
@@ -306,7 +306,7 @@ function sgCloseModal(id) { document.getElementById(id).classList.remove("open")
 
 // Page-wide listener: pressing Escape closes any modal that's currently open.
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") document.querySelectorAll(".sl-modal-backdrop.open").forEach((o) => o.classList.remove("open"));
+  if (e.key === "Escape") document.querySelectorAll(".shield-modal-backdrop.open").forEach((o) => o.classList.remove("open"));
 });
 
 // Called by onmousedown on the dark backdrop behind a modal. Only closes
@@ -331,7 +331,7 @@ function sgDeleteConfirmInput(input, btnId) {
 // the page once the fade finishes (the setTimeout delay just matches the
 // CSS transition duration so it doesn't pop out abruptly).
 function sgRemoveTag(btn) {
-  const tag = btn.closest(".sl-tag");
+  const tag = btn.closest(".shield-tag");
   tag.style.transition = "opacity .12s";
   tag.style.opacity = "0";
   setTimeout(() => tag.remove(), 120);
@@ -347,9 +347,9 @@ function sgToggleCheckableTag(el) {
 /* ---------- Alert — dismissible ---------- */
 
 // Same fade-then-remove pattern as sgRemoveTag above, for the × button
-// on an .sl-alert banner.
+// on an .shield-alert banner.
 function sgDismissAlert(el) {
-  const a = el.closest(".sl-alert");
+  const a = el.closest(".shield-alert");
   a.style.transition = "opacity .15s";
   a.style.opacity = "0";
   setTimeout(() => a.remove(), 150);
@@ -365,17 +365,17 @@ function sgDismissAlert(el) {
 // the line only looks "done" (filled blue) up to the current step.
 function sgSetStep(groupId, index) {
   const group = document.getElementById(groupId);
-  const steps = group.querySelectorAll(".sl-step");
-  const lines = group.querySelectorAll(".sl-step-line");
+  const steps = group.querySelectorAll(".shield-step");
+  const lines = group.querySelectorAll(".shield-step-line");
   steps.forEach((s, i) => {
     s.classList.remove("done", "current");
     if (i < index) s.classList.add("done");
     else if (i === index) s.classList.add("current");
     // Swap the dot's contents: a checkmark for completed steps, otherwise
     // just the step number (1-indexed, so step 0 shows "1").
-    const dot = s.querySelector(".sl-step-dot");
+    const dot = s.querySelector(".shield-step-dot");
     dot.innerHTML = i < index
-      ? '<svg class="sl-icon" width="10.5" height="12" viewBox="0 0 448 512" fill="currentColor"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>'
+      ? '<svg class="shield-icon" width="10.5" height="12" viewBox="0 0 448 512" fill="currentColor"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>'
       : String(i + 1);
   });
   lines.forEach((l, i) => l.classList.toggle("done", i < index));
@@ -385,11 +385,11 @@ function sgSetStep(groupId, index) {
 /* ---------- Menu (sidebar nav demo) ---------- */
 
 // Called by onclick="sgSelectMenuItem(this)" — highlights the clicked
-// nav item and un-highlights every other item in the same .sl-menu.
+// nav item and un-highlights every other item in the same .shield-menu.
 function sgSelectMenuItem(el) {
-  const menu = el.closest(".sl-menu");
-  menu.querySelectorAll(".sl-menu-item").forEach((i) => i.classList.remove("on"));
-  el.classList.add("on");
+  const menu = el.closest(".shield-menu");
+  menu.querySelectorAll(".shield-menu-item").forEach((i) => i.classList.remove("is-on"));
+  el.classList.add("is-on");
 }
 
 
@@ -399,7 +399,7 @@ function sgSelectMenuItem(el) {
 // refocuses it, and hides the × button itself (it's shown again by the
 // input's own oninput handler the next time something is typed).
 function sgClearInput(btn) {
-  const input = btn.closest(".sl-input-wrap").querySelector("input");
+  const input = btn.closest(".shield-input-wrap").querySelector("input");
   input.value = "";
   input.focus();
   btn.style.display = "none";
@@ -409,7 +409,7 @@ function sgClearInput(btn) {
 // type="password" (dots) and type="text" (plain), and swaps the emoji
 // to show which state you'll get if you click again.
 function sgTogglePassword(btn) {
-  const input = btn.closest(".sl-input-wrap").querySelector("input");
+  const input = btn.closest(".shield-input-wrap").querySelector("input");
   input.type = input.type === "password" ? "text" : "password";
   btn.textContent = input.type === "password" ? "👁" : "🙈";
 }
@@ -437,7 +437,7 @@ function sgRenderUploadFiles(files) {
     const item = document.createElement("div");
     item.className = "sg-upload-item";
     const icon = document.createElement("span");
-    icon.innerHTML = '<svg class="sl-icon" width="10.5" height="14" viewBox="0 0 384 512" fill="currentColor"><path d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM120 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg>';
+    icon.innerHTML = '<svg class="shield-icon" width="10.5" height="14" viewBox="0 0 384 512" fill="currentColor"><path d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM120 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg>';
     const name = document.createElement("span");
     name.className = "sg-upload-name";
     name.textContent = f.name;
@@ -447,7 +447,7 @@ function sgRenderUploadFiles(files) {
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "sg-upload-remove";
-    remove.innerHTML = '<svg class="sl-icon" width="8.25" height="11" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>';
+    remove.innerHTML = '<svg class="shield-icon" width="8.25" height="11" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>';
     remove.onclick = () => item.remove();
     item.append(icon, name, size, remove);
     list.appendChild(item);
@@ -483,14 +483,14 @@ let sgToastId = 0;
 // the fixed-position stack at the bottom of index.html, and schedules it
 // to fade out and remove itself after 3 seconds.
 function sgPushToast(type, msg) {
-  const stack = document.querySelector(".sl-toast-stack");
+  const stack = document.querySelector(".shield-toast-stack");
   const id = "toast-" + ++sgToastId;
   const el = document.createElement("div");
-  el.className = "sl-toast " + type;
+  el.className = "shield-toast " + type;
   el.id = id;
   const icon = type === "success"
-    ? '<svg class="sl-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg>'
-    : '<svg class="sl-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>';
+    ? '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg>'
+    : '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>';
   el.innerHTML = icon + "<span>" + msg + "</span>";
   stack.appendChild(el);
   setTimeout(() => {

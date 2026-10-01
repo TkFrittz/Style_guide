@@ -1,441 +1,1039 @@
 /* =====================================================================
    Shield Engineering — hand-rolled component library styles
-   Ported directly from src/styles/ui.css in the Poom codebase, class for
-   class. This is not a reimplementation or an approximation — it is the
-   same stylesheet the running app loads, so every demo on this page
-   renders pixel-identical to the product. Companion to tokens.css.
+   =====================================================================
+
+   WHAT THIS FILE IS
+   Ported directly from src/styles/ui.css in the Poom codebase, class
+   for class. This is not a reimplementation or an approximation — it's
+   the same stylesheet the running app loads, so every demo on this
+   page renders pixel-identical to the product. Companion to
+   tokens.css, which defines the var(--...) values used everywhere
+   below (colors, spacing, radius, shadows, fonts).
+
+   HOW CLASSES ARE NAMED
+   Every component class starts with "shield-". A component usually has
+   one "root" class (e.g. .shield-button) plus modifier classes added
+   alongside it to change its look:
+       <button class="shield-button shield-button-primary large">Save</button>
+   reads as: a button (.shield-button), styled as the primary variant
+   (.shield-button-primary), at the large size (.large). Look at
+   index.html next to a section below to see exactly which classes
+   combine to build each demo.
+
+   Names are spelled out in full (no abbreviations) so they read like
+   plain English. State classes that JavaScript switches on and off
+   while someone uses the page start with "is-" (e.g. .is-on).
+
+   OLD -> NEW NAME MAP (use this to update the Poom app to match)
+     sl-            -> shield-            (prefix on every component)
+     -btn           -> -button            (.sl-btn-primary -> .shield-button-primary)
+     -sk            -> -skeleton          (.sl-sk -> .shield-skeleton)
+     -seg           -> -segmented         (.sl-seg -> .shield-segmented)
+     -opt           -> -option            (.sl-select-opt -> .shield-select-option)
+     -desc          -> -description       (.sl-desc-row, .sl-alert-desc, .sl-empty-desc)
+     .sm            -> .small
+     .lg            -> .large
+     .on            -> .is-on             (checked / selected / active state)
+     .shield-pill .ok / .warn / .idle   -> .success / .warning / .neutral
+     .shield-stat-value .convert / .bad -> .positive / .negative
+     .shield-stat .hero                 -> .highlighted
+   Everything else (e.g. .open, .done, .current, .success) is unchanged.
+
+   HOW TO MAKE A SIMPLE EDIT
+   - To change how an EXISTING component looks everywhere it's used
+     (e.g. make all buttons a bit taller), edit the rule for its class
+     here.
+   - To add a new VARIANT of an existing component (e.g. a new tag
+     color), copy an existing modifier rule just below the component's
+     main rule (e.g. copy .shield-tag.success and change the color), then
+     use that new class name in index.html.
+   - Never hardcode a color/size directly — use var(--token-name) and
+     pick the token from tokens.css that matches what you need, so
+     light/dark theming and spacing stay consistent.
    ===================================================================== */
 
-/* ---------- Typography ---------- */
-.sl-title { font-family: var(--font-heading); color: var(--text); font-weight: 600; margin: 0; }
-.sl-title.h1 { font-size: 38px; line-height: 46px; }
-.sl-title.h2 { font-size: 30px; line-height: 38px; }
-.sl-title.h3 { font-size: 24px; line-height: 32px; }
-.sl-title.h4 { font-size: 20px; line-height: 28px; }
-.sl-title.h5 { font-size: 16px; line-height: 24px; }
-.sl-text { font-family: var(--font-body); color: var(--text); }
-.sl-text.secondary { color: var(--text-secondary); }
-.sl-text.tertiary { color: var(--text-tertiary); }
-.sl-text.success { color: var(--success); }
-.sl-text.warning { color: var(--warning); }
-.sl-text.danger { color: var(--error); }
-.sl-text.code { font-family: var(--font-mono); font-size: 12.5px; background: var(--fill-tertiary); padding: 1px 5px; border-radius: var(--radius-xs); }
-.sl-text.strong { font-weight: 600; }
-
-/* ---------- Layout ---------- */
-.sl-row { display: flex; flex-wrap: wrap; }
-.sl-col {
-  min-width: 0; box-sizing: border-box;
-  flex: 0 0 var(--col-xs, 100%); max-width: var(--col-xs, 100%);
+/* ---------- Typography ----------
+   .shield-title = headings (h1..h5 variants, Catamaran font).
+   .shield-text  = body copy, with color/weight modifiers (.secondary,
+   .tertiary, .success, .warning, .danger, .code, .strong). See the
+   Typography section of index.html for every variant side by side. */
+.shield-title {
+  font-family: var(--font-heading);
+  color: var(--text);
+  font-weight: 600;
+  margin: 0;
 }
-@media (min-width: 576px) { .sl-col { flex-basis: var(--col-sm, var(--col-xs, 100%)); max-width: var(--col-sm, var(--col-xs, 100%)); } }
-@media (min-width: 768px) { .sl-col { flex-basis: var(--col-md, var(--col-sm, var(--col-xs, 100%))); max-width: var(--col-md, var(--col-sm, var(--col-xs, 100%))); } }
-@media (min-width: 992px) { .sl-col { flex-basis: var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%)))); max-width: var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%)))); } }
-@media (min-width: 1200px) { .sl-col { flex-basis: var(--col-xl, var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%))))); max-width: var(--col-xl, var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%))))); } }
-.sl-space { display: flex; align-items: center; }
-.sl-space.vertical { flex-direction: column; align-items: stretch; }
-.sl-space.wrap { flex-wrap: wrap; }
-.sl-space-compact { display: flex; }
-.sl-divider { border: none; border-top: 1px solid var(--border-secondary); margin: var(--space-4) 0; }
-.sl-divider-labeled { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
-.sl-divider-labeled span:not(.sl-text) { flex: 1; border-top: 1px solid var(--border-secondary); }
+.shield-title.h1 { font-size: 38px; line-height: 46px; }
+.shield-title.h2 { font-size: 30px; line-height: 38px; }
+.shield-title.h3 { font-size: 24px; line-height: 32px; }
+.shield-title.h4 { font-size: 20px; line-height: 28px; }
+.shield-title.h5 { font-size: 16px; line-height: 24px; }
 
-/* ---------- Button ---------- */
-.sl-btn {
-  font-family: var(--font-body); font-size: 14px; font-weight: 400; line-height: 22px;
-  border-radius: var(--radius-md); border: 1px solid transparent; padding: 4px 15px; height: 32px;
-  box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  cursor: pointer; transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; white-space: nowrap;
+.shield-text { font-family: var(--font-body); color: var(--text); }
+.shield-text.secondary { color: var(--text-secondary); }  /* captions, helper text */
+.shield-text.tertiary { color: var(--text-tertiary); }    /* placeholders, timestamps */
+.shield-text.success { color: var(--success); }
+.shield-text.warning { color: var(--warning); }
+.shield-text.danger { color: var(--error); }
+.shield-text.code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--fill-tertiary);
+  padding: 1px 5px;
+  border-radius: var(--radius-xs);
 }
-.sl-btn.block { width: 100%; }
-.sl-btn.sm { height: 24px; padding: 0 7px; font-size: 13px; }
-.sl-btn.lg { height: 40px; padding: 6px 15px; font-size: 16px; }
-.sl-btn-primary { background: var(--brand-blue-dark); color: #fff; }
-.sl-btn-primary:hover:not(:disabled) { background: var(--blue-7); }
-.sl-btn-default { background: var(--bg-container); color: var(--text); border-color: var(--border); }
-.sl-btn-default:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
-.sl-btn-dashed { background: var(--bg-container); color: var(--text); border-color: var(--border); border-style: dashed; }
-.sl-btn-dashed:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
-.sl-btn-text { background: transparent; color: var(--text); border-color: transparent; }
-.sl-btn-text:hover:not(:disabled) { background: var(--fill-secondary); }
-.sl-btn-link { background: transparent; color: var(--brand-blue-dark); border-color: transparent; padding-inline: 0; height: auto; }
-.sl-btn-link:hover:not(:disabled) { color: var(--blue-7); }
-.sl-btn-danger { background: var(--error); color: #fff; }
-.sl-btn-danger:hover:not(:disabled) { background: #e84749; }
-.sl-btn-danger.sl-btn-default { background: var(--bg-container); color: var(--error); border-color: var(--error-border); }
-.sl-btn-danger.sl-btn-default:hover:not(:disabled) { background: var(--error-bg); }
-.sl-btn:disabled { background: var(--fill-tertiary) !important; color: var(--text-quaternary) !important; border-color: var(--border) !important; cursor: not-allowed; }
-.sl-btn .sl-spinner { width: 14px; height: 14px; }
+.shield-text.strong { font-weight: 600; }
 
-/* ---------- Input / TextArea ---------- */
-.sl-input-wrap { position: relative; display: flex; align-items: center; width: 100%; }
-.sl-input, .sl-textarea {
-  font-family: var(--font-body); font-size: 14px; color: var(--text); background: var(--bg-container);
-  border: 1px solid var(--border); border-radius: var(--radius-md); padding: 4px 11px; width: 100%; outline: none;
+/* ---------- Layout ----------
+   .shield-row/.shield-col = a 24-unit responsive grid (like Bootstrap's 12-col
+   grid, but 24 units wide). Each .shield-col reads its width from a
+   --col-xs/sm/md/lg/xl custom property set inline in the HTML (e.g.
+   style="--col-xs:100%; --col-md:50%"), and the @media blocks below
+   pick the narrowest breakpoint that applies and fall back to a wider
+   one if a narrower one wasn't set. --col-xs is the ultimate fallback,
+   so always set at least that one.
+   .shield-space = flex row/column with a gap, for evenly spacing a row of
+   buttons/controls (add .vertical to stack them instead).
+   .shield-divider = a plain horizontal rule; .shield-divider-labeled puts a
+   short label (e.g. "or") centered in the middle of the rule. */
+.shield-row { display: flex; flex-wrap: wrap; }
+.shield-col {
+  min-width: 0;
+  box-sizing: border-box;
+  flex: 0 0 var(--col-xs, 100%);
+  max-width: var(--col-xs, 100%);
+}
+@media (min-width: 576px) {
+  .shield-col {
+    flex-basis: var(--col-sm, var(--col-xs, 100%));
+    max-width: var(--col-sm, var(--col-xs, 100%));
+  }
+}
+@media (min-width: 768px) {
+  .shield-col {
+    flex-basis: var(--col-md, var(--col-sm, var(--col-xs, 100%)));
+    max-width: var(--col-md, var(--col-sm, var(--col-xs, 100%)));
+  }
+}
+@media (min-width: 992px) {
+  .shield-col {
+    flex-basis: var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%))));
+    max-width: var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%))));
+  }
+}
+@media (min-width: 1200px) {
+  .shield-col {
+    flex-basis: var(--col-xl, var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%)))));
+    max-width: var(--col-xl, var(--col-lg, var(--col-md, var(--col-sm, var(--col-xs, 100%)))));
+  }
+}
+.shield-space { display: flex; align-items: center; }
+.shield-space.vertical { flex-direction: column; align-items: stretch; }
+.shield-space.wrap { flex-wrap: wrap; }
+.shield-space-compact { display: flex; } /* for input+button groups that should touch with no gap */
+.shield-divider { border: none; border-top: 1px solid var(--border-secondary); margin: var(--space-4) 0; }
+.shield-divider-labeled { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
+.shield-divider-labeled span:not(.shield-text) { flex: 1; border-top: 1px solid var(--border-secondary); }
+
+/* ---------- Button ----------
+   Root class .shield-button, combined with exactly one variant class:
+   .shield-button-primary / .shield-button-default / .shield-button-dashed / .shield-button-text /
+   .shield-button-link / .shield-button-danger. Size modifiers .small / (default) / .large
+   can be added on top of any variant. A disabled button just needs the
+   HTML `disabled` attribute — see the :disabled rule near the bottom
+   of this section. */
+/* The base button: size, font, rounded corners, and centering for any text/icon inside. Colors come from a variant class below. */
+.shield-button {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  padding: 4px 15px;
+  height: 32px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+.shield-button.block { width: 100%; } /* stretches the button to fill its container */
+/* Size options: .small is 24px tall, .large is 40px tall; with neither, the button is the standard 32px. */
+.shield-button.small { height: 24px; padding: 0 7px; font-size: 13px; }
+.shield-button.large { height: 40px; padding: 6px 15px; font-size: 16px; }
+
+/* PRIMARY: solid brand-blue. Use once per screen for the main action. */
+.shield-button-primary { background: var(--brand-blue-dark); color: #fff; }
+.shield-button-primary:hover:not(:disabled) { background: var(--blue-7); }
+
+/* DEFAULT: white with a gray outline. For ordinary secondary actions. */
+.shield-button-default { background: var(--bg-container); color: var(--text); border-color: var(--border); }
+.shield-button-default:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+
+/* DASHED: like default but with a dashed outline, usually for "+ Add something" actions. */
+.shield-button-dashed { background: var(--bg-container); color: var(--text); border-color: var(--border); border-style: dashed; }
+.shield-button-dashed:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+
+/* TEXT: no background or outline until hovered. For low-emphasis actions like "Cancel". */
+.shield-button-text { background: transparent; color: var(--text); border-color: transparent; }
+.shield-button-text:hover:not(:disabled) { background: var(--fill-secondary); }
+
+/* LINK: looks like a hyperlink (blue text, no padding) but still behaves like a button. */
+.shield-button-link { background: transparent; color: var(--brand-blue-dark); border-color: transparent; padding-inline: 0; height: auto; }
+.shield-button-link:hover:not(:disabled) { color: var(--blue-7); }
+
+/* DANGER: solid red, for destructive actions like "Delete". */
+.shield-button-danger { background: var(--error); color: #fff; }
+.shield-button-danger:hover:not(:disabled) { background: #e84749; }
+/* Danger + Default together = an OUTLINED danger button (red text/border
+   on a plain background) instead of the solid-red .shield-button-danger above —
+   used for a less alarming "destructive but secondary" action. */
+.shield-button-danger.shield-button-default { background: var(--bg-container); color: var(--error); border-color: var(--error-border); }
+.shield-button-danger.shield-button-default:hover:not(:disabled) { background: var(--error-bg); }
+
+/* DISABLED: grayed out and not clickable. !important makes sure this wins over every variant color above. */
+.shield-button:disabled {
+  background: var(--fill-tertiary) !important;
+  color: var(--text-quaternary) !important;
+  border-color: var(--border) !important;
+  cursor: not-allowed;
+}
+.shield-button .shield-spinner { width: 14px; height: 14px; } /* shrinks the loading spinner to fit inside a button */
+
+/* ---------- Input / TextArea ----------
+   .shield-input-wrap wraps an <input> so prefix/suffix icons can be
+   absolutely positioned inside it (see .shield-input-icon below) — always
+   use the wrapper, don't style a bare <input> directly. Add
+   .has-prefix / .has-suffix to the <input> itself to make room for
+   whichever icon you're placing on that side. */
+/* The wrapper that lets an icon sit inside the text box (see .shield-input-icon). */
+.shield-input-wrap { position: relative; display: flex; align-items: center; width: 100%; }
+/* Shared look for single-line inputs and multi-line text areas: border, rounded corners, font. */
+.shield-input, .shield-textarea {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg-container);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 4px 11px;
+  width: 100%;
+  outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.sl-input { height: 32px; box-sizing: border-box; }
-.sl-input.has-prefix { padding-left: 30px; }
-.sl-input.has-suffix { padding-right: 30px; }
-.sl-textarea { min-height: 64px; resize: vertical; line-height: 1.5; }
-.sl-input::placeholder, .sl-textarea::placeholder { color: var(--text-quaternary); }
-.sl-input:hover, .sl-textarea:hover { border-color: var(--blue-5); }
-.sl-input:focus, .sl-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
-.sl-input:disabled, .sl-textarea:disabled { background: var(--fill-tertiary); color: var(--text-quaternary); cursor: not-allowed; }
-.sl-input.error, .sl-textarea.error { border-color: var(--error); }
-.sl-input.error:focus, .sl-textarea.error:focus { box-shadow: 0 0 0 2px rgba(207, 19, 34, 0.12); }
-.sl-input-icon { position: absolute; color: var(--text-quaternary); display: flex; pointer-events: none; }
-.sl-input-icon.prefix { left: 10px; }
-.sl-input-icon.suffix { right: 10px; pointer-events: auto; }
-.sl-input-icon.suffix.clearable { cursor: pointer; }
-.sl-input-icon.suffix.clearable:hover { color: var(--text-secondary); }
+/* Single-line inputs are a fixed 32px tall; text areas (below) grow instead. */
+.shield-input { height: 32px; box-sizing: border-box; }
+/* Extra left/right padding so typed text does not run underneath an icon. */
+.shield-input.has-prefix { padding-left: 30px; }
+.shield-input.has-suffix { padding-right: 30px; }
+/* Text areas start 64px tall and can be dragged taller by the user (vertical only). */
+.shield-textarea { min-height: 64px; resize: vertical; line-height: 1.5; }
+/* Placeholder text (the faint hint shown while the box is empty). */
+.shield-input::placeholder, .shield-textarea::placeholder { color: var(--text-quaternary); }
+/* HOVER: border turns light blue when the mouse is over the box. */
+.shield-input:hover, .shield-textarea:hover { border-color: var(--blue-5); }
+/* FOCUS: brand-blue border plus a soft glow while the user is typing in it. */
+.shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+/* DISABLED: gray fill, no typing allowed. */
+.shield-input:disabled, .shield-textarea:disabled { background: var(--fill-tertiary); color: var(--text-quaternary); cursor: not-allowed; }
+/* ERROR: red border. Add the class .error to the input when validation fails. */
+.shield-input.error, .shield-textarea.error { border-color: var(--error); }
+.shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px rgba(207, 19, 34, 0.12); }
+/* An icon placed inside an input. pointer-events: none lets clicks pass through to the input underneath. */
+.shield-input-icon { position: absolute; color: var(--text-quaternary); display: flex; pointer-events: none; }
+/* .prefix = icon on the left inside the box, .suffix = icon on the right. */
+.shield-input-icon.prefix { left: 10px; }
+.shield-input-icon.suffix { right: 10px; pointer-events: auto; } /* re-enables clicks for a clear/eye-toggle button */
+.shield-input-icon.suffix.clearable { cursor: pointer; }
+.shield-input-icon.suffix.clearable:hover { color: var(--text-secondary); }
 
-/* ---------- Select (hand-rolled combobox) ---------- */
-.sl-select { position: relative; width: 100%; }
-.sl-select-box {
-  display: flex; align-items: center; gap: 6px; height: 32px; box-sizing: border-box; width: 100%;
-  border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-container); padding: 0 11px; cursor: text;
+/* ---------- Select (hand-rolled combobox) ----------
+   Not a native <select> — see sgSelectOpen/sgSelectFilter/sgSelectPick
+   in shield.js for the behavior. Structure, outer to inner:
+     .shield-select               unique id, add .multiple for chip mode
+       .shield-select-box          the visible box (input + chips live here)
+         .shield-select-tag         one removable chip (multi-select only)
+         .shield-select-search      the actual text input
+         .shield-select-arrow       the chevron, rotates via .open below
+       .shield-select-panel        the dropdown list, shown via .open
+         .shield-select-group-label  optional heading above a cluster of options
+         .shield-select-option          one option; gets .selected when chosen
+         .shield-select-empty        "No matches" message */
+/* The outermost box of a dropdown select. position: relative lets the list panel anchor to it. */
+.shield-select { position: relative; width: 100%; }
+/* The visible, clickable box that shows the current choice (looks like an input). */
+.shield-select-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-container);
+  padding: 0 11px;
+  cursor: text;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.sl-select-box:hover { border-color: var(--blue-5); }
-.sl-select.open .sl-select-box, .sl-select-box.focused { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
-.sl-select-box .sl-input-icon.prefix { position: static; margin-right: 2px; }
-.sl-select-search {
-  flex: 1; min-width: 0; border: none; outline: none; background: transparent;
-  font-family: var(--font-body); font-size: 14px; color: var(--text); height: 30px;
+/* Hover and open/focused states for the select box. */
+.shield-select-box:hover { border-color: var(--blue-5); }
+.shield-select.open .shield-select-box, .shield-select-box.focused { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+.shield-select-box .shield-input-icon.prefix { position: static; margin-right: 2px; }
+/* The text field inside the box where the user types to filter options. Borderless so it blends in. */
+.shield-select-search {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  height: 30px;
 }
-.sl-select-search::placeholder { color: var(--text-quaternary); }
-.sl-select.multiple .sl-select-box { height: auto; min-height: 32px; flex-wrap: wrap; padding: 3px 8px; }
-.sl-select.multiple .sl-select-search { flex: 1; min-width: 80px; height: 24px; }
-.sl-select-tag {
-  display: inline-flex; align-items: center; gap: 4px; flex: none;
-  font-size: 12.5px; line-height: 20px; color: var(--text);
-  background: var(--fill-tertiary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm);
-  padding: 0 4px 0 8px; max-width: 220px;
+.shield-select-search::placeholder { color: var(--text-quaternary); }
+/* MULTIPLE mode: the box grows taller and wraps chips onto extra lines. */
+.shield-select.multiple .shield-select-box { height: auto; min-height: 32px; flex-wrap: wrap; padding: 3px 8px; }
+.shield-select.multiple .shield-select-search { flex: 1; min-width: 80px; height: 24px; }
+/* A small removable "chip" showing one chosen value (multiple mode only). */
+.shield-select-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  font-size: 12.5px;
+  line-height: 20px;
+  color: var(--text);
+  background: var(--fill-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0 4px 0 8px;
+  max-width: 220px;
 }
-.sl-select-tag-remove {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 16px; height: 16px; border: none; background: none; padding: 0; margin-left: 2px;
-  color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-xs);
+/* The tiny × button inside a chip. */
+.shield-select-tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-left: 2px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
 }
-.sl-select-tag-remove:hover { color: var(--text); background: var(--fill-secondary); }
-.sl-select-clear, .sl-select-arrow {
-  flex: none; display: flex; align-items: center; justify-content: center;
-  color: var(--text-quaternary); width: 16px; height: 16px; cursor: pointer;
+.shield-select-tag-remove:hover { color: var(--text); background: var(--fill-secondary); }
+/* The clear (×) and chevron icons on the right edge of the box. */
+.shield-select-clear, .shield-select-arrow {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-quaternary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
-.sl-select-arrow { pointer-events: none; transition: transform 0.15s ease; font-size: 10px; }
-.sl-select.open .sl-select-arrow { transform: rotate(180deg); }
-.sl-select-clear:hover { color: var(--text-secondary); }
-.sl-select-panel {
-  position: absolute; top: calc(100% + 4px); left: 0; right: 0; min-width: 240px;
-  max-height: 320px; overflow-y: auto; z-index: 50;
-  background: var(--bg-elevated); border: 1px solid var(--border-secondary);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 4px;
-  display: none;
+.shield-select-arrow { pointer-events: none; transition: transform 0.15s ease; font-size: 10px; }
+.shield-select.open .shield-select-arrow { transform: rotate(180deg); } /* flips the chevron when the panel is open */
+.shield-select-clear:hover { color: var(--text-secondary); }
+/* The floating list of options that appears under the box. */
+.shield-select-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  min-width: 240px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 50;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  display: none; /* shown only when the parent .shield-select has .open — see rule below */
 }
-.sl-select.open .sl-select-panel { display: block; }
-.sl-select-group-label {
-  padding: 6px 10px 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
-  text-transform: uppercase; color: var(--text-tertiary);
+.shield-select.open .shield-select-panel { display: block; }
+/* A small uppercase heading that groups related options. */
+.shield-select-group-label {
+  padding: 6px 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
 }
-.sl-select-opt {
-  font-size: 14px; padding: 6px 10px; border-radius: var(--radius-sm);
-  color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+/* One row in the options list. */
+.shield-select-option {
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
-.sl-select-opt:hover, .sl-select-opt.active { background: var(--fill-secondary); }
-.sl-select-opt.selected { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
-:root[data-theme="dark"] .sl-select-opt.selected { background: rgba(24, 171, 237, 0.16); }
-.sl-select-empty { padding: 14px 10px; font-size: 13px; color: var(--text-tertiary); text-align: center; }
-.sl-select-match-count { display: block; margin-bottom: var(--space-4); font-size: 12.5px; color: var(--text-secondary); }
+/* Hover highlight, and the blue "chosen" highlight for the selected option. */
+.shield-select-option:hover, .shield-select-option.active { background: var(--fill-secondary); }
+.shield-select-option.selected { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
+:root[data-theme="dark"] .shield-select-option.selected { background: rgba(24, 171, 237, 0.16); } /* blue-1 reads too light on a dark background, so dark mode gets its own translucent highlight instead */
+/* The "No matches" message shown when the search filters out every option. */
+.shield-select-empty { padding: 14px 10px; font-size: 13px; color: var(--text-tertiary); text-align: center; }
+/* A small caption that says how many options matched the search. */
+.shield-select-match-count { display: block; margin-bottom: var(--space-4); font-size: 12.5px; color: var(--text-secondary); }
 
-/* ---------- Checkbox / Radio / Switch ---------- */
-.sl-check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); cursor: pointer; user-select: none; }
-.sl-check-row.disabled { cursor: not-allowed; color: var(--text-quaternary); }
-.sl-checkbox {
-  width: 16px; height: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);
-  background: var(--bg-container); display: inline-flex; align-items: center; justify-content: center;
-  flex-shrink: 0; transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-.sl-checkbox svg { display: none; width: 10px; height: 10px; }
-.sl-checkbox.on { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
-.sl-checkbox.on svg { display: block; }
-.sl-checkbox.disabled { background: var(--fill-tertiary); }
-.sl-radio {
-  width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--border);
-  background: var(--bg-container); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.sl-radio.on { border-color: var(--brand-blue-dark); }
-.sl-radio.on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); }
-.sl-switch-track {
-  width: 44px; height: 22px; border-radius: var(--radius-full); background: var(--text-quaternary);
-  position: relative; cursor: pointer; flex-shrink: 0; transition: background-color 0.15s ease; border: none; padding: 0;
-  display: inline-flex; align-items: center;
-}
-.sl-switch-track.sm { width: 32px; height: 16px; }
-.sl-switch-track.on { background: var(--brand-blue-dark); }
-.sl-switch-track:disabled { opacity: 0.4; cursor: not-allowed; }
-.sl-switch-thumb {
-  width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: left 0.15s ease;
-  display: flex; align-items: center; justify-content: center; color: var(--text-quaternary); font-size: 10px;
-}
-.sl-switch-track.sm .sl-switch-thumb { width: 12px; height: 12px; top: 2px; left: 2px; }
-.sl-switch-track.on .sl-switch-thumb { left: 24px; }
-.sl-switch-track.sm.on .sl-switch-thumb { left: 18px; }
+/* ---------- Checkbox / Radio / Switch / Segmented ----------
+   .shield-check-row wraps a checkbox or radio together with its label text
+   so the whole row is one big click target. The checkbox/radio/switch
+   itself is a plain <span>/<button> (no native <input type="checkbox">
+   under the hood) — shield.js toggles an "is-on" class to show the
+   checked/active state; see sgToggleCheckbox / sgSelectRadio /
+   sgToggleSwitch / sgSegPick in shield.js. */
+/* One clickable row: the checkbox/radio plus its label text. */
+.shield-check-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); cursor: pointer; user-select: none; }
+.shield-check-row.disabled { cursor: not-allowed; color: var(--text-quaternary); }
 
-.sl-seg { display: inline-flex; border: 1px solid var(--border-secondary); border-radius: var(--radius-full); background: var(--bg-container); padding: 2px; gap: 2px; }
-.sl-seg button {
-  font: inherit; font-family: var(--font-body); font-size: 12.5px; font-weight: 500; color: var(--text-tertiary);
-  border: none; background: none; border-radius: var(--radius-full); padding: 4px 12px; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+/* The checkbox square. Empty by default; gets .is-on (blue + checkmark) when ticked. */
+.shield-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-container);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.shield-checkbox svg { display: none; width: 10px; height: 10px; } /* the checkmark icon, hidden until .is-on is added */
+.shield-checkbox.is-on { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+.shield-checkbox.is-on svg { display: block; }
+.shield-checkbox.disabled { background: var(--fill-tertiary); }
+
+/* The radio circle. Only one in a group can be .is-on at a time. */
+.shield-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-container);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease;
+}
+.shield-radio.is-on { border-color: var(--brand-blue-dark); }
+.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); } /* the filled center dot */
+
+/* The switch (on/off toggle). The track is the pill-shaped background; the thumb is the white circle that slides. */
+.shield-switch-track {
+  width: 44px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--text-quaternary);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+/* Small switch variant, plus the colors for the on and disabled states. */
+.shield-switch-track.small { width: 32px; height: 16px; }
+.shield-switch-track.is-on { background: var(--brand-blue-dark); }
+.shield-switch-track:disabled { opacity: 0.4; cursor: not-allowed; }
+/* The white circle that slides left (off) and right (on). */
+.shield-switch-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  left: 2px; /* resting position; .is-on below slides it to the right by changing `left` */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: left 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-quaternary);
+  font-size: 10px;
+}
+.shield-switch-track.small .shield-switch-thumb { width: 12px; height: 12px; top: 2px; left: 2px; }
+.shield-switch-track.is-on .shield-switch-thumb { left: 24px; }
+.shield-switch-track.small.is-on .shield-switch-thumb { left: 18px; }
+
+/* A row of connected buttons where exactly one is selected (like a Light/Dark toggle). */
+.shield-segmented { display: inline-flex; border: 1px solid var(--border-secondary); border-radius: var(--radius-full); background: var(--bg-container); padding: 2px; gap: 2px; }
+/* Each button inside the segmented control. */
+.shield-segmented button {
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  border: none;
+  background: none;
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
-.sl-seg button:hover { color: var(--text); background: var(--fill-secondary); }
-.sl-seg button.on { background: var(--brand-blue-dark); color: #fff; }
+/* Hover color, and the filled blue look for the currently selected button. */
+.shield-segmented button:hover { color: var(--text); background: var(--fill-secondary); }
+.shield-segmented button.is-on { background: var(--brand-blue-dark); color: #fff; }
 
-/* ---------- Tag / Pill ---------- */
-.sl-tag {
-  display: inline-flex; align-items: center; gap: 5px; font-size: 12px; line-height: 20px;
-  border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--fill-quaternary);
-  color: var(--text); padding: 0 7px; white-space: nowrap;
+/* ---------- Tag / Pill ----------
+   .shield-tag = the base tag; add a mood class (.success/.warning/.error/
+   .processing/.gold) to color it, or .checkable (+.checked once
+   clicked) to make it behave like a toggle chip instead of a static
+   label. .shield-pill is a separate, rounder shape used for status dots
+   with text (.success/.warning/.neutral). */
+/* The base tag: a small rounded label with a thin border. Neutral gray until you add a mood class. */
+.shield-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--fill-quaternary);
+  color: var(--text);
+  padding: 0 7px;
+  white-space: nowrap;
 }
-.sl-tag button { background: none; border: none; padding: 0; color: inherit; opacity: 0.6; cursor: pointer; font-size: 11px; line-height: 1; }
-.sl-tag button:hover { opacity: 1; }
-.sl-tag.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
-.sl-tag.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
-.sl-tag.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
-.sl-tag.processing { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
-.sl-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #9a7b2f; }
-.sl-tag.checkable { cursor: pointer; user-select: none; }
-.sl-tag.checkable.checked { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
-.sl-pill {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; white-space: nowrap;
-  border-radius: var(--radius-full); padding: 2.5px 10px 2.5px 8px; border: 1px solid var(--border-secondary);
-}
-.sl-pill.ok { color: var(--success); }
-.sl-pill.warn { color: var(--warning); }
-.sl-pill.idle { color: var(--text-tertiary); }
+.shield-tag button { background: none; border: none; padding: 0; color: inherit; opacity: 0.6; cursor: pointer; font-size: 11px; line-height: 1; } /* the × remove button inside a tag */
+.shield-tag button:hover { opacity: 1; }
+/* Mood colors. Each sets background, border and text together from tokens.css. */
+.shield-tag.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
+.shield-tag.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
+.shield-tag.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
+.shield-tag.processing { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
+.shield-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #9a7b2f; } /* a one-off accent color, not part of the four-mood functional set above */
+/* Toggleable tag: clickable, and turns solid blue once .checked is added. */
+.shield-tag.checkable { cursor: pointer; user-select: none; }
+.shield-tag.checkable.checked { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
 
-/* ---------- Card ---------- */
-.sl-card {
-  background: var(--bg-container); border: 1px solid var(--border-secondary); border-radius: var(--radius-lg);
+/* A fully rounded status label, typically paired with a colored dot. */
+.shield-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: var(--radius-full);
+  padding: 2.5px 10px 2.5px 8px;
+  border: 1px solid var(--border-secondary);
+}
+/* Pill colors: success (green), warning (amber), neutral (faint gray). */
+.shield-pill.success { color: var(--success); }
+.shield-pill.warning { color: var(--warning); }
+.shield-pill.neutral { color: var(--text-tertiary); }
+
+/* ---------- Card ----------
+   Plain .shield-card = borderless, flush against the page. Add
+   .bordered-shadow for the "floating tile" look (border + shadow-sm) —
+   that's the one you want in most real layouts. Add .small for a
+   tighter-padding compact variant. */
+/* The base card: white box with a thin border and rounded corners. */
+.shield-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-.sl-card.bordered-shadow { box-shadow: var(--shadow-sm); }
-.sl-card.sm .sl-card-body { padding: var(--space-3) var(--space-4); }
-.sl-card-head {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 0 var(--space-6); min-height: 56px; border-bottom: 1px solid var(--border-secondary);
-  font-weight: 600; font-size: 15px;
+/* Adds a soft drop shadow so the card appears to float. Use .small for tighter inner padding. */
+.shield-card.bordered-shadow { box-shadow: var(--shadow-sm); }
+.shield-card.small .shield-card-body { padding: var(--space-3) var(--space-4); }
+/* The card title bar: title on the left, optional actions on the right, a line underneath. */
+.shield-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--space-6);
+  min-height: 56px;
+  border-bottom: 1px solid var(--border-secondary);
+  font-weight: 600;
+  font-size: 15px;
 }
-.sl-card-body { padding: var(--space-5) var(--space-6); }
+/* The main content area of a card, with comfortable padding. */
+.shield-card-body { padding: var(--space-5) var(--space-6); }
 
-/* ---------- Table ---------- */
-.sl-table-scroll { overflow-x: auto; overflow-y: hidden; }
-table.sl-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-table.sl-table th {
-  text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--text-tertiary); padding: 8px 12px; border-bottom: 1px solid var(--border-secondary); white-space: nowrap;
+/* ---------- Table ----------
+   Wrap <table class="shield-table"> in a <div class="shield-table-scroll"> so
+   wide tables can scroll horizontally on narrow screens instead of
+   breaking the page layout. Add .clickable to a <tr> to get a pointer
+   cursor (pair it with an onclick handler for row-click navigation). */
+/* Lets a wide table scroll sideways instead of overflowing the page. */
+.shield-table-scroll { overflow-x: auto; overflow-y: hidden; }
+/* Table basics: full width, no gaps between cells. */
+table.shield-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+/* Header cells: small, uppercase, gray text so they do not compete with the data. */
+table.shield-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+  white-space: nowrap;
 }
-table.sl-table td { padding: 11px 12px; border-bottom: 1px solid var(--border-secondary); vertical-align: top; color: var(--text); }
-table.sl-table tr:last-child td { border-bottom: none; }
-table.sl-table tbody tr { transition: background-color 0.12s ease; }
-table.sl-table tbody tr.clickable { cursor: pointer; }
-table.sl-table tbody tr:hover { background: var(--fill-quaternary); }
+/* Body cells: padding plus a thin line between rows. */
+table.shield-table td { padding: 11px 12px; border-bottom: 1px solid var(--border-secondary); vertical-align: top; color: var(--text); }
+/* No line under the final row. */
+table.shield-table tr:last-child td { border-bottom: none; }
+/* Rows fade smoothly when hovered, and show a hand cursor if marked .clickable. */
+table.shield-table tbody tr { transition: background-color 0.12s ease; }
+table.shield-table tbody tr.clickable { cursor: pointer; }
+table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 
-/* ---------- Modal ---------- */
-.sl-modal-backdrop {
-  position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.45);
-  display: none; align-items: center; justify-content: center; padding: 24px;
+/* ---------- Modal ----------
+   .shield-modal-backdrop is the fixed, full-screen dark overlay — it's
+   always in the page but only visible once it gets the .open class
+   (see sgOpenModal/sgCloseModal in shield.js). .shield-modal is the actual
+   dialog box centered inside it; add .wide for the 720px variant used
+   by anything with its own internal layout (schema editors, multi-
+   column forms) instead of the 480px default. */
+/* The dark full-screen overlay behind a modal. Hidden until .open is added. */
+.shield-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.45);
+  display: none; /* becomes `flex` only when .open is added, which also centers the dialog */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
-.sl-modal-backdrop.open { display: flex; }
-.sl-modal {
-  background: var(--bg-elevated); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
-  width: 480px; max-width: 100%; max-height: 88vh; display: flex; flex-direction: column;
-  animation: fadeUp 0.2s ease both;
+.shield-modal-backdrop.open { display: flex; }
+/* The dialog box itself, centered by the backdrop. */
+.shield-modal {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  width: 480px;
+  max-width: 100%;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.2s ease both; /* fadeUp is defined once in tokens.css and reused by the Toast too */
 }
-.sl-modal.wide { width: 720px; }
-.sl-modal-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 24px 0; }
-.sl-modal-head h3 { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; flex: 1; font-family: var(--font-heading); }
-.sl-modal-close { font-size: 20px; line-height: 1; padding: 0 4px; border: none; background: none; color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-sm); }
-.sl-modal-close:hover { background: var(--fill-secondary); color: var(--text); }
-.sl-modal-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 22px; }
-.sl-modal-foot { padding: 12px 24px 20px; display: flex; gap: 8px; justify-content: flex-end; border-top: 1px solid var(--border-secondary); margin-top: 4px; padding-top: 16px; }
-
-/* ---------- Alert ---------- */
-.sl-alert { display: flex; gap: 10px; padding: 10px 14px; border-radius: var(--radius-lg); border: 1px solid; font-size: 13.5px; align-items: flex-start; }
-.sl-alert-icon { flex: none; margin-top: 1px; }
-.sl-alert-body { flex: 1; min-width: 0; }
-.sl-alert-title { font-weight: 600; }
-.sl-alert-desc { color: var(--text-secondary); font-size: 12.5px; margin-top: 3px; }
-.sl-alert-desc ul { margin: 4px 0 0; padding-left: 18px; }
-.sl-alert-close { margin-left: auto; background: none; border: none; color: inherit; opacity: 0.55; cursor: pointer; font-size: 14px; line-height: 1; padding: 2px; }
-.sl-alert-close:hover { opacity: 1; }
-.sl-alert.info { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
-.sl-alert.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
-.sl-alert.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
-.sl-alert.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
-
-/* ---------- Empty ---------- */
-.sl-empty { padding: 48px 24px; text-align: center; color: var(--text-tertiary); }
-.sl-empty-icon { margin: 0 auto 10px; opacity: 0.5; width: 48px; height: 48px; }
-.sl-empty-desc { font-size: 13.5px; }
-
-/* ---------- Steps / Rail ---------- */
-.sl-steps { display: flex; align-items: flex-start; gap: 4px; overflow-x: auto; }
-.sl-step { display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; }
-.sl-step-btn { display: flex; align-items: center; gap: 8px; background: none; border: none; padding: 0; cursor: default; font: inherit; }
-.sl-step-btn.clickable { cursor: pointer; }
-.sl-step-dot {
-  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600; flex: none; border: 1px solid var(--border); color: var(--text-tertiary); background: var(--bg-container);
+.shield-modal.wide { width: 720px; }
+/* Modal top row: title on the left, close (×) button on the right. */
+.shield-modal-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 24px 0; }
+.shield-modal-head h3 { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: -0.01em; flex: 1; font-family: var(--font-heading); }
+.shield-modal-close { font-size: 20px; line-height: 1; padding: 0 4px; border: none; background: none; color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-sm); }
+.shield-modal-close:hover { background: var(--fill-secondary); color: var(--text); }
+/* The scrollable middle of the modal, holding the message or form. */
+.shield-modal-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 14px; color: var(--text-secondary); line-height: 22px; }
+/* The bottom row, right-aligned, where the action buttons go (e.g. Cancel / Save). */
+.shield-modal-foot {
+  padding: 12px 24px 20px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-secondary);
+  margin-top: 4px;
+  padding-top: 16px;
 }
-.sl-step.done .sl-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
-.sl-step.current .sl-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); }
-.sl-step-title { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; }
-.sl-step.done .sl-step-title, .sl-step.current .sl-step-title { color: var(--text); font-weight: 500; }
-.sl-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 0 2px; align-self: center; }
-.sl-step-line.done { background: var(--brand-blue-dark); }
-.sl-steps.compact .sl-step-title { display: none; }
-.sl-steps.compact .sl-step-dot { width: 18px; height: 18px; font-size: 10px; }
 
-/* ---------- Descriptions ---------- */
-.sl-desc { width: 100%; border: 1px solid var(--border-secondary); border-radius: var(--radius-md); overflow: hidden; }
-.sl-desc-row { display: flex; border-bottom: 1px solid var(--border-secondary); }
-.sl-desc-row:last-child { border-bottom: none; }
-.sl-desc-label { width: 160px; flex: none; padding: 10px 14px; background: var(--fill-quaternary); font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
-.sl-desc-value { flex: 1; padding: 10px 14px; font-size: 13px; color: var(--text); }
+/* ---------- Alert ----------
+   A dismissible banner. Mood classes (.info/.success/.warning/.error)
+   set the background/border/text together, same pattern as Tag above.
+   Pair with .shield-alert-icon + .shield-alert-body (containing .shield-alert-title
+   and, optionally, .shield-alert-description) and an .shield-alert-close × button
+   wired to sgDismissAlert() in shield.js. */
+/* Alert banner layout: icon, text, then a close button, in a row. */
+.shield-alert { display: flex; gap: 10px; padding: 10px 14px; border-radius: var(--radius-lg); border: 1px solid; font-size: 13.5px; align-items: flex-start; }
+.shield-alert-icon { flex: none; margin-top: 1px; }
+.shield-alert-body { flex: 1; min-width: 0; }
+.shield-alert-title { font-weight: 600; }
+.shield-alert-description { color: var(--text-secondary); font-size: 12.5px; margin-top: 3px; }
+.shield-alert-description ul { margin: 4px 0 0; padding-left: 18px; }
+.shield-alert-close { margin-left: auto; background: none; border: none; color: inherit; opacity: 0.55; cursor: pointer; font-size: 14px; line-height: 1; padding: 2px; }
+.shield-alert-close:hover { opacity: 1; }
+/* Alert mood colors (info, success, warning, error). */
+.shield-alert.info { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
+.shield-alert.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
+.shield-alert.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
+.shield-alert.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
 
-/* ---------- Timeline ---------- */
-.sl-timeline { position: relative; padding-left: 18px; }
-.sl-timeline-item { position: relative; padding-bottom: 18px; }
-.sl-timeline-item:last-child { padding-bottom: 0; }
-.sl-timeline-item::before { content: ""; position: absolute; left: -14px; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); }
-.sl-timeline-item::after { content: ""; position: absolute; left: -11px; top: 13px; bottom: -4px; width: 1px; background: var(--border-secondary); }
-.sl-timeline-item:last-child::after { display: none; }
-.sl-timeline-content { font-size: 13px; color: var(--text); }
+/* ---------- Empty ----------
+   Shown in place of a list/table when there's no data to display —
+   just an icon and a short message. */
+/* Centered, faint "nothing here" placeholder. */
+.shield-empty { padding: 48px 24px; text-align: center; color: var(--text-tertiary); }
+.shield-empty-icon { margin: 0 auto 10px; opacity: 0.5; width: 48px; height: 48px; }
+.shield-empty-description { font-size: 13.5px; }
 
-/* ---------- Statistic / KPI tile strip ---------- */
-.sl-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 14px; }
-.sl-stats.tight { gap: 10px; margin-bottom: 12px; }
-.sl-stat {
-  background: var(--bg-container); border: 1px solid var(--border-secondary); border-radius: var(--radius-lg);
-  padding: 14px 16px 13px; box-shadow: var(--shadow-sm); min-width: 0;
-  display: flex; flex-direction: column; gap: 2px;
+/* ---------- Steps / Rail ----------
+   A horizontal row of numbered steps connected by lines, driven by
+   sgSetStep() in shield.js. Each .shield-step gets exactly one of: nothing
+   (upcoming), .current (outlined, in progress), or .done (filled, with
+   a checkmark instead of a number). Add .compact on the outer
+   .shield-steps to hide the text labels and show dots only, for dense rows. */
+/* The row holding all steps. It scrolls sideways if there are too many to fit. */
+.shield-steps { display: flex; align-items: flex-start; gap: 4px; overflow-x: auto; }
+.shield-step { display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; }
+.shield-step-button { display: flex; align-items: center; gap: 8px; background: none; border: none; padding: 0; cursor: default; font: inherit; }
+.shield-step-button.clickable { cursor: pointer; }
+.shield-step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex: none;
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+  background: var(--bg-container);
+}
+/* Step states: done = filled blue circle, current = blue outline. Titles darken for both. */
+.shield-step.done .shield-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
+.shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); }
+.shield-step-title { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; }
+.shield-step.done .shield-step-title, .shield-step.current .shield-step-title { color: var(--text); font-weight: 500; }
+/* The connector line between two steps; turns blue once the step before it is done. */
+.shield-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 0 2px; align-self: center; }
+.shield-step-line.done { background: var(--brand-blue-dark); }
+.shield-steps.compact .shield-step-title { display: none; }
+.shield-steps.compact .shield-step-dot { width: 18px; height: 18px; font-size: 10px; }
+
+/* ---------- Descriptions ----------
+   A simple label/value key-value list — like a read-only form, for
+   showing a record's details (order id, partner, status, etc). */
+/* The outer bordered box of the key/value list. */
+.shield-description { width: 100%; border: 1px solid var(--border-secondary); border-radius: var(--radius-md); overflow: hidden; }
+.shield-description-row { display: flex; border-bottom: 1px solid var(--border-secondary); }
+.shield-description-row:last-child { border-bottom: none; }
+.shield-description-label { width: 160px; flex: none; padding: 10px 14px; background: var(--fill-quaternary); font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
+.shield-description-value { flex: 1; padding: 10px 14px; font-size: 13px; color: var(--text); }
+
+/* ---------- Timeline ----------
+   A vertical list of events, each with a small dot and a connecting
+   line down to the next one (the last item has no line below it). */
+/* Leaves room on the left for the dots and connecting lines. */
+.shield-timeline { position: relative; padding-left: 18px; }
+.shield-timeline-item { position: relative; padding-bottom: 18px; }
+.shield-timeline-item:last-child { padding-bottom: 0; }
+.shield-timeline-item::before { content: ""; position: absolute; left: -14px; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); } /* the dot */
+.shield-timeline-item::after { content: ""; position: absolute; left: -11px; top: 13px; bottom: -4px; width: 1px; background: var(--border-secondary); } /* the connecting line */
+.shield-timeline-item:last-child::after { display: none; }
+.shield-timeline-content { font-size: 13px; color: var(--text); }
+
+/* ---------- Statistic / KPI tile strip ----------
+   A CSS-grid row of stat tiles that auto-fits as many 220px-minimum
+   columns as will fit (NOT the 24-unit .shield-row/.shield-col grid used
+   elsewhere), so tiles stay content-sized instead of stretching into
+   one full-width bar. .shield-stat.highlighted gets a subtle green-tinted
+   border to draw the eye to a headline metric; .positive/.negative on
+   .shield-stat-value recolor just the big number (green / red). */
+/* The grid holding all stat tiles, with a gap between them. */
+.shield-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 14px; }
+.shield-stats.tight { gap: 10px; margin-bottom: 12px; }
+/* One stat tile: a small card with a label, big number, and optional notes. */
+.shield-stat {
+  background: var(--bg-container);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px 13px;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   transition: box-shadow 0.2s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
-.sl-stat:hover { box-shadow: var(--shadow-md); }
-.sl-stat.hero { border-color: color-mix(in srgb, var(--success) 45%, transparent); }
-.sl-stats.tight .sl-stat { padding: 10px 14px 9px; }
-.sl-stat-label { font-size: 12px; color: var(--text-secondary); }
-.sl-stat-value {
-  font-family: var(--font-body); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; line-height: 1.2;
-  font-variant-numeric: tabular-nums; color: var(--text); margin-top: 2px;
+.shield-stat:hover { box-shadow: var(--shadow-md); }
+.shield-stat.highlighted { border-color: color-mix(in srgb, var(--success) 45%, transparent); }
+.shield-stats.tight .shield-stat { padding: 10px 14px 9px; }
+/* The small gray caption above the number. */
+.shield-stat-label { font-size: 12px; color: var(--text-secondary); }
+/* The big headline number. */
+.shield-stat-value {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums; /* keeps digits aligned if the number changes */
+  color: var(--text);
+  margin-top: 2px;
 }
-.sl-stats.tight .sl-stat-value { font-size: 26px; }
-.sl-stat-value small { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--text-secondary); letter-spacing: 0; }
-.sl-stat-value.convert { color: var(--success); }
-.sl-stat-value.bad { color: var(--error); }
-.sl-stat-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
-.sl-stat-extra { font-size: 12px; color: var(--warning); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-secondary); }
-@media (max-width: 900px) { .sl-stats { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .sl-stats { grid-template-columns: 1fr; } }
+.shield-stats.tight .shield-stat-value { font-size: 26px; }
+.shield-stat-value small { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--text-secondary); letter-spacing: 0; } /* for a trailing unit like "%" or "total" */
+.shield-stat-value.positive { color: var(--success); }
+.shield-stat-value.negative { color: var(--error); }
+/* Small gray note under the number, and an amber "extra" note below a dashed line. */
+.shield-stat-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
+.shield-stat-extra { font-size: 12px; color: var(--warning); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-secondary); }
+/* On medium screens show 2 tiles per row; on phones show 1. */
+@media (max-width: 900px) { .shield-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .shield-stats { grid-template-columns: 1fr; } }
 
-/* ---------- Tabs ---------- */
-.sl-tabs-bar { display: flex; gap: 28px; border-bottom: 1px solid var(--border-secondary); overflow-x: auto; overflow-y: hidden; }
-.sl-tab {
-  padding: 0 0 12px; font-size: 14px; color: var(--text-secondary); position: relative; cursor: pointer;
-  background: none; border: none; font-family: var(--font-body); white-space: nowrap;
+/* ---------- Tabs ----------
+   .shield-tabs-bar holds the row of .shield-tab buttons; shield.js's
+   sgShowTab() toggles each button's "is-on" class and shows/hides the
+   matching .shield-tab-panel content (matched by data-tab / data-tabpanel
+   attributes in the HTML, not by CSS). */
+/* The row of tab buttons with a line underneath. */
+.shield-tabs-bar { display: flex; gap: 28px; border-bottom: 1px solid var(--border-secondary); overflow-x: auto; overflow-y: hidden; }
+/* One tab button: plain text until hovered or active. */
+.shield-tab {
+  padding: 0 0 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  position: relative;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  white-space: nowrap;
 }
-.sl-tab:hover { color: var(--text); }
-.sl-tab.on { color: var(--brand-blue-dark); font-weight: 600; }
-.sl-tab.on::after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--brand-blue-dark); border-radius: 1px; }
-.sl-tab-panel { padding-top: var(--space-4); }
+.shield-tab:hover { color: var(--text); }
+.shield-tab.is-on { color: var(--brand-blue-dark); font-weight: 600; }
+.shield-tab.is-on::after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--brand-blue-dark); border-radius: 1px; } /* the little underline on the active tab */
+/* The content area shown under the tabs. */
+.shield-tab-panel { padding-top: var(--space-4); }
 
-/* ---------- Collapse (details/summary) ---------- */
-.sl-collapse-item { border-bottom: 1px solid var(--border-secondary); }
-.sl-collapse-item:last-child { border-bottom: none; }
-.sl-collapse-item summary { display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; padding: 12px 4px; font-weight: 500; font-size: 14px; }
-.sl-collapse-item summary::-webkit-details-marker { display: none; }
-.sl-collapse-item summary::before { content: "›"; color: var(--text-tertiary); font-size: 14px; flex: none; transition: transform 0.15s ease; }
-.sl-collapse-item[open] summary::before { transform: rotate(90deg); }
-.sl-collapse-body { padding: 0 4px 14px; font-size: 13.5px; color: var(--text-secondary); }
+/* ---------- Collapse ----------
+   Built on the native <details>/<summary> HTML elements — no
+   JavaScript needed at all, the browser handles the open/close itself.
+   This just restyles the default disclosure triangle as a rotating "›". */
+/* One collapsible section, separated from the next by a thin line. */
+.shield-collapse-item { border-bottom: 1px solid var(--border-secondary); }
+.shield-collapse-item:last-child { border-bottom: none; }
+.shield-collapse-item summary { display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; padding: 12px 4px; font-weight: 500; font-size: 14px; }
+.shield-collapse-item summary::-webkit-details-marker { display: none; } /* hides Chrome/Safari's own default triangle, since we draw our own below */
+.shield-collapse-item summary::before { content: "›"; color: var(--text-tertiary); font-size: 14px; flex: none; transition: transform 0.15s ease; }
+.shield-collapse-item[open] summary::before { transform: rotate(90deg); } /* [open] is set automatically by the browser, not by shield.js */
+/* The text revealed when a section is opened. */
+.shield-collapse-body { padding: 0 4px 14px; font-size: 13.5px; color: var(--text-secondary); }
 
-/* ---------- Dropdown ---------- */
-.sl-dropdown { position: relative; display: inline-block; }
-.sl-dropdown-panel {
-  position: absolute; top: calc(100% + 6px); right: 0; min-width: 160px; z-index: 60;
-  background: var(--bg-elevated); border: 1px solid var(--border-secondary); border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md); padding: 4px; display: none;
+/* ---------- Dropdown ----------
+   A trigger element (often an .shield-button) wrapped in .shield-dropdown, next to
+   a .shield-dropdown-panel of .shield-dropdown-item buttons. Opened/closed via
+   sgDropdownToggle() in shield.js; add .danger to an item for a
+   destructive action like "Delete". */
+/* Wrapper that anchors the pop-up menu to its trigger button. */
+.shield-dropdown { position: relative; display: inline-block; }
+/* The floating menu. Hidden until the wrapper gets .open. */
+.shield-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 160px;
+  z-index: 60;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  display: none;
 }
-.sl-dropdown.open .sl-dropdown-panel { display: block; }
-.sl-dropdown-item {
-  display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm);
-  font-size: 13.5px; color: var(--text); cursor: pointer; white-space: nowrap; background: none; border: none; width: 100%; text-align: left; font-family: var(--font-body);
+.shield-dropdown.open .shield-dropdown-panel { display: block; }
+/* One clickable menu entry. */
+.shield-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
 }
-.sl-dropdown-item:hover { background: var(--fill-secondary); }
-.sl-dropdown-item.danger { color: var(--error); }
+.shield-dropdown-item:hover { background: var(--fill-secondary); }
+.shield-dropdown-item.danger { color: var(--error); }
 
-/* ---------- Avatar / Badge ---------- */
-.sl-avatar {
-  border-radius: 50%; background: var(--brand-blue-dark); color: #fff; font-weight: 600;
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--font-body);
+/* ---------- Avatar / Badge ----------
+   .shield-avatar is just a colored circle with initials (or an icon) inside
+   — set its width/height/font-size inline per instance (see index.html)
+   rather than with size modifier classes. .shield-badge-dot corner-overlays
+   a small red dot on top of an avatar/icon to mean "needs attention"
+   (no number — wrap both in .shield-badge-wrap so the dot positions itself
+   correctly). .shield-badge-count is unrelated and does NOT overlay
+   anything — it's a plain inline numeric chip meant to sit right after
+   a label, e.g. an unread count next to a menu item. */
+/* A colored circle for initials or an icon. */
+.shield-avatar {
+  border-radius: 50%;
+  background: var(--brand-blue-dark);
+  color: #fff;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-body);
 }
-.sl-badge-wrap { position: relative; display: inline-flex; }
-.sl-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--error); position: absolute; top: -1px; right: -1px; border: 1px solid var(--bg-container); }
-.sl-badge-count {
-  min-width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--fill-secondary); color: var(--text-secondary);
-  font-size: 11px; line-height: 18px; text-align: center; padding: 0 5px; font-variant-numeric: tabular-nums;
+/* Wrapper so a badge dot can sit on the corner of whatever is inside. */
+.shield-badge-wrap { position: relative; display: inline-flex; }
+.shield-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--error); position: absolute; top: -1px; right: -1px; border: 1px solid var(--bg-container); }
+/* A small gray number bubble, e.g. an unread count. */
+.shield-badge-count {
+  min-width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--fill-secondary);
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  padding: 0 5px;
+  font-variant-numeric: tabular-nums;
 }
-.sl-badge-count.on-dark { background: rgba(255, 255, 255, 0.15); color: #fff; }
+.shield-badge-count.on-dark { background: rgba(255, 255, 255, 0.15); color: #fff; } /* for use on top of a dark/colored surface instead of the default page background */
 
-/* ---------- Menu (sidebar nav) ---------- */
-.sl-menu { display: flex; flex-direction: column; gap: 2px; }
-.sl-menu-group-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-quaternary);
+/* ---------- Menu (sidebar nav) ----------
+   The same component used for this very style guide's own left sidebar
+   nav — it's themed like any other surface (var(--bg-container)), not
+   hardcoded to a fixed dark panel. .is-on marks the active item; the
+   count chip on the right uses .shield-badge-count from above. */
+/* A vertical list of navigation items with a small gap between them. */
+.shield-menu { display: flex; flex-direction: column; gap: 2px; }
+/* A small uppercase heading that groups menu items. */
+.shield-menu-group-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-quaternary);
   padding: 14px 16px 6px;
 }
-.sl-menu-item {
-  height: 40px; padding: 0 16px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 10px;
-  font-size: 14px; color: var(--text-secondary); cursor: pointer; background: none; border: none; width: 100%; text-align: left;
-  font-family: var(--font-body); justify-content: space-between;
+/* One menu row: icon and label on the left, optional count on the right. */
+.shield-menu-item {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  justify-content: space-between;
 }
-.sl-menu-item:hover { background: var(--fill-secondary); color: var(--text); }
-.sl-menu-item.on { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
-:root[data-theme="dark"] .sl-menu-item.on { background: rgba(24, 171, 237, 0.16); }
-.sl-menu-item .sl-menu-item-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.sl-menu-item svg { flex-shrink: 0; opacity: 0.85; }
+/* Hover color, and the blue highlight for the current page (.is-on). */
+.shield-menu-item:hover { background: var(--fill-secondary); color: var(--text); }
+.shield-menu-item.is-on { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
+:root[data-theme="dark"] .shield-menu-item.is-on { background: rgba(24, 171, 237, 0.16); } /* same dark-mode override reason as .shield-select-option.selected above */
+.shield-menu-item .shield-menu-item-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
+/* Keeps icons from shrinking and slightly softens them. */
+.shield-menu-item svg { flex-shrink: 0; opacity: 0.85; }
 
-/* ---------- Skeleton ---------- */
-.sl-sk { display: inline-block; max-width: 100%; flex: none; background: var(--fill-secondary); position: relative; overflow: hidden; border-radius: var(--radius-sm); }
-.sl-sk::after {
-  content: ""; position: absolute; inset: 0;
+/* ---------- Skeleton / Spin ----------
+   .shield-skeleton is a placeholder block shown in place of content that's still
+   loading (size it inline per use, e.g. style="width:60%;height:20px").
+   The ::after pseudo-element sweeps a soft highlight across it on a
+   loop to read as "loading," not just a flat gray box. .shield-spinner is a
+   simple rotating-ring spinner, independent of the skeleton. */
+.shield-skeleton { display: inline-block; max-width: 100%; flex: none; background: var(--fill-secondary); position: relative; overflow: hidden; border-radius: var(--radius-sm); }
+.shield-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--bg-container) 60%, transparent), transparent);
-  transform: translateX(-100%); animation: skSweep 1.5s ease-in-out infinite;
+  transform: translateX(-100%);
+  animation: skSweep 1.5s ease-in-out infinite;
 }
 @keyframes skSweep { to { transform: translateX(100%); } }
-.sl-spinner {
-  display: inline-block; border: 2px solid var(--fill-secondary); border-top-color: var(--brand-blue-dark);
-  border-radius: 50%; width: 20px; height: 20px; animation: spin 0.7s linear infinite;
+.shield-spinner {
+  display: inline-block;
+  border: 2px solid var(--fill-secondary);
+  border-top-color: var(--brand-blue-dark); /* the one side colored differently is what makes it look like it's spinning */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-.sl-loading-page { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 100px 24px; color: var(--text-tertiary); }
+.shield-loading-page { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 100px 24px; color: var(--text-tertiary); } /* a full-page loading state, e.g. while a route's data is being fetched */
 
-/* ---------- Toast ---------- */
-.sl-toast-stack { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 8px; align-items: center; }
-.sl-toast {
-  display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: var(--radius-md);
-  background: var(--bg-elevated); border: 1px solid var(--border-secondary); box-shadow: var(--shadow-md);
-  font-size: 13.5px; color: var(--text); animation: fadeUp 0.2s ease both; min-width: 200px;
+/* ---------- Toast ----------
+   .shield-toast-stack is the fixed container pinned to top-center of the
+   viewport (there's exactly one on the page, in index.html, right
+   before </body>). sgPushToast() in shield.js creates and appends each
+   .shield-toast into it, and removes it again after a few seconds. */
+/* The fixed strip at the top of the screen where toasts appear. */
+.shield-toast-stack { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+/* One toast: a small floating message that fades up into view. */
+.shield-toast {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  box-shadow: var(--shadow-md);
+  font-size: 13.5px;
+  color: var(--text);
+  animation: fadeUp 0.2s ease both;
+  min-width: 200px;
 }
-.sl-toast.success { color: var(--success); }
-.sl-toast.error { color: var(--error); }
+/* Toast text colors for success and error messages. */
+.shield-toast.success { color: var(--success); }
+.shield-toast.error { color: var(--error); }
 
-/* ---------- Icons (hand-drawn stroke-based line icons) ---------- */
-.sl-icon { display: block; flex-shrink: 0; }
+/* ---------- Icons ----------
+   Every icon on this page is an inlined Font Awesome Classic (Solid)
+   <svg>, used as-is with `fill="currentColor"` so it always matches
+   the surrounding text color. This one class just resets a couple of
+   default <svg> quirks (inline whitespace gap, shrinking in a flex
+   row) — it carries no color/size of its own. See the Icons section of
+   index.html for the full set and how to add a new one. */
+.shield-icon { display: block; flex-shrink: 0; }
 
-/* ---------- misc app-shell bits reused across pages ---------- */
-.sl-eyebrow {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary);
-  margin: 0 0 10px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+/* ---------- Misc app-shell bits reused across pages ---------- */
+/* A small uppercase label that sits above a heading (e.g. "SETTINGS"). */
+.shield-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
 }
