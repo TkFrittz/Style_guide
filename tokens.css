@@ -84,25 +84,30 @@
 
   /* ----------------------------------------------------------------
      Functional colors — success / warning / error / info
-     Each mood is a matched set of three: a text color, a light
-     background, and a border — always used together (see the Tag or
-     Alert components in components.css for the pattern). All four
-     clear 4.5:1 contrast against their own background. That matters
-     because Ant Design's raw defaults (#52C41A, #FAAD14, #FF4D4F)
-     only measure 2.3:1 / 1.9:1 / 3.3:1 on white — each token below is
-     the same color ramp pushed to a darker, more readable step instead.
+     Each mood is a matched set of three: a text color, a background,
+     and a border — always used together (see the Tag or Alert
+     components in components.css for the pattern). The backgrounds
+     are saturated mid-tones, with dark text on top. Measured text-on-
+     background contrast in LIGHT mode: success 7.9:1, warning 4.9:1,
+     error 4.6:1, info 3.2:1 — so success/warning/error clear the 4.5:1
+     target and info does not. DARK mode uses the separate values
+     further down, and all four measure below 4.5:1 there. For
+     comparison, Ant Design's raw defaults (#52C41A, #FAAD14, #FF4D4F)
+     measure 2.3:1 / 1.9:1 / 3.3:1 on white. If you change any value
+     here, update the "Functional colors" cards and caption in
+     index.html to match.
      ---------------------------------------------------------------- */
-  --success: #237804;
-  --success-bg: #f6ffed;
-  --success-border: #b7eb8f;
+  --success: #174208;
+  --success-bg: #9fea55;
+  --success-border: #73c435;
   --warning: #874d00;
-  --warning-bg: #fffbe6;
+  --warning-bg: #ffd84c;
   --warning-border: #ffe58f;
-  --error: #cf1322;
-  --error-bg: #fff1f0;
+  --error: #620008;
+  --error-bg: #f6675d;
   --error-border: #ffa39e;
-  --info: var(--brand-blue-dark);  /* "info" reuses the brand color rather than inventing a 5th hue */
-  --info-bg: var(--blue-1);
+  --info: var(--blue-8);  /* "info" reuses the brand color rather than inventing a 5th hue */
+  --info-bg: var(--blue-5);
   --info-border: var(--blue-3);
 
   /* ----------------------------------------------------------------
@@ -145,15 +150,18 @@
     0 9px 28px 8px rgba(0, 0, 0, 0.05);
 
   /* ----------------------------------------------------------------
-     Type — Catamaran carries headings/the brand mark, Lexend carries
-     body copy and every control. Both are loaded as webfonts via the
-     Google Fonts <link> tags in index.html's <head> (weights 500–800
-     for Catamaran, 400–700 for Lexend). The rest of each stack
-     (-apple-system, "Segoe UI", sans-serif) only kicks in if that
-     Google Fonts request fails — same shape, not a real fallback look.
+     Type — Fraunces carries headings/the brand mark, Satoshi carries
+     body copy and every control. Both are VARIABLE webfonts: the files
+     live in the fonts/ folder and are declared in fonts.css (which
+     index.html's <head> loads). Because each file covers every weight
+     (Fraunces 100–900, Satoshi 300–900), any font-weight number in
+     components.css renders exactly as written — no weight needs to be
+     avoided. The rest of each stack (Georgia, serif for headings;
+     -apple-system, "Segoe UI", sans-serif for body) only kicks in if
+     the font files fail to load.
      ---------------------------------------------------------------- */
-  --font-heading: "Catamaran", -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Lexend", -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Fraunces", Georgia, serif;
+  --font-body: "Satoshi", -apple-system, "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* ---- motion ---- */
@@ -188,14 +196,14 @@
   --fill-tertiary: rgba(255, 255, 255, 0.08);
   --fill-quaternary: rgba(255, 255, 255, 0.04);
 
-  --success: #35c235;
-  --success-bg: rgba(35, 120, 4, 0.15);
+  --success: #18cb18;
+  --success-bg: rgb(32, 120, 0);
   --success-border: rgba(183, 235, 143, 0.3);
   --warning: #fab219;
-  --warning-bg: rgba(135, 77, 0, 0.15);
+  --warning-bg: rgb(108, 98, 13);
   --warning-border: rgba(255, 229, 143, 0.3);
-  --error: #e66767;
-  --error-bg: rgba(207, 19, 34, 0.15);
+  --error: #da1111;
+  --error-bg: rgb(97, 4, 12);
   --error-border: rgba(255, 163, 158, 0.3);
 
   /* Dark mode needs darker/stronger shadows to read against a near-black
@@ -249,7 +257,7 @@ code {
   color: var(--text);
 }
 
-button { font: inherit; } /* without this, buttons default to the browser's system font, not Lexend */
+button { font: inherit; } /* without this, buttons default to the browser's system font, not Satoshi */
 
 table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
 

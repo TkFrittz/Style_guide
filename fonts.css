@@ -1,0 +1,36 @@
+/* Self-hosted fonts, so they work even when index.html is opened straight from disk.
+   Both are VARIABLE fonts: one file covers every weight from 100 to 900, so any
+   font-weight value used in components.css (400, 500, 600, 650, 700...) renders
+   as itself instead of snapping to the nearest weight that happened to be loaded.
+   - Fraunces (headings), from Google Fonts. Also adjusts its shapes automatically
+     for text size ("optical size").
+   - Satoshi (body and controls), from Fontshare. */
+
+/* Fraunces — latin-ext characters */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('fonts/Fraunces-latin-ext.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Fraunces — latin characters */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('fonts/Fraunces-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Satoshi — all weights */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('fonts/Satoshi-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}

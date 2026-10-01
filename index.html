@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <title>Shield Engineering — Style Guide</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Catamaran:wght@500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="components.css">
 <style>
@@ -205,7 +204,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section>
       <h2>Overview</h2>
       <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Engineering blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>shield-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
-      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Catamaran</b> for headings, <b style="color:var(--text)">Lexend</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar (the sidebar's own background themes with it, same as every other surface).</p>
+      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Fraunces</b> for headings, <b style="color:var(--text)">Satoshi</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar (the sidebar's own background themes with it, same as every other surface).</p>
       <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
@@ -243,29 +242,29 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
       <h3 class="sub">Functional colors — one bg/border/text formula, four moods</h3>
       <div class="func-row">
-        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #103801</div><div>bg #6aba1b</div><div>border #1e340d</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #874f06</div><div>bg #ecca22</div><div>border #FFE58F</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #5f070f</div><div>bg #df3a2f</div><div>border #FFA39E</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = brand-blue-dark</div><div>bg = blue-1</div><div>border = blue-3</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #174208</div><div>bg #9FEA55</div><div>border #73C435</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #874D00</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #620008</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-8 (brand-blue-dark)</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
       </div>
-      <p class="lede">All four clear 4.5:1 on their own background. Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; each token above is the same ramp pushed to a darker step instead.</p>
+      <p class="lede">Each mood is a text color on a saturated mid-tone background (not a pale tint). In light mode, text on its own background measures 7.9:1 for success, 4.9:1 for warning and 4.6:1 for error — all above the 4.5:1 target — but only 3.2:1 for info, which falls short of it. Dark mode uses its own values (see <code>tokens.css</code>), and all four moods measure below 4.5:1 there (2.6:1 success, 3.4:1 warning, 2.7:1 error, 3.2:1 info). For comparison, Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; the text colors above are the same ramps pushed to a much darker step.</p>
     </section>
 
-    <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Catamaran/Lexend
+    <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
              webfonts loaded via <head>. Static. -->
     <section id="typography">
       <h2>Typography</h2>
-      <p class="lede">Catamaran carries headings and the brand mark; Lexend carries body copy and every control. Both load from Google Fonts as variable-weight families — no system-font fallback in normal use, just a same-shape fallback stack if the network request fails.</p>
+      <p class="lede">Fraunces carries headings and the brand mark; Satoshi carries body copy and every control. Both are variable fonts (every weight from light to black is available) downloaded into this project's <code>fonts/</code> folder — Fraunces from Google Fonts, Satoshi from Fontshare — no system-font fallback in normal use, just a system sans-serif fallback stack if the font files fail to load.</p>
       <div class="font-cards">
         <div class="font-card">
           <div class="spec" style="margin:0">--font-heading</div>
-          <div class="sample" style="font-family:var(--font-heading);font-weight:700">Catamaran</div>
-          <div class="weights">weights loaded: 500 · 600 · 700 · 800</div>
+          <div class="sample" style="font-family:var(--font-heading);font-weight:700">Fraunces</div>
+          <div class="weights">weights available: 100–900 (variable font)</div>
         </div>
         <div class="font-card">
           <div class="spec" style="margin:0">--font-body</div>
-          <div class="sample" style="font-family:var(--font-body);font-weight:400">Lexend</div>
-          <div class="weights">weights loaded: 400 · 500 · 600 · 700</div>
+          <div class="sample" style="font-family:var(--font-body);font-weight:400">Satoshi</div>
+          <div class="weights">weights available: 300–900 (variable font)</div>
         </div>
       </div>
       <h3 class="sub">Title — <code>shield-title h1..h5</code></h3>
