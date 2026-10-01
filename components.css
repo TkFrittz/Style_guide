@@ -146,9 +146,9 @@
 .shield-button {
   font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 400;
+  font-weight: var(--weight-small);
   line-height: 22px;
-  border-radius: var(--radius-md);
+  border-radius: 42px; /* pill-shaped: one value for every button, every size and variant */
   border: 1px solid transparent;
   padding: 4px 15px;
   height: 32px;
@@ -158,17 +158,32 @@
   justify-content: center;
   gap: 6px;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
   white-space: nowrap;
 }
 .shield-button.block { width: 100%; } /* stretches the button to fill its container */
 /* Size options: .small is 24px tall, .large is 40px tall; with neither, the button is the standard 32px. */
-.shield-button.small { height: 24px; padding: 0 7px; font-size: 13px; }
+.shield-button.small { height: 24px; padding: 0 7px; font-size: 13px; font-weight: var(--weight-small); }
 .shield-button.large { height: 40px; padding: 6px 15px; font-size: 16px; }
 
+/* Button shadow: ONLY the two "main action" buttons get one — Primary (solid blue) and Danger (solid red).
+   Default, Dashed, Text, Link, the outlined Danger (default) and disabled buttons have none.
+   It is soft and faint: "0 2px 12px" = no sideways shift, 2px down, 12px of blur; the last value is the
+   shadow color (black at 14% strength). Raise that last number for a stronger shadow, raise 12px for a softer one.
+   Hover swaps in its own slightly bigger values. Dark mode has its own lines (a shadow needs more strength to show). */
+.shield-button-primary,
+.shield-button-danger:not(.shield-button-default) { box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.14); }
+.shield-button-primary:hover:not(:disabled),
+.shield-button-danger:not(.shield-button-default):hover:not(:disabled) { box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2); }
+:root[data-theme="dark"] .shield-button-primary,
+:root[data-theme="dark"] .shield-button-danger:not(.shield-button-default) { box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.45); }
+:root[data-theme="dark"] .shield-button-primary:hover:not(:disabled),
+:root[data-theme="dark"] .shield-button-danger:not(.shield-button-default):hover:not(:disabled) { box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.55); }
+.shield-button:disabled { box-shadow: none !important; }
+
 /* PRIMARY: solid brand-blue. Use once per screen for the main action. */
-.shield-button-primary { background: var(--brand-blue-dark); color: #fff; }
-.shield-button-primary:hover:not(:disabled) { background: var(--blue-7); }
+.shield-button-primary { background: var(--blue-7); color: #fff; }
+.shield-button-primary:hover:not(:disabled) { background: var(--blue-8); }
 
 /* DEFAULT: white with a gray outline. For ordinary secondary actions. */
 .shield-button-default { background: var(--bg-container); color: var(--text); border-color: var(--border); }
@@ -202,7 +217,10 @@
   border-color: var(--border) !important;
   cursor: not-allowed;
 }
-.shield-button .shield-spinner { width: 14px; height: 14px; } /* shrinks the loading spinner to fit inside a button */
+/* Loading spinner inside a button: sized to fit, and drawn in the button's own TEXT color
+   (currentColor = "whatever color the text is"), so it always matches — white on Primary/Danger,
+   dark on Default, and so on. The faint ring behind the spinning arc is the same color at 25% strength. */
+.shield-button .shield-spinner { width: 14px; height: 14px; border-color: color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; }
 
 /* ---------- Input / TextArea ----------
    .shield-input-wrap wraps an <input> so prefix/suffix icons can be
@@ -314,6 +332,7 @@
   border-radius: var(--radius-sm);
   padding: 0 4px 0 8px;
   max-width: 220px;
+  font-weight: var(--weight-small);
 }
 /* The tiny × button inside a chip. */
 .shield-select-tag-remove {
@@ -389,9 +408,9 @@
 .shield-select-option.selected { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
 :root[data-theme="dark"] .shield-select-option.selected { background: rgba(24, 171, 237, 0.16); } /* blue-1 reads too light on a dark background, so dark mode gets its own translucent highlight instead */
 /* The "No matches" message shown when the search filters out every option. */
-.shield-select-empty { padding: 14px 10px; font-size: 13px; color: var(--text-tertiary); text-align: center; }
+.shield-select-empty { padding: 14px 10px; font-size: 13px; color: var(--text-tertiary); text-align: center; font-weight: var(--weight-small); }
 /* A small caption that says how many options matched the search. */
-.shield-select-match-count { display: block; margin-bottom: var(--space-4); font-size: 12.5px; color: var(--text-secondary); }
+.shield-select-match-count { display: block; margin-bottom: var(--space-4); font-size: 12.5px; color: var(--text-secondary); font-weight: var(--weight-small); }
 
 /* ---------- Checkbox / Radio / Switch / Segmented ----------
    .shield-check-row wraps a checkbox or radio together with its label text
@@ -418,7 +437,7 @@
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .shield-checkbox svg { display: none; width: 10px; height: 10px; } /* the checkmark icon, hidden until .is-on is added */
-.shield-checkbox.is-on { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+.shield-checkbox.is-on { background: var(--blue-7); border-color: var(--blue-7); }
 .shield-checkbox.is-on svg { display: block; }
 .shield-checkbox.disabled { background: var(--fill-tertiary); }
 
@@ -435,8 +454,8 @@
   flex-shrink: 0;
   transition: border-color 0.15s ease;
 }
-.shield-radio.is-on { border-color: var(--brand-blue-dark); }
-.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); } /* the filled center dot */
+.shield-radio.is-on { border-color: var(--blue-7); }
+.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-7); } /* the filled center dot */
 
 /* The switch (on/off toggle). The track is the pill-shaped background; the thumb is the white circle that slides. */
 .shield-switch-track {
@@ -455,7 +474,7 @@
 }
 /* Small switch variant, plus the colors for the on and disabled states. */
 .shield-switch-track.small { width: 32px; height: 16px; }
-.shield-switch-track.is-on { background: var(--brand-blue-dark); }
+.shield-switch-track.is-on { background: var(--blue-7); }
 .shield-switch-track:disabled { opacity: 0.4; cursor: not-allowed; }
 /* The white circle that slides left (off) and right (on). */
 .shield-switch-thumb {
@@ -500,7 +519,7 @@
 }
 /* Hover color, and the filled blue look for the currently selected button. */
 .shield-segmented button:hover { color: var(--text); background: var(--fill-secondary); }
-.shield-segmented button.is-on { background: var(--brand-blue-dark); color: #fff; }
+.shield-segmented button.is-on { background: var(--blue-7); color: #fff; }
 
 /* ---------- Tag / Pill ----------
    .shield-tag = the base tag; add a mood class (.success/.warning/.error/
@@ -521,6 +540,7 @@
   color: var(--text);
   padding: 0 7px;
   white-space: nowrap;
+  font-weight: var(--weight-small);
 }
 .shield-tag button { background: none; border: none; padding: 0; color: inherit; opacity: 0.6; cursor: pointer; font-size: 11px; line-height: 1; } /* the × remove button inside a tag */
 .shield-tag button:hover { opacity: 1; }
@@ -532,7 +552,7 @@
 .shield-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #9a7b2f; } /* a one-off accent color, not part of the four-mood functional set above */
 /* Toggleable tag: clickable, and turns solid blue once .checked is added. */
 .shield-tag.checkable { cursor: pointer; user-select: none; }
-.shield-tag.checkable.checked { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
+.shield-tag.checkable.checked { background: var(--blue-7); border-color: var(--blue-7); color: #fff; }
 
 /* A fully rounded status label, typically paired with a colored dot. */
 .shield-pill {
@@ -589,7 +609,7 @@
 /* Lets a wide table scroll sideways instead of overflowing the page. */
 .shield-table-scroll { overflow-x: auto; overflow-y: hidden; }
 /* Table basics: full width, no gaps between cells. */
-table.shield-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.shield-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-weight: var(--weight-small); }
 /* Header cells: small, uppercase, gray text so they do not compete with the data. */
 table.shield-table th {
   text-align: left;
@@ -668,11 +688,11 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    and, optionally, .shield-alert-description) and an .shield-alert-close × button
    wired to sgDismissAlert() in shield.js. */
 /* Alert banner layout: icon, text, then a close button, in a row. */
-.shield-alert { display: flex; gap: 10px; padding: 10px 14px; border-radius: var(--radius-lg); border: 1px solid; font-size: 13.5px; align-items: flex-start; }
+.shield-alert { display: flex; gap: 10px; padding: 10px 14px; border-radius: var(--radius-lg); border: 1px solid; font-size: 13.5px; align-items: flex-start; font-weight: var(--weight-small); }
 .shield-alert-icon { flex: none; margin-top: 1px; }
 .shield-alert-body { flex: 1; min-width: 0; }
 .shield-alert-title { font-weight: 600; }
-.shield-alert-description { color: var(--text-secondary); font-size: 12.5px; margin-top: 3px; }
+.shield-alert-description { color: var(--text-secondary); font-size: 12.5px; margin-top: 3px; font-weight: var(--weight-small); }
 .shield-alert-description ul { margin: 4px 0 0; padding-left: 18px; }
 .shield-alert-close { margin-left: auto; background: none; border: none; color: inherit; opacity: 0.55; cursor: pointer; font-size: 14px; line-height: 1; padding: 2px; }
 .shield-alert-close:hover { opacity: 1; }
@@ -688,7 +708,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* Centered, faint "nothing here" placeholder. */
 .shield-empty { padding: 48px 24px; text-align: center; color: var(--text-tertiary); }
 .shield-empty-icon { margin: 0 auto 10px; opacity: 0.5; width: 48px; height: 48px; }
-.shield-empty-description { font-size: 13.5px; }
+.shield-empty-description { font-size: 13.5px; font-weight: var(--weight-small); }
 
 /* ---------- Steps / Rail ----------
    A horizontal row of numbered steps connected by lines, driven by
@@ -718,8 +738,8 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* Step states: done = filled blue circle, current = blue outline. Titles darken for both. */
 .shield-step.done .shield-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
 .shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); }
-.shield-step-title { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; }
-.shield-step.done .shield-step-title, .shield-step.current .shield-step-title { color: var(--text); font-weight: 500; }
+.shield-step-title { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; font-weight: var(--weight-small); }
+.shield-step.done .shield-step-title, .shield-step.current .shield-step-title { color: var(--text); font-weight: 700; }
 /* The connector line between two steps; turns blue once the step before it is done. */
 .shield-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 0 2px; align-self: center; }
 .shield-step-line.done { background: var(--brand-blue-dark); }
@@ -734,7 +754,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-description-row { display: flex; border-bottom: 1px solid var(--border-secondary); }
 .shield-description-row:last-child { border-bottom: none; }
 .shield-description-label { width: 160px; flex: none; padding: 10px 14px; background: var(--fill-quaternary); font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
-.shield-description-value { flex: 1; padding: 10px 14px; font-size: 13px; color: var(--text); }
+.shield-description-value { flex: 1; padding: 10px 14px; font-size: 13px; color: var(--text); font-weight: var(--weight-small); }
 
 /* ---------- Timeline ----------
    A vertical list of events, each with a small dot and a connecting
@@ -746,7 +766,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-timeline-item::before { content: ""; position: absolute; left: -14px; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-blue-dark); } /* the dot */
 .shield-timeline-item::after { content: ""; position: absolute; left: -11px; top: 13px; bottom: -4px; width: 1px; background: var(--border-secondary); } /* the connecting line */
 .shield-timeline-item:last-child::after { display: none; }
-.shield-timeline-content { font-size: 13px; color: var(--text); }
+.shield-timeline-content { font-size: 13px; color: var(--text); font-weight: var(--weight-small); }
 
 /* ---------- Statistic / KPI tile strip ----------
    A CSS-grid row of stat tiles that auto-fits as many 220px-minimum
@@ -775,7 +795,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-stat.highlighted { border-color: color-mix(in srgb, var(--success) 45%, transparent); }
 .shield-stats.tight .shield-stat { padding: 10px 14px 9px; }
 /* The small gray caption above the number. */
-.shield-stat-label { font-size: 12px; color: var(--text-secondary); }
+.shield-stat-label { font-size: 12px; color: var(--text-secondary); font-weight: var(--weight-small); }
 /* The big headline number. */
 .shield-stat-value {
   font-family: var(--font-body);
@@ -792,8 +812,8 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-stat-value.positive { color: var(--success); }
 .shield-stat-value.negative { color: var(--error); }
 /* Small gray note under the number, and an amber "extra" note below a dashed line. */
-.shield-stat-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
-.shield-stat-extra { font-size: 12px; color: var(--warning); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-secondary); }
+.shield-stat-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; font-weight: var(--weight-small); }
+.shield-stat-extra { font-size: 12px; color: var(--warning); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-secondary); font-weight: var(--weight-small); }
 /* On medium screens show 2 tiles per row; on phones show 1. */
 @media (max-width: 900px) { .shield-stats { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .shield-stats { grid-template-columns: 1fr; } }
@@ -816,6 +836,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   border: none;
   font-family: var(--font-body);
   white-space: nowrap;
+  font-weight: var(--weight-small);
 }
 .shield-tab:hover { color: var(--text); }
 .shield-tab.is-on { color: var(--brand-blue-dark); font-weight: 600; }
@@ -835,7 +856,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-collapse-item summary::before { content: "›"; color: var(--text-tertiary); font-size: 14px; flex: none; transition: transform 0.15s ease; }
 .shield-collapse-item[open] summary::before { transform: rotate(90deg); } /* [open] is set automatically by the browser, not by shield.js */
 /* The text revealed when a section is opened. */
-.shield-collapse-body { padding: 0 4px 14px; font-size: 13.5px; color: var(--text-secondary); }
+.shield-collapse-body { padding: 0 4px 14px; font-size: 13.5px; color: var(--text-secondary); font-weight: var(--weight-small); }
 
 /* ---------- Dropdown ----------
    A trigger element (often an .shield-button) wrapped in .shield-dropdown, next to
@@ -875,6 +896,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   width: 100%;
   text-align: left;
   font-family: var(--font-body);
+  font-weight: var(--weight-small);
 }
 .shield-dropdown-item:hover { background: var(--fill-secondary); }
 .shield-dropdown-item.danger { color: var(--error); }
@@ -915,13 +937,14 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   text-align: center;
   padding: 0 5px;
   font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-small);
 }
 .shield-badge-count.on-dark { background: rgba(255, 255, 255, 0.15); color: #fff; } /* for use on top of a dark/colored surface instead of the default page background */
 
 /* ---------- Menu (sidebar nav) ----------
    The same component used for this very style guide's own left sidebar
-   nav — it's themed like any other surface (var(--bg-container)), not
-   hardcoded to a fixed dark panel. .is-on marks the active item; the
+   nav — its background is the --sider-bg token (separate light and
+   dark values in tokens.css), not hardcoded to a fixed dark panel. .is-on marks the active item; the
    count chip on the right uses .shield-badge-count from above. */
 /* A vertical list of navigation items with a small gap between them. */
 .shield-menu { display: flex; flex-direction: column; gap: 2px; }
@@ -951,6 +974,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   text-align: left;
   font-family: var(--font-body);
   justify-content: space-between;
+  font-weight: var(--weight-small);
 }
 /* Hover color, and the blue highlight for the current page (.is-on). */
 .shield-menu-item:hover { background: var(--fill-secondary); color: var(--text); }
@@ -1009,6 +1033,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   color: var(--text);
   animation: fadeUp 0.2s ease both;
   min-width: 200px;
+  font-weight: var(--weight-small);
 }
 /* Toast text colors for success and error messages. */
 .shield-toast.success { color: var(--success); }

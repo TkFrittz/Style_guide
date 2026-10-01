@@ -10,16 +10,16 @@
 <style>
 /* ---- page-specific layout (the style guide's own chrome, not shipped component styles) ---- */
 .shell{display:flex;min-height:100vh}
-.side{width:240px;flex-shrink:0;background:var(--bg-container);border-right:1px solid var(--border-secondary);position:sticky;top:0;height:100vh;overflow-y:auto}
+.side{width:240px;flex-shrink:0;background:var(--sider-bg);border-right:1px solid var(--border-secondary);position:sticky;top:0;height:100vh;overflow-y:auto}
 .side-brand{padding:24px 24px 14px;border-bottom:1px solid var(--border-secondary);display:flex;align-items:center;gap:12px}
 .side-brand .brand-logo{width:28px;height:28px;flex-shrink:0}
 .side-brand .mark{font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--text)}
 .side-brand .mark span{color:var(--brand-blue-dark)}
-.side-brand .sub{font-size:12px;color:var(--text-tertiary);margin-top:2px}
+.side-brand .sub{font-size:12px;color:var(--text-tertiary);margin-top:2px;font-weight:var(--weight-small)}
 .side-theme{padding:14px 24px;border-bottom:1px solid var(--border-secondary)}
 .side-nav{padding:12px}
 .side-nav .grp{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-quaternary);padding:14px 12px 6px}
-.side-nav a{display:block;padding:6px 12px;border-radius:var(--radius-md);font-size:13.5px;color:var(--text-secondary);text-decoration:none}
+.side-nav a{display:block;padding:6px 12px;border-radius:var(--radius-md);font-size:13.5px;color:var(--text-secondary);text-decoration:none;font-weight:var(--weight-small)}
 .side-nav a:hover{background:var(--fill-secondary);color:var(--text)}
 .main{flex:1;min-width:0;max-width:960px;margin:0 auto;padding:56px 48px 120px}
 section{margin-bottom:64px;scroll-margin-top:24px}
@@ -44,12 +44,12 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .sw{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border-secondary)}
 .sw .fill{height:64px}
 .sw .meta{padding:8px 10px;background:var(--bg-container)}
-.sw .meta b{display:block;font-size:12.5px}
+.sw .meta b{display:block;font-size:12.5px;font-weight:var(--weight-small)}
 .sw .meta span{display:block;font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono)}
 .neutral-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-3);margin:16px 0}
 .n-sw{border:1px solid var(--border-secondary);border-radius:var(--radius-md);padding:14px;background:var(--bg-container)}
 .n-sw .chip{width:100%;height:40px;border-radius:var(--radius-sm);border:1px solid var(--border-secondary);margin-bottom:8px}
-.n-sw b{font-size:12.5px;display:block}
+.n-sw b{font-size:12.5px;display:block;font-weight:var(--weight-small)}
 .n-sw span{font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono)}
 .func-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:16px 0}
 .func-card{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border-secondary)}
@@ -58,7 +58,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .func-card .body div{padding:2px 0}
 .sidebar-swatch{border-radius:var(--radius-lg);background:var(--sider-bg);padding:16px 18px;margin:16px 0;display:flex;flex-wrap:wrap;gap:24px}
 .sidebar-swatch .item{font-size:12px;font-family:var(--font-mono)}
-.sidebar-swatch .item b{display:block;font-family:var(--font-body);font-size:12.5px;margin-bottom:6px}
+.sidebar-swatch .item b{display:block;font-family:var(--font-body);font-size:12.5px;margin-bottom:6px;font-weight:var(--weight-small)}
 
 /* ---- type scale ---- */
 .type-row{display:flex;align-items:baseline;gap:20px;padding:14px 0;border-bottom:1px solid var(--border-secondary)}
@@ -107,7 +107,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .demo-row:last-child{margin-bottom:0}
 .demo-row.stack{align-items:stretch;flex-direction:column;gap:10px}
 .demo-label{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-tertiary);width:100%}
-.spec{font-size:12.5px;color:var(--text-tertiary);margin-top:10px}
+.spec{font-size:12.5px;color:var(--text-tertiary);margin-top:10px;font-weight:var(--weight-small)}
 .spec code{margin-right:4px}
 .field{width:220px}
 .field-wide{width:320px}
@@ -119,16 +119,16 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .sg-upload-dropzone:hover,.sg-upload-dropzone.drag{border-color:var(--brand-blue);background:var(--blue-1)}
 .sg-upload-dropzone svg{color:var(--text-tertiary)}
 .sg-upload-title{font-size:14px;color:var(--text)}
-.sg-upload-hint{font-size:12px;color:var(--text-tertiary)}
+.sg-upload-hint{font-size:12px;color:var(--text-tertiary);font-weight:var(--weight-small)}
 .sg-upload-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-.sg-upload-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-container);font-size:12.5px}
+.sg-upload-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-container);font-size:12.5px;font-weight:var(--weight-small)}
 .sg-upload-item svg{color:var(--text-tertiary);flex-shrink:0}
 .sg-upload-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
 .sg-upload-size{color:var(--text-tertiary);font-family:var(--font-mono);font-size:11px}
 .sg-upload-remove{background:none;border:none;padding:2px;color:var(--text-tertiary);cursor:pointer;border-radius:var(--radius-xs);display:flex}
 .sg-upload-remove:hover{color:var(--error);background:var(--fill-secondary)}
 
-footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-secondary)}
+footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-secondary);font-weight:var(--weight-small)}
 </style>
 </head>
 <body>
@@ -204,7 +204,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section>
       <h2>Overview</h2>
       <p class="lede">This system started as Ant Design v5's tokens recolored with Shield Engineering blue. Ant Design has since been removed from the app entirely — every component is now a small, self-contained React component styled with plain CSS classes (<code>shield-*</code>), documented here class for class from <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</p>
-      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Fraunces</b> for headings, <b style="color:var(--text)">Satoshi</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar (the sidebar's own background themes with it, same as every other surface).</p>
+      <p class="lede">What survived the rebuild: the color ramp and its contrast math, the 8-step spacing scale, the radius steps, and the three-layer shadow formulas — all originally derived from Ant's methodology, none of it Ant's code anymore. What's new: two brand webfonts (<b style="color:var(--text)">Fraunces</b> for headings, <b style="color:var(--text)">Satoshi</b> for body) in place of the system-font stack, a full set of <a href="#icons">Font Awesome</a> (Classic, Solid) icons replacing <code>@ant-design/icons</code>, and real light/dark theming via a <code>data-theme</code> attribute — try the toggle in the sidebar (the sidebar's own background, the <code>sider-bg</code> token, themes with it too).</p>
       <p class="lede">Everything below is a working component, not a screenshot — open the select, flip the switch, dismiss a tag, push a toast.</p>
     </section>
 
@@ -220,34 +220,35 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-4)"></div><div class="meta"><b>blue-4</b><span>#6BDAFF · 1.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-5)"></div><div class="meta"><b>blue-5</b><span>#41C6FA · 2.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-6)"></div><div class="meta"><b>blue-6 · base</b><span>#18ABED · 2.6:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7</b><span>#0A85C7 · 4.0:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · buttons &amp; checked</b><span>#0A85C7 · 4.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action</b><span>#0063A1 · 6.4:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only — 2.6:1 contrast, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) is the action color: buttons, links, selected state, focus rings.</p>
+      <p class="lede"><b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only — 2.6:1 contrast, not text-safe. <b style="color:var(--text)">brand-blue-dark</b> (step 8) is the action color for links, focus rings and selected menu items, tabs and options. Buttons and on/checked controls (checkboxes, radios, switches, checkable tags, the segmented control) use <b style="color:var(--text)">blue-7</b> (step 7) instead.</p>
 
       <h3 class="sub">Neutral colors — light / dark</h3>
       <div class="neutral-grid">
         <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF · #141414</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#F5F5F5 · #000000</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#FFFBF9 · #121212</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--sider-bg)"></div><b>sider-bg</b><span>#FFFBF9 · #121212 · sidebar</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--fill-secondary)"></div><b>fill-secondary</b><span>rgba(0,0,0,.06) · rgba(255,255,255,.12)</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#F0F0F0 · #303030</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgba(0,0,0,.88) · rgba(255,255,255,.85)</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>.65 · .65</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>.45 · .45</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#484545 at 37% · #303030</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgb(0,0,0) · rgba(255,255,255,.85)</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>rgb(0,0,0) · rgba(255,255,255,.65)</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>rgb(0,0,0) · rgba(255,255,255,.45)</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b>bg-spotlight</b><span>toast / tooltip surface</span></div>
       </div>
       <p class="lede">Toggle the sidebar theme control — every swatch, card and demo on this page repaints from the same tokens, the same way the app itself does when <code>ThemeModeProvider</code> flips <code>document.documentElement.dataset.theme</code>.</p>
 
       <h3 class="sub">Functional colors — one bg/border/text formula, four moods</h3>
       <div class="func-row">
-        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #174208</div><div>bg #9FEA55</div><div>border #73C435</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #874D00</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #620008</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-8 (brand-blue-dark)</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #89C849</div><div>border #73C435</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #5C3400</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #4C0107</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-9</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
       </div>
-      <p class="lede">Each mood is a text color on a saturated mid-tone background (not a pale tint). In light mode, text on its own background measures 7.9:1 for success, 4.9:1 for warning and 4.6:1 for error — all above the 4.5:1 target — but only 3.2:1 for info, which falls short of it. Dark mode uses its own values (see <code>tokens.css</code>), and all four moods measure below 4.5:1 there (2.6:1 success, 3.4:1 warning, 2.7:1 error, 3.2:1 info). For comparison, Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; the text colors above are the same ramps pushed to a much darker step.</p>
+      <p class="lede">Each mood is a text color on a saturated mid-tone background (not a pale tint). In light mode, text on its own background measures 5.9:1 for success, 7.8:1 for warning, 5.3:1 for error and 4.9:1 for info — all above the 4.5:1 target. Dark mode uses its own values (see <code>tokens.css</code>): success measures 4.8:1 there (above the target), while warning (3.4:1), error (2.7:1) and info (3.2:1) fall below 4.5:1. Info has separate light and dark values — light uses <code>blue-9</code> for its text, dark uses <code>blue-8</code>. For comparison, Ant's raw defaults — <code>#52C41A</code>, <code>#FAAD14</code>, <code>#FF4D4F</code> — measure 2.3:1, 1.9:1 and 3.3:1 on white; the text colors above are the same ramps pushed to a much darker step.</p>
     </section>
 
     <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
@@ -275,13 +276,17 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="type-row"><span class="tagcell">h5</span><span class="sample shield-title h5">Inline emphasis titles</span><span class="meta">16 / 24 · 600</span></div>
       <h3 class="sub">Text — <code>shield-text</code> variants, all at the 14px body size</h3>
       <div class="type-row"><span class="tagcell">default</span><span class="sample shield-text">Default body copy</span><span class="meta">14 / 22 · 400</span></div>
-      <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary — captions, helper text</span><span class="meta">.65 opacity</span></div>
-      <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary — placeholders, timestamps</span><span class="meta">.45 opacity</span></div>
+      <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary — captions, helper text</span><span class="meta">light: solid black · dark: .65 white</span></div>
+      <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary — placeholders, timestamps</span><span class="meta">light: solid black · dark: .45 white</span></div>
       <div class="type-row"><span class="tagcell">strong</span><span class="sample shield-text strong">Strong — emphasized inline text</span><span class="meta">weight 600</span></div>
       <div class="type-row"><span class="tagcell">success</span><span class="sample shield-text success">Success text</span><span class="meta">var(--success)</span></div>
       <div class="type-row"><span class="tagcell">warning</span><span class="sample shield-text warning">Warning text</span><span class="meta">var(--warning)</span></div>
       <div class="type-row"><span class="tagcell">danger</span><span class="sample shield-text danger">Danger text</span><span class="meta">var(--error)</span></div>
       <div class="type-row"><span class="tagcell">code</span><span class="sample shield-text code">order.status</span><span class="meta">12.5 · mono</span></div>
+      <h3 class="sub">Small text — <code>--weight-small</code></h3>
+      <p class="lede">Satoshi looks light at small sizes, so small text and control labels (buttons, tabs, menu items, tags, table cells, captions, alerts, toasts, step titles, stat labels) use <code>--weight-small</code> (500) instead of the normal 400. Everything else (paragraphs, typed input text) stays at 400. Change that one token in <code>tokens.css</code> to adjust all of it at once.</p>
+      <div class="type-row"><span class="tagcell">400</span><span class="sample shield-text" style="font-size:12.5px;font-weight:400">Regular weight at 12.5px — thin and harder to read</span><span class="meta">not used for small text</span></div>
+      <div class="type-row"><span class="tagcell">500</span><span class="sample shield-text" style="font-size:12.5px;font-weight:var(--weight-small)">Small-text weight at 12.5px — what the components use</span><span class="meta">--weight-small</span></div>
     </section>
 
     <!-- Demonstrates the --space-* and --radius-* scale tokens from tokens.css. Static. -->
@@ -301,7 +306,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="radius-row">
         <div><div class="box" style="border-radius:var(--radius-xs)"></div><span>xs · 2</span></div>
         <div><div class="box" style="border-radius:var(--radius-sm)"></div><span>sm · 4</span></div>
-        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6 · buttons, inputs</span></div>
+        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6 · inputs, cards</span></div>
         <div><div class="box" style="border-radius:var(--radius-lg)"></div><span>lg · 8 · cards, modals</span></div>
         <div><div class="box" style="border-radius:var(--radius-full)"></div><span>full · pill / switch</span></div>
       </div>
@@ -421,7 +426,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. Static; clicking these buttons doesn't do anything. -->
     <section id="button">
       <h2>Button <span class="live-badge">Live</span></h2>
-      <p class="lede">Five variants. Primary fills with <code>brand-blue-dark</code>, not the base brand color — see Color, above.</p>
+      <p class="lede">Seven looks: Primary, Default, Dashed, Text, Link, Danger and Danger (default), plus a Disabled state. Primary fills with <code>blue-7</code> (<code>#0A85C7</code>, one step lighter than <code>brand-blue-dark</code>) and darkens to <code>blue-8</code> on hover, not the base brand color — see Color, above. White text on <code>blue-7</code> measures 4.0:1, a little under the 4.5:1 target. Button colors in <code>components.css</code> read from the color tokens in <code>tokens.css</code> (<code>brand-blue-dark</code>, <code>error</code>, <code>border</code> and so on), so changing a token also changes the buttons. Buttons are pill-shaped (42px radius), use the small-text weight, and only the two main-action buttons (Primary and solid Danger) carry a faint, soft shadow, with its own hover values.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
           <button class="shield-button shield-button-primary">Primary</button>
@@ -442,7 +447,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <button class="shield-button shield-button-primary"><span class="shield-spinner" style="width:14px;height:14px;border-width:2px"></span>Saving…</button>
           <button class="shield-button shield-button-default"><svg class="shield-icon" width="12.25" height="14" viewBox="0 0 448 512" fill="currentColor"><path d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/></svg>Add product</button>
         </div>
-        <div class="spec"><code>radius-md</code><code>height 32</code><code>padding 4 15</code></div>
+        <div class="spec"><code>radius 42px (pill)</code><code>shadow: Primary &amp; Danger only · 0 2 12 · 14%</code><code>height 32</code><code>padding 4 15</code></div>
       </div>
     </section>
 
@@ -588,7 +593,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
             <button type="button" onclick="sgSegPick(this)">Grid</button>
           </div>
         </div>
-        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → brand-blue-dark</code></div>
+        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → blue-7</code></div>
       </div>
     </section>
 
@@ -919,7 +924,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              Clicking an item calls shield.js's sgSelectMenuItem() to mark it active. -->
     <section id="menu">
       <h2>Menu <span class="live-badge">Live</span></h2>
-      <p class="lede">The sidebar nav — themed like every other surface (<code>bg-container</code>), not a fixed dark panel. Selected uses <code>blue-1</code> / <code>brand-blue-dark</code>, the same pairing <a href="#select">Select</a> uses for its selected option.</p>
+      <p class="lede">The sidebar nav — its background is the <code>sider-bg</code> token, which has separate light and dark values, so it themes like every other surface and is not a fixed dark panel. Selected uses <code>blue-1</code> / <code>brand-blue-dark</code>, the same pairing <a href="#select">Select</a> uses for its selected option.</p>
       <div class="demo">
         <nav class="shield-menu" style="width:220px">
           <div class="shield-menu-group-label">Platform</div>
