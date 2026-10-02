@@ -76,7 +76,7 @@
   --bg-layout: #fffbf9;                 /* the page background behind cards */
   --bg-elevated: #fffbf9;               /* modals, dropdowns — things that float above the page */
   --bg-spotlight: rgba(0, 0, 0, 0.85);  /* dark surface used by toasts/tooltips, even in light mode */
-  --sider-bg: #fffbf9;                  /* the left sidebar's background (its own token, so it can differ from cards) */
+  --sider-bg: #fffbf9;;                  /* the left sidebar's background (its own token, so it can differ from cards) */
   --text: rgb(0, 0, 0);          /* default body text color */
   --text-secondary: rgb(0, 0, 0);
   --text-tertiary: rgb(0, 0, 0);
@@ -104,8 +104,8 @@
      caption in index.html to match.
      ---------------------------------------------------------------- */
   --success: #114100;
-  --success-bg: #89c849;
-  --success-border: #73c435;
+  --success-bg: #91dd61;
+  --success-border: #80d842;
   --warning: #5c3400;
   --warning-bg: #ffd84c;
   --warning-border: #ffe58f;
@@ -175,6 +175,19 @@
      of the normal 400 to stay readable. Change this one number to nudge
      every small-text rule at once (components.css uses it by name). */
   --weight-small: 500;
+
+  /* Type sizes. Body text was 14px, which is small for most people, so the
+     scale now starts at 16px. Each role has one token, and components.css
+     uses them by name, so changing a number here resizes everything in
+     that role at once.
+       body    reading text: paragraphs, modal text, card titles
+       control the text inside controls: buttons, inputs, tabs, menu items
+       small   secondary content: table cells, alerts, toasts, step titles
+       caption the smallest readable text: tags, pills, stat labels, hints */
+  --font-size-body: 16px;
+  --font-size-control: 15px;
+  --font-size-small: 14px;
+  --font-size-caption: 13px;
 
   /* ---- motion ---- */
   --ease: cubic-bezier(0.25, 1, 0.35, 1); /* the easing curve for hover/open transitions */
@@ -252,8 +265,8 @@ body {
   background: var(--bg-layout);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.5714285714;
+  font-size: var(--font-size-body);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s ease, color 0.2s ease; /* smooths the light/dark theme switch */
 }
@@ -269,7 +282,7 @@ a { color: var(--brand-blue-dark); }
 
 code {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--font-size-small);
   background: var(--fill-tertiary);
   padding: 1px 5px;
   border-radius: var(--radius-xs);
@@ -278,7 +291,7 @@ code {
 
 button { font: inherit; } /* without this, buttons default to the browser's system font, not Satoshi */
 
-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table { border-collapse: collapse; width: 100%; font-size: var(--font-size-small); }
 
 /* The ring shown around whatever's focused when navigating by keyboard
    (Tab key) — :focus-visible means it's skipped for a plain mouse click,
