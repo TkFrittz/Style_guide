@@ -116,6 +116,8 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .sg-upload-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 .sg-upload-dropzone{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 20px;border:1px dashed var(--border);border-radius:var(--radius-lg);background:var(--bg-container);cursor:pointer;text-align:center;transition:border-color .15s ease,background-color .15s ease}
 .sg-upload-dropzone:hover,.sg-upload-dropzone.drag{border-color:var(--brand-blue);background:var(--blue-1)}
+/* dark mode: blue-1 is a pale tint that washes out the light text, so hover uses a soft translucent blue instead (same as the selected Select option and Menu item) */
+:root[data-theme="dark"] .sg-upload-dropzone:hover,:root[data-theme="dark"] .sg-upload-dropzone.drag{background:rgba(24,171,237,.16)}
 .sg-upload-dropzone svg{color:var(--text-tertiary)}
 .sg-upload-title{font-size:14px;color:var(--text)}
 .sg-upload-hint{font-size:12px;color:var(--text-tertiary);font-weight:var(--weight-small)}
