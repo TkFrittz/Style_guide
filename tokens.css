@@ -73,10 +73,10 @@
      ---------------------------------------------------------------- */
   color-scheme: light;
   --bg-container: #ffffff;              /* cards, panels, inputs */
-  --bg-layout: #fffbf9;                 /* the page background behind cards */
-  --bg-elevated: #fffbf9;               /* modals, dropdowns — things that float above the page */
+  --bg-layout: #fffbf7;                 /* the page background behind cards */
+  --bg-elevated: #fffbf7;               /* modals, dropdowns — things that float above the page */
   --bg-spotlight: rgba(0, 0, 0, 0.85);  /* dark surface used by toasts/tooltips, even in light mode */
-  --sider-bg: #fffbf9;;                  /* the left sidebar's background (its own token, so it can differ from cards) */
+  --sider-bg: #fffbf7;                  /* the left sidebar's background (its own token, so it can differ from cards) */
   --text: rgb(0, 0, 0);          /* default body text color */
   --text-secondary: rgb(0, 0, 0);
   --text-tertiary: rgb(0, 0, 0);
@@ -94,7 +94,7 @@
      and a border — always used together (see the Tag or Alert
      components in components.css for the pattern). The backgrounds
      are saturated mid-tones, with dark text on top. Measured text-on-
-     background contrast in LIGHT mode: success 5.9:1, warning 7.8:1,
+     background contrast in LIGHT mode: success 7.2:1, warning 7.8:1,
      error 5.3:1, info 4.9:1 — all clear the 4.5:1 target. DARK mode uses
      the separate values further down: success measures 4.8:1 there,
      warning 3.4:1, error 2.7:1 and info 3.2:1 (only success clears

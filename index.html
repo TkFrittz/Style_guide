@@ -212,7 +212,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede"><b style="color:var(--text)">Modern, but professional.</b> Clean type, generous spacing and soft rounded controls, with a tone suited to legal work. <b style="color:var(--text)">Legible first.</b> Text and status colors are tuned for contrast, because misreading a term or a status is costly. <b style="color:var(--text)">Consistent.</b> One set of tokens drives everything. <b style="color:var(--text)">Easy to change.</b> Each visual decision lives in a named token or a short CSS rule.</p>
 
       <h3 class="sub">Light mode</h3>
-      <p class="lede">Modern and professional, with a hint of warmth. The page is a faint warm white (<code>#FFFBF9</code>), like the pages of a novel or an old legal pad, and cards stay pure white so content sits on the page like sheets of paper. Text is solid black, like ink. The warmth stays subtle so it never looks yellowed in a modern technical product.</p>
+      <p class="lede">Modern and professional, with a hint of warmth. The page is a faint warm white (<code>#FFFBF7</code>), like the pages of a novel or an old legal pad, and cards stay pure white so content sits on the page like sheets of paper. Text is solid black, like ink. The warmth stays subtle so it never looks yellowed in a modern technical product.</p>
 
       <h3 class="sub">Dark mode</h3>
       <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a soft near-black (<code>#121212</code>) instead of pure black, cards sit just above it, and text is a soft white (85%) instead of pure white, so long sessions stay easy on the eyes.</p>
@@ -243,8 +243,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <h3 class="sub">Neutral colors: light / dark</h3>
       <div class="neutral-grid">
         <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF · #141414</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#FFFBF9 · #121212</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--sider-bg)"></div><b>sider-bg</b><span>#FFFBF9 · #121212 · sidebar</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#FFFBF7 · #121212</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--sider-bg)"></div><b>sider-bg</b><span>#FFFBF7 · #121212 · sidebar</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--fill-secondary)"></div><b>fill-secondary</b><span>rgba(0,0,0,.06) · rgba(255,255,255,.12)</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#484545 at 37% · #303030</span></div>
         <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgb(0,0,0) · rgba(255,255,255,.85)</span></div>
@@ -256,12 +256,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
       <h3 class="sub">Functional colors: one bg/border/text formula, four moods</h3>
       <div class="func-row">
-        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #89C849</div><div>border #73C435</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #91DD61</div><div>border #80D842</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #5C3400</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #4C0107</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-9</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
       </div>
-      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 5.9:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode only success clears it (4.8:1); warning (3.4:1), error (2.7:1) and info (3.2:1) do not and should be revisited. Info uses <code>blue-9</code> text in light mode and <code>blue-8</code> in dark.</p>
+      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode only success clears it (4.8:1); warning (3.4:1), error (2.7:1) and info (3.2:1) do not and should be revisited. Info uses <code>blue-9</code> text in light mode and <code>blue-8</code> in dark.</p>
     </section>
 
     <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
