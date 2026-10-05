@@ -18,8 +18,9 @@
    Light/Dark toggle in the sidebar — see sgApplyTheme() in shield.js.
 
    QUICK EDITS YOU CAN TRY
-   - Change --brand-blue-dark below to retheme every button, link, and
-     "selected" state on the whole page at once.
+   - Change --action below to retheme every solid blue button and checked
+     control at once, or --brand-blue-dark to retheme links, focus rings
+     and "selected" states.
    - Change --space-4 (or any --space-N) to retheme spacing gaps that
      use var(--space-4) instead of a hardcoded "16px".
    - Add a brand-new variable here (e.g. --radius-xl: 12px;) and then
@@ -50,10 +51,11 @@
        --brand-blue      = step 6. Logos and large decorative graphics
                             ONLY. Only 2.6:1 contrast against white —
                             not safe to use for text.
-       --brand-blue-dark = step 8. The actual action color: buttons,
-                            links, the "selected" state, focus rings.
-                            This is the one that clears 4.5:1 text
-                            contrast, so it's the one that's readable. */
+       --brand-blue-dark = step 8 (a lighter blue in dark mode). Links,
+                            the "selected" state, focus rings. This is
+                            the one that clears 4.5:1 text contrast, so
+                            it's the one that's readable. Solid button
+                            fills use --action instead (see below). */
   --brand-blue: var(--blue-6);
   --brand-blue-dark: var(--blue-8);
 
@@ -97,8 +99,8 @@
                    alerts and badges
        --X-text    text and icons placed ON --X-bg
        --X-border  the outline of a tinted tag or alert
-     Contrast, light mode: --X is 5.4:1 or more on white and on the page
-     (success 5.8, warning 5.4, error 5.9, info 6.2); --X-text is 7.3:1 or
+     Contrast, light mode: --X is 4.5:1 or more on white and on the page
+     (success 5.8, warning 4.6, error 5.9, info 6.2); --X-text is 7.2:1 or
      more on --X-bg. Dark mode values are further down, with the same
      targets. If you change any value, update the "Functional colors" cards
      and caption in index.html to match.
@@ -106,22 +108,22 @@
      count badge). Error text and icons use --error.
      ---------------------------------------------------------------- */
   --success: #137333;
-  --success-bg: #e4f4e9;
-  --success-text: #0b5a28;
-  --success-border: #a6d9b8;
-  --warning: #a35200;
-  --warning-bg: #fff1d1;
-  --warning-text: #7a3e00;
-  --warning-border: #f0c76a;
+  --success-bg: #d2f4dd;
+  --success-text: #0b5827;
+  --success-border: #98d9b0;
+  --warning: #bf5300;
+  --warning-bg: #ffe9ab;
+  --warning-text: #753c00;
+  --warning-border: #f6bd16;
   --error: #c4121f;
-  --error-bg: #fde8e8;
-  --error-text: #99101f;
-  --error-border: #f2a7a7;
+  --error-bg: #ffe0e0;
+  --error-text: #930f1e;
+  --error-border: #fa9d9e;
   --error-fill: #c4121f;
   --info: var(--blue-8);
-  --info-bg: #e3f2fb;
+  --info-bg: #d5efff;
   --info-text: #004f80;
-  --info-border: #a3d0ec;
+  --info-border: #95cef1;
 
   /* ----------------------------------------------------------------
      Action and control colors
@@ -132,7 +134,7 @@
      selects, checkboxes, radios and switches: 3.7:1 or more against the
      card and the page. --border-secondary stays faint on purpose: it is
      only for dividers and card edges. --text-placeholder is the hint text
-     inside an empty field (5:1).
+     inside an empty field (4.9:1 or more).
      ---------------------------------------------------------------- */
   --action: #0874b0;
   --action-hover: var(--blue-8);
@@ -298,10 +300,10 @@
   --success-bg: #123524;
   --success-text: #8be9ad;
   --success-border: #1f6b44;
-  --warning: #f2b33a;
-  --warning-bg: #352a0f;
-  --warning-text: #fcd34d;
-  --warning-border: #7a5d14;
+  --warning: #ff9a1f;
+  --warning-bg: #3a2c06;
+  --warning-text: #fed23d;
+  --warning-border: #7c5c01;
   --error: #ff6b6b;
   --error-bg: #3f1a1f;
   --error-text: #ffb4b4;
