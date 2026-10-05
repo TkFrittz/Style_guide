@@ -613,6 +613,128 @@ const SG_SNIPPETS = {
     tokens: ["--text-secondary", "--text-tertiary", "--brand-blue-dark"],
   },
 
+  /* ------------------------------ Content ------------------------------ */
+
+  writing: {
+    html: `<!-- The rules in one glance. Sentence case; verb + object; no articles; say what to enter. -->
+<button class="shield-button shield-button-primary">Send for signature</button>   <!-- not "Submit", not "Send For Signature" -->
+<label class="shield-field-label" for="eff">Effective date</label>              <!-- a noun, no colon -->
+
+<!-- Field error: what to enter, in text, with the hidden prefix -->
+<div class="shield-field-hint bad" id="eff-err"><span class="shield-sr-only">Error: </span>Enter a date after the effective date.</div>
+
+<!-- Page error: title of three or four words, then reason + action + consequence -->
+<div class="shield-alert error" role="alert">
+  <div class="shield-alert-body">
+    <div class="shield-alert-title">Offer not sent</div>
+    <div class="shield-alert-description">The partner group has no role contact for signatures. Add one on the Contacts tab, then send again.</div>
+  </div>
+</div>
+
+<!-- Never: please · sorry · oops · valid · invalid · forbidden · illegal · "Click here" · "OK" for a consequence -->`,
+    tokens: [],
+  },
+
+  formats: {
+    html: `<!-- Store and send ISO 8601 in UTC; format at the edge through Intl with the record's zone. -->
+const when = new Date("2026-09-12T13:04:00Z");
+const dateTime = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short",
+  timeZone: "America/New_York", timeZoneName: "short" });       // "Sep 12, 2026, 9:04 AM EDT"
+const date = new Intl.DateTimeFormat("en-US", { dateStyle: "medium" });   // "Sep 12, 2026"
+const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });   // "$48,200.00"
+const count = new Intl.NumberFormat("en-US");                                          // "1,250,000"
+
+<!-- The machine value travels with the text -->
+<time datetime="2026-09-12T13:04:00Z">Sep 12, 2026, 9:04 AM EDT</time>
+<time datetime="2026-10-05T14:30:00Z" title="Oct 5, 2026, 10:30 AM EDT">2 hours ago</time>   <!-- feeds only -->
+
+<!-- Numbers and money in a table: .num on the header and the cells -->
+<th class="num">Value</th>  …  <td class="num" data-value="48200">$48,200.00</td>
+<!-- Identifiers in mono, never wrapped -->
+<span class="shield-text code">ORD-501</span>
+<!-- Unknown -->
+<td>—</td>`,
+    tokens: ["--font-mono", "--font-size-small", "--fill-tertiary"],
+  },
+
+  /* ------------------------------ Page patterns ------------------------------ */
+
+  patterns: {
+    html: `<!-- Page header: breadcrumb (2+ levels deep), the h1 on one line, an optional info icon, actions with one Primary -->
+<header class="shield-page-header">
+  <nav class="shield-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/offers">Offers</a></li><li aria-current="page">OFF-2041</li></ol></nav>
+  <div class="shield-page-header-row">
+    <h1 class="shield-title h3" title="OFF-2041 · Harlow &amp; Vance mass tort intake">OFF-2041 · Harlow &amp; Vance mass tort intake</h1>
+    <div class="shield-page-header-actions">
+      <button class="shield-button shield-button-default">Edit</button>
+      <button class="shield-button shield-button-primary">Send for signature</button>
+    </div>
+  </div>
+  <!-- Record page only: up to four key facts, status first -->
+  <dl class="shield-page-header-facts">
+    <div><dt>Status</dt><dd><span class="shield-tag processing">Internal review</span></dd></div>
+    <div><dt>Partner group</dt><dd>Harlow &amp; Vance</dd></div>
+    <div><dt>Value</dt><dd>$48,200</dd></div>
+    <div><dt>Created</dt><dd><time datetime="2026-09-12">Sep 12, 2026</time></dd></div>
+  </dl>
+</header>
+<!-- then: Steps (if the record has stages) · Tabs · the first tab is a Descriptions list -->
+
+<!-- List page order: page header → Statistic tiles → toolbar (search, filters, ≤5 actions) → Table → Pagination.
+     Every data region has four states: loading (Skeleton), empty (Empty with an action), error (Alert), loaded. -->`,
+    tokens: ["--border-secondary", "--space-2", "--space-3", "--space-4", "--space-6", "--font-size-small", "--text-secondary", "--text"],
+  },
+
+  /* ------------------------------ Standards ------------------------------ */
+
+  accessibility: {
+    html: `<!-- The pieces a screen needs so the "met" rows stay met -->
+
+<!-- One h1, landmarks with names, a skip link first -->
+<a href="#main" class="shield-skip-link">Skip to content</a>
+<nav aria-label="Main"> … </nav>
+<main id="main" tabindex="-1"> … </main>
+
+<!-- A span control needs its own name: aria-labelledby, not a wrapping <label> -->
+<span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-labelledby="lbl-1"></span><span id="lbl-1">Send me a copy</span>
+
+<!-- Announce what changes without a page change -->
+<span class="shield-sr-only" role="status" id="live"></span>
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
+
+<!-- Color plus a second cue -->
+<span class="shield-tag error">Rejected</span>                      <!-- the word -->
+<div class="shield-stat-value negative">7</div><div class="shield-stat-sub">Up 2 since last week</div>
+
+<!-- A sticky header never hides what the page scrolls to -->
+html { scroll-padding-top: 64px; }
+
+<!-- Before shipping: node tools/check.mjs · Tab through · screen reader once · dark mode · Increase contrast · Reduce motion · 320px -->`,
+    tokens: ["--brand-blue-dark", "--error-solid", "--bg-elevated", "--shadow-md", "--z-toast"],
+  },
+
+  governance: {
+    html: `<!-- 1. Bump the version in shield.js -->
+const SG_VERSION = "0.10.0";
+
+<!-- 2. Move the Unreleased notes in CHANGELOG.md under the version and today's date -->
+## [0.10.0] - 2026-10-19
+### Added
+- Status display table in Tag & pill.
+### Deprecated
+- '--blue-7' as a fill; use '--brand-fill'. Removed in 1.0.0.
+
+<!-- 3. Check, then tag -->
+node tools/check.mjs
+node tools/export-tokens.mjs
+git tag v0.10.0
+
+<!-- Patch: copy and fixes · Minor: anything new · Major: a rename, a removal, a value products must react to -->`,
+    tokens: [],
+  },
+
+  /* ------------------------------ Navigation ------------------------------ */
+
   pagination: {
     html: `<nav class="shield-pagination" id="pager-1" aria-label="Pagination"
      data-total-pages="12" data-total="118" data-per-page="10"></nav>

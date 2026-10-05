@@ -226,7 +226,10 @@ console.log("\nWiring");
     if (!cl) fail("version  CHANGELOG.md has no '## x.y.z' entry");
     else if (cl[1] !== v[1]) fail(`version  shield.js says ${v[1]} but CHANGELOG.md's newest entry is ${cl[1]}`);
     else ok(`version ${v[1]} matches CHANGELOG.md`);
-    if (/v0\.\d(?:\.\d)?\b/.test(indexHtml.replace(/data-sg-version>v[^<]*/g, ""))) fail("version  index.html still has a hand-typed version number; use <span data-sg-version>");
+    // The stamped form of the current version ("v0.9.0") must appear in index.html only inside the
+    // data-sg-version spans, never typed by hand. Bare numbers in prose ("0.9.0 → 0.9.1") are fine.
+    const stripped = indexHtml.replace(/data-sg-version>v[^<]*/g, "");
+    if (new RegExp("\\bv" + v[1].replace(/\./g, "\\.") + "\\b").test(stripped)) fail(`version  index.html has a hand-typed "v${v[1]}"; use <span data-sg-version> so a release is one edit`);
   }
 }
 

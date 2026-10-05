@@ -13,13 +13,34 @@ replacement. The version lives in one place, `SG_VERSION` in `shield.js`;
 
 ## [0.9.0] - 2026-10-05
 
-The release that makes the guide meet its own stated standard: 4.5:1 text
-contrast in both themes, named and keyboard-operable controls, and a check
-that keeps it that way. Nothing was restyled for its own sake; every value
-change below is a contrast fix.
+The release that makes the guide meet its own stated standard (4.5:1 text
+contrast in both themes, named and keyboard-operable controls, a check
+that keeps it that way) and adds the sections an enterprise guide needs:
+writing, data formats, page patterns, accessibility conformance and how
+the guide itself changes. Nothing was restyled for its own sake; every
+value change below is a contrast fix.
 
 ### Added
-- `CONTRIBUTING.md`, `LICENSES.md` and this changelog.
+- **Writing** section: voice, sentence case, button labels, error message
+  structure and banned words, punctuation, numbers, money, abbreviations,
+  and the Shield glossary.
+- **Data formats** section: one date format, times with a time zone,
+  relative time only with an absolute `<time>` behind it, ranges, tabular
+  numbers in tables, currency, identifiers, empty values, and `Intl` as the
+  implementation rule.
+- **Page patterns** section: page header anatomy (new `shield-page-header`
+  classes), list page and record page anatomy, and the four states every
+  data region specifies (loading, empty, error, loaded).
+- **Accessibility conformance** section: the WCAG 2.2 AA criteria the
+  guide meets, how each is met, the open items, and a review checklist.
+- **How this guide changes** section: owners, proposing a change, review,
+  versioning, deprecation, release cadence, and what 1.0 means.
+- **Status display** table in Tag & pill: when to use a Tag, a Pill, the
+  inline Status dot, and what gold is for.
+- **Icon sizes** scale in Icons: 12 / 16 / 20 / 24 / 48, paired with text
+  sizes, with the 24px minimum hit area.
+- `README.md`, `CONTRIBUTING.md`, `LICENSES.md`, this changelog, and a DTCG
+  token export (`tools/export-tokens.mjs` → `tokens.json`).
 - Tokens: `--brand-fill` (the action color as a fill carrying white text),
   `--selected-bg`, `--brand-tint`, `--brand-tint-strong`, `--error-tint`,
   `--error-fill`, `--error-fill-hover`, `--fill-inverse`, `--gold`,
