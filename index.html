@@ -18,7 +18,7 @@
 .side-brand .sub{font-size:12px;color:var(--text-tertiary);margin-top:2px;font-weight:var(--weight-small)}
 .side-theme{padding:14px 20px;border-bottom:1px solid var(--border-secondary)}
 .side-nav{padding:12px}
-.side-nav .grp{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-quaternary);padding:14px 12px 6px}
+.side-nav .grp{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--text-tertiary);padding:14px 12px 6px}
 .side-nav a{display:block;padding:6px 12px;border-radius:var(--radius-md);font-size:var(--font-size-small);color:var(--text-secondary);text-decoration:none;font-weight:var(--weight-small)}
 .side-nav a:hover{background:var(--fill-secondary);color:var(--text)}
 .main{flex:1;min-width:0;max-width:1040px;margin:0 auto;padding:56px 48px 120px}
@@ -27,9 +27,9 @@ section{margin-bottom:64px;scroll-margin-top:24px}
 section > h2{font-family:var(--font-heading);font-size:24px;line-height:32px;padding-bottom:12px;border-bottom:1px solid var(--border-secondary);margin-bottom:20px;display:flex;align-items:center;gap:10px}
 section p.lede{font-size:var(--font-size-body);color:var(--text-secondary)}
 h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:var(--text)}
-.live-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--success);background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-full);padding:2px 9px}
-.live-badge.new{color:var(--info);background:var(--info-bg);border-color:var(--info-border)}
-.live-badge.review{color:var(--error);background:var(--error-bg);border-color:var(--error-border)}
+.live-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--success-text);background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-full);padding:2px 9px}
+.live-badge.new{color:var(--info-text);background:var(--info-bg);border-color:var(--info-border)}
+.live-badge.review{color:var(--error-text);background:var(--error-bg);border-color:var(--error-border)}
 
 /* ---- cover ---- */
 .cover{padding:16px 0 40px;border-bottom:1px solid var(--border-secondary)}
@@ -53,7 +53,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .n-sw span{font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono)}
 .func-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin:16px 0}
 .func-card{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border-secondary)}
-.func-card .head{padding:14px 16px;font-weight:600;font-size:13.5px}
+.func-card .head{padding:14px 16px;font-weight:var(--weight-functional);font-size:13.5px}
 .func-card .body{padding:10px 16px 14px;font-size:12px;font-family:var(--font-mono);background:var(--bg-container);color:var(--text-tertiary)}
 .func-card .body div{padding:2px 0}
 .sidebar-swatch{border-radius:var(--radius-lg);background:var(--sider-bg);padding:16px 18px;margin:16px 0;display:flex;flex-wrap:wrap;gap:24px}
@@ -94,7 +94,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 
 /* ---- layout demo ---- */
 .grid-demo{display:flex;flex-wrap:wrap;gap:8px;width:100%}
-.grid-block{background:var(--info-bg);border:1px solid var(--info-border);color:var(--info);border-radius:var(--radius-sm);padding:10px;text-align:center;font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
+.grid-block{background:var(--info-bg);border:1px solid var(--info-border);color:var(--info-text);font-weight:var(--weight-functional);border-radius:var(--radius-sm);padding:10px;text-align:center;font-size:12px;font-family:var(--font-mono);box-sizing:border-box}
 .g-24{flex:0 0 100%}
 .g-12{flex:0 0 calc(50% - 4px)}
 .g-8{flex:0 0 calc(33.333% - 6px)}
@@ -154,7 +154,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .sg-try .shield-toast{min-width:0;padding:7px 12px}
 .sg-try .shield-stat{padding:8px 12px;min-width:120px}
 .sg-try-card{width:120px;padding:10px 12px;font-size:var(--font-size-caption);cursor:pointer;color:var(--text-secondary)}
-.sg-try-card.sg-try-alt,.sg-try-card:hover{background:var(--info-bg);border-color:var(--info-border)}
+.sg-try-card.sg-try-alt,.sg-try-card:hover{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text);font-weight:var(--weight-functional)}
 .sg-try-panel{width:96px;height:44px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-elevated);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-caption);color:var(--text-secondary)}
 .sg-try-pop{animation:fadeUp var(--duration-base) var(--ease) both}
 .sg-try-drawer{animation:drawerIn var(--duration-base) var(--ease) both}
@@ -166,7 +166,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 /* ---- logo section ---- */
 .sg-logo-row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
 .sg-logo-cell{display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-tertiary);max-width:220px}
-.sg-logo-cell b{color:var(--error)}
+.sg-logo-cell b{color:var(--error);font-weight:var(--weight-functional)}
 .sg-logo-stage{display:flex;align-items:center;justify-content:center;gap:12px;min-width:120px;height:120px;padding:16px;border:1px solid var(--border-secondary);border-radius:var(--radius-lg);background:var(--bg-container)}
 .sg-logo-cell.wide{max-width:none}
 .sg-logo-stage.lockup{min-width:230px;padding:16px 28px;box-sizing:border-box}
@@ -267,7 +267,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
   <main class="main" id="main" tabindex="-1">
     <div class="cover" id="overview">
-      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:#000" title="brand">brand</div><div style="flex:3;background:var(--blue-7);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-8);color:#fff" title="link">link</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
+      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:#000" title="brand">brand</div><div style="flex:3;background:var(--action);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-8);color:#fff" title="link">link</div><div style="flex:2;background:var(--success);color:var(--bg-container)" title="success">success</div><div style="flex:2;background:var(--warning);color:var(--bg-container)" title="warning">warning</div><div style="flex:2;background:var(--error);color:var(--bg-container)" title="error">error</div><div style="flex:2;background:var(--info);color:var(--bg-container)" title="info">info</div></div>
       <img class="cover-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo">
       <h1>Shield Engineering</h1>
       <div class="tagline">The visual language for Shield Legal's operations software: modern, professional, and a little bit warm.</div>
@@ -309,12 +309,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-4)"></div><div class="meta"><b>blue-4</b><span>#6BDAFF · 1.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-5)"></div><div class="meta"><b>blue-5</b><span>#41C6FA · 2.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-6)"></div><div class="meta"><b>blue-6 · base</b><span>#18ABED · 2.6:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · buttons &amp; checked</b><span>#0A85C7 · 4.0:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7</b><span>#0A85C7 · 4.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action</b><span>#0063A1 · 6.4:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings and selected menu items, tabs and options. Buttons and on/checked controls use <b style="color:var(--text)">blue-7</b> (step 7).</p>
+      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings and selected menu items, tabs and options; on dark surfaces it switches to a lighter blue (<code>#5CB8F0</code>, 7:1 or more) so it stays readable. Buttons and on/checked controls use <b style="color:var(--text)">--action</b> (<code>#0874B0</code>), which has 5.1:1 against white text.</p>
 
       <h3 class="sub">Neutral colors: light / dark</h3>
       <div class="neutral-grid">
@@ -326,18 +326,20 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgb(0,0,0) · #FFFBF7</span></div>
         <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>rgb(0,0,0) · rgba(255,251,247,.85)</span></div>
         <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>rgb(0,0,0) · rgba(255,251,247,.7)</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-container);border:2px solid var(--control-border)"></div><b>control-border</b><span>#858280 · #64759A · input, checkbox, switch edges</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-placeholder)">Aa</div><b>text-placeholder</b><span>#6E6E6E · rgba(255,251,247,.5)</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b>bg-spotlight</b><span>toast / tooltip surface</span></div>
       </div>
       <p class="lede">In light mode the page (<code>bg-layout</code>) is a faint warm white and cards (<code>bg-container</code>) are pure white. In dark mode the page is a deep midnight blue, not black, and cards are a slightly lighter navy. Each swatch shows its light value, then its dark value. Use the theme toggle in the sidebar to see both.</p>
 
-      <h3 class="sub">Functional colors: one bg/border/text formula, four moods</h3>
+      <h3 class="sub">Functional colors: four moods, each with four tokens</h3>
       <div class="func-row">
-        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #91DD61</div><div>border #80D842</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #5C3400</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #4C0107</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-9</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success-text)">Success</div><div class="body"><div class="alone" style="font-weight:var(--weight-functional);color:var(--success)">On its own</div><div>text #0B5A28 · #8BE9AD</div><div>bg #E4F4E9 · #123524</div><div>border #A6D9B8 · #1F6B44</div><div>alone #137333 · #46D27A</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning-text)">Warning</div><div class="body"><div class="alone" style="font-weight:var(--weight-functional);color:var(--warning)">On its own</div><div>text #7A3E00 · #FCD34D</div><div>bg #FFF1D1 · #352A0F</div><div>border #F0C76A · #7A5D14</div><div>alone #A35200 · #F2B33A</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error-text)">Error</div><div class="body"><div class="alone" style="font-weight:var(--weight-functional);color:var(--error)">On its own</div><div>text #99101F · #FFB4B4</div><div>bg #FDE8E8 · #3F1A1F</div><div>border #F2A7A7 · #8A3340</div><div>alone #C4121F · #FF6B6B</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info-text)">Info</div><div class="body"><div class="alone" style="font-weight:var(--weight-functional);color:var(--info)">On its own</div><div>text #004F80 · #A5DCFB</div><div>bg #E3F2FB · #103049</div><div>border #A3D0EC · #1F6A9C</div><div>alone #0063A1 · #60BDF2</div></div></div>
       </div>
-      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode only success clears it (4.8:1); warning (3.4:1), error (2.7:1) and info (3.2:1) do not and should be revisited. Info uses <code>blue-9</code> text in light mode and <code>blue-8</code> in dark.</p>
+      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has four tokens: the color on its own (<code>--success</code>) for text, icons and dots on the page or a card; a background (<code>-bg</code>); text for use on that background (<code>-text</code>); and a border. Each card shows its light value, then its dark value. Text in a functional color is always bold (<code>--weight-functional</code>). Contrast in light mode: the colors on their own are 5.4:1 or more against white and the page, and text on its background is 7.3:1 or more. In dark mode the backgrounds are deep, muted tints, the colors on their own are 5.6:1 or more against every dark surface, and text on its background is 9:1 or more.</p>
     </section>
 
     <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
@@ -368,9 +370,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary: captions, helper text</span><span class="meta">light: solid black · dark: .85 off-white</span></div>
       <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary: placeholders, timestamps</span><span class="meta">light: solid black · dark: .7 off-white</span></div>
       <div class="type-row"><span class="tagcell">strong</span><span class="sample shield-text strong">Strong: emphasized inline text</span><span class="meta">weight 600</span></div>
-      <div class="type-row"><span class="tagcell">success</span><span class="sample shield-text success">Success text</span><span class="meta">var(--success)</span></div>
-      <div class="type-row"><span class="tagcell">warning</span><span class="sample shield-text warning">Warning text</span><span class="meta">var(--warning)</span></div>
-      <div class="type-row"><span class="tagcell">danger</span><span class="sample shield-text danger">Danger text</span><span class="meta">var(--error)</span></div>
+      <div class="type-row"><span class="tagcell">success</span><span class="sample shield-text success">Success text</span><span class="meta">var(--success) · bold</span></div>
+      <div class="type-row"><span class="tagcell">warning</span><span class="sample shield-text warning">Warning text</span><span class="meta">var(--warning) · bold</span></div>
+      <div class="type-row"><span class="tagcell">danger</span><span class="sample shield-text danger">Danger text</span><span class="meta">var(--error) · bold</span></div>
       <div class="type-row"><span class="tagcell">code</span><span class="sample shield-text code">order.status</span><span class="meta">14 · mono</span></div>
       <h3 class="sub">Type sizes</h3>
       <p class="lede">Four sizes cover body copy and everything inside the components. 16px is the base because 14px is too small for most people to read comfortably for long. Change a number in <code>tokens.css</code> to resize that role everywhere.</p>
@@ -669,7 +671,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. Static; clicking these buttons doesn't do anything. -->
     <section id="button">
       <h2>Button</h2>
-      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>blue-7</code> (<code>#0A85C7</code>), darkening to <code>blue-8</code> on hover. White text on <code>blue-7</code> measures 4.0:1, a little under the 4.5:1 target. Colors come from <code>tokens.css</code>.</p>
+      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>--action</code> (<code>#0874B0</code>), darkening to <code>--action-hover</code> (blue-8) on hover. White text on it measures 5.1:1. Colors come from <code>tokens.css</code>.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
           <button class="shield-button shield-button-primary">Primary</button>
@@ -823,7 +825,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
             <button type="button" onclick="sgSegPick(this)">Grid</button>
           </div>
         </div>
-        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → blue-7</code></div>
+        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → action</code><code>edge → control-border</code></div>
       </div>
     </section>
 
@@ -1434,7 +1436,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Splits a long list into pages. Always show the first and last page, the current page and its neighbors, with an ellipsis for the gap, plus Previous and Next and a plain "1–10 of 118" summary. Use it for tables and lists that are too long to scroll comfortably; for a short list, show everything. After changing page, focus stays on the control and the summary is announced to screen readers.</p>
       <div class="demo">
         <nav class="shield-pagination" id="pager-demo" aria-label="Pagination" data-total-pages="12" data-total="118" data-per-page="10"></nav>
-        <div class="spec"><code>button 32 · current blue-7</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
+        <div class="spec"><code>button 32 · current action</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
       </div>
     </section>
 

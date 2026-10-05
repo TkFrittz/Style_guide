@@ -33,8 +33,16 @@ const SG_SNIPPETS = {
 .muted  { color: var(--text-tertiary); }
 .link   { color: var(--brand-blue-dark); }          /* actions, links, focus rings */
 .logo   { color: var(--brand-blue); }               /* logos and big graphics only */
-.ok     { color: var(--success); background: var(--success-bg); border: 1px solid var(--success-border); }`,
-    tokens: ["--blue-1 … --blue-10", "--brand-blue", "--brand-blue-dark", "--bg-container", "--bg-layout", "--bg-elevated", "--bg-spotlight", "--sider-bg", "--text", "--text-secondary", "--text-tertiary", "--text-quaternary", "--border", "--border-secondary", "--fill", "--fill-secondary", "--success", "--success-bg", "--success-border", "--warning", "--warning-bg", "--warning-border", "--error", "--error-bg", "--error-border", "--info", "--info-bg", "--info-border"],
+/* Functional colors: --success, --warning, --error, --info.
+   On their own (text, icons, dots on the page or a card): use --X.
+   On a tinted background: use --X-bg with --X-text and --X-border.
+   Text in a functional color is always bold. */
+.ok-text { color: var(--success); font-weight: var(--weight-functional); }
+.ok      { color: var(--success-text); background: var(--success-bg); border: 1px solid var(--success-border);
+           font-weight: var(--weight-functional); }
+.control { border: 1px solid var(--control-border); }   /* input, checkbox, switch edges */
+.solid   { background: var(--action); color: #fff; }     /* buttons and checked controls */`,
+    tokens: ["--blue-1 … --blue-10", "--brand-blue", "--brand-blue-dark", "--bg-container", "--bg-layout", "--bg-elevated", "--bg-spotlight", "--sider-bg", "--text", "--text-secondary", "--text-tertiary", "--text-quaternary", "--text-placeholder", "--border", "--border-secondary", "--control-border", "--action", "--weight-functional", "--fill", "--fill-secondary", "--success", "--success-bg", "--success-border", "--warning", "--warning-bg", "--warning-border", "--error", "--error-bg", "--error-border", "--info", "--info-bg", "--info-border"],
   },
 
   typography: {
@@ -43,7 +51,7 @@ const SG_SNIPPETS = {
 <p class="shield-text secondary">Secondary: captions, helper text</p>
 <p class="shield-text tertiary">Tertiary: placeholders, timestamps</p>
 <b class="shield-text strong">Strong</b>
-<span class="shield-text success">Success</span>   <!-- also warning, danger -->
+<span class="shield-text success">Success</span>   <!-- also warning, danger; always bold -->
 <code class="shield-text code">order.status</code>`,
     tokens: ["--font-heading", "--font-body", "--font-mono", "--font-size-body", "--font-size-control", "--font-size-small", "--font-size-caption", "--weight-small"],
   },
@@ -156,7 +164,7 @@ const SG_SNIPPETS = {
 
 <!-- Icon-only buttons need a label for screen readers -->
 <button class="shield-button shield-button-default" aria-label="Edit order"><!-- icon --></button>`,
-    tokens: ["--blue-7", "--blue-8", "--error", "--border", "--text", "--bg-container", "--font-size-control", "--duration-fast"],
+    tokens: ["--action", "--action-hover", "--error-fill", "--control-border", "--text", "--bg-container", "--font-size-control", "--duration-fast"],
   },
 
   /* ------------------------------ Data entry ------------------------------ */
@@ -186,7 +194,7 @@ const SG_SNIPPETS = {
 
 <textarea class="shield-textarea" placeholder="Notes…"></textarea>
 <span class="shield-input-wrap" style="width:120px"><input class="shield-input" type="number" min="0" step="1"></span>`,
-    tokens: ["--bg-container", "--border", "--blue-5", "--brand-blue", "--error", "--radius-md", "--font-size-control"],
+    tokens: ["--bg-container", "--control-border", "--text-placeholder", "--brand-blue-dark", "--error", "--radius-md", "--font-size-control"],
   },
 
   select: {
@@ -271,7 +279,7 @@ const SG_SNIPPETS = {
   <span class="shield-upload-hint">Retainer agreements, PDFs, up to 25MB each.</span>
 </label>
 <div class="shield-upload-list" id="upload-list"></div>`,
-    tokens: ["--border", "--brand-blue", "--blue-1", "--bg-container", "--text-tertiary", "--error"],
+    tokens: ["--control-border", "--brand-blue-dark", "--blue-1", "--bg-container", "--text-tertiary", "--error"],
   },
 
   forms: {
@@ -316,7 +324,7 @@ const SG_SNIPPETS = {
 <span class="shield-tag checkable checked" onclick="sgToggleCheckableTag(this)">Consumer Finance</span>
 
 <span class="shield-pill success"><!-- icon -->Synced</span>   <!-- warning | neutral -->`,
-    tokens: ["--success", "--success-bg", "--success-border", "--warning", "--error", "--info", "--radius-sm"],
+    tokens: ["--success-bg", "--success-text", "--success-border", "--warning-text", "--error-text", "--info-text", "--weight-functional", "--radius-sm"],
   },
 
   avatar: {
@@ -407,7 +415,7 @@ const SG_SNIPPETS = {
   <button class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button>
 </div>
 <!-- Moods: info | success | warning | error -->`,
-    tokens: ["--info-bg", "--success-bg", "--warning-bg", "--error-bg", "--info-border", "--radius-md"],
+    tokens: ["--info-bg", "--success-bg", "--warning-bg", "--error-bg", "--info-text", "--success-text", "--warning-text", "--error-text", "--weight-functional", "--radius-md"],
   },
 
   modal: {

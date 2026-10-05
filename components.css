@@ -179,16 +179,16 @@
 :root[data-theme="dark"] .shield-button-danger:not(.shield-button-default):hover:not(:disabled) { box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.55); }
 .shield-button:disabled { box-shadow: none !important; }
 
-/* PRIMARY: solid blue-7. Use once per screen for the main action. */
-.shield-button-primary { background: var(--blue-7); color: #fff; }
-.shield-button-primary:hover:not(:disabled) { background: var(--blue-8); }
+/* PRIMARY: solid --action blue (white text 5.1:1). Use once per screen for the main action. */
+.shield-button-primary { background: var(--action); color: #fff; }
+.shield-button-primary:hover:not(:disabled) { background: var(--action-hover); }
 
 /* DEFAULT: white with a gray outline. For ordinary secondary actions. */
-.shield-button-default { background: var(--bg-container); color: var(--text); border-color: var(--border); }
+.shield-button-default { background: var(--bg-container); color: var(--text); border-color: var(--control-border); }
 .shield-button-default:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
 
 /* DASHED: like default but with a dashed outline, usually for "+ Add something" actions. */
-.shield-button-dashed { background: var(--bg-container); color: var(--text); border-color: var(--border); border-style: dashed; }
+.shield-button-dashed { background: var(--bg-container); color: var(--text); border-color: var(--control-border); border-style: dashed; }
 .shield-button-dashed:hover:not(:disabled) { color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
 
 /* TEXT: no background or outline until hovered. For low-emphasis actions like "Cancel". */
@@ -197,16 +197,16 @@
 
 /* LINK: looks like a hyperlink (blue text, no padding) but still behaves like a button. */
 .shield-button-link { background: transparent; color: var(--brand-blue-dark); border-color: transparent; padding-inline: 0; height: auto; }
-.shield-button-link:hover:not(:disabled) { color: var(--blue-7); }
+.shield-button-link:hover:not(:disabled) { color: var(--link-hover); }
 
 /* DANGER: solid red, for destructive actions like "Delete". */
-.shield-button-danger { background: var(--error); color: #fff; }
-.shield-button-danger:hover:not(:disabled) { background: #e84749; }
+.shield-button-danger { background: var(--error-fill); color: #fff; }
+.shield-button-danger:hover:not(:disabled) { background: color-mix(in srgb, var(--error-fill) 82%, #000); }
 /* Danger + Default together = an OUTLINED danger button (red text/border
    on a plain background) instead of the solid-red .shield-button-danger above —
    used for a less alarming "destructive but secondary" action. */
-.shield-button-danger.shield-button-default { background: var(--bg-container); color: var(--error); border-color: var(--error-border); }
-.shield-button-danger.shield-button-default:hover:not(:disabled) { background: var(--error-bg); }
+.shield-button-danger.shield-button-default { background: var(--bg-container); color: var(--error); border-color: var(--error); }
+.shield-button-danger.shield-button-default:hover:not(:disabled) { background: var(--error-bg); color: var(--error-text); }
 
 /* DISABLED: grayed out and not clickable. !important makes sure this wins over every variant color above. */
 .shield-button:disabled {
@@ -234,7 +234,7 @@
   font-size: var(--font-size-control);
   color: var(--text);
   background: var(--bg-container);
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   border-radius: var(--radius-md);
   padding: 4px 11px;
   width: 100%;
@@ -249,19 +249,19 @@
 /* Text areas start 64px tall and can be dragged taller by the user (vertical only). */
 .shield-textarea { min-height: 64px; resize: vertical; line-height: 1.5; }
 /* Placeholder text (the faint hint shown while the box is empty). */
-.shield-input::placeholder, .shield-textarea::placeholder { color: var(--text-quaternary); }
+.shield-input::placeholder, .shield-textarea::placeholder { color: var(--text-placeholder); }
 /* HOVER: border turns light blue when the mouse is over the box. */
 .shield-input:hover, .shield-textarea:hover { border-color: var(--blue-5); }
 /* FOCUS: brand-blue border plus a soft glow while the user is typing in it. */
-.shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+.shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue-dark); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
 /* DISABLED: gray fill, no typing allowed. */
 .shield-input:disabled, .shield-textarea:disabled { background: var(--fill-tertiary); color: var(--text-quaternary); cursor: not-allowed; }
 /* ERROR: red border. Add the class .error to the input when validation fails, and add the red
    error icon (.shield-input-error, defined with the tooltip rules below) so the message is available on hover or focus. */
-.shield-input.error, .shield-textarea.error { border-color: var(--error-solid); }
-.shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px rgba(207, 19, 34, 0.12); }
+.shield-input.error, .shield-textarea.error { border-color: var(--error); }
+.shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--error) 18%, transparent); }
 /* An icon placed inside an input. pointer-events: none lets clicks pass through to the input underneath. */
-.shield-input-icon { position: absolute; color: var(--text-quaternary); display: flex; pointer-events: none; }
+.shield-input-icon { position: absolute; color: var(--text-tertiary); display: flex; pointer-events: none; }
 /* .prefix = icon on the left inside the box, .suffix = icon on the right. */
 .shield-input-icon.prefix { left: 10px; }
 .shield-input-icon.suffix { right: 10px; pointer-events: auto; } /* re-enables clicks for a clear/eye-toggle button */
@@ -290,7 +290,7 @@
   height: 32px;
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   border-radius: var(--radius-md);
   background: var(--bg-container);
   padding: 0 11px;
@@ -299,7 +299,7 @@
 }
 /* Hover and open/focused states for the select box. */
 .shield-select-box:hover { border-color: var(--blue-5); }
-.shield-select.open .shield-select-box, .shield-select-box.focused { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+.shield-select.open .shield-select-box, .shield-select-box.focused { border-color: var(--brand-blue-dark); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
 .shield-select-box .shield-input-icon.prefix { position: static; margin-right: 2px; }
 /* The text field inside the box where the user types to filter options. Borderless so it blends in. */
 .shield-select-search {
@@ -313,7 +313,7 @@
   color: var(--text);
   height: 30px;
 }
-.shield-select-search::placeholder { color: var(--text-quaternary); }
+.shield-select-search::placeholder { color: var(--text-placeholder); }
 /* MULTIPLE mode: the box grows taller and wraps chips onto extra lines. */
 .shield-select.multiple .shield-select-box { height: auto; min-height: 32px; flex-wrap: wrap; padding: 3px 8px; }
 .shield-select.multiple .shield-select-search { flex: 1; min-width: 80px; height: 24px; }
@@ -355,7 +355,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -427,7 +427,7 @@
   width: 16px;
   height: 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   background: var(--bg-container);
   display: inline-flex;
   align-items: center;
@@ -436,7 +436,7 @@
   transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
 }
 .shield-checkbox svg { display: none; width: 10px; height: 10px; } /* the checkmark icon, hidden until .is-on is added */
-.shield-checkbox.is-on { background: var(--blue-7); border-color: var(--blue-7); }
+.shield-checkbox.is-on { background: var(--action); border-color: var(--action); }
 .shield-checkbox.is-on svg { display: block; }
 .shield-checkbox.disabled { background: var(--fill-tertiary); }
 
@@ -445,7 +445,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   background: var(--bg-container);
   display: inline-flex;
   align-items: center;
@@ -454,15 +454,15 @@
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
 .shield-radio:focus-visible { border-radius: 50%; } /* keep the keyboard focus ring round on a round control */
-.shield-radio.is-on { border-color: var(--blue-7); }
-.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-7); } /* the filled center dot */
+.shield-radio.is-on { border-color: var(--action); }
+.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--action); } /* the filled center dot */
 
 /* The switch (on/off toggle). The track is the pill-shaped background; the thumb is the white circle that slides. */
 .shield-switch-track {
   width: 44px;
   height: 22px;
   border-radius: var(--radius-full);
-  background: var(--text-quaternary);
+  background: var(--control-border);
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
@@ -474,7 +474,7 @@
 }
 /* Small switch variant, plus the colors for the on and disabled states. */
 .shield-switch-track.small { width: 32px; height: 16px; }
-.shield-switch-track.is-on { background: var(--blue-7); }
+.shield-switch-track.is-on { background: var(--action); }
 .shield-switch-track:disabled { opacity: 0.4; cursor: not-allowed; }
 /* The white circle that slides left (off) and right (on). */
 .shield-switch-thumb {
@@ -490,7 +490,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
   font-size: 10px;
 }
 .shield-switch-track.small .shield-switch-thumb { width: 12px; height: 12px; top: 2px; left: 2px; }
@@ -519,7 +519,7 @@
 }
 /* Hover color, and the filled blue look for the currently selected button. */
 .shield-segmented button:hover { color: var(--text); background: var(--fill-secondary); }
-.shield-segmented button.is-on { background: var(--blue-7); color: #fff; }
+.shield-segmented button.is-on { background: var(--action); color: #fff; }
 
 /* ---------- Tag / Pill ----------
    .shield-tag = the base tag; add a mood class (.success/.warning/.error/
@@ -545,14 +545,15 @@
 .shield-tag button { background: none; border: none; padding: 0; color: inherit; opacity: 0.6; cursor: pointer; font-size: 12px; line-height: 1; } /* the × remove button inside a tag */
 .shield-tag button:hover { opacity: 1; }
 /* Mood colors. Each sets background, border and text together from tokens.css. */
-.shield-tag.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
-.shield-tag.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
-.shield-tag.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
-.shield-tag.processing { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
-.shield-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #9a7b2f; } /* a one-off accent color, not part of the four-mood functional set above */
+.shield-tag.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
+.shield-tag.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning-text); }
+.shield-tag.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error-text); }
+.shield-tag.processing { background: var(--info-bg); border-color: var(--info-border); color: var(--info-text); }
+.shield-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #7a5c14; } /* a one-off accent color, not part of the four-mood functional set above */
+:root[data-theme="dark"] .shield-tag.gold { background: rgba(224, 189, 106, 0.14); border-color: rgba(224, 189, 106, 0.4); color: #e0bd6a; }
 /* Toggleable tag: clickable, and turns solid blue once .checked is added. */
 .shield-tag.checkable { cursor: pointer; user-select: none; }
-.shield-tag.checkable.checked { background: var(--blue-7); border-color: var(--blue-7); color: #fff; }
+.shield-tag.checkable.checked { background: var(--action); border-color: var(--action); color: #fff; }
 
 /* A fully rounded status label, typically paired with a colored dot. */
 .shield-pill {
@@ -694,13 +695,13 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-alert-title { font-weight: 600; }
 .shield-alert-description { color: var(--text-secondary); font-size: var(--font-size-caption); margin-top: 3px; font-weight: var(--weight-small); }
 .shield-alert-description ul { margin: 4px 0 0; padding-left: 18px; }
-.shield-alert-close { margin-left: auto; background: none; border: none; color: inherit; opacity: 0.55; cursor: pointer; font-size: var(--font-size-control); line-height: 1; padding: 2px; }
+.shield-alert-close { margin-left: auto; background: none; border: none; color: inherit; opacity: 0.85; cursor: pointer; font-size: var(--font-size-control); line-height: 1; padding: 2px; }
 .shield-alert-close:hover { opacity: 1; }
 /* Alert mood colors (info, success, warning, error). */
-.shield-alert.info { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
-.shield-alert.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success); }
-.shield-alert.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
-.shield-alert.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
+.shield-alert.info { background: var(--info-bg); border-color: var(--info-border); color: var(--info-text); }
+.shield-alert.success { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
+.shield-alert.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning-text); }
+.shield-alert.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error-text); }
 
 /* ---------- Empty ----------
    Shown in place of a list/table when there's no data to display —
@@ -735,12 +736,12 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   font-size: var(--font-size-caption);
   font-weight: 600;
   flex: none;
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   color: var(--text-tertiary);
   background: var(--bg-container);
 }
 /* Step states: done = filled blue circle, current = blue outline. Titles darken for both. */
-.shield-step.done .shield-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
+.shield-step.done .shield-step-dot { background: var(--action); border-color: var(--action); color: #fff; }
 .shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); box-shadow: 0 0 0 3px rgba(24, 171, 237, 0.2); }
 /* Started but not finished: the dot is half tinted, with the number still readable on top. */
 .shield-step.partial .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--text); background: conic-gradient(rgba(24, 171, 237, 0.45) 50%, var(--bg-container) 0); }
@@ -923,7 +924,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* A colored circle for initials or an icon. */
 .shield-avatar {
   border-radius: 50%;
-  background: var(--brand-blue-dark);
+  background: var(--action);
   color: #fff;
   font-weight: 600;
   display: inline-flex;
@@ -964,7 +965,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-quaternary);
+  color: var(--text-tertiary);
   padding: 14px 16px 6px;
 }
 /* One menu row: icon and label on the left, optional count on the right. */
@@ -1190,7 +1191,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 .shield-page:hover:not(:disabled):not(.is-on) { background: var(--fill-secondary); }
-.shield-page.is-on { background: var(--blue-7); color: #fff; }
+.shield-page.is-on { background: var(--action); color: #fff; }
 .shield-page:disabled { color: var(--text-quaternary); cursor: not-allowed; }
 .shield-page-ellipsis { min-width: 32px; text-align: center; color: var(--text-tertiary); user-select: none; }
 .shield-page-summary { margin-left: var(--space-3); font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text-tertiary); }
@@ -1215,7 +1216,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    .shield-status is the inline "dot + word" for a state in a list or
    table cell: the word always carries the meaning, the dot only
    reinforces it. */
-.shield-badge-count.corner { position: absolute; top: -8px; right: -10px; background: var(--error); color: #fff; box-shadow: 0 0 0 2px var(--bg-container); }
+.shield-badge-count.corner { position: absolute; top: -8px; right: -10px; background: var(--error-fill); color: #fff; box-shadow: 0 0 0 2px var(--bg-container); }
 .shield-badge-dot.success { background: var(--success); }
 .shield-badge-dot.warning { background: var(--warning); }
 .shield-badge-dot.info { background: var(--info); }
@@ -1252,8 +1253,8 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    .shield-upload-item rows that can be removed. Wired by sgHandleUpload /
    sgHandleDrop / sgRenderUploadFiles in shield.js. */
 .shield-upload-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
-.shield-upload-dropzone { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 20px; border: 1px dashed var(--border); border-radius: var(--radius-lg); background: var(--bg-container); cursor: pointer; text-align: center; transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
-.shield-upload-dropzone:hover, .shield-upload-dropzone.drag { border-color: var(--brand-blue); background: var(--blue-1); }
+.shield-upload-dropzone { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 20px; border: 1px dashed var(--control-border); border-radius: var(--radius-lg); background: var(--bg-container); cursor: pointer; text-align: center; transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.shield-upload-dropzone:hover, .shield-upload-dropzone.drag { border-color: var(--brand-blue-dark); background: var(--blue-1); }
 :root[data-theme="dark"] .shield-upload-dropzone:hover, :root[data-theme="dark"] .shield-upload-dropzone.drag { background: rgba(24, 171, 237, 0.16); } /* blue-1 is a pale tint that washes out light text in dark mode, so hover uses the same soft translucent blue as the selected Select option and Menu item */
 .shield-upload-input:focus-visible + .shield-upload-dropzone { outline: 2px solid var(--brand-blue-dark); outline-offset: 2px; } /* keyboard focus lands on the hidden input, so the ring is drawn on the dropzone */
 .shield-upload-dropzone svg { color: var(--text-tertiary); }
@@ -1371,6 +1372,22 @@ table.shield-table tbody tr.is-selected { background: var(--fill-secondary); }
    keeps it from being clipped at the edge of the page). Add .after-native to the icon when the input
    is type="date": it moves the icon left of the browser's own calendar button. */
 .shield-input-wrap .shield-input-error { position: static; }
-.shield-input-error-icon { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); display: inline-flex; color: var(--error-solid); cursor: help; border-radius: 50%; outline-offset: 2px; }
+.shield-input-error-icon { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); display: inline-flex; color: var(--error); cursor: help; border-radius: 50%; outline-offset: 2px; }
 .shield-input-error-icon.after-native { right: 36px; }
 .shield-input-wrap .shield-input-error .shield-tooltip-body { left: 0; width: max-content; max-width: max(100%, 220px); }
+
+/* ---------- Functional-colored text is always bold ----------
+   Any text drawn in a functional color (success, warning, error, info), on its own
+   or on its tinted background, uses --weight-functional (700). Neutral text is never
+   made bold to match. Add a new functional-colored component to this list. */
+.shield-text.success, .shield-text.warning, .shield-text.danger,
+.shield-field-hint.bad, .shield-field-hint.warn, .shield-field-required,
+.shield-tag.success, .shield-tag.warning, .shield-tag.error, .shield-tag.processing,
+.shield-pill.success, .shield-pill.warning,
+.shield-alert.info, .shield-alert.success, .shield-alert.warning, .shield-alert.error,
+.shield-alert-title, .shield-alert.info .shield-alert-description, .shield-alert.success .shield-alert-description,
+.shield-alert.warning .shield-alert-description, .shield-alert.error .shield-alert-description,
+.shield-toast.success, .shield-toast.error,
+.shield-stat-extra, .shield-stat-value.positive, .shield-stat-value.negative,
+.shield-dropdown-item.danger, .shield-button-danger.shield-button-default { font-weight: var(--weight-functional); }
+.shield-tooltip-body code, .shield-info-tip-body code { color: inherit; background: color-mix(in srgb, currentColor 18%, transparent); } /* inline code inside the dark tooltip surface */
