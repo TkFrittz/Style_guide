@@ -3,11 +3,9 @@
    =====================================================================
 
    WHAT THIS FILE IS
-   Ported directly from src/styles/ui.css in the Poom codebase, class
-   for class. This is not a reimplementation or an approximation — it's
-   the same stylesheet the running app loads, so every demo on this
-   page renders pixel-identical to the product. Companion to
-   tokens.css, which defines the var(--...) values used everywhere
+   The Shield Engineering component styles: plain CSS, one class per
+   component, no UI framework. Every demo on this page renders from this
+   file. Companion to tokens.css, which defines the var(--...) values used everywhere
    below (colors, spacing, radius, shadows, fonts).
 
    HOW CLASSES ARE NAMED
@@ -24,7 +22,7 @@
    plain English. State classes that JavaScript switches on and off
    while someone uses the page start with "is-" (e.g. .is-on).
 
-   OLD -> NEW NAME MAP (use this to update the Poom app to match)
+   NAMING MAP (short form -> spelled-out form used in this file)
      sl-            -> shield-            (prefix on every component)
      -btn           -> -button            (.sl-btn-primary -> .shield-button-primary)
      -sk            -> -skeleton          (.sl-sk -> .shield-skeleton)
@@ -158,7 +156,7 @@
   justify-content: center;
   gap: 6px;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
   white-space: nowrap;
 }
 .shield-button.block { width: 100%; } /* stretches the button to fill its container */
@@ -181,7 +179,7 @@
 :root[data-theme="dark"] .shield-button-danger:not(.shield-button-default):hover:not(:disabled) { box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.55); }
 .shield-button:disabled { box-shadow: none !important; }
 
-/* PRIMARY: solid brand-blue. Use once per screen for the main action. */
+/* PRIMARY: solid blue-7. Use once per screen for the main action. */
 .shield-button-primary { background: var(--blue-7); color: #fff; }
 .shield-button-primary:hover:not(:disabled) { background: var(--blue-8); }
 
@@ -241,7 +239,7 @@
   padding: 4px 11px;
   width: 100%;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
 }
 /* Single-line inputs are a fixed 32px tall; text areas (below) grow instead. */
 .shield-input { height: 32px; box-sizing: border-box; }
@@ -258,8 +256,9 @@
 .shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
 /* DISABLED: gray fill, no typing allowed. */
 .shield-input:disabled, .shield-textarea:disabled { background: var(--fill-tertiary); color: var(--text-quaternary); cursor: not-allowed; }
-/* ERROR: red border. Add the class .error to the input when validation fails. */
-.shield-input.error, .shield-textarea.error { border-color: var(--error); }
+/* ERROR: red border. Add the class .error to the input when validation fails, and add the red
+   error icon (.shield-input-error, defined with the tooltip rules below) so the message is available on hover or focus. */
+.shield-input.error, .shield-textarea.error { border-color: var(--error-solid); }
 .shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px rgba(207, 19, 34, 0.12); }
 /* An icon placed inside an input. pointer-events: none lets clicks pass through to the input underneath. */
 .shield-input-icon { position: absolute; color: var(--text-quaternary); display: flex; pointer-events: none; }
@@ -296,7 +295,7 @@
   background: var(--bg-container);
   padding: 0 11px;
   cursor: text;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
 }
 /* Hover and open/focused states for the select box. */
 .shield-select-box:hover { border-color: var(--blue-5); }
@@ -361,7 +360,7 @@
   height: 16px;
   cursor: pointer;
 }
-.shield-select-arrow { pointer-events: none; transition: transform 0.15s ease; font-size: 10px; }
+.shield-select-arrow { pointer-events: none; transition: transform var(--duration-fast) var(--ease-standard); font-size: 10px; }
 .shield-select.open .shield-select-arrow { transform: rotate(180deg); } /* flips the chevron when the panel is open */
 .shield-select-clear:hover { color: var(--text-secondary); }
 /* The floating list of options that appears under the box. */
@@ -373,7 +372,7 @@
   min-width: 240px;
   max-height: 320px;
   overflow-y: auto;
-  z-index: 50;
+  z-index: var(--z-dropdown);
   background: var(--bg-elevated);
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius-lg);
@@ -434,7 +433,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
 }
 .shield-checkbox svg { display: none; width: 10px; height: 10px; } /* the checkmark icon, hidden until .is-on is added */
 .shield-checkbox.is-on { background: var(--blue-7); border-color: var(--blue-7); }
@@ -452,8 +451,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: border-color 0.15s ease;
+  transition: border-color var(--duration-fast) var(--ease-standard);
 }
+.shield-radio:focus-visible { border-radius: 50%; } /* keep the keyboard focus ring round on a round control */
 .shield-radio.is-on { border-color: var(--blue-7); }
 .shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-7); } /* the filled center dot */
 
@@ -466,7 +466,7 @@
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard);
   border: none;
   padding: 0;
   display: inline-flex;
@@ -486,7 +486,7 @@
   top: 2px;
   left: 2px; /* resting position; .is-on below slides it to the right by changing `left` */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: left 0.15s ease;
+  transition: left var(--duration-fast) var(--ease-standard);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -515,7 +515,7 @@
   align-items: center;
   gap: 5px;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 /* Hover color, and the filled blue look for the currently selected button. */
 .shield-segmented button:hover { color: var(--text); background: var(--fill-secondary); }
@@ -572,16 +572,16 @@
 .shield-pill.neutral { color: var(--text-tertiary); }
 
 /* ---------- Card ----------
-   Plain .shield-card = borderless, flush against the page. Add
+   Plain .shield-card = a thin border and no shadow, flush against the page. Add
    .bordered-shadow for the "floating tile" look (border + shadow-sm) —
    that's the one you want in most real layouts. Add .small for a
    tighter-padding compact variant. */
-/* The base card: white box with a thin border and rounded corners. */
+/* The base card: card-colored box with a thin border and rounded corners. */
 .shield-card {
   background: var(--bg-container);
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius-lg);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
 }
 /* Adds a soft drop shadow so the card appears to float. Use .small for tighter inner padding. */
 .shield-card.bordered-shadow { box-shadow: var(--shadow-sm); }
@@ -627,7 +627,7 @@ table.shield-table td { padding: 11px 12px; border-bottom: 1px solid var(--borde
 /* No line under the final row. */
 table.shield-table tr:last-child td { border-bottom: none; }
 /* Rows fade smoothly when hovered, and show a hand cursor if marked .clickable. */
-table.shield-table tbody tr { transition: background-color 0.12s ease; }
+table.shield-table tbody tr { transition: background-color var(--duration-instant) var(--ease-standard); }
 table.shield-table tbody tr.clickable { cursor: pointer; }
 table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 
@@ -642,8 +642,8 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.45);
+  z-index: var(--z-modal);
+  background: var(--scrim);
   display: none; /* becomes `flex` only when .open is added, which also centers the dialog */
   align-items: center;
   justify-content: center;
@@ -660,7 +660,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   max-height: 88vh;
   display: flex;
   flex-direction: column;
-  animation: fadeUp 0.2s ease both; /* fadeUp is defined once in tokens.css and reused by the Toast too */
+  animation: fadeUp var(--duration-base) var(--ease-standard) both; /* fadeUp is defined once in tokens.css and reused by the Toast too */
 }
 .shield-modal.wide { width: 720px; }
 /* Modal top row: title on the left, close (×) button on the right. */
@@ -712,14 +712,18 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 
 /* ---------- Steps / Rail ----------
    A horizontal row of numbered steps connected by lines, driven by
-   sgSetStep() in shield.js. Each .shield-step gets exactly one of: nothing
-   (upcoming), .current (outlined, in progress), or .done (filled, with
-   a checkmark instead of a number). Add .compact on the outer
-   .shield-steps to hide the text labels and show dots only, for dense rows. */
+   sgStepsRender() in shield.js. Each .shield-step gets exactly one of: nothing
+   (not started), .partial (started, not finished: a half-filled dot), or
+   .done (filled, with a checkmark instead of a number). .current is
+   separate: it only marks which step the person is looking at (bold
+   title and a soft ring), so a step keeps its own state when they leave
+   it. A small .shield-step-sub line under the title says "In progress"
+   or "Done" in words. Add .compact on the outer .shield-steps to hide
+   the text labels and show dots only, for dense rows. */
 /* The row holding all steps. It scrolls sideways if there are too many to fit. */
 .shield-steps { display: flex; align-items: flex-start; gap: 4px; overflow-x: auto; }
-.shield-step { display: flex; align-items: center; gap: 8px; flex: none; min-width: 0; }
-.shield-step-button { display: flex; align-items: center; gap: 8px; background: none; border: none; padding: 0; cursor: default; font: inherit; }
+.shield-step { display: flex; align-items: flex-start; gap: 8px; flex: none; min-width: 0; }
+.shield-step-button { display: flex; align-items: flex-start; gap: 8px; background: none; border: none; padding: 0; cursor: default; font: inherit; }
 .shield-step-button.clickable { cursor: pointer; }
 .shield-step-dot {
   width: 24px;
@@ -737,13 +741,19 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 }
 /* Step states: done = filled blue circle, current = blue outline. Titles darken for both. */
 .shield-step.done .shield-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
-.shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); }
-.shield-step-title { font-size: var(--font-size-small); color: var(--text-tertiary); white-space: nowrap; font-weight: var(--weight-small); }
-.shield-step.done .shield-step-title, .shield-step.current .shield-step-title { color: var(--text); font-weight: 700; }
+.shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); box-shadow: 0 0 0 3px rgba(24, 171, 237, 0.2); }
+/* Started but not finished: the dot is half tinted, with the number still readable on top. */
+.shield-step.partial .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--text); background: conic-gradient(rgba(24, 171, 237, 0.45) 50%, var(--bg-container) 0); }
+.shield-step.done.current .shield-step-dot { color: #fff; } /* a finished step you are looking at keeps its white check */
+.shield-step-title { line-height: 24px; font-size: var(--font-size-small); color: var(--text-tertiary); white-space: nowrap; font-weight: var(--weight-small); }
+.shield-step.done .shield-step-title, .shield-step.current .shield-step-title, .shield-step.partial .shield-step-title { color: var(--text); font-weight: 700; }
+.shield-step-text { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+.shield-step-sub { font-size: var(--font-size-caption); color: var(--text-tertiary); font-weight: var(--weight-small); white-space: nowrap; }
 /* The connector line between two steps; turns blue once the step before it is done. */
-.shield-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 0 2px; align-self: center; }
+.shield-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 12px 2px 0; align-self: flex-start; } /* 12px = half the dot, so the line meets the dots whatever the label height */
 .shield-step-line.done { background: var(--brand-blue-dark); }
-.shield-steps.compact .shield-step-title { display: none; }
+.shield-steps.compact .shield-step-title, .shield-steps.compact .shield-step-sub { display: none; }
+.shield-steps.compact .shield-step-line { margin-top: 9px; }
 .shield-steps.compact .shield-step-dot { width: 18px; height: 18px; font-size: 10px; }
 
 /* ---------- Descriptions ----------
@@ -769,14 +779,15 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-timeline-content { font-size: var(--font-size-small); color: var(--text); font-weight: var(--weight-small); }
 
 /* ---------- Statistic / KPI tile strip ----------
-   A CSS-grid row of stat tiles that auto-fits as many 220px-minimum
-   columns as will fit (NOT the 24-unit .shield-row/.shield-col grid used
-   elsewhere), so tiles stay content-sized instead of stretching into
-   one full-width bar. .shield-stat.highlighted gets a subtle green-tinted
+   A wrapping row of stat tiles. Each tile is only as wide as its content
+   (with a 180px minimum so a short number still looks like a card) and
+   never stretches to fill the row; tiles that do not fit wrap onto the
+   next line. (NOT the 24-unit .shield-row/.shield-col grid used
+   elsewhere.) .shield-stat.highlighted gets a subtle green-tinted
    border to draw the eye to a headline metric; .positive/.negative on
    .shield-stat-value recolor just the big number (green / red). */
 /* The grid holding all stat tiles, with a gap between them. */
-.shield-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 14px; }
+.shield-stats { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; margin: 0 0 14px; }
 .shield-stats.tight { gap: 10px; margin-bottom: 12px; }
 /* One stat tile: a small card with a label, big number, and optional notes. */
 .shield-stat {
@@ -785,11 +796,13 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   border-radius: var(--radius-lg);
   padding: 14px 16px 13px;
   box-shadow: var(--shadow-sm);
-  min-width: 0;
+  flex: 0 0 auto; /* content-sized: never grow to fill the row */
+  min-width: 180px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  transition: box-shadow 0.2s ease, background-color 0.25s ease, border-color 0.25s ease;
+  transition: box-shadow var(--duration-base) var(--ease-standard), background-color var(--duration-slow) var(--ease-standard), border-color var(--duration-slow) var(--ease-standard);
 }
 .shield-stat:hover { box-shadow: var(--shadow-md); }
 .shield-stat.highlighted { border-color: color-mix(in srgb, var(--success) 45%, transparent); }
@@ -814,9 +827,6 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* Small gray note under the number, and an amber "extra" note below a dashed line. */
 .shield-stat-sub { font-size: var(--font-size-caption); color: var(--text-tertiary); margin-top: 3px; font-weight: var(--weight-small); }
 .shield-stat-extra { font-size: var(--font-size-caption); color: var(--warning); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-secondary); font-weight: var(--weight-small); }
-/* On medium screens show 2 tiles per row; on phones show 1. */
-@media (max-width: 900px) { .shield-stats { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .shield-stats { grid-template-columns: 1fr; } }
 
 /* ---------- Tabs ----------
    .shield-tabs-bar holds the row of .shield-tab buttons; shield.js's
@@ -853,7 +863,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-collapse-item:last-child { border-bottom: none; }
 .shield-collapse-item summary { display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; padding: 12px 4px; font-weight: 500; font-size: var(--font-size-control); }
 .shield-collapse-item summary::-webkit-details-marker { display: none; } /* hides Chrome/Safari's own default triangle, since we draw our own below */
-.shield-collapse-item summary::before { content: "›"; color: var(--text-tertiary); font-size: var(--font-size-control); flex: none; transition: transform 0.15s ease; }
+.shield-collapse-item summary::before { content: "›"; color: var(--text-tertiary); font-size: var(--font-size-control); flex: none; transition: transform var(--duration-fast) var(--ease-standard); }
 .shield-collapse-item[open] summary::before { transform: rotate(90deg); } /* [open] is set automatically by the browser, not by shield.js */
 /* The text revealed when a section is opened. */
 .shield-collapse-body { padding: 0 4px 14px; font-size: var(--font-size-small); color: var(--text-secondary); font-weight: var(--weight-small); }
@@ -871,7 +881,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   top: calc(100% + 6px);
   right: 0;
   min-width: 160px;
-  z-index: 60;
+  z-index: var(--z-dropdown);
   background: var(--bg-elevated);
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius-md);
@@ -997,7 +1007,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   inset: 0;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--bg-container) 60%, transparent), transparent);
   transform: translateX(-100%);
-  animation: skSweep 1.5s ease-in-out infinite;
+  animation: skSweep var(--duration-shimmer) ease-in-out infinite;
 }
 @keyframes skSweep { to { transform: translateX(100%); } }
 .shield-spinner {
@@ -1007,7 +1017,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  animation: spin 0.7s linear infinite;
+  animation: spin var(--duration-spin) linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .shield-loading-page { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 100px 24px; color: var(--text-tertiary); } /* a full-page loading state, e.g. while a route's data is being fetched */
@@ -1018,7 +1028,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    before </body>). sgPushToast() in shield.js creates and appends each
    .shield-toast into it, and removes it again after a few seconds. */
 /* The fixed strip at the top of the screen where toasts appear. */
-.shield-toast-stack { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.shield-toast-stack { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: var(--z-toast); display: flex; flex-direction: column; gap: 8px; align-items: center; }
 /* One toast: a small floating message that fades up into view. */
 .shield-toast {
   display: flex;
@@ -1031,7 +1041,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   box-shadow: var(--shadow-md);
   font-size: var(--font-size-small);
   color: var(--text);
-  animation: fadeUp 0.2s ease both;
+  animation: fadeUp var(--duration-base) var(--ease-standard) both;
   min-width: 200px;
   font-weight: var(--weight-small);
 }
@@ -1062,3 +1072,305 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   gap: 10px;
   flex-wrap: wrap;
 }
+
+
+/* =====================================================================
+   v0.8 additions — new components, in the same order they appear in the
+   guide: Tooltip, Popover, Radio group, Pagination, Breadcrumb,
+   Badge extras, Drawer, File upload, Date picker, Form fields, Table
+   patterns, App shell. Everything below reads from tokens.css only.
+   ===================================================================== */
+
+/* ---------- Tooltip ----------
+   A short, non-interactive explanation that appears on hover or keyboard
+   focus. Wrap the trigger in .shield-tooltip (give it tabindex="0" if the
+   trigger isn't already focusable), put the text in .shield-tooltip-body
+   with role="tooltip", and point the trigger at it with aria-describedby.
+   .shield-info-tip is the same thing for the "i" icon that sits next to a
+   page title (use it in page headers). Modifiers
+   on the wrapper: .top opens upward, .end right-aligns the bubble so it
+   doesn't run off the right edge of the screen. The bubble stays open
+   while the pointer is over it (the invisible ::before bridges the gap),
+   and Escape dismisses it (sgTooltipKeys in shield.js). */
+.shield-tooltip, .shield-info-tip { position: relative; display: inline-flex; }
+.shield-info-tip { color: var(--brand-blue-dark); cursor: help; border-radius: 50%; }
+.shield-tooltip-body, .shield-info-tip-body {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -8px;
+  z-index: var(--z-tooltip);
+  width: max-content;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-spotlight);
+  color: var(--bg-container);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+  transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard), visibility var(--duration-fast);
+}
+.shield-info-tip-body { width: 340px; max-width: calc(100vw - 32px); } /* the page-title version holds a full sentence or two */
+.shield-tooltip-body::before, .shield-info-tip-body::before { content: ""; position: absolute; left: 0; right: 0; top: -8px; height: 8px; } /* invisible bridge so the pointer can move onto the bubble */
+.shield-tooltip.top .shield-tooltip-body { top: auto; bottom: calc(100% + 8px); transform: translateY(2px); }
+.shield-tooltip.top .shield-tooltip-body::before { top: auto; bottom: -8px; }
+.shield-tooltip.end .shield-tooltip-body, .shield-info-tip.end .shield-info-tip-body { left: auto; right: -8px; }
+.shield-tooltip:hover .shield-tooltip-body, .shield-tooltip:focus-within .shield-tooltip-body,
+.shield-info-tip:hover .shield-info-tip-body, .shield-info-tip:focus-within .shield-info-tip-body { opacity: 1; visibility: visible; transform: none; }
+.shield-tooltip.is-dismissed .shield-tooltip-body, .shield-info-tip.is-dismissed .shield-info-tip-body { opacity: 0; visibility: hidden; } /* set by Escape, cleared when the pointer leaves */
+
+/* ---------- Popover ----------
+   Like a Tooltip but click-triggered and interactive: a small title, some
+   body text and optional action buttons. .shield-popover wraps the trigger
+   button and the .shield-popover-panel; .open (set by sgPopoverToggle)
+   shows it. The trigger carries aria-expanded. Escape or a click outside
+   closes it and Escape returns focus to the trigger. Modifiers: .end
+   right-aligns the panel, .top opens it upward. */
+.shield-popover { position: relative; display: inline-block; }
+.shield-popover-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: var(--z-dropdown);
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  padding: var(--space-4);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: none;
+}
+.shield-popover.open .shield-popover-panel { display: block; animation: fadeUp var(--duration-base) var(--ease) both; }
+.shield-popover.end .shield-popover-panel { left: auto; right: 0; }
+.shield-popover.top .shield-popover-panel { top: auto; bottom: calc(100% + 8px); }
+.shield-popover-title { margin: 0 0 6px; font-family: var(--font-heading); font-size: var(--font-size-body); font-weight: 650; letter-spacing: -0.01em; }
+.shield-popover-body { font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text-secondary); line-height: 1.5; }
+.shield-popover-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: var(--space-3); }
+
+/* ---------- Radio group ----------
+   Wrap related .shield-radio options in .shield-radio-group (role=
+   "radiogroup" plus an aria-label). Default is a vertical stack; add
+   .horizontal for a row. Give an option a second line of explanation
+   with .has-desc on its .shield-check-row and a .shield-radio-desc span. */
+.shield-radio-group { display: flex; flex-direction: column; gap: 10px; }
+.shield-radio-group.horizontal { flex-direction: row; flex-wrap: wrap; gap: 8px 20px; }
+.shield-check-row.has-desc { align-items: flex-start; }
+.shield-check-row.has-desc .shield-radio { margin-top: 3px; }
+.shield-radio-text { display: flex; flex-direction: column; }
+.shield-radio-desc { font-size: var(--font-size-caption); font-weight: var(--weight-small); color: var(--text-tertiary); }
+
+/* ---------- Pagination ----------
+   A row of page buttons. .shield-page is one button; .is-on marks the
+   current page (and the button also carries aria-current="page"). Prev
+   and next are .shield-page buttons that become :disabled at the ends.
+   .shield-page-ellipsis stands in for skipped pages. sgPaginationGo in
+   shield.js drives the live demo. */
+.shield-pagination { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.shield-page {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text);
+  font-size: var(--font-size-control);
+  font-weight: var(--weight-small);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+.shield-page:hover:not(:disabled):not(.is-on) { background: var(--fill-secondary); }
+.shield-page.is-on { background: var(--blue-7); color: #fff; }
+.shield-page:disabled { color: var(--text-quaternary); cursor: not-allowed; }
+.shield-page-ellipsis { min-width: 32px; text-align: center; color: var(--text-tertiary); user-select: none; }
+.shield-page-summary { margin-left: var(--space-3); font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text-tertiary); }
+
+/* ---------- Breadcrumb ----------
+   Shows where the current page sits in the hierarchy. Use a <nav
+   aria-label="Breadcrumb"> around an <ol>; every item but the last is a
+   link, and the last <li> carries aria-current="page". The separator is
+   drawn by CSS and hidden from screen readers. */
+.shield-breadcrumb { font-size: var(--font-size-small); font-weight: var(--weight-small); }
+.shield-breadcrumb ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.shield-breadcrumb li { display: inline-flex; align-items: center; gap: 6px; color: var(--text); }
+.shield-breadcrumb li + li::before { content: "›"; content: "›" / ""; color: var(--text-tertiary); }
+.shield-breadcrumb a { color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-xs); }
+.shield-breadcrumb a:hover { color: var(--brand-blue-dark); text-decoration: underline; }
+.shield-breadcrumb li[aria-current="page"] { font-weight: 600; }
+
+/* ---------- Badge extras ----------
+   .shield-badge-count.corner turns the count chip into a corner overlay
+   (inside a .shield-badge-wrap, like the dot). Show "99+" instead of
+   larger numbers. .shield-badge-dot takes .success / .warning / .info.
+   .shield-status is the inline "dot + word" for a state in a list or
+   table cell: the word always carries the meaning, the dot only
+   reinforces it. */
+.shield-badge-count.corner { position: absolute; top: -8px; right: -10px; background: var(--error); color: #fff; box-shadow: 0 0 0 2px var(--bg-container); }
+.shield-badge-dot.success { background: var(--success); }
+.shield-badge-dot.warning { background: var(--warning); }
+.shield-badge-dot.info { background: var(--info); }
+.shield-status { display: inline-flex; align-items: center; gap: 8px; font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text); }
+.shield-status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--status-dot, var(--text-tertiary)); flex: none; }
+.shield-status.success { --status-dot: var(--success); }
+.shield-status.warning { --status-dot: var(--warning); }
+.shield-status.error { --status-dot: var(--error); }
+.shield-status.info { --status-dot: var(--info); }
+
+/* ---------- Drawer ----------
+   A side panel that slides in from the right for viewing or editing a
+   record without leaving the page. Same structure as a Modal: a
+   .shield-drawer-backdrop (hidden until .open) holding a .shield-drawer
+   with head / body / foot. On screens narrower
+   than the drawer it fills the width. sgOpenDrawer / sgCloseDrawer in
+   shield.js open and close it, move focus inside and return it after. */
+.shield-drawer-backdrop { position: fixed; inset: 0; z-index: var(--z-drawer); background: var(--scrim); display: none; justify-content: flex-end; }
+.shield-drawer-backdrop.open { display: flex; }
+.shield-drawer { width: 420px; max-width: 100%; height: 100%; display: flex; flex-direction: column; background: var(--bg-elevated); box-shadow: var(--shadow-md); animation: drawerIn var(--duration-base) var(--ease) both; }
+@keyframes drawerIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+.shield-drawer-head { display: flex; align-items: flex-start; gap: 12px; padding: 20px 24px 16px; border-bottom: 1px solid var(--border-secondary); }
+.shield-drawer-head h3 { margin: 0; flex: 1; font-family: var(--font-heading); font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+.shield-drawer-close { font-size: 20px; line-height: 1; padding: 0 4px; border: none; background: none; color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-sm); }
+.shield-drawer-close:hover { background: var(--fill-secondary); color: var(--text); }
+.shield-drawer-body { flex: 1; overflow-y: auto; padding: 20px 24px; font-size: var(--font-size-body); color: var(--text-secondary); line-height: 24px; }
+.shield-drawer-foot { display: flex; gap: 8px; justify-content: flex-end; padding: 12px 24px; border-top: 1px solid var(--border-secondary); }
+
+/* ---------- File upload ----------
+   A dropzone for choosing files by click or drag-and-drop. The real
+   <input type="file"> is visually hidden (.shield-upload-input) but still
+   focusable; its <label> is the dropzone, so clicking anywhere on it
+   opens the file picker. Chosen files are listed below as
+   .shield-upload-item rows that can be removed. Wired by sgHandleUpload /
+   sgHandleDrop / sgRenderUploadFiles in shield.js. */
+.shield-upload-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.shield-upload-dropzone { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 20px; border: 1px dashed var(--border); border-radius: var(--radius-lg); background: var(--bg-container); cursor: pointer; text-align: center; transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.shield-upload-dropzone:hover, .shield-upload-dropzone.drag { border-color: var(--brand-blue); background: var(--blue-1); }
+:root[data-theme="dark"] .shield-upload-dropzone:hover, :root[data-theme="dark"] .shield-upload-dropzone.drag { background: rgba(24, 171, 237, 0.16); } /* blue-1 is a pale tint that washes out light text in dark mode, so hover uses the same soft translucent blue as the selected Select option and Menu item */
+.shield-upload-input:focus-visible + .shield-upload-dropzone { outline: 2px solid var(--brand-blue-dark); outline-offset: 2px; } /* keyboard focus lands on the hidden input, so the ring is drawn on the dropzone */
+.shield-upload-dropzone svg { color: var(--text-tertiary); }
+.shield-upload-title { font-size: var(--font-size-small); color: var(--text); }
+.shield-upload-hint { font-size: var(--font-size-caption); font-weight: var(--weight-small); color: var(--text-tertiary); }
+.shield-upload-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.shield-upload-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--border-secondary); border-radius: var(--radius-md); background: var(--bg-container); font-size: var(--font-size-caption); font-weight: var(--weight-small); }
+.shield-upload-item svg { color: var(--text-tertiary); flex-shrink: 0; }
+.shield-upload-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+.shield-upload-size { color: var(--text-tertiary); font-family: var(--font-mono); font-size: var(--font-size-caption); }
+.shield-upload-remove { background: none; border: none; padding: 2px; color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-xs); display: flex; }
+.shield-upload-remove:hover { color: var(--error); background: var(--fill-secondary); }
+
+/* ---------- Date picker ----------
+   There is no custom calendar. A date field is the browser's own date
+   input styled as a normal .shield-input, so it is keyboard- and screen-
+   reader-friendly for free and follows the visitor's locale. For a range,
+   put two in a .shield-date-range. Dark mode needs nothing extra:
+   color-scheme: dark (tokens.css) makes the browser's calendar icon and
+   popup dark too. */
+.shield-input[type="date"] { min-width: 150px; font-variant-numeric: tabular-nums; }
+.shield-input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
+.shield-date-range { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; max-width: 100%; }
+.shield-date-range .shield-input { width: auto; flex: 1 1 140px; min-width: 0; }
+
+/* ---------- Form fields ----------
+   .shield-field = one label + control + hint, spaced 16px from the next.
+   The label sits ABOVE the control. Required fields get a
+   .shield-field-required asterisk before the label (aria-hidden: set
+   `required` on the control itself so assistive tech announces it).
+   .shield-field-hint is the help line; add .bad or .warn when it is
+   reporting a problem. .shield-form lays fields out in one column;
+   .two makes two columns above 576px. .shield-form-actions is the
+   right-aligned button row at the bottom. */
+.shield-field { margin-bottom: var(--space-4); }
+.shield-field-label { display: block; margin-bottom: 6px; font-size: var(--font-size-small); font-weight: 500; color: var(--text); }
+.shield-field-required { color: var(--error); margin-right: 4px; }
+.shield-field-hint { margin-top: 4px; font-size: var(--font-size-caption); font-weight: var(--weight-small); color: var(--text-tertiary); }
+.shield-field-hint.bad { color: var(--error); }
+.shield-field-hint.warn { color: var(--warning); }
+.shield-form { display: grid; grid-template-columns: 1fr; column-gap: var(--space-5); }
+@media (min-width: 576px) { .shield-form.two { grid-template-columns: 1fr 1fr; } }
+.shield-form .span-all { grid-column: 1 / -1; }
+.shield-form-actions { display: flex; gap: 8px; justify-content: flex-end; padding-top: var(--space-3); border-top: 1px solid var(--border-secondary); }
+
+/* ---------- Table patterns ----------
+   Sorting: put aria-sort on the <th> ("ascending", "descending" or
+   "none") and a .shield-sort button inside it; the arrow is drawn from
+   aria-sort. Selection: a first column holding a checkbox (td.shield-
+   table-select), with .is-selected on the chosen <tr>. Bulk actions: a
+   .shield-bulk-bar above the table, shown (remove [hidden]) while one or
+   more rows are selected. The
+   behavior in the demo is sgTableSort / sgTableToggleRow /
+   sgTableToggleAll in shield.js. */
+table.shield-table th .shield-sort { all: unset; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: inherit; border-radius: var(--radius-xs); }
+table.shield-table th .shield-sort:hover { color: var(--text); }
+table.shield-table th .shield-sort:focus-visible { outline: 2px solid var(--brand-blue-dark); outline-offset: 2px; }
+table.shield-table th .shield-sort::after { content: "↕"; content: "↕" / ""; font-size: 12px; opacity: 0.6; }
+table.shield-table th[aria-sort="ascending"] .shield-sort::after { content: "↑"; content: "↑" / ""; opacity: 1; }
+table.shield-table th[aria-sort="descending"] .shield-sort::after { content: "↓"; content: "↓" / ""; opacity: 1; }
+table.shield-table th.shield-table-select, table.shield-table td.shield-table-select { width: 40px; padding-right: 0; }
+table.shield-table tbody tr.is-selected { background: var(--fill-secondary); }
+.shield-bulk-bar { display: flex; align-items: center; gap: var(--space-3); padding: 8px 12px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-secondary); font-size: var(--font-size-small); font-weight: var(--weight-small); }
+.shield-bulk-bar[hidden] { display: none; }
+.shield-bulk-count { flex: 1; font-variant-numeric: tabular-nums; }
+
+/* ---------- App shell ----------
+   The page frame: a left navigation column plus a main area with a 64px
+   top bar and the page content. Above 768px the nav sits beside the
+   content. At 768px and below it becomes an off-canvas drawer opened by
+   the menu button in the top bar (sgShellToggle in shield.js flips
+   .nav-open on .shield-shell). Content padding drops from 28px to 16px. */
+.shield-shell { display: flex; min-height: 100vh; }
+.shield-shell-side { width: 272px; flex: none; background: var(--sider-bg); border-right: 1px solid var(--border-secondary); overflow-y: auto; }
+.shield-shell-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.shield-shell-top { height: 64px; flex: none; display: flex; align-items: center; gap: var(--space-3); padding: 0 28px; background: var(--sider-bg); border-bottom: 1px solid var(--border-secondary); }
+.shield-shell-content { width: 100%; max-width: 1180px; padding: 24px 28px 60px; }
+.shield-shell-toggle { display: none; }
+.shield-shell-scrim { display: none; }
+@media (max-width: 768px) {
+  .shield-shell-side { position: fixed; inset: 0 auto 0 0; z-index: var(--z-drawer); max-width: 85vw; transform: translateX(-100%); visibility: hidden; transition: transform var(--duration-base) var(--ease), visibility 0s linear var(--duration-base); } /* visibility keeps the off-screen nav out of the Tab order while closed */
+  .shield-shell.nav-open .shield-shell-side { transform: none; visibility: visible; transition-delay: 0s; box-shadow: var(--shadow-md); }
+  .shield-shell.nav-open .shield-shell-scrim { display: block; position: fixed; inset: 0; z-index: calc(var(--z-drawer) - 1); background: var(--scrim); }
+  .shield-shell-toggle { display: inline-flex; }
+  .shield-shell-top { padding: 0 16px; }
+  .shield-shell-content { padding: 16px 16px 40px; }
+}
+
+/* Reduced motion keeps loaders alive: the global rule in tokens.css would
+   freeze the spinner into a static ring, which no longer says "working".
+   A slow steady turn is allowed (it is essential motion, not decoration). */
+@media (prefers-reduced-motion: reduce) {
+  .shield-spinner { animation-duration: 2s !important; animation-iteration-count: infinite !important; }
+}
+
+/* ---------- Skip link ----------
+   The first focusable thing on a page: invisible until a keyboard user
+   tabs to it, then it appears top-left and jumps past the navigation to
+   the main content (<main id="main" tabindex="-1">). */
+.shield-skip-link { position: fixed; top: 8px; left: 8px; z-index: var(--z-toast); padding: 8px 14px; border-radius: var(--radius-md); background: var(--bg-elevated); color: var(--text); font-size: var(--font-size-small); font-weight: 600; box-shadow: var(--shadow-md); transform: translateY(-200%); }
+.shield-skip-link:focus { transform: none; }
+
+/* ---------- Screen-reader-only text ----------
+   Visually hidden but still read aloud: use for live-region messages
+   ("Sorted by Order, ascending", "Copied to clipboard"). */
+.shield-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* ---------- Input error icon ----------
+   A small red error icon at the right end of an input. Hover or focus it to read what is wrong; the
+   message opens ABOVE the field, lined up with the field's left edge. Markup: inside .shield-input-wrap,
+   next to the input, put a .shield-input-error.shield-tooltip.top that holds the focusable
+   .shield-input-error-icon and the .shield-tooltip-body. Add .error and .has-suffix to the input and
+   point its aria-describedby at the tooltip body so screen readers read the message too. The wrapper is
+   not positioned itself, so the message is placed against the whole field, not the small icon (which
+   keeps it from being clipped at the edge of the page). Add .after-native to the icon when the input
+   is type="date": it moves the icon left of the browser's own calendar button. */
+.shield-input-wrap .shield-input-error { position: static; }
+.shield-input-error-icon { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); display: inline-flex; color: var(--error-solid); cursor: help; border-radius: 50%; outline-offset: 2px; }
+.shield-input-error-icon.after-native { right: 36px; }
+.shield-input-wrap .shield-input-error .shield-tooltip-body { left: 0; width: max-content; max-width: max(100%, 220px); }

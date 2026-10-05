@@ -3,7 +3,7 @@
    =====================================================================
 
    WHAT THIS FILE IS
-   Plain JavaScript — no React, no build step, no npm packages. Every
+   Plain JavaScript — no framework, no build step, no npm packages. Every
    function below makes one component on the page (the Select, the
    Modal, the Switch, etc.) actually work when you click/type on it.
 
@@ -30,9 +30,14 @@
    NAMING CONVENTION
    Every function starts with "sg" (Style Guide) so it's obvious at a
    glance that it belongs to this demo page and not to some library.
-   The real app's components (src/components/ui/*.jsx) do the same
-   jobs with React state instead of these functions — this file is a
-   plain-JS stand-in that produces the same visible behavior.
+   These functions are plain-JS helpers: copy one with its markup, or
+   replace it with your own state handling.
+
+   ENGINEER MODE
+   The Engineer Mode switch at the top of the sidebar reveals a code
+   panel under every section. The panels are built here (see "Engineer
+   Mode" near the bottom) from the SG_SNIPPETS object in snippets.js,
+   which is loaded before this file.
 
    HOW TO ADD A NEW INTERACTIVE BIT
    1. Write a new function here, named sgDoTheThing(el, ...extraArgs).
@@ -63,6 +68,9 @@ function sgApplyTheme(mode) {
   document.querySelectorAll("[data-theme-seg] button").forEach((b) => {
     b.classList.toggle("is-on", b.dataset.mode === mode);
   });
+  // The live responsive demo is an <iframe> with its own <html>, so it
+  // has to be told about the change (see "Responsive demo" below).
+  document.querySelectorAll("iframe[data-sg-frame]").forEach(sgFrameTheme);
 }
 
 // Runs once when the page first loads: reads the saved theme (defaulting
@@ -102,6 +110,7 @@ const SG_CHECK_SVG = '<svg width="2.19" height="2.5" viewBox="0 0 448 512" fill=
 function sgToggleCheckbox(el) {
   if (el.classList.contains("disabled")) return;
   const on = el.classList.toggle("is-on");
+  if (el.hasAttribute("aria-checked")) el.setAttribute("aria-checked", on); // keep screen readers in sync
   if (on && !el.querySelector("svg")) el.innerHTML = SG_CHECK_SVG;
 }
 
@@ -113,8 +122,12 @@ function sgToggleCheckbox(el) {
 // this one on — that's what makes radios mutually exclusive.
 function sgSelectRadio(el) {
   const group = el.dataset.group;
-  document.querySelectorAll('.shield-radio[data-group="' + group + '"]').forEach((r) => r.classList.remove("is-on"));
+  document.querySelectorAll('.shield-radio[data-group="' + group + '"]').forEach((r) => {
+    r.classList.remove("is-on");
+    if (r.hasAttribute("aria-checked")) { r.setAttribute("aria-checked", "false"); r.tabIndex = -1; }
+  });
   el.classList.add("is-on");
+  if (el.hasAttribute("aria-checked")) { el.setAttribute("aria-checked", "true"); el.tabIndex = 0; } // only the chosen radio is a Tab stop; arrow keys move between them
 }
 
 
@@ -266,7 +279,11 @@ document.addEventListener("focusout", (e) => {
 // data-tabpanel-group gets hidden.
 function sgShowTab(groupId, tabId) {
   const group = document.getElementById(groupId);
-  group.querySelectorAll(".shield-tab").forEach((t) => t.classList.toggle("is-on", t.dataset.tab === tabId));
+  group.querySelectorAll(".shield-tab").forEach((t) => {
+    const on = t.dataset.tab === tabId;
+    t.classList.toggle("is-on", on);
+    if (t.getAttribute("role") === "tab") { t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; } // roving tabindex: only the active tab is a Tab stop
+  });
   document.querySelectorAll('[data-tabpanel-group="' + groupId + '"]').forEach((p) => {
     p.style.display = p.dataset.tabpanel === tabId ? "" : "none";
   });
@@ -283,6 +300,7 @@ function sgDropdownToggle(el) {
   const wasOpen = root.classList.contains("open");
   document.querySelectorAll(".shield-dropdown.open").forEach((d) => d.classList.remove("open"));
   if (!wasOpen) root.classList.add("open");
+  el.setAttribute("aria-expanded", !wasOpen);
 }
 
 // Page-wide listener: click anywhere outside a .shield-dropdown and close
@@ -298,15 +316,33 @@ document.addEventListener("mousedown", (e) => {
 
 // Called by onclick="sgOpenModal('modal-id')" — adds the .open class,
 // which is what components.css uses to actually show the backdrop+dialog
-// (see .shield-modal-backdrop.open in components.css).
-function sgOpenModal(id) { document.getElementById(id).classList.add("open"); }
+// (see .shield-modal-backdrop.open in components.css). It also moves
+// keyboard focus into the dialog (sgOverlayOpen, below).
+function sgOpenModal(id) { sgOverlayOpen(document.getElementById(id), ".shield-modal"); }
 
-// Called by the × button, Cancel button, etc. — hides the modal again.
-function sgCloseModal(id) { document.getElementById(id).classList.remove("open"); }
+// Called by the × button, Cancel button, etc. — hides the modal again and
+// puts focus back on the button that opened it.
+function sgCloseModal(id) { sgOverlayClose(document.getElementById(id)); }
 
-// Page-wide listener: pressing Escape closes any modal that's currently open.
+// Page-wide listener: Escape closes whichever modal or drawer is on top,
+// and Tab stays inside it (a "focus trap") so keyboard users can't tab
+// off into the page behind. See sgOverlayOpen below for the focus part.
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") document.querySelectorAll(".shield-modal-backdrop.open").forEach((o) => o.classList.remove("open"));
+  const open = document.querySelectorAll(".shield-modal-backdrop.open, .shield-drawer-backdrop.open");
+  if (!open.length) return;
+  const top = open[open.length - 1];
+  if (e.key === "Escape") {
+    if (document.querySelector(".shield-popover.open")) return; // a popover inside the dialog closes first (see Popover)
+    sgOverlayClose(top);
+    return;
+  }
+  if (e.key === "Tab") {
+    const items = sgFocusable(top);
+    if (!items.length) { e.preventDefault(); return; }
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !top.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 
 // Called by onmousedown on the dark backdrop behind a modal. Only closes
@@ -358,27 +394,49 @@ function sgDismissAlert(el) {
 
 /* ---------- Steps — clickable ---------- */
 
-// Called by onclick="sgSetStep('group-id', index)" on a step's button.
-// Marks every step before `index` as "done" (filled, with a checkmark),
-// the step at `index` as "current" (outlined), and leaves the rest
-// untouched/upcoming. Also toggles the connecting lines between steps so
-// the line only looks "done" (filled blue) up to the current step.
-function sgSetStep(groupId, index) {
-  const group = document.getElementById(groupId);
+/* ---------- Steps that remember progress ----------
+   Each step keeps its own state, separate from which step you are
+   looking at. The group carries data-steps and data-current (the index
+   being viewed). Each .shield-step carries data-state: "todo" (not
+   started), "partial" (started, not finished) or "done". sgStepsRender()
+   turns those into the classes the CSS draws. Going back to an earlier
+   step therefore never changes a later step's state. */
+const SG_CHECK_ICON = '<svg class="shield-icon" width="10.5" height="12" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>';
+
+function sgStepsRender(group) {
+  const current = parseInt(group.dataset.current, 10);
   const steps = group.querySelectorAll(".shield-step");
   const lines = group.querySelectorAll(".shield-step-line");
   steps.forEach((s, i) => {
-    s.classList.remove("done", "current");
-    if (i < index) s.classList.add("done");
-    else if (i === index) s.classList.add("current");
-    // Swap the dot's contents: a checkmark for completed steps, otherwise
-    // just the step number (1-indexed, so step 0 shows "1").
-    const dot = s.querySelector(".shield-step-dot");
-    dot.innerHTML = i < index
-      ? '<svg class="shield-icon" width="10.5" height="12" viewBox="0 0 448 512" fill="currentColor"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>'
-      : String(i + 1);
+    const state = s.dataset.state || "todo";
+    s.classList.toggle("done", state === "done");
+    s.classList.toggle("partial", state === "partial");
+    s.classList.toggle("current", i === current);
+    s.querySelector(".shield-step-dot").innerHTML = state === "done" ? SG_CHECK_ICON : String(i + 1);
+    const sub = s.querySelector(".shield-step-sub");
+    if (sub) sub.textContent = state === "done" ? "Done" : state === "partial" ? "In progress" : "";
+    const btn = s.querySelector(".shield-step-button");
+    if (i === current) btn.setAttribute("aria-current", "step"); else btn.removeAttribute("aria-current");
   });
-  lines.forEach((l, i) => l.classList.toggle("done", i < index));
+  // A connector turns blue once the step before it is done.
+  lines.forEach((l, i) => l.classList.toggle("done", steps[i].classList.contains("done")));
+}
+
+// Called by a step's button: look at that step. Nothing about any
+// step's state changes.
+function sgStepGo(groupId, index) {
+  const group = document.getElementById(groupId);
+  group.dataset.current = index;
+  sgStepsRender(group);
+}
+
+// Demo buttons: set the state of the step being viewed ("todo",
+// "partial" or "done"), as if the person had cleared it, started filling
+// it in, or finished it.
+function sgStepSet(groupId, state) {
+  const group = document.getElementById(groupId);
+  group.querySelectorAll(".shield-step")[parseInt(group.dataset.current, 10)].dataset.state = state;
+  sgStepsRender(group);
 }
 
 
@@ -416,10 +474,8 @@ function sgTogglePassword(btn) {
 
 
 /* ---------- File upload ----------
-   Heads up: this component is PROPOSED, not real yet — there's no Upload
-   component in the actual app today (see the "Proposed" badge next to it
-   in index.html). It's built here to match the existing design tokens so
-   it can be reviewed before anyone builds the real thing. */
+   Beta: this component is new in v0.8. The shield-upload-* styles
+   live in components.css. */
 
 // Turns a raw byte count into a human-readable size like "2.4 MB" or "480 KB".
 function sgFormatFileSize(bytes) {
@@ -435,18 +491,19 @@ function sgRenderUploadFiles(files) {
   if (!list) return;
   Array.from(files).forEach((f) => {
     const item = document.createElement("div");
-    item.className = "sg-upload-item";
+    item.className = "shield-upload-item";
     const icon = document.createElement("span");
     icon.innerHTML = '<svg class="shield-icon" width="10.5" height="14" viewBox="0 0 384 512" fill="currentColor"><path d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM120 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg>';
     const name = document.createElement("span");
-    name.className = "sg-upload-name";
+    name.className = "shield-upload-name";
     name.textContent = f.name;
     const size = document.createElement("span");
-    size.className = "sg-upload-size";
+    size.className = "shield-upload-size";
     size.textContent = sgFormatFileSize(f.size);
     const remove = document.createElement("button");
     remove.type = "button";
-    remove.className = "sg-upload-remove";
+    remove.setAttribute("aria-label", "Remove " + f.name);
+    remove.className = "shield-upload-remove";
     remove.innerHTML = '<svg class="shield-icon" width="8.25" height="11" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>';
     remove.onclick = () => item.remove();
     item.append(icon, name, size, remove);
@@ -501,8 +558,511 @@ function sgPushToast(type, msg) {
 }
 
 
+/* =====================================================================
+   v0.8 additions
+   ===================================================================== */
+
+
+/* ---------- Overlays: focus handling shared by Modal and Drawer ----------
+   A dialog that opens must (1) take keyboard focus, (2) keep Tab inside
+   itself, and (3) give focus back to whatever opened it when it closes.
+   Those are the three jobs of the helpers below; the Tab and Escape key
+   handling is in the page-wide keydown listener in the Modal section. */
+
+// Every element inside `root` that a keyboard user can land on.
+function sgFocusable(root) {
+  const sel = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+  return Array.from(root.querySelectorAll(sel)).filter((el) => el.offsetParent !== null);
+}
+
+// Opens a modal/drawer backdrop: remembers the button that was focused,
+// shows the overlay, and moves focus onto the dialog itself (which gets
+// tabindex="-1" so it can hold focus without becoming a Tab stop).
+function sgOverlayOpen(overlay, panelSelector) {
+  overlay._returnFocus = document.activeElement;
+  overlay.classList.add("open");
+  const panel = overlay.querySelector(panelSelector);
+  if (panel) { panel.setAttribute("tabindex", "-1"); panel.focus(); }
+}
+
+// Closes it and returns focus to the remembered button.
+function sgOverlayClose(overlay) {
+  overlay.classList.remove("open");
+  const back = overlay._returnFocus;
+  overlay._returnFocus = null;
+  if (back && back.focus) back.focus();
+}
+
+
+/* ---------- Drawer ---------- */
+
+// Called by onclick="sgOpenDrawer('drawer-id')". Same idea as sgOpenModal.
+function sgOpenDrawer(id) { sgOverlayOpen(document.getElementById(id), ".shield-drawer"); }
+
+// Called by the × and Close buttons.
+function sgCloseDrawer(id) { sgOverlayClose(document.getElementById(id)); }
+
+// Clicking the dim area outside the drawer closes it (same rule as the modal).
+function sgDrawerBackdropClick(e, id) {
+  if (e.target === e.currentTarget) sgCloseDrawer(id);
+}
+
+
+/* ---------- Tooltip ----------
+   Showing and hiding is pure CSS (:hover and :focus-within). The only
+   JavaScript is the Escape key: a tooltip has to be dismissible without
+   moving the pointer (WCAG 1.4.13). Escape adds .is-dismissed to any
+   tooltip that is currently showing; it clears again when the pointer
+   leaves or focus moves away, so the next hover works normally. */
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  document.querySelectorAll(".shield-tooltip, .shield-info-tip").forEach((t) => {
+    if (t.matches(":hover, :focus-within")) t.classList.add("is-dismissed");
+  });
+});
+["mouseout", "focusout"].forEach((type) => {
+  document.addEventListener(type, (e) => {
+    const t = e.target.closest && e.target.closest(".shield-tooltip, .shield-info-tip");
+    if (t && !t.contains(e.relatedTarget)) t.classList.remove("is-dismissed");
+  });
+});
+
+
+/* ---------- Popover ----------
+   Click the trigger to open, click it again, click outside, or press
+   Escape to close. Escape also puts focus back on the trigger. The
+   trigger carries aria-expanded so screen readers hear the state. */
+
+// Called by onclick="sgPopoverToggle(this)" on the trigger button.
+function sgPopoverToggle(btn) {
+  const root = btn.closest(".shield-popover");
+  const wasOpen = root.classList.contains("open");
+  sgPopoverCloseAll();
+  if (!wasOpen) { root.classList.add("open"); btn.setAttribute("aria-expanded", "true"); }
+}
+
+// Called by a button inside the panel (e.g. "Got it") to close it and return focus.
+function sgPopoverClose(el) {
+  const root = el.closest(".shield-popover");
+  const trigger = root.querySelector("[aria-expanded]");
+  sgPopoverCloseAll();
+  if (trigger) trigger.focus();
+}
+
+function sgPopoverCloseAll() {
+  document.querySelectorAll(".shield-popover.open").forEach((p) => {
+    p.classList.remove("open");
+    const t = p.querySelector("[aria-expanded]");
+    if (t) t.setAttribute("aria-expanded", "false");
+  });
+}
+
+document.addEventListener("mousedown", (e) => {
+  if (!e.target.closest(".shield-popover")) sgPopoverCloseAll();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const open = document.querySelector(".shield-popover.open");
+  if (!open) return;
+  const trigger = open.querySelector("[aria-expanded]");
+  sgPopoverCloseAll();
+  if (trigger) trigger.focus();
+});
+
+
+/* ---------- Keyboard + label behavior for checkboxes and radios ----------
+   The checkbox and radio are <span>s (see the Checkbox section), so the
+   browser gives them no keyboard behavior for free. Three listeners add
+   it for every one on the page that carries role="checkbox" / role=
+   "radio" and tabindex:
+     - Space toggles a checkbox or picks a radio.
+     - Arrow keys move between the radios of one group (and pick them),
+       the way native radio buttons work.
+     - Clicking the label text (anywhere in .shield-check-row) acts like
+       clicking the control. */
+document.addEventListener("keydown", (e) => {
+  const el = e.target;
+  if (!(el instanceof Element)) return;
+  if (e.key === " " && el.matches('.shield-checkbox[role="checkbox"], .shield-radio[role="radio"]')) {
+    e.preventDefault();
+    el.click();
+    return;
+  }
+  if (el.matches('.shield-radio[role="radio"]') && ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(e.key)) {
+    e.preventDefault();
+    const group = Array.from(document.querySelectorAll('.shield-radio[data-group="' + el.dataset.group + '"]'));
+    const step = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
+    const next = group[(group.indexOf(el) + step + group.length) % group.length];
+    next.focus();
+    next.click();
+  }
+});
+document.addEventListener("click", (e) => {
+  const row = e.target.closest(".shield-check-row");
+  if (!row || row.classList.contains("disabled")) return;
+  const control = row.querySelector(".shield-checkbox, .shield-radio");
+  if (control && !control.contains(e.target)) control.click(); // control.click() bubbles back here, but then e.target is inside the control, so it stops
+});
+
+
+/* ---------- Keyboard support for Select, Tabs and Dropdown ----------
+   Added in v0.8. Each is one delegated listener, so it works for every
+   instance on the page without any extra attributes.
+     Select:   Arrow Up/Down move a highlight through the visible options,
+               Enter picks the highlighted one, Escape closes the list.
+     Tabs:     Arrow Left/Right (and Home/End) move to and open the
+               neighboring tab, the way a native tab list behaves.
+     Dropdown: Escape closes it and returns focus to its button. */
+document.addEventListener("keydown", (e) => {
+  const search = e.target.closest && e.target.closest(".shield-select-search");
+  if (search) {
+    const root = search.closest(".shield-select");
+    const visible = () => Array.from(root.querySelectorAll(".shield-select-option")).filter((o) => o.style.display !== "none");
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (!root.classList.contains("open")) sgSelectOpen(root.id);
+      const opts = visible();
+      if (!opts.length) return;
+      const cur = opts.findIndex((o) => o.classList.contains("active"));
+      opts.forEach((o) => o.classList.remove("active"));
+      const next = e.key === "ArrowDown" ? (cur + 1) % opts.length : (cur - 1 + opts.length) % opts.length;
+      opts[next].classList.add("active");
+      opts[next].scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      const active = root.querySelector(".shield-select-option.active");
+      if (active && root.classList.contains("open")) { e.preventDefault(); sgSelectPick(root.id, active.dataset.value, active.dataset.label); active.classList.remove("active"); }
+    } else if (e.key === "Escape") {
+      root.classList.remove("open");
+    }
+    return;
+  }
+  const tab = e.target.closest && e.target.closest('.shield-tab[role="tab"]');
+  if (tab && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) {
+    e.preventDefault();
+    const tabs = Array.from(tab.parentNode.querySelectorAll('.shield-tab[role="tab"]'));
+    const i = tabs.indexOf(tab);
+    const next = e.key === "Home" ? tabs[0] : e.key === "End" ? tabs[tabs.length - 1] : tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+    next.focus();
+    next.click();
+    return;
+  }
+  if (e.key === "Escape") {
+    const open = document.querySelector(".shield-dropdown.open");
+    if (open) {
+      open.classList.remove("open");
+      const t = open.querySelector("[aria-expanded]");
+      if (t) { t.setAttribute("aria-expanded", "false"); t.focus(); }
+    }
+  }
+});
+
+
+/* ---------- Pagination ----------
+   Markup is a <nav class="shield-pagination"> with data-total-pages,
+   data-total and data-per-page. sgPaginationRender draws the buttons for
+   a page: always the first and last page, the current page and one on
+   each side, with an ellipsis for any gap. */
+
+function sgPaginationRender(nav, page) {
+  if (!nav) return;
+  const pages = parseInt(nav.dataset.totalPages, 10);
+  const per = parseInt(nav.dataset.perPage, 10);
+  const total = parseInt(nav.dataset.total, 10);
+  page = Math.min(Math.max(1, page), pages);
+  nav.dataset.page = page;
+  const show = [];
+  for (let i = 1; i <= pages; i++) if (i === 1 || i === pages || Math.abs(i - page) <= 1) show.push(i);
+  let html = '<button type="button" class="shield-page" data-go="' + (page - 1) + '" aria-label="Previous page" onclick="sgPaginationGo(this)"' + (page === 1 ? " disabled" : "") + '>‹</button>';
+  show.forEach((n, i) => {
+    if (i > 0 && n - show[i - 1] > 1) html += '<span class="shield-page-ellipsis" aria-hidden="true">…</span>';
+    html += '<button type="button" class="shield-page' + (n === page ? " is-on" : "") + '" data-go="' + n + '" aria-label="Page ' + n + '"' + (n === page ? ' aria-current="page"' : "") + ' onclick="sgPaginationGo(this)">' + n + "</button>";
+  });
+  html += '<button type="button" class="shield-page" data-go="' + (page + 1) + '" aria-label="Next page" onclick="sgPaginationGo(this)"' + (page === pages ? " disabled" : "") + '>›</button>';
+  html += '<span class="shield-page-summary" aria-live="polite">' + ((page - 1) * per + 1) + "–" + Math.min(page * per, total) + " of " + total + "</span>";
+  nav.innerHTML = html;
+}
+
+// Called by every page button. Redraws, then puts focus back on the
+// button the user just used (the redraw replaced it), or on the current
+// page if that button is now disabled.
+function sgPaginationGo(btn) {
+  const nav = btn.closest(".shield-pagination");
+  const go = parseInt(btn.dataset.go, 10);
+  sgPaginationRender(nav, go);
+  const again = nav.querySelector('[data-go="' + go + '"]:not(:disabled)') || nav.querySelector(".shield-page.is-on");
+  if (again) again.focus();
+}
+
+
+/* ---------- Table patterns: sort, select, bulk bar ----------
+   The demo table carries data-bulk="id of its bulk bar" and, for the
+   screen-reader announcement, data-live="id of a .shield-sr-only
+   status element". Cells can carry data-value when the sort value is not
+   the visible text (e.g. a number shown as "$1,200"). */
+
+// Called by the .shield-sort button inside a <th>. Sorts the table body
+// by that column (ascending first, then toggling) and updates aria-sort.
+function sgTableSort(btn) {
+  const th = btn.closest("th");
+  const table = th.closest("table");
+  const col = Array.from(th.parentNode.children).indexOf(th);
+  const dir = th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
+  table.querySelectorAll("th[aria-sort]").forEach((h) => h.setAttribute("aria-sort", "none"));
+  th.setAttribute("aria-sort", dir);
+  const value = (tr) => {
+    const td = tr.children[col];
+    const v = td.dataset.value !== undefined ? td.dataset.value : td.textContent.trim();
+    return isNaN(parseFloat(v)) || !/^[-\d.]/.test(v) ? v.toLowerCase() : parseFloat(v);
+  };
+  const body = table.tBodies[0];
+  const rows = Array.from(body.rows).sort((a, b) => {
+    const x = value(a), y = value(b);
+    const r = x < y ? -1 : x > y ? 1 : 0;
+    return dir === "ascending" ? r : -r;
+  });
+  rows.forEach((r) => body.appendChild(r));
+  const live = document.getElementById(table.dataset.live);
+  if (live) live.textContent = "Sorted by " + btn.textContent.trim() + ", " + dir;
+}
+
+// A row checkbox was clicked: flip it, mark the row, refresh the header
+// checkbox and the bulk bar.
+function sgTableToggleRow(box) {
+  sgToggleCheckbox(box);
+  box.closest("tr").classList.toggle("is-selected", box.classList.contains("is-on"));
+  sgTableRefresh(box.closest("table"));
+}
+
+// The header checkbox was clicked: select or clear every row.
+function sgTableToggleAll(box) {
+  const table = box.closest("table");
+  const on = box.getAttribute("aria-checked") !== "true";
+  table.querySelectorAll("tbody .shield-checkbox").forEach((b) => {
+    b.classList.toggle("is-on", on);
+    b.setAttribute("aria-checked", on);
+    b.innerHTML = on ? SG_CHECK_SVG : "";
+    b.closest("tr").classList.toggle("is-selected", on);
+  });
+  sgTableRefresh(table);
+}
+
+// Recounts the selected rows, sets the header checkbox to checked / empty
+// / mixed, and shows or hides the bulk bar with the count.
+function sgTableRefresh(table) {
+  const boxes = Array.from(table.querySelectorAll("tbody .shield-checkbox"));
+  const n = boxes.filter((b) => b.classList.contains("is-on")).length;
+  const head = table.querySelector("thead .shield-checkbox");
+  if (head) {
+    const all = n === boxes.length, none = n === 0;
+    head.classList.toggle("is-on", !none);
+    head.setAttribute("aria-checked", all ? "true" : none ? "false" : "mixed");
+    head.innerHTML = all ? SG_CHECK_SVG : none ? "" : '<span style="display:block;width:8px;height:2px;background:#fff;border-radius:1px"></span>'; // dash = some, not all
+  }
+  const bar = document.getElementById(table.dataset.bulk);
+  if (bar) {
+    bar.hidden = n === 0;
+    const count = bar.querySelector(".shield-bulk-count");
+    if (count) count.textContent = n + " selected";
+  }
+}
+
+// Clears the selection (the bulk bar's "Clear" button).
+function sgTableClear(tableId) {
+  const table = document.getElementById(tableId);
+  table.querySelectorAll("tbody .shield-checkbox").forEach((b) => {
+    b.classList.remove("is-on");
+    b.setAttribute("aria-checked", "false");
+    b.innerHTML = "";
+    b.closest("tr").classList.remove("is-selected");
+  });
+  sgTableRefresh(table);
+}
+
+
+/* ---------- App shell: the nav drawer on narrow screens ---------- */
+
+// Called by the menu button (and the dim area behind the open nav).
+function sgShellToggle(el) {
+  const shell = el.closest(".shield-shell");
+  const open = shell.classList.toggle("nav-open");
+  const btn = shell.querySelector(".shield-shell-toggle");
+  if (btn) btn.setAttribute("aria-expanded", open);
+}
+
+// The guide's own sidebar does the same thing below 900px (see the
+// .side rules in index.html). Called by the menu button in its top bar
+// and by every sidebar link, so picking a section closes the menu.
+function sgGuideNav(open) {
+  document.body.classList.toggle("nav-open", open);
+  const btn = document.querySelector(".m-top button");
+  if (btn) btn.setAttribute("aria-expanded", open);
+}
+
+
+/* ---------- Responsive demo ----------
+   A real iframe, so the page inside it measures its OWN width and the
+   real @media rules from components.css run: that is why it is an
+   iframe and not a resized box. The buttons set its width; the theme is
+   sent to it with postMessage because it is a separate document. */
+
+// Called by the Phone / Tablet / Desktop buttons (data-frame = iframe id, data-width).
+function sgFrameSize(btn) {
+  sgSegPick(btn);
+  const frame = document.getElementById(btn.dataset.frame);
+  frame.style.width = btn.dataset.width;
+  const label = document.getElementById(btn.dataset.frame + "-label");
+  if (label) label.textContent = btn.dataset.label;
+}
+
+// Sends the current theme to a demo iframe (also on its load event).
+function sgFrameTheme(frame) {
+  try { frame.contentWindow.postMessage({ type: "sg-theme", mode: document.documentElement.dataset.theme }, "*"); } catch {}
+}
+
+
+/* ---------- Motion "Try it" examples ---------- */
+
+// Called by the Replay button in a Motion table row. Restarts every
+// .sg-anim element in that row's .sg-try cell: clearing the animation and
+// forcing a reflow makes the browser play the CSS animation again.
+function sgReplayMotion(btn) {
+  btn.closest(".sg-try").querySelectorAll(".sg-anim").forEach((el) => {
+    el.style.animation = "none";
+    void el.offsetWidth;
+    el.style.animation = "";
+  });
+}
+
+/* ---------- Engineer Mode ----------
+   One switch (top of the sidebar) that reveals a code panel at the end of
+   every section listed in SG_SNIPPETS (snippets.js). The panels are always
+   in the page; CSS in index.html shows them only while <html
+   data-engineer="on">. The choice is remembered in localStorage. */
+
+const SG_ENGINEER_KEY = "sg-engineer-mode";
+
+// Turns Engineer Mode on or off: flips the attribute CSS keys off, syncs
+// the switch's own look and aria-checked, and remembers the choice (in a
+// try/catch, same as the theme, in case localStorage is blocked).
+function sgApplyEngineer(on) {
+  document.documentElement.dataset.engineer = on ? "on" : "off";
+  const sw = document.getElementById("engineer-switch");
+  if (sw) { sw.classList.toggle("is-on", on); sw.setAttribute("aria-checked", on); }
+  try { localStorage.setItem(SG_ENGINEER_KEY, on ? "on" : "off"); } catch {}
+}
+
+// Called by the switch: onclick="sgToggleEngineer()".
+function sgToggleEngineer() { sgApplyEngineer(document.documentElement.dataset.engineer !== "on"); }
+
+// Builds one code panel per SG_SNIPPETS entry whose section exists on the
+// page and appends it to that section. Text goes in with textContent (not
+// innerHTML), so the markup in a snippet is shown, not run.
+function sgBuildCodeBlocks() {
+  if (typeof SG_SNIPPETS === "undefined") return;
+  Object.keys(SG_SNIPPETS).forEach((id) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const snip = SG_SNIPPETS[id];
+    const name = (section.querySelector("h2") || {}).firstChild ? section.querySelector("h2").firstChild.textContent.trim() : id;
+    const panel = document.createElement("div");
+    panel.className = "sg-code";
+    panel.setAttribute("role", "group");
+    panel.setAttribute("aria-label", "Code for " + name);
+
+    const bar = document.createElement("div");
+    bar.className = "sg-code-bar";
+    const tabs = document.createElement("div");
+    tabs.className = "shield-segmented";
+    const panes = [["html", "HTML / CSS"], ["tokens", "Tokens"]];
+    panes.forEach(([key, label], i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      b.dataset.pane = key;
+      if (i === 0) b.classList.add("is-on");
+      b.setAttribute("onclick", "sgCodeTab(this)");
+      tabs.appendChild(b);
+    });
+    const copy = document.createElement("button");
+    copy.type = "button";
+    copy.className = "shield-button shield-button-default small sg-copy";
+    copy.textContent = "Copy";
+    copy.setAttribute("onclick", "sgCopyCode(this)");
+    const status = document.createElement("span");
+    status.className = "shield-sr-only";
+    status.setAttribute("role", "status");
+    bar.append(tabs, copy, status);
+    panel.appendChild(bar);
+
+    const mkPre = (key, text, hidden) => {
+      const pre = document.createElement("pre");
+      pre.className = "sg-pane";
+      pre.dataset.pane = key;
+      pre.tabIndex = 0;
+      if (hidden) pre.hidden = true;
+      const code = document.createElement("code");
+      code.textContent = text;
+      pre.appendChild(code);
+      return pre;
+    };
+    panel.appendChild(mkPre("html", snip.html, false));
+    panel.appendChild(mkPre("tokens", snip.tokens && snip.tokens.length ? snip.tokens.join("\n") : "/* No tokens: this section does not read any variables directly. */", true));
+    section.appendChild(panel);
+  });
+}
+
+// Called by the HTML / Tokens buttons: shows that pane, hides the others.
+function sgCodeTab(btn) {
+  sgSegPick(btn);
+  const panel = btn.closest(".sg-code");
+  panel.querySelectorAll(".sg-pane").forEach((p) => { p.hidden = p.dataset.pane !== btn.dataset.pane; });
+}
+
+// Called by the Copy button: copies the visible pane. navigator.clipboard
+// only works on secure pages (https or localhost), so a hidden textarea +
+// execCommand is the fallback for file:// and plain http.
+function sgCopyCode(btn) {
+  const panel = btn.closest(".sg-code");
+  const text = panel.querySelector(".sg-pane:not([hidden])").textContent;
+  const done = () => {
+    btn.textContent = "Copied";
+    panel.querySelector('[role="status"]').textContent = "Copied to clipboard";
+    setTimeout(() => { btn.textContent = "Copy"; }, 1500);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done, () => sgCopyFallback(text, done));
+  } else {
+    sgCopyFallback(text, done);
+  }
+}
+
+function sgCopyFallback(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { if (document.execCommand("copy")) done(); } catch {}
+  ta.remove();
+}
+
+// Runs once at startup: build the panels, then apply the saved choice.
+function sgInitEngineer() {
+  sgBuildCodeBlocks();
+  let on = false;
+  try { on = localStorage.getItem(SG_ENGINEER_KEY) === "on"; } catch {}
+  sgApplyEngineer(on);
+}
+
+
 /* ---------- Startup ----------
-   Everything above just defines functions — nothing runs until this
-   line, which applies the saved (or default) theme the moment the page
-   loads, before the visitor sees anything. */
+   Everything above just defines functions — nothing runs until the lines
+   below: apply the saved theme the moment the page loads, build the
+   Engineer Mode code panels, draw the pagination
+   demo, and make every sidebar link close the mobile menu. */
 sgInitTheme();
+sgInitEngineer();
+document.querySelectorAll("[data-steps]").forEach(sgStepsRender);
+sgPaginationRender(document.getElementById("pager-demo"), 1);
+document.querySelectorAll(".side-nav a").forEach((a) => a.addEventListener("click", () => sgGuideNav(false)));

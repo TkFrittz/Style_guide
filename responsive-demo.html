@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Responsive preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+/* Demo only: on wide screens the real shell keeps its navigation fixed, so this page adds a Menu button
+   there too and lets the navigation slide out and back in, to show the same drawer idea at every width.
+   At 768px and below the real shell rules in components.css take over (the drawer with a dimmed scrim). */
+@media (min-width: 769px) {
+  .shield-shell-toggle { display: inline-flex; }
+  .shield-shell-side { transition: margin-left var(--duration-base) var(--ease); }
+  .shield-shell.nav-collapsed .shield-shell-side { margin-left: -272px; visibility: hidden; transition: margin-left var(--duration-base) var(--ease), visibility 0s linear var(--duration-base); }
+}
+</style>
+<!-- Loaded inside the Responsive behavior section of index.html. It is a real page so the real
+     @media rules in components.css run against the width of the frame. It follows the guide's
+     theme through a message (see sgFrameTheme in shield.js). -->
+</head>
+<body>
+<div class="shield-shell" id="shell">
+  <aside class="shield-shell-side" aria-label="Navigation">
+    <div style="padding:20px 20px 12px;font-family:var(--font-heading);font-weight:700;font-size:17px">Example<span style="color:var(--brand-blue-dark)">App</span></div>
+    <nav class="shield-menu" style="padding:0 12px 12px">
+      <div class="shield-menu-group-label">Operations</div>
+      <button class="shield-menu-item is-on" aria-current="page"><span class="shield-menu-item-main">Section A</span><span class="shield-badge-count">46</span></button>
+      <button class="shield-menu-item"><span class="shield-menu-item-main">Section B</span><span class="shield-badge-count">16</span></button>
+      <button class="shield-menu-item"><span class="shield-menu-item-main">Section C</span><span class="shield-badge-count">6</span></button>
+      <button class="shield-menu-item"><span class="shield-menu-item-main">Section D</span><span class="shield-badge-count">5</span></button>
+    </nav>
+  </aside>
+  <div class="shield-shell-scrim" onclick="sgShellToggle(this)"></div>
+  <div class="shield-shell-main">
+    <header class="shield-shell-top">
+      <button class="shield-button shield-button-default shield-shell-toggle" aria-label="Open navigation" aria-expanded="false" onclick="demoNav(this)">Menu</button>
+      <h1 class="shield-title h4" style="margin:0;font-size:21px">Example page title</h1>
+    </header>
+    <main class="shield-shell-content" id="main">
+      <p class="shield-text secondary" style="margin:0 0 12px;font-size:12.5px"><b>Example only.</b> A generic page that shows how the rules respond to width. It is not a design for any real screen. Press Menu to slide the navigation out and back in.</p>
+      <div class="shield-stats">
+        <div class="shield-stat"><div class="shield-stat-label">Stat one</div><div class="shield-stat-value">42</div></div>
+        <div class="shield-stat"><div class="shield-stat-label">Stat two</div><div class="shield-stat-value">89</div></div>
+        <div class="shield-stat"><div class="shield-stat-label">Stat three</div><div class="shield-stat-value">4</div></div>
+      </div>
+      <div class="shield-card bordered-shadow" style="margin-top:16px">
+        <div class="shield-card-head"><span>Example table</span></div>
+        <div class="shield-table-scroll">
+          <table class="shield-table">
+            <thead><tr><th>Name</th><th>Count</th><th>Status</th><th>Date</th><th>Owner</th></tr></thead>
+            <tbody>
+              <tr><td>Sample row one</td><td>9</td><td><span class="shield-tag success">Active</span></td><td>2026-09-30</td><td>Person A</td></tr>
+              <tr><td>Sample row two</td><td>0</td><td><span class="shield-tag success">Active</span></td><td>2026-09-12</td><td>Person B</td></tr>
+              <tr><td>Sample row three</td><td>1</td><td><span class="shield-tag warning">Paused</span></td><td>2026-08-21</td><td>Person C</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p><button class="shield-button shield-button-primary" onclick="sgOpenModal('m')">Open modal</button></p>
+      <form class="shield-form two" onsubmit="event.preventDefault()">
+        <div class="shield-field"><label class="shield-field-label" for="a">Field one</label><span class="shield-input-wrap"><input class="shield-input" id="a"></span></div>
+        <div class="shield-field"><label class="shield-field-label" for="b">Field two</label><span class="shield-input-wrap"><input class="shield-input" id="b" type="email"></span></div>
+      </form>
+    </main>
+  </div>
+</div>
+<div class="shield-modal-backdrop" id="m" onmousedown="sgModalBackdropClick(event,'m')">
+  <div class="shield-modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <div class="shield-modal-head"><h3 id="m-title">Example modal</h3><button class="shield-modal-close" aria-label="Close" onclick="sgCloseModal('m')">×</button></div>
+    <div class="shield-modal-body">A modal is never wider than the screen, and its body scrolls inside it when the screen is short.</div>
+    <div class="shield-modal-foot"><button class="shield-button shield-button-default" onclick="sgCloseModal('m')">Cancel</button><button class="shield-button shield-button-primary" onclick="sgCloseModal('m')">Save</button></div>
+  </div>
+</div>
+<div class="shield-toast-stack"></div>
+<script src="shield.js"></script>
+<script>
+  // Menu button: at 768px and below it opens the real drawer (sgShellToggle); wider, it slides the navigation out and in.
+  var wide = window.matchMedia("(min-width: 769px)");
+  function demoNav(btn) {
+    var shell = btn.closest(".shield-shell");
+    if (wide.matches) {
+      var collapsed = shell.classList.toggle("nav-collapsed");
+      btn.setAttribute("aria-expanded", String(!collapsed));
+    } else {
+      sgShellToggle(btn);
+    }
+  }
+  function demoNavReset() {
+    var shell = document.getElementById("shell"), btn = shell.querySelector(".shield-shell-toggle");
+    shell.classList.remove("nav-open", "nav-collapsed");
+    btn.setAttribute("aria-expanded", String(wide.matches));
+  }
+  wide.addEventListener("change", demoNavReset);
+  demoNavReset();
+
+  // The guide tells this page which theme to use (sgFrameTheme in shield.js).
+  window.addEventListener("message", function (e) {
+    if (e.data && e.data.type === "sg-theme") document.documentElement.dataset.theme = e.data.mode;
+  });
+</script>
+</body>
+</html>

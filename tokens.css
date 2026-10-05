@@ -11,9 +11,8 @@
    change a value once here, and everything that reads that variable
    updates everywhere it's used.
 
-   Ported directly from src/styles/tokens.css in the Poom (Shield Legal
-   Operations Platform) codebase — the hand-rolled "glass-pane" component
-   library that replaced Ant Design. Light values live on :root; dark
+   This is the single source for the Shield Engineering design tokens,
+   used by the hand-rolled component library in components.css. Light values live on :root; dark
    values live under :root[data-theme="dark"] and override the light
    ones. shield.js flips that data-theme attribute when you click the
    Light/Dark toggle in the sidebar — see sgApplyTheme() in shield.js.
@@ -65,7 +64,8 @@
      Text normally steps down in opacity (secondary/tertiary/quaternary
      = lighter emphasis), but in light mode text, text-secondary and
      text-tertiary are currently ALL solid black, so only quaternary
-     (.25) is lighter; dark mode still steps down (.85/.65/.45/.25).
+     (.25) is lighter; dark mode still steps down (solid off-white, then
+     .85/.7/.5 of the same off-white).
      The border and border-secondary values are semi-transparent grays
      (8-digit hex: the last two digits are the opacity).
      color-scheme: light tells the browser's own UI (like
@@ -112,6 +112,7 @@
   --error: #4c0107;
   --error-bg: #f6675d;
   --error-border: #ffa39e;
+  --error-solid: #cf1322;  /* a true red for marks drawn on a white or light surface: the error icon and the error border (5.6:1 on white). --error above is the dark text color for use on --error-bg. */
   --info: var(--blue-9);  /* "info" reuses the brand blue ramp (step 9 here, step 8 in dark mode) rather than inventing a 5th hue */
   --info-bg: var(--blue-5);
   --info-border: var(--blue-3);
@@ -189,8 +190,51 @@
   --font-size-small: 14px;
   --font-size-caption: 13px;
 
-  /* ---- motion ---- */
-  --ease: cubic-bezier(0.25, 1, 0.35, 1); /* the easing curve for hover/open transitions */
+  /* ----------------------------------------------------------------
+     Motion — how long things take and how they ease.
+     Durations are named by ROLE, not by number, so a component says
+     "this is a quick hover change" instead of "0.15s".
+       instant  row/hover tints that should feel immediate
+       fast     control states (hover, focus, check, toggle, chevron
+                flip) and the tooltip fade
+       base     things appearing: modal, toast, drawer, popover, and the
+                light/dark theme switch
+       slow     the stat tile's color change on hover
+     Rules: animate color, opacity, shadow and transform only (not size
+     or position); nothing slower than --duration-slow; leaving should be
+     quicker than entering; never type a raw number of seconds.
+       spin / shimmer   the looping loaders (spinner, skeleton)
+     --ease-standard is the plain "ease" curve the existing controls use.
+     --ease is a snappier decelerating curve, used for overlays that slide
+     or scale in (drawer, popover). The prefers-reduced-motion block
+     further down shortens every duration to near zero for people who ask
+     their OS for less motion.
+     ---------------------------------------------------------------- */
+  --duration-instant: 0.12s;
+  --duration-fast: 0.15s;
+  --duration-base: 0.2s;
+  --duration-slow: 0.25s;
+  --duration-spin: 0.7s;
+  --duration-shimmer: 1.5s;
+  --ease-standard: ease;
+  --ease: cubic-bezier(0.25, 1, 0.35, 1);
+
+  /* ----------------------------------------------------------------
+     Layering — one scale for everything that stacks above the page, so
+     two floating things never fight over a made-up z-index number.
+     A floating surface gets --shadow-md AND one of these; a resting
+     surface gets neither (or --shadow-sm). Blocking panels (modal,
+     drawer) also get the --scrim dim layer behind them.
+     Lowest to highest: dropdown (select panel, dropdown menu, popover)
+     < tooltip < drawer < modal < toast. Never write a raw z-index in a
+     component; pick a step from here.
+     ---------------------------------------------------------------- */
+  --scrim: rgba(0, 0, 0, 0.45);  /* the dim layer behind a modal or drawer (same in light and dark) */
+  --z-dropdown: 60;
+  --z-tooltip: 70;
+  --z-drawer: 900;
+  --z-modal: 1000;
+  --z-toast: 2000;
 }
 
 /* =====================================================================
@@ -201,8 +245,9 @@
    spacing/radius/type scales are NOT repeated here — those stay the
    same in both themes. Only colors that need to flip (backgrounds,
    text, borders, functional colors, shadows) are redefined.
-   These are Ant Design's own dark-mode algorithm output, captured once
-   and pasted in as plain values — not computed live.
+   The functional colors are Ant Design's dark-mode algorithm output,
+   captured once and pasted in as plain values — not computed live. The
+   surfaces, borders and text are Shield's own midnight-blue palette.
    ===================================================================== */
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -231,6 +276,7 @@
   --error: #da1111;
   --error-bg: rgb(97, 4, 12);
   --error-border: rgba(255, 163, 158, 0.3);
+  --error-solid: #e5484d;  /* the same job on the dark surface: a lighter red (4.4:1 on the dark card) */
   /* Info has its own dark-mode values (it used to share the light ones).
      Dark uses blue-8 for the text where light uses blue-9. Edit these three
      lines to tune info for dark mode without touching light mode. */
@@ -238,7 +284,8 @@
   --info-bg: var(--blue-5);
   --info-border: var(--blue-3);
 
-  /* Dark mode needs darker/stronger shadows to read against a near-black
+
+  /* Dark mode needs darker/stronger shadows to read against a dark
      background — the light-mode shadow values above would barely show up. */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 6px -1px rgba(0, 0, 0, 0.25),
     0 2px 4px 0 rgba(0, 0, 0, 0.25);
@@ -268,7 +315,7 @@ body {
   font-size: var(--font-size-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.2s ease, color 0.2s ease; /* smooths the light/dark theme switch */
+  transition: background-color var(--duration-base) var(--ease-standard), color var(--duration-base) var(--ease-standard); /* smooths the light/dark theme switch */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -315,6 +362,7 @@ table { border-collapse: collapse; width: 100%; font-size: var(--font-size-small
    them outright (disabling can break logic that waits for a transition
    to finish). */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; } /* anchor links jump instead of gliding */
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

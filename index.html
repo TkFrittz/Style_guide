@@ -29,6 +29,7 @@ section p.lede{font-size:var(--font-size-body);color:var(--text-secondary)}
 h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:var(--text)}
 .live-badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--success);background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-full);padding:2px 9px}
 .live-badge.new{color:var(--info);background:var(--info-bg);border-color:var(--info-border)}
+.live-badge.review{color:var(--error);background:var(--error-bg);border-color:var(--error-border)}
 
 /* ---- cover ---- */
 .cover{padding:16px 0 40px;border-bottom:1px solid var(--border-secondary)}
@@ -111,35 +112,90 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .field{width:220px}
 .field-wide{width:320px}
 
-/* ---- file upload (proposed, does not exist in ui.css/Input.jsx yet;
-   styled to match the existing token system for review) ---- */
-.sg-upload-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-.sg-upload-dropzone{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 20px;border:1px dashed var(--border);border-radius:var(--radius-lg);background:var(--bg-container);cursor:pointer;text-align:center;transition:border-color .15s ease,background-color .15s ease}
-.sg-upload-dropzone:hover,.sg-upload-dropzone.drag{border-color:var(--brand-blue);background:var(--blue-1)}
-/* dark mode: blue-1 is a pale tint that washes out the light text, so hover uses a soft translucent blue instead (same as the selected Select option and Menu item) */
-:root[data-theme="dark"] .sg-upload-dropzone:hover,:root[data-theme="dark"] .sg-upload-dropzone.drag{background:rgba(24,171,237,.16)}
-.sg-upload-dropzone svg{color:var(--text-tertiary)}
-.sg-upload-title{font-size:14px;color:var(--text)}
-.sg-upload-hint{font-size:12px;color:var(--text-tertiary);font-weight:var(--weight-small)}
-.sg-upload-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-.sg-upload-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-container);font-size:12.5px;font-weight:var(--weight-small)}
-.sg-upload-item svg{color:var(--text-tertiary);flex-shrink:0}
-.sg-upload-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
-.sg-upload-size{color:var(--text-tertiary);font-family:var(--font-mono);font-size:11px}
-.sg-upload-remove{background:none;border:none;padding:2px;color:var(--text-tertiary);cursor:pointer;border-radius:var(--radius-xs);display:flex}
-.sg-upload-remove:hover{color:var(--error);background:var(--fill-secondary)}
+/* ---- Engineer Mode (guide chrome: the switch and the code panels) ---- */
+.side-engineer{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:var(--font-size-small);font-weight:var(--weight-small)}
+.side-engineer label{cursor:pointer;color:var(--text)}
+.sg-code{display:none;margin-top:20px;border:1px solid var(--border-secondary);border-radius:var(--radius-lg);background:var(--bg-container);overflow:hidden}
+:root[data-engineer="on"] .sg-code{display:block}
+.sg-code-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--border-secondary)}
+.sg-code-bar .sg-copy{margin-left:auto}
+.sg-pane{margin:0;padding:14px 16px;overflow:auto;max-height:440px;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;background:var(--fill-quaternary);color:var(--text);white-space:pre;tab-size:2}
+.sg-pane[hidden]{display:none}
+.sg-pane code{background:none;padding:0;font-size:inherit}
+
+/* ---- cover version note, mobile top bar ---- */
+.cover-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:var(--font-size-small);color:var(--text-secondary)}
+.m-top,.m-scrim{display:none}
+.m-top .mark{font-family:var(--font-heading);font-size:17px;font-weight:700;color:var(--text)}
+.m-top .mark span{color:var(--brand-blue-dark)}
+@media (max-width: 900px){
+  .shell{display:block}
+  .side{position:fixed;left:0;top:0;z-index:var(--z-drawer);max-width:85vw;transform:translateX(-100%);visibility:hidden;transition:transform var(--duration-base) var(--ease),visibility 0s linear var(--duration-base)}
+  body.nav-open .side{transform:none;visibility:visible;transition-delay:0s;box-shadow:var(--shadow-md)}
+  body.nav-open .m-scrim{display:block;position:fixed;inset:0;z-index:calc(var(--z-drawer) - 1);background:var(--scrim)}
+  .m-top{display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5;height:56px;padding:0 16px;background:var(--sider-bg);border-bottom:1px solid var(--border-secondary)}
+}
+@media (max-width: 700px){
+  .ramp{grid-template-columns:repeat(2,1fr) !important}
+  .neutral-grid,.func-row{grid-template-columns:repeat(2,1fr)}
+  .font-cards{grid-template-columns:1fr}
+  .type-row .meta{display:none}
+}
+.main:focus{outline:none}
+.main{overflow-x:clip} /* hidden tooltips and popovers are positioned past the edge; clip them so they never create a sideways scrollbar */
+.main code{overflow-wrap:anywhere}
+
+
+.sg-steps-list{margin:0 0 8px;padding-left:22px;color:var(--text-secondary);font-size:var(--font-size-body);line-height:1.6}
+.sg-steps-list li{margin-bottom:8px}
+/* ---- motion "Try it" cells: small live examples next to each row of the table ---- */
+.sg-try{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:190px}
+.sg-try .shield-table{min-width:150px;margin:0}
+.sg-try .shield-toast{min-width:0;padding:7px 12px}
+.sg-try .shield-stat{padding:8px 12px;min-width:120px}
+.sg-try-card{width:120px;padding:10px 12px;font-size:var(--font-size-caption);cursor:pointer;color:var(--text-secondary)}
+.sg-try-card.sg-try-alt,.sg-try-card:hover{background:var(--info-bg);border-color:var(--info-border)}
+.sg-try-panel{width:96px;height:44px;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-elevated);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-caption);color:var(--text-secondary)}
+.sg-try-pop{animation:fadeUp var(--duration-base) var(--ease) both}
+.sg-try-drawer{animation:drawerIn var(--duration-base) var(--ease) both}
+.sg-try-skel{display:flex;flex-direction:column;gap:6px;width:120px}
+#motion .shield-table td code{white-space:nowrap}
+/* the tooltip bubble would be clipped by the scrolling wrapper, so on wide screens let it overflow */
+@media (min-width: 1000px){#motion .shield-table-scroll{overflow:visible}}
+
+/* ---- logo section ---- */
+.sg-logo-row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.sg-logo-cell{display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-tertiary);max-width:220px}
+.sg-logo-cell b{color:var(--error)}
+.sg-logo-stage{display:flex;align-items:center;justify-content:center;gap:12px;min-width:120px;height:120px;padding:16px;border:1px solid var(--border-secondary);border-radius:var(--radius-lg);background:var(--bg-container)}
+.sg-logo-cell.wide{max-width:none}
+.sg-logo-stage.lockup{min-width:230px;padding:16px 28px;box-sizing:border-box}
+.sg-logo-stage.lockup img{flex-shrink:0}
+.sg-logo-stage.lockup .mark{white-space:nowrap}
+.sg-logo-stage .mark{font-family:var(--font-heading);font-size:20px;line-height:1.15;font-weight:700;color:var(--text)}
+.sg-logo-stage .mark span{color:var(--brand-blue-dark)}
+
+
+/* ---- responsive demo frame ---- */
+.sg-frame-wrap{display:flex;justify-content:center;overflow:auto;padding:12px;border:1px solid var(--border-secondary);border-radius:var(--radius-lg);background:var(--fill-tertiary)}
+.sg-frame-wrap iframe{height:540px;max-width:100%;border:1px solid var(--border-secondary);border-radius:var(--radius-md);background:var(--bg-layout);transition:width var(--duration-base) var(--ease)}
+
+/* ---- do / don't ---- */
 
 footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-secondary);font-weight:var(--weight-small)}
 </style>
 </head>
 <body>
+<a href="#main" class="shield-skip-link">Skip to content</a>
 <div class="shell">
+  <div class="m-top"><button type="button" class="shield-button shield-button-default" aria-label="Open navigation" aria-expanded="false" onclick="sgGuideNav(true)">Menu</button><span class="mark">Shield<span>Engineering</span></span></div>
+  <div class="m-scrim" onclick="sgGuideNav(false)"></div>
   <nav class="side">
     <div class="side-brand">
       <img class="brand-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering">
       <div>
         <div class="mark">Shield<span>Engineering</span></div>
-        <div class="sub">Style guide</div>
+        <div class="sub">Style guide · v0.8</div>
       </div>
     </div>
     <div class="side-theme">
@@ -153,6 +209,10 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           Dark
         </button>
       </div>
+      <div class="side-engineer">
+        <button type="button" id="engineer-switch" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleEngineer()"><span class="shield-switch-thumb"></span></button>
+        <label for="engineer-switch">Engineer Mode</label>
+      </div>
     </div>
     <div class="side-nav">
       <a href="#overview">Overview</a>
@@ -161,15 +221,22 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#typography">Typography</a>
       <a href="#spacing">Spacing &amp; radius</a>
       <a href="#shadow">Shadow</a>
+      <a href="#motion">Motion</a>
       <a href="#icons">Icons</a>
+      <a href="#logo">Logo &amp; brand</a>
       <div class="grp">Layout</div>
       <a href="#layout">Grid &amp; Space</a>
+      <a href="#responsive">Responsive behavior</a>
       <div class="grp">General</div>
       <a href="#button">Button</a>
       <div class="grp">Data entry</div>
       <a href="#input">Input</a>
       <a href="#select">Select</a>
       <a href="#checkbox">Checkbox, Radio &amp; Switch</a>
+      <a href="#radio">Radio group</a>
+      <a href="#datepicker">Date picker</a>
+      <a href="#upload">File upload</a>
+      <a href="#forms">Form layout</a>
       <div class="grp">Data display</div>
       <a href="#tag">Tag &amp; Pill</a>
       <a href="#avatar">Avatar &amp; Badge</a>
@@ -181,24 +248,30 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="grp">Feedback</div>
       <a href="#alert">Alert</a>
       <a href="#modal">Modal</a>
+      <a href="#drawer">Drawer</a>
       <a href="#empty">Empty</a>
       <a href="#skeleton">Skeleton &amp; Spin</a>
       <a href="#toast">Toast</a>
+      <a href="#tooltip">Tooltip</a>
+      <a href="#popover">Popover</a>
       <div class="grp">Navigation</div>
       <a href="#steps">Steps</a>
       <a href="#tabs">Tabs</a>
       <a href="#collapse">Collapse</a>
       <a href="#dropdown">Dropdown</a>
       <a href="#menu">Menu</a>
+      <a href="#breadcrumb">Breadcrumb</a>
+      <a href="#pagination">Pagination</a>
     </div>
   </nav>
 
-  <div class="main">
+  <main class="main" id="main" tabindex="-1">
     <div class="cover" id="overview">
       <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:#000" title="brand">brand</div><div style="flex:3;background:var(--blue-7);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-8);color:#fff" title="link">link</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
       <img class="cover-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo">
       <h1>Shield Engineering</h1>
       <div class="tagline">The visual language for Shield Legal's operations software: modern, professional, and a little bit warm.</div>
+      <div class="cover-meta"><span class="live-badge new">v0.8 · pre-1.0 draft</span><span>Close to 1.0, not there yet.</span></div>
     </div>
 
     <!-- Intro copy for the whole page, no components demoed here, just the overview text. -->
@@ -220,7 +293,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes.</p>
 
       <h3 class="sub">How it is built</h3>
-      <p class="lede">Plain CSS and small React components, no UI framework. <code>tokens.css</code> holds the values (colors, fonts, spacing, radius, shadow) and <code>components.css</code> holds the components that use them (the app's copy is <code>src/styles/ui.css</code>). Classes are prefixed <code>shield-</code>. Everything below is a working component: open the select, flip the switch, dismiss a tag, push a toast.</p>
+      <p class="lede">Plain HTML, CSS and JavaScript, no UI framework and no build step. <code>tokens.css</code> holds the values (colors, fonts, spacing, radius, shadow, motion) and <code>components.css</code> holds the components that use them. <code>shield.js</code> adds the interactions on this page. Classes are prefixed <code>shield-</code>. Everything below is a working component: open the select, flip the switch, dismiss a tag, push a toast.</p>
+      <p class="lede" style="margin-top:12px"><b style="color:var(--text)">Engineers:</b> switch on <b style="color:var(--text)">Engineer Mode</b> at the top of the sidebar. A code panel appears at the end of each section with copy-paste HTML and the tokens involved.</p>
     </section>
 
     <!-- Demonstrates the color tokens from tokens.css (the --blue-* ramp, neutrals, and the
@@ -254,7 +328,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>rgb(0,0,0) · rgba(255,251,247,.7)</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b>bg-spotlight</b><span>toast / tooltip surface</span></div>
       </div>
-      <p class="lede">In light mode the page (<code>bg-layout</code>) is a faint warm white and cards (<code>bg-container</code>) are pure white. In dark mode the page is a soft near-black, not pure black. Each swatch shows its light value, then its dark value. Use the theme toggle in the sidebar to see both.</p>
+      <p class="lede">In light mode the page (<code>bg-layout</code>) is a faint warm white and cards (<code>bg-container</code>) are pure white. In dark mode the page is a deep midnight blue, not black, and cards are a slightly lighter navy. Each swatch shows its light value, then its dark value. Use the theme toggle in the sidebar to see both.</p>
 
       <h3 class="sub">Functional colors: one bg/border/text formula, four moods</h3>
       <div class="func-row">
@@ -288,11 +362,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="type-row"><span class="tagcell">h2</span><span class="sample shield-title h2">Section headings</span><span class="meta">30 / 38 · 600</span></div>
       <div class="type-row"><span class="tagcell">h3</span><span class="sample shield-title h3">Subsection headings</span><span class="meta">24 / 32 · 600</span></div>
       <div class="type-row"><span class="tagcell">h4</span><span class="sample shield-title h4">Card &amp; panel titles</span><span class="meta">20 / 28 · 600</span></div>
-      <div class="type-row"><span class="tagcell">h5</span><span class="sample shield-title h5">Inline emphasis titles</span><span class="meta">16 / 24 · 600</span></div>
+      <div class="type-row"><span class="tagcell">h5</span><span class="sample shield-title h5">Inline emphasis titles</span><span class="meta">18 / 24 · 600</span></div>
       <h3 class="sub">Text: <code>shield-text</code> variants, all at the 16px body size</h3>
       <div class="type-row"><span class="tagcell">default</span><span class="sample shield-text">Default body copy</span><span class="meta">16 / 24 · 400</span></div>
-      <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary: captions, helper text</span><span class="meta">light: solid black · dark: .65 white</span></div>
-      <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary: placeholders, timestamps</span><span class="meta">light: solid black · dark: .45 white</span></div>
+      <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary: captions, helper text</span><span class="meta">light: solid black · dark: .85 off-white</span></div>
+      <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary: placeholders, timestamps</span><span class="meta">light: solid black · dark: .7 off-white</span></div>
       <div class="type-row"><span class="tagcell">strong</span><span class="sample shield-text strong">Strong: emphasized inline text</span><span class="meta">weight 600</span></div>
       <div class="type-row"><span class="tagcell">success</span><span class="sample shield-text success">Success text</span><span class="meta">var(--success)</span></div>
       <div class="type-row"><span class="tagcell">warning</span><span class="sample shield-text warning">Warning text</span><span class="meta">var(--warning)</span></div>
@@ -313,7 +387,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates the --space-* and --radius-* scale tokens from tokens.css. Static. -->
     <section id="spacing">
       <h2>Spacing &amp; radius</h2>
-      <p class="lede">Eight spacing steps (4 to 48px) and four radius steps (2 to 8px). Pick a step instead of typing a pixel value, so gaps and corners stay consistent. Rounded corners are part of the modern feel.</p>
+      <p class="lede">Eight spacing steps (4 to 48px) and four radius steps (2 to 8px) plus a full pill. Pick a step instead of typing a pixel value, so gaps and corners stay consistent. Rounded corners are part of the modern feel.</p>
       <div class="scale-row"><span class="lbl">space-1 · 4</span><div class="bar" style="width:4px"></div></div>
       <div class="scale-row"><span class="lbl">space-2 · 8</span><div class="bar" style="width:8px"></div></div>
       <div class="scale-row"><span class="lbl">space-3 · 12</span><div class="bar" style="width:12px"></div></div>
@@ -327,7 +401,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="radius-row">
         <div><div class="box" style="border-radius:var(--radius-xs)"></div><span>xs · 2</span></div>
         <div><div class="box" style="border-radius:var(--radius-sm)"></div><span>sm · 4</span></div>
-        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6 · inputs, cards</span></div>
+        <div><div class="box" style="border-radius:var(--radius-md)"></div><span>md · 6 · inputs, selects</span></div>
         <div><div class="box" style="border-radius:var(--radius-lg)"></div><span>lg · 8 · cards, modals</span></div>
         <div><div class="box" style="border-radius:var(--radius-full)"></div><span>full · pill / switch</span></div>
       </div>
@@ -357,12 +431,58 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       </div>
     </section>
 
+
+    <!-- Motion tokens (--duration-*, --ease*) from tokens.css. The Try it cells reuse the real components and the same
+         tokens, so the timing you feel is the timing in the table. sgReplayMotion is in shield.js. -->
+    <section id="motion">
+      <h2>Motion <span class="live-badge new">Beta</span></h2>
+      <p class="lede">Motion tells people that something changed: a button reacted, a menu opened, a message arrived. In Shield products it is small and fast. Pick a duration by <i>what is changing</i>, never by what feels nice: there are four durations, two easings, and a rule for when to use each.</p>
+
+      <h3 class="sub">How to use it</h3>
+      <ol class="sg-steps-list">
+        <li><b style="color:var(--text)">Something small changes in place</b> (hover, focus, checked, a chevron turning): <code>--duration-fast</code> with <code>--ease-standard</code>.</li>
+        <li><b style="color:var(--text)">Something appears</b> (modal, toast, popover, drawer): <code>--duration-base</code>. Use <code>--ease</code> (fast start, soft landing) for things that slide in, <code>--ease-standard</code> for things that fade in.</li>
+        <li><b style="color:var(--text)">Something leaves.</b> Components here hide without an animation. If you add one, make it shorter than the way in: <code>--duration-fast</code>.</li>
+        <li><b style="color:var(--text)">Animate only</b> <code>color</code>, <code>background-color</code>, <code>border-color</code>, <code>opacity</code>, <code>box-shadow</code> and <code>transform</code>. Do not animate <code>width</code>, <code>height</code>, <code>margin</code>, <code>top</code> or <code>left</code>: neighbors jump.</li>
+        <li><b style="color:var(--text)">Never make anyone wait.</b> Nothing should be disabled or hidden while an animation plays. Nothing should take longer than <code>--duration-slow</code> (0.25s).</li>
+        <li><b style="color:var(--text)">Never type a number.</b> Write <code>var(--duration-fast)</code>, not <code>0.15s</code>.</li>
+        <li><b style="color:var(--text)">Reduced motion is automatic.</b> People who ask their OS for less motion get near-instant transitions from <code>tokens.css</code>; never override it.</li>
+      </ol>
+
+      <h3 class="sub">What to use for each component</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>What is changing</th><th>Duration</th><th>Easing</th><th>Example</th><th>Try it</th></tr></thead>
+          <tbody>
+            <tr><td>Row hover tint</td><td><code>--duration-instant</code> (0.12s)</td><td><code>--ease-standard</code></td><td>Table row</td>
+              <td><div class="sg-try"><table class="shield-table"><tbody><tr><td>Hover this row</td></tr><tr><td>Then this one</td></tr></tbody></table></div></td></tr>
+            <tr><td>Control state: hover, focus, checked, toggle, chevron turn</td><td><code>--duration-fast</code> (0.15s)</td><td><code>--ease-standard</code></td><td>Button, Input, Checkbox, Radio, Switch, Segmented, Pagination, Collapse, Select arrow</td>
+              <td><div class="sg-try"><button type="button" class="shield-button shield-button-default small">Hover me</button><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Try the checkbox" onclick="sgToggleCheckbox(this)"></span><button type="button" class="shield-switch-track" role="switch" aria-checked="false" aria-label="Try the switch" onclick="sgToggleSwitch(this)"><span class="shield-switch-thumb"></span></button></div></td></tr>
+            <tr><td>Tooltip fade</td><td><code>--duration-fast</code> (0.15s)</td><td><code>--ease-standard</code></td><td>Tooltip, info icon bubble</td>
+              <td><div class="sg-try"><span class="shield-tooltip top"><button type="button" class="shield-button shield-button-default small" aria-describedby="tip-motion">Hover me</button><span class="shield-tooltip-body" id="tip-motion" role="tooltip">Fades in at --duration-fast.</span></span></div></td></tr>
+            <tr><td>Fades up into view</td><td><code>--duration-base</code> (0.2s)</td><td><code>--ease-standard</code></td><td>Modal, Toast</td>
+              <td><div class="sg-try"><div class="shield-toast success sg-anim"><span>Saved</span></div><button type="button" class="shield-button shield-button-default small" onclick="sgReplayMotion(this)">Replay</button></div></td></tr>
+            <tr><td>Slides or scales in</td><td><code>--duration-base</code> (0.2s)</td><td><code>--ease</code></td><td>Popover, Drawer, off-canvas navigation</td>
+              <td><div class="sg-try"><div class="sg-try-panel sg-try-pop sg-anim">Popover</div><div class="sg-try-panel sg-try-drawer sg-anim">Drawer</div><button type="button" class="shield-button shield-button-default small" onclick="sgReplayMotion(this)">Replay</button></div></td></tr>
+            <tr><td>Surface color change, or the light/dark switch</td><td><code>--duration-base</code> (0.2s)</td><td><code>--ease-standard</code></td><td>Card, the whole page</td>
+              <td><div class="sg-try"><div class="shield-card sg-try-card" tabindex="0" role="button" aria-label="Try the card color change" onclick="this.classList.toggle('sg-try-alt')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('sg-try-alt')}">Hover or click</div></div></td></tr>
+            <tr><td>Large tile lifting on hover</td><td><code>--duration-slow</code> (0.25s) for color, <code>--duration-base</code> for shadow</td><td><code>--ease-standard</code></td><td>Stat tile</td>
+              <td><div class="sg-try"><div class="shield-stat"><div class="shield-stat-label">Hover me</div><div class="shield-stat-value">42</div></div></div></td></tr>
+            <tr><td>Looping "working" indicator</td><td><code>--duration-spin</code> (0.7s) or <code>--duration-shimmer</code> (1.5s)</td><td>linear / ease-in-out</td><td>Spinner, Skeleton</td>
+              <td><div class="sg-try"><span class="shield-spinner"></span><span class="sg-try-skel"><span class="shield-skeleton" style="width:100%;height:12px"></span><span class="shield-skeleton" style="width:70%;height:12px"></span></span></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">Hover, click or press Replay to feel each one.</p>
+    </section>
+
+
     <!-- Every icon currently used on this page, each a literal Font Awesome <svg> styled by
              the .shield-icon class in components.css. See the paragraph below the grid for how
              to add a new one without redrawing it. -->
     <section id="icons">
       <h2>Icons</h2>
-      <p class="lede">Icons come from <a href="https://fontawesome.com/icons/packs/classic" target="_blank" rel="noopener">Font Awesome's Classic pack</a> (Solid style, Free tier, licensed CC BY 4.0). One consistent solid style keeps the product unified and readable at small sizes. For engineers: each glyph is Font Awesome's own path data, inlined as is, with <code>fill="currentColor"</code> so it matches the text color. Each icon keeps its natural aspect ratio (the <code>viewBox</code> width varies, the height is 512). Every icon in the app's set:</p>
+      <p class="lede">Icons come from <a href="https://fontawesome.com/icons/packs/classic" target="_blank" rel="noopener">Font Awesome's Classic pack</a> (Solid style, Free tier, licensed CC BY 4.0). One consistent solid style keeps the product unified and readable at small sizes. The one exception is the Empty illustration, which uses the matching outline (Regular) style because a solid glyph is too heavy at that size. For engineers: each glyph is Font Awesome's own path data, inlined as is, with <code>fill="currentColor"</code> so it matches the text color. Each icon keeps its natural aspect ratio (the <code>viewBox</code> width varies, the height is 512). Every icon in the set:</p>
       <div class="demo">
         <div class="icon-grid">
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376C296.3 401.1 253.9 416 208 416 93.1 416 0 322.9 0 208S93.1 0 208 0 416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg><span>Search</span></div>
@@ -375,12 +495,14 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 105.4-105.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg><span>Arrow left</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg><span>Arrow right</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="17.5" height="20" viewBox="0 0 448 512" fill="currentColor"><path d="M192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-200.6c0-17.4-7.1-34.1-19.7-46.2L370.6 17.8C358.7 6.4 342.8 0 326.3 0L192 0zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-64 0 0 16-192 0 0-256 16 0 0-64-16 0z"/></svg><span>Copy</span></div>
+          <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0zm320 96c0-26.9-16.5-49.9-40-59.3L280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 172.7c-23.5 9.5-40 32.5-40 59.3 0 35.3 28.7 64 64 64s64-28.7 64-64zM144 176a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm-16 80a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM400 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg><span>Dashboard</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="17.5" height="20" viewBox="0 0 448 512" fill="currentColor"><path d="M448 205.8c-14.8 9.8-31.8 17.7-49.5 24-47 16.8-108.7 26.2-174.5 26.2S96.4 246.5 49.5 229.8c-17.6-6.3-34.7-14.2-49.5-24L0 288c0 44.2 100.3 80 224 80s224-35.8 224-80l0-82.2zm0-77.8l0-48C448 35.8 347.7 0 224 0S0 35.8 0 80l0 48c0 44.2 100.3 80 224 80s224-35.8 224-80zM398.5 389.8C351.6 406.5 289.9 416 224 416S96.4 406.5 49.5 389.8c-17.6-6.3-34.7-14.2-49.5-24L0 432c0 44.2 100.3 80 224 80s224-35.8 224-80l0-66.2c-14.8 9.8-31.8 17.7-49.5 24z"/></svg><span>Database</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="22.5" height="20" viewBox="0 0 576 512" fill="currentColor"><path d="M96.5 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-96 78.1 0-31 31c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l72-72c9.4-9.4 9.4-24.6 0-33.9l-72-72c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l31 31-78.1 0 0-133.5c0-17-6.7-33.3-18.7-45.3L291.2 18.7C279.2 6.7 263 0 246 0L96.5 0zM358 176l-93.5 0c-13.3 0-24-10.7-24-24L240.5 58.5 358 176zM224.5 328c0-13.3 10.7-24 24-24l104 0 0 48-104 0c-13.3 0-24-10.7-24-24z"/></svg><span>Export</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="15" height="20" viewBox="0 0 384 512" fill="currentColor"><path d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM120 256c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg><span>File text</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L368 46.1 465.9 144 490.3 119.6c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L432 177.9 334.1 80 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z"/></svg><span>Form</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="15" height="20" viewBox="0 0 384 512" fill="currentColor"><path d="M64 0C28.7 0 0 28.7 0 64l0 240 182.1 0-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l72 72c9.4 9.4 9.4 24.6 0 33.9l-72 72c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-182.1 0 0 96c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"/></svg><span>Import</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M91.8 32C59.9 32 32.9 55.4 28.4 86.9L.6 281.2c-.4 3-.6 6-.6 9.1L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-125.7c0-3-.2-6.1-.6-9.1L483.6 86.9C479.1 55.4 452.1 32 420.2 32L91.8 32zm0 64l328.5 0 27.4 192-59.9 0c-12.1 0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7l-120.4 0c-12.1 0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7L64.3 288 91.8 96z"/></svg><span>Inbox</span></div>
+          <div class="icon-cell"><svg class="shield-icon" width="22.5" height="20" viewBox="0 0 576 512" fill="currentColor"><path d="M97.5 400l50-160 379.4 0-50 160-379.4 0zm190.7 48L477 448c21 0 39.6-13.6 45.8-33.7l50-160c9.7-30.9-13.4-62.3-45.8-62.3l-379.4 0c-21 0-39.6 13.6-45.8 33.7L80.2 294.4 80.2 96c0-8.8 7.2-16 16-16l138.7 0c3.5 0 6.8 1.1 9.6 3.2L282.9 112c13.8 10.4 30.7 16 48 16l117.3 0c8.8 0 16 7.2 16 16l48 0c0-35.3-28.7-64-64-64L330.9 80c-6.9 0-13.7-2.2-19.2-6.4L273.3 44.8C262.2 36.5 248.8 32 234.9 32L96.2 32c-35.3 0-64 28.7-64 64l0 288c0 35.3 28.7 64 64 64l192 0z"/></svg><span>Folder open (outline)</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="15" height="20" viewBox="0 0 384 512" fill="currentColor"><path d="M128 96l0 64 128 0 0-64c0-35.3-28.7-64-64-64s-64 28.7-64 64zM64 160l0-64C64 25.3 121.3-32 192-32S320 25.3 320 96l0 64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64z"/></svg><span>Lock</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M48 64c-26.5 0-48 21.5-48 48 0 15.1 7.1 29.3 19.2 38.4l208 156c17.1 12.8 40.5 12.8 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48L48 64zM0 196L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-188-198.4 148.8c-34.1 25.6-81.1 25.6-115.2 0L0 196z"/></svg><span>Mail</span></div>
           <div class="icon-cell"><svg class="shield-icon" width="20" height="20" viewBox="0 0 512 512" fill="currentColor"><path d="M128 320L24.5 320c-24.9 0-40.2-27.1-27.4-48.5L50 183.3C58.7 168.8 74.3 160 91.2 160l95 0c76.1-128.9 189.6-135.4 265.5-124.3 12.8 1.9 22.8 11.9 24.6 24.6 11.1 75.9 4.6 189.4-124.3 265.5l0 95c0 16.9-8.8 32.5-23.3 41.2l-88.2 52.9c-21.3 12.8-48.5-2.6-48.5-27.4L192 384c0-35.3-28.7-64-64-64l-.1 0zM400 160a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"/></svg><span>Rocket</span></div>
@@ -402,8 +524,39 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
         <div class="spec"><code>height 512, width varies</code><code>fill currentColor</code><code>single path</code><code>no stroke</code></div>
       </div>
-      <p class="lede"><b style="color:var(--text)">Adding an icon:</b> find it at <a href="https://fontawesome.com/icons/packs/classic" target="_blank" rel="noopener">fontawesome.com</a> (free Solid style only) or in the <code>@fortawesome/fontawesome-free</code> package's <code>sprites/solid.svg</code>. Copy the <code>viewBox</code> and path exactly and add an <code>icon(name, viewBox, path)</code> export in <code>icons.jsx</code>. Do not redraw icons.</p>
+      <p class="lede"><b style="color:var(--text)">Adding an icon:</b> find it at <a href="https://fontawesome.com/icons/packs/classic" target="_blank" rel="noopener">fontawesome.com</a> (free Solid style only) or in the <code>@fortawesome/fontawesome-free</code> package's <code>sprites/solid.svg</code>. Copy the <code>viewBox</code> and path exactly into an inline <code>&lt;svg class="shield-icon"&gt;</code> and add it to the grid above. Do not redraw icons.</p>
     </section>
+
+    <!-- Logo usage. The one asset is source_images/Shield_Engineering_Icon.png (1254 x 1254, transparent).
+         The "don't" examples are real renders of that file with a transform or filter applied. -->
+    <section id="logo">
+      <h2>Logo &amp; brand <span class="live-badge new">Beta</span></h2>
+      <p class="lede">The mark is a shield with a gear: protection (the legal side) plus engineering (the software side). It is one flat color, <code>#11ABED</code> as sampled from the file, which is the same family as <code>--brand-blue</code> (<code>#18ABED</code>, blue-6). Like all of blue-6 it is for logos and large graphics only: it is 2.6:1 against white, so never use it for text. The name next to it is set in <b style="color:var(--text)">Fraunces</b> bold, "Shield" in the text color and "Engineering" in <code>--brand-blue-dark</code>.</p>
+      <div class="demo">
+        <div class="sg-logo-row">
+          <div class="sg-logo-cell"><div class="sg-logo-stage" style="background:var(--bg-layout)"><img src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo" width="64" height="64"></div><span>On the page</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage" style="background:var(--bg-container)"><img src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo" width="64" height="64"></div><span>On a card</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage" style="background:var(--blue-10)"><img src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo" width="64" height="64"></div><span>On deep blue (blue-10)</span></div>
+          <div class="sg-logo-cell wide"><div class="sg-logo-stage lockup" style="background:var(--bg-container)"><img src="source_images/Shield_Engineering_Icon.png" alt="" width="40" height="40"><div class="mark">Shield<span>Engineering</span></div></div><span>Mark + name</span></div>
+        </div>
+      </div>
+      <h3 class="sub">Don't</h3>
+      <p class="lede" style="margin-bottom:12px">Every one of these is a real render of the logo file with the mistake applied.</p>
+      <div class="demo">
+        <div class="sg-logo-row">
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo stretched wide (do not do this)" width="96" height="48" style="width:96px;height:48px"></div><span><b>✕</b> Stretch or squash</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo rotated (do not do this)" width="64" height="64" style="transform:rotate(18deg)"></div><span><b>✕</b> Rotate</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo recolored orange (do not do this)" width="64" height="64" style="filter:hue-rotate(160deg) saturate(2)"></div><span><b>✕</b> Recolor</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad" style="background:var(--blue-6)"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo on a same-color background, nearly invisible (do not do this)" width="64" height="64"></div><span><b>✕</b> Place on a similar blue</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo with a heavy drop shadow (do not do this)" width="64" height="64" style="filter:drop-shadow(4px 6px 3px rgba(0,0,0,.6))"></div><span><b>✕</b> Add effects or shadows</span></div>
+          <div class="sg-logo-cell"><div class="sg-logo-stage bad"><img src="source_images/Shield_Engineering_Icon.png" alt="Logo at 16px, too small (do not do this)" width="16" height="16"></div><span><b>✕</b> Go below 32px</span></div>
+        </div>
+      </div>
+      <h3 class="sub">Still to make before 1.0</h3>
+      <p class="lede">The brand has one asset today. Missing: a vector (SVG) master, a single-color version for print and watermarks, a reversed version for use on photos, the lockup as an exported file, and a favicon set.</p>
+    </section>
+
+
 
     <!-- Demonstrates the .shield-row/.shield-col 24-unit responsive grid and the .shield-space/
              .shield-divider helpers, all from components.css. Resize the window to see the grid
@@ -442,6 +595,75 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
       </div>
     </section>
+
+    <!-- Responsive behavior. The demo is a real iframe (responsive-demo.html) so the real @media rules run
+         against its width. Breakpoints are the ones in components.css. -->
+    <section id="responsive">
+      <h2>Responsive behavior <span class="live-badge">Live</span> <span class="live-badge review">Requires Engineering Review and Feedback</span></h2>
+      <p class="lede">Layouts have to stay usable on a tablet and readable on a phone. The grid has five breakpoints, and each component says what it does when space runs out; a few components use their own widths, listed in the second table. Pick a width below, and press Menu to slide the navigation in and out, to see the real stylesheet respond: the demo is a separate page loaded at that width, so it is the actual media queries running, not a picture of them.</p>
+      <div class="shield-alert info" style="margin-bottom:12px"><div class="shield-alert-body"><div class="shield-alert-title">This is an example, not a design.</div><div class="shield-alert-description">The preview below is a generic placeholder page. It exists only to show how the responsive rules in this section behave at different widths. It is not how any particular product screen should look on a tablet or phone, and its layout, labels and content should not be copied.</div></div></div>
+      <div class="demo" style="padding:16px">
+        <div class="demo-row">
+          <div class="shield-segmented" role="group" aria-label="Preview width">
+            <button type="button" class="is-on" data-frame="resp-frame" data-width="100%" data-label="Desktop (fills this column)" onclick="sgFrameSize(this)">Desktop</button>
+            <button type="button" data-frame="resp-frame" data-width="768px" data-label="Tablet, 768px" onclick="sgFrameSize(this)">Tablet</button>
+            <button type="button" data-frame="resp-frame" data-width="375px" data-label="Phone, 375px" onclick="sgFrameSize(this)">Phone</button>
+          </div>
+          <span class="shield-text tertiary" style="font-size:12.5px" id="resp-frame-label" aria-live="polite">Desktop (fills this column)</span>
+        </div>
+        <div class="sg-frame-wrap">
+          <iframe id="resp-frame" data-sg-frame src="responsive-demo.html" title="Example only: a generic placeholder page showing the responsive rules (an app shell, a stats row, a table and a modal)" onload="sgFrameTheme(this)" style="width:100%"></iframe>
+        </div>
+      </div>
+
+      <h3 class="sub">Breakpoints</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Name</th><th>Width</th><th>Typical device</th><th>Grid column var</th></tr></thead>
+          <tbody>
+            <tr><td><code>xs</code></td><td>under 576px</td><td>Phone, portrait</td><td><code>--col-xs</code> (the fallback, always set it)</td></tr>
+            <tr><td><code>sm</code></td><td>576px and up</td><td>Phone, landscape</td><td><code>--col-sm</code></td></tr>
+            <tr><td><code>md</code></td><td>768px and up</td><td>Tablet</td><td><code>--col-md</code></td></tr>
+            <tr><td><code>lg</code></td><td>992px and up</td><td>Desktop</td><td><code>--col-lg</code></td></tr>
+            <tr><td><code>xl</code></td><td>1200px and up</td><td>Large desktop</td><td><code>--col-xl</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">These five widths and their device labels are the same ones Bootstrap 5 uses (it adds a sixth, 1400px, which Shield does not). Mobile first: a column uses the widest variable that applies at or below the current width, then falls back to a narrower one. CSS cannot read a variable inside a media query, so these numbers are written out in <code>components.css</code>.</p>
+
+      <h3 class="sub">What each piece does when space runs out</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Piece</th><th>Behavior</th><th>Breakpoint</th></tr></thead>
+          <tbody>
+            <tr><td>App shell</td><td>The left navigation becomes a drawer opened by a menu button in the top bar; content padding drops from 28px to 16px.</td><td>768px and below</td></tr>
+            <tr><td>Grid (<code>shield-col</code>)</td><td>Columns take the widest <code>--col-*</code> that applies; with only <code>--col-xs:100%</code> they stack.</td><td>576 / 768 / 992 / 1200</td></tr>
+            <tr><td>Statistic tiles</td><td>Each tile is only as wide as its content (180px minimum). Tiles that do not fit wrap onto the next line, one per line on a narrow phone.</td><td>any</td></tr>
+            <tr><td>Table</td><td>Keeps its columns; the <code>shield-table-scroll</code> wrapper scrolls it sideways. Never wrap or hide data columns.</td><td>any</td></tr>
+            <tr><td>Form (<code>shield-form two</code>)</td><td>Two columns become one.</td><td>under 576px</td></tr>
+            <tr><td>Modal</td><td>480px (720px wide) but never wider than the screen; the backdrop keeps 24px around it and the body scrolls inside, up to 88% of the screen height.</td><td>any</td></tr>
+            <tr><td>Drawer</td><td>420px, or the full width of the screen when that is narrower.</td><td>any</td></tr>
+            <tr><td>Popover, Tooltip</td><td>Never wider than the screen minus 32px; use <code>end</code> near the right edge.</td><td>any</td></tr>
+            <tr><td>This guide</td><td>The sidebar becomes the same kind of off-canvas menu.</td><td>900px and below</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub">Rules</h3>
+      <p class="lede">For reflow, touch target size and content that appears on hover or focus, Shield follows the W3C's Web Content Accessibility Guidelines (WCAG) 2.2, Level AA. Read the criteria themselves rather than a summary:</p>
+      <ul class="sg-steps-list">
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" target="_blank" rel="noopener">SC 1.4.10 Reflow</a>: content works at 320 CSS pixels wide without scrolling in two directions.</li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">SC 2.5.8 Target Size (Minimum)</a>: pointer targets are at least 24 by 24 CSS pixels.</li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html" target="_blank" rel="noopener">SC 1.4.13 Content on Hover or Focus</a>: content that appears on hover or focus can be dismissed, hovered over, and stays until dismissed.</li>
+      </ul>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.2</a>, and its Understanding pages linked above.</li>
+        <li>Bootstrap 5.3, <a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/" target="_blank" rel="noopener">Breakpoints</a>: the 576, 768, 992 and 1200px widths and their device labels.</li>
+        <li>The behavior of each Shield component in the tables above comes from <code>components.css</code>.</li>
+      </ul>
+    </section>
+
 
     <!-- Demonstrates the .shield-button component, variants, sizes, and states, from
              components.css. Static; clicking these buttons doesn't do anything. -->
@@ -505,8 +727,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
         <div class="demo-row"><span class="demo-label">Error state</span>
           <div>
-            <span class="shield-input-wrap field"><input class="shield-input error" value="invalid@"></span>
-            <div class="shield-text danger" style="font-size:12px;margin-top:4px">Enter a valid email address.</div>
+            <span class="shield-input-wrap field"><input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="in-err"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="in-err" role="tooltip">Enter a valid email address.</span></span></span>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">TextArea</span>
@@ -516,21 +737,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="shield-input-wrap" style="width:120px"><input class="shield-input" type="number" value="12" min="0" step="1"></span>
         </div>
         <div class="spec"><code>height 32</code><code>border → blue-5 on hover</code><code>focus → brand-blue + 2px ring</code></div>
-
-        <h3 class="sub">File upload <span class="live-badge new">Proposed</span></h3>
-        <p class="lede" style="margin:0 0 12px">Proposed, not built. There is no Upload component in the app yet. It uses the existing tokens so it can be reviewed first.</p>
-        <div class="demo-row">
-          <div style="width:100%">
-            <input type="file" id="upload-input" class="sg-upload-input" multiple onchange="sgHandleUpload(this)">
-            <label for="upload-input" class="sg-upload-dropzone" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="sgHandleDrop(event,this)">
-              <svg class="shield-icon" width="22" height="22" viewBox="0 0 512 512" fill="currentColor"><path d="M91.8 32C59.9 32 32.9 55.4 28.4 86.9L.6 281.2c-.4 3-.6 6-.6 9.1L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-125.7c0-3-.2-6.1-.6-9.1L483.6 86.9C479.1 55.4 452.1 32 420.2 32L91.8 32zm0 64l328.5 0 27.4 192-59.9 0c-12.1 0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7l-120.4 0c-12.1 0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7L64.3 288 91.8 96z"/></svg>
-              <span class="sg-upload-title">Click or drag files to this area to upload</span>
-              <span class="sg-upload-hint">Retainer agreements, PDFs, up to 25MB each.</span>
-            </label>
-            <div class="sg-upload-list" id="upload-list"></div>
-          </div>
-        </div>
-      </div>
+</div>
     </section>
 
     <!-- Demonstrates the hand-rolled .shield-select combobox (NOT a native <select>). Read the
@@ -596,22 +803,22 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Checkbox for independent yes/no options, radio when exactly one option applies, switch for settings that take effect immediately. All use the Primary button blue when on.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Checkbox: click to toggle</span>
-          <label class="shield-check-row"><span class="shield-checkbox" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
-          <label class="shield-check-row"><span class="shield-checkbox is-on" onclick="sgToggleCheckbox(this)"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span>Checked</label>
-          <label class="shield-check-row disabled"><span class="shield-checkbox disabled"></span>Disabled</label>
+          <label class="shield-check-row"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
+          <label class="shield-check-row"><span class="shield-checkbox is-on" role="checkbox" tabindex="0" aria-checked="true" onclick="sgToggleCheckbox(this)"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span>Checked</label>
+          <label class="shield-check-row disabled"><span class="shield-checkbox disabled" role="checkbox" aria-checked="false" aria-disabled="true"></span>Disabled</label>
         </div>
         <div class="demo-row"><span class="demo-label">Radio: pick one</span>
-          <label class="shield-check-row"><span class="shield-radio is-on" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
-          <label class="shield-check-row"><span class="shield-radio" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
+          <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
+          <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
         </div>
         <div class="demo-row"><span class="demo-label">Switch: default &amp; small</span>
-          <button type="button" class="shield-switch-track is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true"><span class="shield-switch-thumb"></span></button>
-          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false"><span class="shield-switch-thumb"></span></button>
-          <button type="button" class="shield-switch-track small is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true"><span class="shield-switch-thumb"></span></button>
-          <button type="button" class="shield-switch-track is-on" disabled role="switch" aria-checked="true"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false" aria-label="Notifications (off)"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track small is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track is-on" disabled role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
         </div>
         <div class="demo-row"><span class="demo-label">Segmented</span>
-          <div class="shield-segmented">
+          <div class="shield-segmented" role="group" aria-label="View">
             <button type="button" class="is-on" onclick="sgSegPick(this)">List</button>
             <button type="button" onclick="sgSegPick(this)">Grid</button>
           </div>
@@ -619,6 +826,122 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → blue-7</code></div>
       </div>
     </section>
+
+    <!-- Radio group: .shield-radio options wrapped in role="radiogroup". Keyboard: Tab to the chosen radio,
+         arrow keys move and pick (shield.js, "Keyboard + label behavior"). -->
+    <section id="radio">
+      <h2>Radio group <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">Use a radio group when exactly one option applies and there are only a few of them (about two to five), so people can see every choice at once. For longer lists use a <a href="#select">Select</a>. If a choice takes effect immediately, a <a href="#checkbox">switch</a> is usually better. Always preselect the safest or most common option unless "no choice yet" is meaningful.</p>
+      <div class="demo">
+        <div class="demo-row stack"><span class="demo-label">Vertical, with descriptions</span>
+          <div class="shield-radio-group" role="radiogroup" aria-label="Delivery method">
+            <label class="shield-check-row has-desc"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Standard<span class="shield-radio-desc">Delivered within 5 business days.</span></span></label>
+            <label class="shield-check-row has-desc"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Expedited<span class="shield-radio-desc">Next business day.</span></span></label>
+            <label class="shield-check-row has-desc disabled"><span class="shield-radio disabled" role="radio" aria-checked="false" aria-disabled="true"></span><span class="shield-radio-text">Same day<span class="shield-radio-desc">Not available for this partner group.</span></span></label>
+          </div>
+        </div>
+        <div class="demo-row stack"><span class="demo-label">Horizontal</span>
+          <div class="shield-radio-group horizontal" role="radiogroup" aria-label="Contact type">
+            <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="contact" onclick="sgSelectRadio(this)"></span>Business</label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Technical</label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Accounts payable</label>
+          </div>
+        </div>
+        <div class="spec"><code>16×16 radio</code><code>whole row is the click target</code><code>Tab: chosen radio · Arrows: move + pick</code><code>group needs a name (aria-label)</code></div>
+      </div>
+    </section>
+
+    <!-- Date picker: the native <input type="date"> styled as .shield-input; no custom calendar. -->
+    <section id="datepicker">
+      <h2>Date picker <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">A date field is the browser's own date input styled as a normal text field. That keeps it fully keyboard and screen-reader friendly, shows the calendar in the visitor's language and format, and costs nothing to maintain. Type the date, use the arrow keys, or open the calendar from the icon. Say the expected format in the hint when typing matters, and use two fields for a range.</p>
+      <h3 class="sub">What it is and how to get it</h3>
+      <p class="lede">The native HTML date input, <code>&lt;input type="date"&gt;</code>. It is built into every browser, so there is nothing to install: add the element and the <code>shield-input</code> class. The calendar popup is drawn by the browser, so it looks different from browser to browser and cannot be restyled. People see the date as <b style="color:var(--text)">MM/DD/YYYY</b> (US browsers follow the visitor's language settings). Your code reads and writes the value as <code>YYYY-MM-DD</code>, which follows the ISO 8601 standard (as HTML uses it) and is how the element passes it along, not what is shown on screen. It is a plain calendar date with no time or time zone.</p>
+      <div class="demo">
+        <div class="demo-row"><span class="demo-label">Single date</span>
+          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-eff">Effective date</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input" id="d-eff" type="date" value="2026-10-05"></span></div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Range</span>
+          <div class="shield-field" style="margin:0"><span class="shield-field-label" id="d-range-l">Campaign dates</span>
+            <span class="shield-date-range" role="group" aria-labelledby="d-range-l"><input class="shield-input" type="date" aria-label="From" value="2026-10-01"><span class="shield-text tertiary">to</span><input class="shield-input" type="date" aria-label="To" value="2026-12-31"></span>
+          </div>
+        </div>
+        <div class="demo-row"><span class="demo-label">Error</span>
+          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-err">Signed on</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input error" id="d-err" type="date" aria-invalid="true" aria-describedby="d-err-h"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon after-native" tabindex="0" role="img" aria-label="Error: Choose the date the agreement was signed."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="d-err-h" role="tooltip">Choose the date the agreement was signed.</span></span></span></div>
+        </div>
+        <div class="spec"><code>height 32</code><code>shown as MM/DD/YYYY</code><code>value read by code: YYYY-MM-DD</code></div>
+      </div>
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/date" target="_blank" rel="noopener">&lt;input type="date"&gt;</a>: the element, its <code>YYYY-MM-DD</code> value, the <code>min</code>, <code>max</code> and <code>step</code> attributes, the browser-rendered picker that cannot be styled, and browser support.</li>
+        <li>WHATWG, <a href="https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)" target="_blank" rel="noopener">HTML Standard: Date state (type=date)</a>: the value format, and that the browser may provide its own interface for choosing a date.</li>
+              <li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Date_and_time_formats" target="_blank" rel="noopener">Date and time string formats used in HTML</a>: the <code>YYYY-MM-DD</code> date string, HTML's variation of ISO 8601, and that a date-only string carries no time zone.</li>
+      </ul>
+    </section>
+
+    <!-- File upload, promoted from "Proposed" to Beta. CSS is in components.css (.shield-upload-*), behavior in shield.js. -->
+    <section id="upload">
+      <h2>File upload <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">A dropzone for adding files by click or drag-and-drop, with a list of what was chosen. The hint names what is accepted (type and size) before the visitor tries. Each file can be removed. The real file input stays in the page and works with the keyboard: Tab to the dropzone and press Enter or Space to open the file picker. This component is new in v0.8, so it is Beta.</p>
+      <div class="demo">
+        <div style="width:100%">
+          <input type="file" id="upload-input" class="shield-upload-input" multiple onchange="sgHandleUpload(this)">
+          <label for="upload-input" class="shield-upload-dropzone" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="sgHandleDrop(event,this)">
+            <svg aria-hidden="true" class="shield-icon" width="17.5" height="20" viewBox="0 0 448 512" fill="currentColor"><path d="M256 109.3L256 320c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-210.7-41.4 41.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l96-96c12.5-12.5 32.8-12.5 45.3 0l96 96c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 109.3zM224 400c44.2 0 80-35.8 80-80l80 0c35.3 0 64 28.7 64 64l0 32c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64l0-32c0-35.3 28.7-64 64-64l80 0c0 44.2 35.8 80 80 80zm144 24a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
+            <span class="shield-upload-title">Click or drag files to this area to upload</span>
+            <span class="shield-upload-hint">Retainer agreements, PDFs, up to 25MB each.</span>
+          </label>
+          <div class="shield-upload-list" id="upload-list"></div>
+        </div>
+        <div class="spec"><code>dashed border → brand-blue on hover or drag</code><code>files are listed, not uploaded, in this demo</code></div>
+      </div>
+    </section>
+
+    <!-- Form layout: .shield-field/.shield-form from components.css. A label, control and hint are grouped
+         and spaced by the shared classes instead of inline styles. -->
+    <section id="forms">
+      <h2>Form layout <span class="live-badge new">Beta</span></h2>
+      <ul class="sg-steps-list">
+        <li><b style="color:var(--text)">Label above the field,</b> always visible. A placeholder is an example, not a label.</li>
+        <li><b style="color:var(--text)">Required fields</b> get a red asterisk before the label.</li>
+        <li><b style="color:var(--text)">Help text</b> goes under the field, short.</li>
+        <li><b style="color:var(--text)">Check a field</b> when the person leaves it and again on submit, not on every keystroke.</li>
+        <li><b style="color:var(--text)">Errors:</b> the field border turns red and a red error icon appears at the right end of the field. Hover or focus the icon to read what is wrong.</li>
+        <li><b style="color:var(--text)">Buttons:</b> primary action on the right, Cancel beside it.</li>
+      </ul>
+      <div class="demo">
+        <form class="shield-form two" onsubmit="event.preventDefault()" novalidate>
+          <div class="shield-field">
+            <label class="shield-field-label" for="f-name"><span class="shield-field-required" aria-hidden="true">*</span>Partner group name</label>
+            <span class="shield-input-wrap"><input class="shield-input" id="f-name" required aria-describedby="f-name-h" value="Meridian Legal Group"></span>
+            <div class="shield-field-hint" id="f-name-h">Legal entity name. Roles are assigned per offer, not here.</div>
+          </div>
+          <div class="shield-field">
+            <label class="shield-field-label" for="f-email"><span class="shield-field-required" aria-hidden="true">*</span>Primary contact email</label>
+            <span class="shield-input-wrap"><input class="shield-input error has-suffix" id="f-email" type="email" required aria-invalid="true" aria-describedby="f-email-h" value="accounts@meridian"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address, like name@firm.com."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="f-email-h" role="tooltip">Enter a valid email address, like name@firm.com.</span></span></span>
+          </div>
+          <div class="shield-field">
+            <label class="shield-field-label" for="f-cat">Catalog</label>
+            <span class="shield-input-wrap"><input class="shield-input" id="f-cat" value="Mass Tort"></span>
+            <div class="shield-field-hint warn">This catalog has no active products yet.</div>
+          </div>
+          <div class="shield-field">
+            <span class="shield-field-label">System integration</span>
+            <label class="shield-check-row"><button type="button" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleSwitch(this)"><span class="shield-switch-thumb"></span></button>Requires system integration</label>
+          </div>
+          <div class="shield-field span-all">
+            <label class="shield-field-label" for="f-notes">Notes</label>
+            <textarea class="shield-textarea" id="f-notes" placeholder="Anything the order manager should know…"></textarea>
+          </div>
+          <div class="shield-form-actions span-all">
+            <button type="button" class="shield-button shield-button-default">Cancel</button>
+            <button type="submit" class="shield-button shield-button-primary">Onboard partner group</button>
+          </div>
+        </form>
+        <div class="spec"><code>field gap 16px</code><code>label 6px above control</code><code>hint 4px below · 13px</code><code>two columns from 576px</code></div>
+      </div>
+    </section>
+
 
     <!-- Demonstrates .shield-tag (with its color/checkable modifiers) and .shield-pill from
              components.css. The × remove and checkable-toggle behavior come from shield.js's
@@ -645,7 +968,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="shield-pill warning"><svg class="shield-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg>Needs review</span>
           <span class="shield-pill neutral">Idle</span>
         </div>
-        <h3 class="sub">StatusTag: the app-wide status → color mapping</h3>
+        <h3 class="sub">StatusTag: the status → color mapping</h3>
         <div class="demo-row">
           <span class="shield-tag">Draft</span>
           <span class="shield-tag processing">Internal Review</span>
@@ -695,11 +1018,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row">
           <div class="shield-card bordered-shadow" style="width:220px">
             <div class="shield-card-head"><span>Consumer Finance</span></div>
-            <div class="shield-card-body shield-text secondary" style="font-size:13.5px">Default: border-secondary + shadow-sm, the standard resting state.</div>
+            <div class="shield-card-body shield-text secondary" style="font-size:13.5px">bordered-shadow: border-secondary + shadow-sm, the standard resting state.</div>
           </div>
           <div class="shield-card" style="width:220px">
             <div class="shield-card-head"><span>Draft catalog</span></div>
-            <div class="shield-card-body shield-text secondary" style="font-size:13.5px">Borderless variant: no shadow, sits flush against a page.</div>
+            <div class="shield-card-body shield-text secondary" style="font-size:13.5px">Plain variant: thin border, no shadow, sits flush against a page.</div>
           </div>
           <div class="shield-card bordered-shadow small" style="width:220px">
             <div class="shield-card-head" style="min-height:40px;font-size:13.5px"><span>Compact</span><span class="shield-tag success">Active</span></div>
@@ -714,19 +1037,37 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <section id="table">
       <h2>Table <span class="live-badge">Live</span></h2>
       <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens.</p>
+<h3 class="sub">Sorting, selection and bulk actions <span class="live-badge new">Beta</span></h3>
+      <p class="lede">For long working lists. <b style="color:var(--text)">Sort</b> by clicking a column heading; the arrow and <code>aria-sort</code> show the direction, and the change is announced. <b style="color:var(--text)">Select</b> rows with the checkboxes in the first column; the header checkbox selects all and shows a dash when only some are chosen. When anything is selected, a <b style="color:var(--text)">bulk bar</b> appears above the table with the count and the actions that apply to every selected row.</p>
       <div class="demo" style="padding:0">
+        <div class="shield-bulk-bar" id="orders-bulk" hidden>
+          <span class="shield-bulk-count" aria-live="polite">0 selected</span>
+          <button class="shield-button shield-button-default small">Export</button>
+          <button class="shield-button shield-button-default small shield-button-danger">Cancel orders</button>
+          <button class="shield-button shield-button-text small" onclick="sgTableClear('orders-table')">Clear</button>
+        </div>
+        <span class="shield-sr-only" id="orders-live" role="status"></span>
         <div class="shield-table-scroll">
-          <table class="shield-table">
-            <thead><tr><th>Order</th><th>Partner</th><th>Status</th></tr></thead>
+          <table class="shield-table" id="orders-table" data-bulk="orders-bulk" data-live="orders-live">
+            <caption class="shield-sr-only">Orders, sortable and selectable</caption>
+            <thead><tr>
+              <th class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select all orders" onclick="sgTableToggleAll(this)"></span></th>
+              <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Order</button></th>
+              <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Partner group</button></th>
+              <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Value</button></th>
+              <th>Status</th>
+            </tr></thead>
             <tbody>
-              <tr class="clickable"><td>ORD-501</td><td>Harlow &amp; Vance</td><td><span class="shield-tag success">Active</span></td></tr>
-              <tr class="clickable"><td>ORD-498</td><td>Meridian Legal Group</td><td><span class="shield-tag warning">Paused</span></td></tr>
-              <tr class="clickable"><td>ORD-493</td><td>Consumer Finance Direct</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-501" onclick="sgTableToggleRow(this)"></span></td><td>ORD-501</td><td>Harlow &amp; Vance</td><td data-value="48200">$48,200</td><td><span class="shield-tag success">Active</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-498" onclick="sgTableToggleRow(this)"></span></td><td>ORD-498</td><td>Meridian Legal Group</td><td data-value="12750">$12,750</td><td><span class="shield-tag warning">Paused</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-493" onclick="sgTableToggleRow(this)"></span></td><td>ORD-493</td><td>Consumer Finance Direct</td><td data-value="31000">$31,000</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-487" onclick="sgTableToggleRow(this)"></span></td><td>ORD-487</td><td>Archer Systems</td><td data-value="9400">$9,400</td><td><span class="shield-tag success">Approved</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-482" onclick="sgTableToggleRow(this)"></span></td><td>ORD-482</td><td>Bailey &amp; Glasser</td><td data-value="22300">$22,300</td><td><span class="shield-tag error">Rejected</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="spec"><code>hover → fill-quaternary</code><code>headers → uppercase, 11px</code></div>
+      <div class="spec"><code>sort: aria-sort + one button per heading</code><code>select column 40px</code><code>hover → fill-quaternary</code><code>headers → uppercase, 12px</code></div>
     </section>
 
     <!-- Demonstrates the .shield-description label/value list, a read-only key/value layout for
@@ -757,11 +1098,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       </div>
     </section>
 
-    <!-- Demonstrates the .shield-stats KPI tile grid (CSS grid, auto-fit columns, see
+    <!-- Demonstrates the .shield-stats KPI tile grid (wrapping row of content-sized tiles, see
              components.css). Static. -->
     <section id="statistic">
       <h2>Statistic</h2>
-      <p class="lede">Key numbers at the top of a screen. Tiles fit as many 220px columns as the width allows. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red.</p>
+      <p class="lede">Key numbers at the top of a screen. Each tile is only as wide as its content (180px minimum) and never stretches to fill the row; tiles that do not fit wrap onto the next line. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red.</p>
       <div class="demo" style="background:var(--bg-layout)">
         <div class="shield-stats">
           <div class="shield-stat highlighted"><div class="shield-stat-label">Active orders</div><div class="shield-stat-value">128</div><div class="shield-stat-sub">+12 this week</div></div>
@@ -771,6 +1112,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
       </div>
     </section>
+
+
 
     <!-- Demonstrates .shield-alert banners in each mood (success/warning/error/info). The ×
              dismiss button calls shield.js's sgDismissAlert(). -->
@@ -798,29 +1141,29 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row">
           <button class="shield-button shield-button-default" onclick="sgOpenModal('modal-basic')">Open modal</button>
           <button class="shield-button shield-button-default" onclick="sgOpenModal('modal-wide')">Open wide modal</button>
-          <button class="shield-button shield-button-danger" onclick="sgOpenModal('modal-delete')">Delete partner…</button>
+          <button class="shield-button shield-button-danger" onclick="sgOpenModal('modal-delete')">Delete partner group…</button>
         </div>
       </div>
 
       <div class="shield-modal-backdrop" id="modal-basic" onmousedown="sgModalBackdropClick(event,'modal-basic')">
-        <div class="shield-modal">
-          <div class="shield-modal-head"><h3>Assign role contact</h3><button class="shield-modal-close" onclick="sgCloseModal('modal-basic')">×</button></div>
+        <div class="shield-modal" role="dialog" aria-modal="true" aria-labelledby="modal-basic-title">
+          <div class="shield-modal-head"><h3 id="modal-basic-title">Assign role contact</h3><button class="shield-modal-close" aria-label="Close" onclick="sgCloseModal('modal-basic')">×</button></div>
           <div class="shield-modal-body">Pick who handles business and technical contact for this offer.</div>
           <div class="shield-modal-foot"><button class="shield-button shield-button-default" onclick="sgCloseModal('modal-basic')">Cancel</button><button class="shield-button shield-button-primary" onclick="sgCloseModal('modal-basic')">Save</button></div>
         </div>
       </div>
 
       <div class="shield-modal-backdrop" id="modal-wide" onmousedown="sgModalBackdropClick(event,'modal-wide')">
-        <div class="shield-modal wide">
-          <div class="shield-modal-head"><h3>Offer schema</h3><button class="shield-modal-close" onclick="sgCloseModal('modal-wide')">×</button></div>
+        <div class="shield-modal wide" role="dialog" aria-modal="true" aria-labelledby="modal-wide-title">
+          <div class="shield-modal-head"><h3 id="modal-wide-title">Offer schema</h3><button class="shield-modal-close" aria-label="Close" onclick="sgCloseModal('modal-wide')">×</button></div>
           <div class="shield-modal-body">The wide variant (720px) is used for anything with its own internal layout: schema editors, multi-column forms.</div>
           <div class="shield-modal-foot"><button class="shield-button shield-button-default" onclick="sgCloseModal('modal-wide')">Close</button></div>
         </div>
       </div>
 
       <div class="shield-modal-backdrop" id="modal-delete" onmousedown="sgModalBackdropClick(event,'modal-delete')">
-        <div class="shield-modal">
-          <div class="shield-modal-head"><h3>Delete partner</h3><button class="shield-modal-close" onclick="sgCloseModal('modal-delete')">×</button></div>
+        <div class="shield-modal" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+          <div class="shield-modal-head"><h3 id="modal-delete-title">Delete partner group</h3><button class="shield-modal-close" aria-label="Close" onclick="sgCloseModal('modal-delete')">×</button></div>
           <div class="shield-modal-body">
             <p style="margin-top:0">Delete <b class="shield-text strong">Meridian Legal Group</b>? This cannot be undone.</p>
             <p class="shield-text tertiary" style="font-size:12.5px">Type <code>Delete</code> to confirm.</p>
@@ -831,13 +1174,39 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       </div>
     </section>
 
+    <!-- Drawer: same structure as Modal, slides in from the right. -->
+    <section id="drawer">
+      <h2>Drawer <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">Use a drawer when the user may want to click a button to see more information without leaving the page. It slides in from the right, dims the page, traps focus, closes on Escape or a click outside, and returns focus to the button that opened it.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <button class="shield-button shield-button-default" onclick="sgOpenDrawer('drawer-basic')">View order details</button>
+        </div>
+        <div class="spec"><code>width 420</code><code>full width when the screen is narrower</code><code>z: --z-drawer</code></div>
+      </div>
+      <div class="shield-drawer-backdrop" id="drawer-basic" onmousedown="sgDrawerBackdropClick(event,'drawer-basic')">
+        <aside class="shield-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-basic-title">
+          <div class="shield-drawer-head"><h3 id="drawer-basic-title">ORD-501</h3><button class="shield-drawer-close" aria-label="Close" onclick="sgCloseDrawer('drawer-basic')">×</button></div>
+          <div class="shield-drawer-body">
+            <div class="shield-description">
+              <div class="shield-description-row"><div class="shield-description-label">Partner group</div><div class="shield-description-value">Harlow &amp; Vance</div></div>
+              <div class="shield-description-row"><div class="shield-description-label">Status</div><div class="shield-description-value"><span class="shield-tag success">Active</span></div></div>
+              <div class="shield-description-row"><div class="shield-description-label">Created</div><div class="shield-description-value">2026-09-12</div></div>
+            </div>
+          </div>
+          <div class="shield-drawer-foot"><button class="shield-button shield-button-default" onclick="sgCloseDrawer('drawer-basic')">Close</button><button class="shield-button shield-button-primary">Open order</button></div>
+        </aside>
+      </div>
+    </section>
+
+
     <!-- Demonstrates the .shield-empty placeholder shown in place of an empty list/table. Static. -->
     <section id="empty">
       <h2>Empty</h2>
       <p class="lede">Shown in place of a list or table that has nothing to display.</p>
       <div class="demo">
         <div class="shield-empty">
-          <svg class="shield-empty-icon" viewBox="0 0 512 512" fill="currentColor"><path d="M0 64C0 46.3 14.3 32 32 32l448 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96L0 64zM32 176l448 0 0 240c0 35.3-28.7 64-64 64L96 480c-35.3 0-64-28.7-64-64l0-240zm152 64c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"/></svg>
+          <svg class="shield-empty-icon" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M97.5 400l50-160 379.4 0-50 160-379.4 0zm190.7 48L477 448c21 0 39.6-13.6 45.8-33.7l50-160c9.7-30.9-13.4-62.3-45.8-62.3l-379.4 0c-21 0-39.6 13.6-45.8 33.7L80.2 294.4 80.2 96c0-8.8 7.2-16 16-16l138.7 0c3.5 0 6.8 1.1 9.6 3.2L282.9 112c13.8 10.4 30.7 16 48 16l117.3 0c8.8 0 16 7.2 16 16l48 0c0-35.3-28.7-64-64-64L330.9 80c-6.9 0-13.7-2.2-19.2-6.4L273.3 44.8C262.2 36.5 248.8 32 234.9 32L96.2 32c-35.3 0-64 28.7-64 64l0 288c0 35.3 28.7 64 64 64l192 0z"/></svg>
           <div class="shield-empty-description">No orders match these filters.</div>
         </div>
       </div>
@@ -877,23 +1246,88 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       </div>
     </section>
 
-    <!-- Demonstrates .shield-steps. Clicking a step calls shield.js's sgSetStep(), which marks
-             every earlier step "done" and the clicked one "current". -->
+    <!-- Tooltip + info icon (.shield-tooltip, .shield-info-tip) from components.css. -->
+    <section id="tooltip">
+      <h2>Tooltip <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">A short, non-interactive explanation that appears when a control is hovered or focused. It is for <i>extra</i> information: if people need it to complete the task, put it on the page. Keep it to a sentence or two, never put links or buttons inside (use a <a href="#popover">Popover</a> for that), and make it work from the keyboard. It stays open while the pointer is over it and Escape dismisses it, as WCAG 1.4.13 requires. Hover or tab to the examples.</p>
+      <div class="demo" style="padding-bottom:80px">
+        <div class="demo-row"><span class="demo-label">On a control</span>
+          <span class="shield-tooltip"><button class="shield-button shield-button-default" aria-describedby="tip-save">Save draft</button><span class="shield-tooltip-body" id="tip-save" role="tooltip">Saves as a draft. Nothing is sent to the partner group.</span></span>
+          <span class="shield-tooltip top"><button class="shield-button shield-button-default" aria-describedby="tip-top">Opens upward</button><span class="shield-tooltip-body" id="tip-top" role="tooltip">Add <code>top</code> when there is no room below.</span></span>
+          <span class="shield-tooltip end" style="margin-left:auto"><button class="shield-button shield-button-default" aria-describedby="tip-end">Right-aligned</button><span class="shield-tooltip-body" id="tip-end" role="tooltip">Add <code>end</code> near the right edge so the bubble stays on screen.</span></span>
+        </div>
+        <div class="demo-row"><span class="demo-label">Info icon beside a page title</span>
+          <div style="display:flex;align-items:center;gap:8px"><h4 class="shield-title h4" style="margin:0;font-size:21px">External Partner Groups</h4>
+            <span class="shield-info-tip" tabindex="0" aria-label="More information" aria-describedby="tip-page"><svg aria-hidden="true" class="shield-icon" width="16.0" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg><span class="shield-info-tip-body" id="tip-page" role="tooltip">All external partner groups must be pre-onboarded here before they can be added to an offer. Partner roles (Law Firm, Co-Counsel, Funding Partner) are assigned per offer, not here.</span></span>
+          </div>
+        </div>
+        <div class="spec"><code>surface bg-spotlight · text bg-container</code><code>radius 8 · shadow-md</code><code>info bubble 340px · default max 260px</code><code>z: --z-tooltip</code></div>
+      </div>
+    </section>
+
+    <!-- Popover: click-triggered panel with a title, text and actions. -->
+    <section id="popover">
+      <h2>Popover <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">A small panel opened by a click that holds a title, a few lines of text and, if needed, buttons. Use it for explanations with a next step ("Why is this locked?" with a Create change request button) or a quick choice that doesn't deserve a modal. It closes when you click the trigger again, click outside, press Escape (focus goes back to the trigger), or use one of its buttons. Don't put forms or long content in it: that is a <a href="#drawer">Drawer</a> or a <a href="#modal">Modal</a>.</p>
+      <h3 class="sub">Popover or tooltip?</h3>
+      <p class="lede">If the person only needs a hint, use a <a href="#tooltip">tooltip</a>. If they need to read something longer or take an action, use a popover.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th></th><th>Tooltip</th><th>Popover</th></tr></thead>
+          <tbody>
+            <tr><td>Opens when</td><td>Hover or keyboard focus</td><td>Click or tap</td></tr>
+            <tr><td>Contains</td><td>One or two sentences of plain text</td><td>A title, a few lines of text and, if needed, buttons</td></tr>
+            <tr><td>Interactive</td><td>No. Never links or buttons</td><td>Yes</td></tr>
+            <tr><td>Closes when</td><td>Pointer or focus leaves, or Escape</td><td>Click outside, click the trigger again, Escape, or one of its buttons</td></tr>
+            <tr><td>Use it for</td><td>Extra detail about a control, such as what an icon means</td><td>An explanation with a next step, or a quick choice that doesn't need a modal</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="demo" style="min-height:200px">
+        <div class="demo-row">
+          <span class="shield-popover" id="pop-1">
+            <button class="shield-button shield-button-default" aria-expanded="false" aria-controls="pop-1-panel" onclick="sgPopoverToggle(this)">Why is this locked?</button>
+            <div class="shield-popover-panel" id="pop-1-panel" role="dialog" aria-label="Why is this locked?">
+              <h4 class="shield-popover-title">Frozen after signature</h4>
+              <div class="shield-popover-body">Signed offers cannot be edited. To change the terms, create a change request; the signed version stays in the history.</div>
+              <div class="shield-popover-actions"><button class="shield-button shield-button-default small" onclick="sgPopoverClose(this)">Got it</button><button class="shield-button shield-button-primary small" onclick="sgPopoverClose(this)">Create change request</button></div>
+            </div>
+          </span>
+          <span class="shield-popover end" id="pop-2" style="margin-left:auto">
+            <button class="shield-button shield-button-default" aria-expanded="false" aria-controls="pop-2-panel" onclick="sgPopoverToggle(this)">Right-aligned</button>
+            <div class="shield-popover-panel" id="pop-2-panel" role="dialog" aria-label="Right-aligned popover">
+              <h4 class="shield-popover-title">Near the edge</h4>
+              <div class="shield-popover-body">Add <code>end</code> to open the panel toward the left so it stays on screen.</div>
+            </div>
+          </span>
+        </div>
+        <div class="spec"><code>width 300 · max screen − 32</code><code>surface bg-elevated · shadow-md</code><code>Escape returns focus to the trigger</code><code>z: --z-dropdown</code></div>
+      </div>
+    </section>
+
+
+    <!-- Steps. Each step keeps its own state (data-state: todo / partial / done); sgStepsRender() in shield.js draws
+         done / partial / not started, and data-current only marks which step is being viewed. -->
     <section id="steps">
       <h2>Steps <span class="live-badge">Live</span></h2>
-      <p class="lede">Shows progress through a multi-stage process, such as creating an offer. Each step is upcoming, current (outlined) or done (filled with a checkmark).</p>
+      <p class="lede">Shows progress through a multi-stage process, such as creating an offer. Each step is not started, in progress (half-filled dot) or done (checkmark). The step you are looking at is marked separately with a bold title and a soft ring, so going back to an earlier step never changes a later step's state.</p>
       <div class="demo">
-        <div class="demo-row"><span class="demo-label">Click a step to jump: Rail wraps this for offer stages</span></div>
-        <div class="shield-steps" id="steps-demo">
-          <div class="shield-step done"><button type="button" class="shield-step-button clickable" onclick="sgSetStep('steps-demo',0)"><span class="shield-step-dot"><svg class="shield-icon" width="10.5" height="12" viewBox="0 0 448 512" fill="currentColor"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span><span class="shield-step-title">Documentation</span></button></div>
-          <span class="shield-step-line done"></span>
-          <div class="shield-step current"><button type="button" class="shield-step-button clickable" onclick="sgSetStep('steps-demo',1)"><span class="shield-step-dot">2</span><span class="shield-step-title">Internal review</span></button></div>
+        <div class="demo-row"><span class="demo-label">Try it: click Partner signature, press Start filling in, then click Internal review</span></div>
+        <div class="shield-steps" id="steps-demo" data-steps data-current="1">
+          <div class="shield-step" data-state="done"><button type="button" class="shield-step-button clickable" onclick="sgStepGo('steps-demo',0)"><span class="shield-step-dot">1</span><span class="shield-step-text"><span class="shield-step-title">Documentation</span><span class="shield-step-sub"></span></span></button></div>
           <span class="shield-step-line"></span>
-          <div class="shield-step"><button type="button" class="shield-step-button clickable" onclick="sgSetStep('steps-demo',2)"><span class="shield-step-dot">3</span><span class="shield-step-title">Partner signature</span></button></div>
+          <div class="shield-step" data-state="todo"><button type="button" class="shield-step-button clickable" onclick="sgStepGo('steps-demo',1)"><span class="shield-step-dot">2</span><span class="shield-step-text"><span class="shield-step-title">Internal review</span><span class="shield-step-sub"></span></span></button></div>
           <span class="shield-step-line"></span>
-          <div class="shield-step"><button type="button" class="shield-step-button clickable" onclick="sgSetStep('steps-demo',3)"><span class="shield-step-dot">4</span><span class="shield-step-title">Approved</span></button></div>
+          <div class="shield-step" data-state="todo"><button type="button" class="shield-step-button clickable" onclick="sgStepGo('steps-demo',2)"><span class="shield-step-dot">3</span><span class="shield-step-text"><span class="shield-step-title">Partner signature</span><span class="shield-step-sub"></span></span></button></div>
+          <span class="shield-step-line"></span>
+          <div class="shield-step" data-state="todo"><button type="button" class="shield-step-button clickable" onclick="sgStepGo('steps-demo',3)"><span class="shield-step-dot">4</span><span class="shield-step-text"><span class="shield-step-title">Approved</span><span class="shield-step-sub"></span></span></button></div>
         </div>
-        <div class="spec"><code>done → filled, checkmark</code><code>current → outlined</code><code>compact → dots only, for dense rows</code></div>
+        <div class="demo-row" style="margin-top:16px">
+          <button type="button" class="shield-button shield-button-default small" onclick="sgStepSet('steps-demo','partial')">Start filling in</button>
+          <button type="button" class="shield-button shield-button-default small" onclick="sgStepSet('steps-demo','done')">Mark complete</button>
+          <button type="button" class="shield-button shield-button-text small" onclick="sgStepSet('steps-demo','todo')">Clear</button>
+        </div>
+        <div class="spec"><code>done → filled, checkmark</code><code>in progress → half-filled dot</code><code>current → bold title, soft ring</code><code>compact → dots only, for dense rows</code></div>
       </div>
     </section>
 
@@ -903,10 +1337,10 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <h2>Tabs <span class="live-badge">Live</span></h2>
       <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline.</p>
       <div class="demo">
-        <div class="shield-tabs-bar" id="tabs-demo">
-          <button class="shield-tab is-on" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
-          <button class="shield-tab" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
-          <button class="shield-tab" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
+        <div class="shield-tabs-bar" id="tabs-demo" role="tablist" aria-label="Offer sections">
+          <button class="shield-tab is-on" role="tab" aria-selected="true" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
+          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
+          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
         </div>
         <div class="shield-tab-panel">
           <div data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="shield-text secondary">Offer stages, blockers, and the current gate.</div>
@@ -941,7 +1375,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="demo">
         <div class="demo-row">
           <div class="shield-dropdown">
-            <button class="shield-button shield-button-default" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
+            <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
             <div class="shield-dropdown-panel">
               <button class="shield-dropdown-item">Duplicate offer</button>
               <button class="shield-dropdown-item">Export as PDF</button>
@@ -980,10 +1414,35 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </nav>
       </div>
     </section>
-  </div>
+
+    <!-- Breadcrumb: nav > ol > li, last item aria-current. -->
+    <section id="breadcrumb">
+      <h2>Breadcrumb <span class="live-badge new">Beta</span></h2>
+      <p class="lede">Shows where the current page sits (Partner groups, then one partner group, then its contacts) and gives a one-click way back up. Use it on pages two or more levels deep. The last item is the current page and is not a link. Don't use it as the only navigation, and don't use it on top-level pages.</p>
+      <div class="demo">
+        <div class="demo-row stack">
+          <nav class="shield-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#breadcrumb">Partners</a></li><li><a href="#breadcrumb">Harlow &amp; Vance</a></li><li aria-current="page">Contacts</li></ol></nav>
+          <nav class="shield-breadcrumb" aria-label="Breadcrumb, offer"><ol><li><a href="#breadcrumb">Offers</a></li><li><a href="#breadcrumb">OFF-2041</a></li><li aria-current="page">Documentation</li></ol></nav>
+        </div>
+        <div class="spec"><code>14px · separators drawn by CSS</code><code>current page: bold, not a link</code><code>nav aria-label="Breadcrumb"</code></div>
+      </div>
+    </section>
+
+    <!-- Pagination: the nav is empty in the HTML; sgPaginationRender (shield.js) draws it. -->
+    <section id="pagination">
+      <h2>Pagination <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <p class="lede">Splits a long list into pages. Always show the first and last page, the current page and its neighbors, with an ellipsis for the gap, plus Previous and Next and a plain "1–10 of 118" summary. Use it for tables and lists that are too long to scroll comfortably; for a short list, show everything. After changing page, focus stays on the control and the summary is announced to screen readers.</p>
+      <div class="demo">
+        <nav class="shield-pagination" id="pager-demo" aria-label="Pagination" data-total-pages="12" data-total="118" data-per-page="10"></nav>
+        <div class="spec"><code>button 32 · current blue-7</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
+      </div>
+    </section>
+
+  </main>
 </div>
 <div class="shield-toast-stack"></div>
-<footer>Shield Engineering style guide for the Shield Legal Operations Platform. Tokens and components mirror the app's <code>src/styles/tokens.css</code> and <code>src/styles/ui.css</code>.</footer>
+<footer>Shield Engineering style guide v0.8 (pre-1.0 draft) for the Shield Legal Operations Platform. Tokens are in <code>tokens.css</code> and components in <code>components.css</code>.</footer>
+<script src="snippets.js"></script>
 <script src="shield.js"></script>
 </body>
 </html>
