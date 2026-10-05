@@ -435,7 +435,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Motion tokens (--duration-*, --ease*) from tokens.css. The Try it cells reuse the real components and the same
          tokens, so the timing you feel is the timing in the table. sgReplayMotion is in shield.js. -->
     <section id="motion">
-      <h2>Motion <span class="live-badge new">Beta</span></h2>
+      <h2>Motion</h2>
       <p class="lede">Motion tells people that something changed: a button reacted, a menu opened, a message arrived. In Shield products it is small and fast. Pick a duration by <i>what is changing</i>, never by what feels nice: there are four durations, two easings, and a rule for when to use each.</p>
 
       <h3 class="sub">How to use it</h3>
@@ -530,7 +530,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Logo usage. The one asset is source_images/Shield_Engineering_Icon.png (1254 x 1254, transparent).
          The "don't" examples are real renders of that file with a transform or filter applied. -->
     <section id="logo">
-      <h2>Logo &amp; brand <span class="live-badge new">Beta</span></h2>
+      <h2>Logo &amp; brand</h2>
       <p class="lede">The mark is a shield with a gear: protection (the legal side) plus engineering (the software side). It is one flat color, <code>#11ABED</code> as sampled from the file, which is the same family as <code>--brand-blue</code> (<code>#18ABED</code>, blue-6). Like all of blue-6 it is for logos and large graphics only: it is 2.6:1 against white, so never use it for text. The name next to it is set in <b style="color:var(--text)">Fraunces</b> bold, "Shield" in the text color and "Engineering" in <code>--brand-blue-dark</code>.</p>
       <div class="demo">
         <div class="sg-logo-row">
@@ -599,7 +599,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Responsive behavior. The demo is a real iframe (responsive-demo.html) so the real @media rules run
          against its width. Breakpoints are the ones in components.css. -->
     <section id="responsive">
-      <h2>Responsive behavior <span class="live-badge">Live</span> <span class="live-badge review">Requires Engineering Review and Feedback</span></h2>
+      <h2>Responsive behavior <span class="live-badge review">Requires Engineering Review and Feedback</span></h2>
       <p class="lede">Layouts have to stay usable on a tablet and readable on a phone. The grid has five breakpoints, and each component says what it does when space runs out; a few components use their own widths, listed in the second table. Pick a width below, and press Menu to slide the navigation in and out, to see the real stylesheet respond: the demo is a separate page loaded at that width, so it is the actual media queries running, not a picture of them.</p>
       <div class="shield-alert info" style="margin-bottom:12px"><div class="shield-alert-body"><div class="shield-alert-title">This is an example, not a design.</div><div class="shield-alert-description">The preview below is a generic placeholder page. It exists only to show how the responsive rules in this section behave at different widths. It is not how any particular product screen should look on a tablet or phone, and its layout, labels and content should not be copied.</div></div></div>
       <div class="demo" style="padding:16px">
@@ -668,7 +668,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates the .shield-button component, variants, sizes, and states, from
              components.css. Static; clicking these buttons doesn't do anything. -->
     <section id="button">
-      <h2>Button <span class="live-badge">Live</span></h2>
+      <h2>Button</h2>
       <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>blue-7</code> (<code>#0A85C7</code>), darkening to <code>blue-8</code> on hover. White text on <code>blue-7</code> measures 4.0:1, a little under the 4.5:1 target. Colors come from <code>tokens.css</code>.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
@@ -700,7 +700,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              own "Proposed" badge) driven by shield.js's sgHandleUpload/sgHandleDrop/
              sgRenderUploadFiles. -->
     <section id="input">
-      <h2>Input <span class="live-badge">Live</span></h2>
+      <h2>Input</h2>
       <p class="lede">Text fields are 32px tall. The border turns light blue on hover, glows brand blue while typing, and turns red on error. Use <code>shield-input-wrap</code> when an icon sits inside the field.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Basic</span>
@@ -744,7 +744,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              comment above the Select functions in shield.js, sgSelectOpen/sgSelectFilter/
              sgSelectPick/sgSelectRemoveChip, for how open/search/pick/chips all fit together. -->
     <section id="select">
-      <h2>Select <span class="live-badge">Live</span></h2>
+      <h2>Select</h2>
       <p class="lede">A custom combobox, not a native <code>&lt;select&gt;</code>: search as you type, grouped options, and a multi-select mode that shows chips. Use it for long or structured lists such as catalogs, products and partners.</p>
       <div class="demo" style="min-height:260px">
         <div class="demo-row"><span class="demo-label">Single, searchable</span>
@@ -799,7 +799,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css, each toggled by shield.js (sgToggleCheckbox, sgSelectRadio,
              sgToggleSwitch, sgSegPick). -->
     <section id="checkbox">
-      <h2>Checkbox, Radio &amp; Switch <span class="live-badge">Live</span></h2>
+      <h2>Checkbox, Radio &amp; Switch</h2>
       <p class="lede">Checkbox for independent yes/no options, radio when exactly one option applies, switch for settings that take effect immediately. All use the Primary button blue when on.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Checkbox: click to toggle</span>
@@ -830,7 +830,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Radio group: .shield-radio options wrapped in role="radiogroup". Keyboard: Tab to the chosen radio,
          arrow keys move and pick (shield.js, "Keyboard + label behavior"). -->
     <section id="radio">
-      <h2>Radio group <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Radio group</h2>
       <p class="lede">Use a radio group when exactly one option applies and there are only a few of them (about two to five), so people can see every choice at once. For longer lists use a <a href="#select">Select</a>. If a choice takes effect immediately, a <a href="#checkbox">switch</a> is usually better. Always preselect the safest or most common option unless "no choice yet" is meaningful.</p>
       <div class="demo">
         <div class="demo-row stack"><span class="demo-label">Vertical, with descriptions</span>
@@ -853,7 +853,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Date picker: the native <input type="date"> styled as .shield-input; no custom calendar. -->
     <section id="datepicker">
-      <h2>Date picker <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Date picker</h2>
       <p class="lede">A date field is the browser's own date input styled as a normal text field. That keeps it fully keyboard and screen-reader friendly, shows the calendar in the visitor's language and format, and costs nothing to maintain. Type the date, use the arrow keys, or open the calendar from the icon. Say the expected format in the hint when typing matters, and use two fields for a range.</p>
       <h3 class="sub">What it is and how to get it</h3>
       <p class="lede">The native HTML date input, <code>&lt;input type="date"&gt;</code>. It is built into every browser, so there is nothing to install: add the element and the <code>shield-input</code> class. The calendar popup is drawn by the browser, so it looks different from browser to browser and cannot be restyled. People see the date as <b style="color:var(--text)">MM/DD/YYYY</b> (US browsers follow the visitor's language settings). Your code reads and writes the value as <code>YYYY-MM-DD</code>, which follows the ISO 8601 standard (as HTML uses it) and is how the element passes it along, not what is shown on screen. It is a plain calendar date with no time or time zone.</p>
@@ -879,10 +879,10 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       </ul>
     </section>
 
-    <!-- File upload, promoted from "Proposed" to Beta. CSS is in components.css (.shield-upload-*), behavior in shield.js. -->
+    <!-- File upload, CSS is in components.css (.shield-upload-*), behavior in shield.js. -->
     <section id="upload">
-      <h2>File upload <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
-      <p class="lede">A dropzone for adding files by click or drag-and-drop, with a list of what was chosen. The hint names what is accepted (type and size) before the visitor tries. Each file can be removed. The real file input stays in the page and works with the keyboard: Tab to the dropzone and press Enter or Space to open the file picker. This component is new in v0.8, so it is Beta.</p>
+      <h2>File upload</h2>
+      <p class="lede">A dropzone for adding files by click or drag-and-drop, with a list of what was chosen. The hint names what is accepted (type and size) before the visitor tries. Each file can be removed. The real file input stays in the page and works with the keyboard: Tab to the dropzone and press Enter or Space to open the file picker.</p>
       <div class="demo">
         <div style="width:100%">
           <input type="file" id="upload-input" class="shield-upload-input" multiple onchange="sgHandleUpload(this)">
@@ -900,7 +900,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Form layout: .shield-field/.shield-form from components.css. A label, control and hint are grouped
          and spaced by the shared classes instead of inline styles. -->
     <section id="forms">
-      <h2>Form layout <span class="live-badge new">Beta</span></h2>
+      <h2>Form layout</h2>
       <ul class="sg-steps-list">
         <li><b style="color:var(--text)">Label above the field,</b> always visible. A placeholder is an example, not a label.</li>
         <li><b style="color:var(--text)">Required fields</b> get a red asterisk before the label.</li>
@@ -947,7 +947,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. The × remove and checkable-toggle behavior come from shield.js's
              sgRemoveTag() and sgToggleCheckableTag(). -->
     <section id="tag">
-      <h2>Tag &amp; Pill <span class="live-badge">Live</span></h2>
+      <h2>Tag &amp; Pill</h2>
       <p class="lede">Small labels for status or category, using the four functional colors so a color means the same thing on every screen. Tags are rectangular, pills are rounder with a status dot, and checkable tags work as toggle filters.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Tag: colors, click × to remove</span>
@@ -1012,7 +1012,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates the .shield-card component and its bordered-shadow / sm modifiers from
              components.css. Static. -->
     <section id="card">
-      <h2>Card <span class="live-badge">Live</span></h2>
+      <h2>Card</h2>
       <p class="lede">Groups related content. In light mode it is pure white on the warm page, like a sheet of paper. Add <code>bordered-shadow</code> for a floating tile and <code>small</code> for tighter padding.</p>
       <div class="demo" style="background:var(--bg-layout)">
         <div class="demo-row">
@@ -1035,9 +1035,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-table, wrapped in a .shield-table-scroll container so wide tables can
              scroll horizontally instead of breaking the page layout. Static. -->
     <section id="table">
-      <h2>Table <span class="live-badge">Live</span></h2>
+      <h2>Table</h2>
       <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens.</p>
-<h3 class="sub">Sorting, selection and bulk actions <span class="live-badge new">Beta</span></h3>
+<h3 class="sub">Sorting, selection and bulk actions</h3>
       <p class="lede">For long working lists. <b style="color:var(--text)">Sort</b> by clicking a column heading; the arrow and <code>aria-sort</code> show the direction, and the change is announced. <b style="color:var(--text)">Select</b> rows with the checkboxes in the first column; the header checkbox selects all and shows a dash when only some are chosen. When anything is selected, a <b style="color:var(--text)">bulk bar</b> appears above the table with the count and the actions that apply to every selected row.</p>
       <div class="demo" style="padding:0">
         <div class="shield-bulk-bar" id="orders-bulk" hidden>
@@ -1118,7 +1118,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-alert banners in each mood (success/warning/error/info). The ×
              dismiss button calls shield.js's sgDismissAlert(). -->
     <section id="alert">
-      <h2>Alert <span class="live-badge">Live</span></h2>
+      <h2>Alert</h2>
       <p class="lede">A banner that stays until dismissed, in four moods: info, success, warning and error. Use a Toast for a quick confirmation instead.</p>
       <div class="demo">
         <div class="demo-row stack">
@@ -1135,7 +1135,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              and the Escape-to-close listener near the top of shield.js. The delete-confirm
              modal's Delete button is driven by sgDeleteConfirmInput() (type-to-confirm). -->
     <section id="modal">
-      <h2>Modal <span class="live-badge">Live</span></h2>
+      <h2>Modal</h2>
       <p class="lede">A modal interrupts on purpose, so use it for decisions and focused tasks. 480px wide by default, 720px when it needs more room. Destructive deletes use type-to-confirm: the button stays disabled until the exact word is typed.</p>
       <div class="demo">
         <div class="demo-row">
@@ -1176,7 +1176,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Drawer: same structure as Modal, slides in from the right. -->
     <section id="drawer">
-      <h2>Drawer <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Drawer</h2>
       <p class="lede">Use a drawer when the user may want to click a button to see more information without leaving the page. It slides in from the right, dims the page, traps focus, closes on Escape or a click outside, and returns focus to the button that opened it.</p>
       <div class="demo">
         <div class="demo-row">
@@ -1236,7 +1236,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              a toast in the .shield-toast-stack (see the very end of this file, just before
              shield.js is loaded) and removes it again after 3 seconds. -->
     <section id="toast">
-      <h2>Toast <span class="live-badge">Live</span></h2>
+      <h2>Toast</h2>
       <p class="lede">A brief confirmation, for example "Saved". Pushed from code with <code>useToast()</code>, shown top-center, and gone after 3 seconds. Use an Alert if the message needs to stay.</p>
       <div class="demo">
         <div class="demo-row">
@@ -1248,7 +1248,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Tooltip + info icon (.shield-tooltip, .shield-info-tip) from components.css. -->
     <section id="tooltip">
-      <h2>Tooltip <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Tooltip</h2>
       <p class="lede">A short, non-interactive explanation that appears when a control is hovered or focused. It is for <i>extra</i> information: if people need it to complete the task, put it on the page. Keep it to a sentence or two, never put links or buttons inside (use a <a href="#popover">Popover</a> for that), and make it work from the keyboard. It stays open while the pointer is over it and Escape dismisses it, as WCAG 1.4.13 requires. Hover or tab to the examples.</p>
       <div class="demo" style="padding-bottom:80px">
         <div class="demo-row"><span class="demo-label">On a control</span>
@@ -1267,7 +1267,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Popover: click-triggered panel with a title, text and actions. -->
     <section id="popover">
-      <h2>Popover <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Popover</h2>
       <p class="lede">A small panel opened by a click that holds a title, a few lines of text and, if needed, buttons. Use it for explanations with a next step ("Why is this locked?" with a Create change request button) or a quick choice that doesn't deserve a modal. It closes when you click the trigger again, click outside, press Escape (focus goes back to the trigger), or use one of its buttons. Don't put forms or long content in it: that is a <a href="#drawer">Drawer</a> or a <a href="#modal">Modal</a>.</p>
       <h3 class="sub">Popover or tooltip?</h3>
       <p class="lede">If the person only needs a hint, use a <a href="#tooltip">tooltip</a>. If they need to read something longer or take an action, use a popover.</p>
@@ -1309,7 +1309,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Steps. Each step keeps its own state (data-state: todo / partial / done); sgStepsRender() in shield.js draws
          done / partial / not started, and data-current only marks which step is being viewed. -->
     <section id="steps">
-      <h2>Steps <span class="live-badge">Live</span></h2>
+      <h2>Steps</h2>
       <p class="lede">Shows progress through a multi-stage process, such as creating an offer. Each step is not started, in progress (half-filled dot) or done (checkmark). The step you are looking at is marked separately with a bold title and a soft ring, so going back to an earlier step never changes a later step's state.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Try it: click Partner signature, press Start filling in, then click Internal review</span></div>
@@ -1334,7 +1334,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-tabs-bar / .shield-tab-panel. Clicking a tab calls shield.js's
              sgShowTab(), which shows the matching panel and hides the others. -->
     <section id="tabs">
-      <h2>Tabs <span class="live-badge">Live</span></h2>
+      <h2>Tabs</h2>
       <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline.</p>
       <div class="demo">
         <div class="shield-tabs-bar" id="tabs-demo" role="tablist" aria-label="Offer sections">
@@ -1353,7 +1353,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-collapse-item, built on the native <details>/<summary> elements,
              the browser handles open/close on its own, no shield.js function is involved. -->
     <section id="collapse">
-      <h2>Collapse <span class="live-badge">Live</span></h2>
+      <h2>Collapse</h2>
       <p class="lede">Expandable sections for secondary detail, built on the native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> elements, so no JavaScript is needed.</p>
       <div class="demo" style="padding:0 24px">
         <details class="shield-collapse-item" open>
@@ -1370,7 +1370,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-dropdown. The trigger button calls shield.js's sgDropdownToggle();
              a page-wide listener in shield.js closes it on an outside click or Escape. -->
     <section id="dropdown">
-      <h2>Dropdown <span class="live-badge">Live</span></h2>
+      <h2>Dropdown</h2>
       <p class="lede">A small menu of actions opened from a button, often at the end of a table row. Items marked <code>danger</code> are red so destructive choices stand out.</p>
       <div class="demo">
         <div class="demo-row">
@@ -1392,7 +1392,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates .shield-menu, the same component that styles this page's own sidebar nav.
              Clicking an item calls shield.js's sgSelectMenuItem() to mark it active. -->
     <section id="menu">
-      <h2>Menu <span class="live-badge">Live</span></h2>
+      <h2>Menu</h2>
       <p class="lede">Main navigation. Its background is the <code>sider-bg</code> token, with separate light and dark values. The selected item uses <code>blue-1</code> and <code>brand-blue-dark</code>, the same pairing as <a href="#select">Select</a>'s selected option.</p>
       <div class="demo">
         <nav class="shield-menu" style="width:220px">
@@ -1417,7 +1417,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Breadcrumb: nav > ol > li, last item aria-current. -->
     <section id="breadcrumb">
-      <h2>Breadcrumb <span class="live-badge new">Beta</span></h2>
+      <h2>Breadcrumb</h2>
       <p class="lede">Shows where the current page sits (Partner groups, then one partner group, then its contacts) and gives a one-click way back up. Use it on pages two or more levels deep. The last item is the current page and is not a link. Don't use it as the only navigation, and don't use it on top-level pages.</p>
       <div class="demo">
         <div class="demo-row stack">
@@ -1430,7 +1430,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
     <!-- Pagination: the nav is empty in the HTML; sgPaginationRender (shield.js) draws it. -->
     <section id="pagination">
-      <h2>Pagination <span class="live-badge">Live</span> <span class="live-badge new">Beta</span></h2>
+      <h2>Pagination</h2>
       <p class="lede">Splits a long list into pages. Always show the first and last page, the current page and its neighbors, with an ellipsis for the gap, plus Previous and Next and a plain "1–10 of 118" summary. Use it for tables and lists that are too long to scroll comfortably; for a short list, show everything. After changing page, focus stays on the control and the summary is announced to screen readers.</p>
       <div class="demo">
         <nav class="shield-pagination" id="pager-demo" aria-label="Pagination" data-total-pages="12" data-total="118" data-per-page="10"></nav>

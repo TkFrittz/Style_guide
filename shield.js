@@ -474,8 +474,7 @@ function sgTogglePassword(btn) {
 
 
 /* ---------- File upload ----------
-   Beta: this component is new in v0.8. The shield-upload-* styles
-   live in components.css. */
+   The shield-upload-* styles live in components.css. */
 
 // Turns a raw byte count into a human-readable size like "2.4 MB" or "480 KB".
 function sgFormatFileSize(bytes) {
