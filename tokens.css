@@ -81,8 +81,8 @@
   --text-secondary: rgb(0, 0, 0);
   --text-tertiary: rgb(0, 0, 0);
   --text-quaternary: rgba(0, 0, 0, 0.25);
-  --border: #4e4c4c6f;                    /* visible borders — inputs, dividers you want noticeable */
-  --border-secondary: #4845455f;          /* quiet borders — table rows, section rules */
+  --border: #4e4c4c38;                    /* visible borders — inputs, dividers you want noticeable */
+  --border-secondary: #48454529;          /* quiet borders — table rows, section rules */
   --fill: rgba(0, 0, 0, 0.15);
   --fill-secondary: rgba(0, 0, 0, 0.06);  /* hover backgrounds */
   --fill-tertiary: rgba(0, 0, 0, 0.04);   /* disabled backgrounds, inline code */
