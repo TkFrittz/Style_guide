@@ -217,7 +217,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Modern and professional, with a hint of warmth. The page is a faint warm white (<code>#FFFBF7</code>), like the pages of a novel or an old legal pad, and cards stay pure white so content sits on the page like sheets of paper. Text is solid black, like ink. The warmth stays subtle so it never looks yellowed in a modern technical product.</p>
 
       <h3 class="sub">Dark mode</h3>
-      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a soft near-black (<code>#121212</code>) instead of pure black, cards sit just above it, and text is a soft white (85%) instead of pure white, so long sessions stay easy on the eyes.</p>
+      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes.</p>
 
       <h3 class="sub">How it is built</h3>
       <p class="lede">Plain CSS and small React components, no UI framework. <code>tokens.css</code> holds the values (colors, fonts, spacing, radius, shadow) and <code>components.css</code> holds the components that use them (the app's copy is <code>src/styles/ui.css</code>). Classes are prefixed <code>shield-</code>. Everything below is a working component: open the select, flip the switch, dismiss a tag, push a toast.</p>
@@ -244,14 +244,14 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
       <h3 class="sub">Neutral colors: light / dark</h3>
       <div class="neutral-grid">
-        <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF · #141414</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#FFFBF7 · #121212</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--sider-bg)"></div><b>sider-bg</b><span>#FFFBF7 · #121212 · sidebar</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-container)"></div><b>bg-container</b><span>#FFFFFF · #111A2E</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--bg-layout)"></div><b>bg-layout</b><span>#FFFBF7 · #0B1220</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--sider-bg)"></div><b>sider-bg</b><span>#FFFBF7 · #0B1220 · sidebar</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--fill-secondary)"></div><b>fill-secondary</b><span>rgba(0,0,0,.06) · rgba(255,255,255,.12)</span></div>
-        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#484545 at 37% · #303030</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgb(0,0,0) · rgba(255,255,255,.85)</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>rgb(0,0,0) · rgba(255,255,255,.65)</span></div>
-        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>rgb(0,0,0) · rgba(255,255,255,.45)</span></div>
+        <div class="n-sw"><div class="chip" style="background:var(--border-secondary)"></div><b>border-secondary</b><span>#484545 at 37% · #222F4D</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text)">Aa</div><b>text</b><span>rgb(0,0,0) · #FFFBF7</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary)">Aa</div><b>text-secondary</b><span>rgb(0,0,0) · rgba(255,251,247,.85)</span></div>
+        <div class="n-sw"><div class="chip" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-tertiary)">Aa</div><b>text-tertiary</b><span>rgb(0,0,0) · rgba(255,251,247,.7)</span></div>
         <div class="n-sw"><div class="chip" style="background:var(--bg-spotlight)"></div><b>bg-spotlight</b><span>toast / tooltip surface</span></div>
       </div>
       <p class="lede">In light mode the page (<code>bg-layout</code>) is a faint warm white and cards (<code>bg-container</code>) are pure white. In dark mode the page is a soft near-black, not pure black. Each swatch shows its light value, then its dark value. Use the theme toggle in the sidebar to see both.</p>
