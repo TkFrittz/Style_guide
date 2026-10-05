@@ -1,0 +1,19 @@
+# Runs tools/check.mjs on every push and pull request: contrast in both
+# themes, no hardcoded colors in components.css, snippet classes and tokens
+# resolve, every handler is defined, version matches the changelog.
+# Node only, no dependencies to install.
+name: Style guide checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/check.mjs

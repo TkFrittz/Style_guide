@@ -129,6 +129,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .m-top .mark{font-family:var(--font-heading);font-size:17px;font-weight:700;color:var(--text)}
 .m-top .mark span{color:var(--brand-blue-dark)}
 @media (max-width: 900px){
+  html{scroll-padding-top:64px} /* the sticky top bar is 56px: keep a focused or linked element below it (WCAG 2.4.11) */
   .shell{display:block}
   .side{position:fixed;left:0;top:0;z-index:var(--z-drawer);max-width:85vw;transform:translateX(-100%);visibility:hidden;transition:transform var(--duration-base) var(--ease),visibility 0s linear var(--duration-base)}
   body.nav-open .side{transform:none;visibility:visible;transition-delay:0s;box-shadow:var(--shadow-md)}
@@ -195,7 +196,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <img class="brand-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering">
       <div>
         <div class="mark">Shield<span>Engineering</span></div>
-        <div class="sub">Style guide · v0.8</div>
+        <div class="sub">Style guide · <span data-sg-version>v0.9.0</span></div>
       </div>
     </div>
     <div class="side-theme">
@@ -225,21 +226,21 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#icons">Icons</a>
       <a href="#logo">Logo &amp; brand</a>
       <div class="grp">Layout</div>
-      <a href="#layout">Grid &amp; Space</a>
+      <a href="#layout">Grid &amp; space</a>
       <a href="#responsive">Responsive behavior</a>
       <div class="grp">General</div>
       <a href="#button">Button</a>
       <div class="grp">Data entry</div>
       <a href="#input">Input</a>
       <a href="#select">Select</a>
-      <a href="#checkbox">Checkbox, Radio &amp; Switch</a>
+      <a href="#checkbox">Checkbox, radio &amp; switch</a>
       <a href="#radio">Radio group</a>
       <a href="#datepicker">Date picker</a>
       <a href="#upload">File upload</a>
       <a href="#forms">Form layout</a>
       <div class="grp">Data display</div>
-      <a href="#tag">Tag &amp; Pill</a>
-      <a href="#avatar">Avatar &amp; Badge</a>
+      <a href="#tag">Tag &amp; pill</a>
+      <a href="#avatar">Avatar &amp; badge</a>
       <a href="#card">Card</a>
       <a href="#table">Table</a>
       <a href="#descriptions">Descriptions</a>
@@ -250,7 +251,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#modal">Modal</a>
       <a href="#drawer">Drawer</a>
       <a href="#empty">Empty</a>
-      <a href="#skeleton">Skeleton &amp; Spin</a>
+      <a href="#skeleton">Skeleton &amp; spin</a>
       <a href="#toast">Toast</a>
       <a href="#tooltip">Tooltip</a>
       <a href="#popover">Popover</a>
@@ -267,11 +268,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
 
   <main class="main" id="main" tabindex="-1">
     <div class="cover" id="overview">
-      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:#000" title="brand">brand</div><div style="flex:3;background:var(--blue-7);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-8);color:#fff" title="link">link</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
+      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:var(--blue-10)" title="brand">brand</div><div style="flex:3;background:var(--blue-8);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-9);color:#fff" title="pressed">pressed</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
       <img class="cover-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo">
       <h1>Shield Engineering</h1>
       <div class="tagline">The visual language for Shield Legal's operations software: modern, professional, and a little bit warm.</div>
-      <div class="cover-meta"><span class="live-badge new">v0.8 · pre-1.0 draft</span><span>Close to 1.0, not there yet.</span></div>
+      <div class="cover-meta"><span class="live-badge new"><span data-sg-version>v0.9.0</span> · release candidate</span><span>Close to 1.0. What is still open is listed under <a href="#accessibility">Accessibility conformance</a>; how a change gets in is under <a href="#governance">How this guide changes</a>.</span></div>
     </div>
 
     <!-- Intro copy for the whole page, no components demoed here, just the overview text. -->
@@ -290,7 +291,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Modern and professional, with a hint of warmth. The page is a faint warm white (<code>#FFFBF7</code>), like the pages of a novel or an old legal pad, and cards stay pure white so content sits on the page like sheets of paper. Text is solid black, like ink. The warmth stays subtle so it never looks yellowed in a modern technical product.</p>
 
       <h3 class="sub">Dark mode</h3>
-      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes.</p>
+      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes. The guide follows the operating system's light or dark setting until a visitor picks one in the sidebar; products should do the same.</p>
 
       <h3 class="sub">How it is built</h3>
       <p class="lede">Plain HTML, CSS and JavaScript, no UI framework and no build step. <code>tokens.css</code> holds the values (colors, fonts, spacing, radius, shadow, motion) and <code>components.css</code> holds the components that use them. <code>shield.js</code> adds the interactions on this page. Classes are prefixed <code>shield-</code>. Everything below is a working component: open the select, flip the switch, dismiss a tag, push a toast.</p>
@@ -309,12 +310,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-4)"></div><div class="meta"><b>blue-4</b><span>#6BDAFF · 1.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-5)"></div><div class="meta"><b>blue-5</b><span>#41C6FA · 2.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-6)"></div><div class="meta"><b>blue-6 · base</b><span>#18ABED · 2.6:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · buttons &amp; checked</b><span>#0A85C7 · 4.0:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action</b><span>#0063A1 · 6.4:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · accents, never text</b><span>#0A85C7 · 4.0:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action: buttons, links, on</b><span>#0063A1 · 6.4:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9 · hover / pressed</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings and selected menu items, tabs and options. Buttons and on/checked controls use <b style="color:var(--text)">blue-7</b> (step 7).</p>
+      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings, selected menu items, tabs and options, and the Primary button and every on/checked control, so one blue means one thing and white text on it clears 4.5:1 everywhere. <b style="color:var(--text)">blue-9</b> is the hover and pressed shade. <b style="color:var(--text)">blue-7</b> (4.0:1) is kept for non-text accents only.</p>
 
       <h3 class="sub">Neutral colors: light / dark</h3>
       <div class="neutral-grid">
@@ -335,9 +336,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #91DD61</div><div>border #80D842</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #5C3400</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #4C0107</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-9</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text blue-9 · dark blue-4</div><div>bg blue-5 · dark #0B2D4A</div><div>border blue-3</div></div></div>
       </div>
-      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode only success clears it (4.8:1); warning (3.4:1), error (2.7:1) and info (3.2:1) do not and should be revisited. Info uses <code>blue-9</code> text in light mode and <code>blue-8</code> in dark.</p>
+      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode each mood flips to a deep background with light text and measures 4.8:1 (success), 4.8:1 (warning), 6.0:1 (error) and 8.8:1 (info). Info uses <code>blue-9</code> text on <code>blue-5</code> in light mode and <code>blue-4</code> text on a deep blue in dark. <code>node tools/check.mjs</code> re-measures all eight pairs in both themes and fails below 4.5:1, so these numbers cannot drift from the tokens.</p>
     </section>
 
     <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
@@ -364,6 +365,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="type-row"><span class="tagcell">h4</span><span class="sample shield-title h4">Card &amp; panel titles</span><span class="meta">20 / 28 · 600</span></div>
       <div class="type-row"><span class="tagcell">h5</span><span class="sample shield-title h5">Inline emphasis titles</span><span class="meta">18 / 24 · 600</span></div>
       <h3 class="sub">Text: <code>shield-text</code> variants, all at the 16px body size</h3>
+      <p class="lede">In light mode all three text levels are solid black on purpose: ink on paper. The hierarchy comes from size and weight, not from shades of gray, which keeps every caption readable. Dark mode steps the levels down in opacity because off-white at full strength glows and tires the eyes. The three class names exist so markup says what a line is <i>for</i>, and so a future theme can separate them without touching a component. <code>text-quaternary</code> is the one lighter value in light mode (placeholders, group labels, disabled text) and it still measures 4.9:1 on white.</p>
       <div class="type-row"><span class="tagcell">default</span><span class="sample shield-text">Default body copy</span><span class="meta">16 / 24 · 400</span></div>
       <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary: captions, helper text</span><span class="meta">light: solid black · dark: .85 off-white</span></div>
       <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary: placeholders, timestamps</span><span class="meta">light: solid black · dark: .7 off-white</span></div>
@@ -562,7 +564,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              .shield-divider helpers, all from components.css. Resize the window to see the grid
              breakpoints (defined in components.css) fall back. -->
     <section id="layout">
-      <h2>Grid &amp; Space</h2>
+      <h2>Grid &amp; space</h2>
       <p class="lede">A 24-column responsive grid (<code>shield-row</code>, <code>shield-col</code>) with five breakpoints (<code>xs / sm / md / lg / xl</code>), plus <code>Space</code> and <code>Divider</code>. Column widths come from <code>--col-xs/sm/md/lg/xl</code>, so a layout can be one column on a phone and several on a monitor. Resize the window to see it.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Row · Col span=24/12/8/6 (resize to see breakpoints fall back)</span></div>
@@ -669,7 +671,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. Static; clicking these buttons doesn't do anything. -->
     <section id="button">
       <h2>Button</h2>
-      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>blue-7</code> (<code>#0A85C7</code>), darkening to <code>blue-8</code> on hover. White text on <code>blue-7</code> measures 4.0:1, a little under the 4.5:1 target. Colors come from <code>tokens.css</code>.</p>
+      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>brand-blue-dark</code> (<code>#0063A1</code>, blue-8), darkening to <code>blue-9</code> on hover; white text on it measures 6.4:1. Solid Danger is <code>error-fill</code> (<code>#CF1322</code>), 5.6:1 with white text, darkening on hover. Colors come from <code>tokens.css</code>.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
           <button class="shield-button shield-button-primary">Primary</button>
@@ -695,13 +697,13 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     </section>
 
     <!-- Demonstrates .shield-input/.shield-textarea from components.css. The clear (×) and
-             password-reveal (👁) behavior is wired to shield.js's sgClearInput() and
+             password-reveal (eye icon) behavior is wired to shield.js's sgClearInput() and
              sgTogglePassword(). The File upload block below is a PROPOSED component (see its
              own "Proposed" badge) driven by shield.js's sgHandleUpload/sgHandleDrop/
              sgRenderUploadFiles. -->
     <section id="input">
       <h2>Input</h2>
-      <p class="lede">Text fields are 32px tall. The border turns light blue on hover, glows brand blue while typing, and turns red on error. Use <code>shield-input-wrap</code> when an icon sits inside the field.</p>
+      <p class="lede">Text fields are 32px tall. The border turns light blue on hover, glows brand blue while typing, and turns red on error. Use <code>shield-input-wrap</code> when an icon sits inside the field. An error is always described <i>in text</i> under the field (<code>shield-field-hint bad</code>, pointed to by <code>aria-describedby</code>); the red border and icon are extra cues, never the only ones (WCAG 2.2 SC 3.3.1). Say what to enter, not what was wrong: "Enter an email address in the form name@firm.com", not "Invalid email".</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Basic</span>
           <span class="shield-input-wrap field"><input class="shield-input" placeholder="Type here"></span>
@@ -716,18 +718,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row"><span class="demo-label">Password: suffix toggle</span>
           <span class="shield-input-wrap field">
             <input class="shield-input has-suffix" type="password" value="hunter2" id="pw-demo">
-            <span class="shield-input-icon suffix clearable" style="pointer-events:auto;cursor:pointer" onclick="sgTogglePassword(this)">👁</span>
+            <button type="button" class="shield-input-icon suffix clearable" aria-label="Show password" aria-pressed="false" aria-controls="pw-demo" onclick="sgTogglePassword(this)"><svg class="shield-icon" width="15.75" height="14" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></button>
           </span>
         </div>
         <div class="demo-row"><span class="demo-label">Clearable</span>
           <span class="shield-input-wrap field">
             <input class="shield-input has-suffix" value="Consumer Finance" oninput="this.nextElementSibling.style.display = this.value ? '' : 'none'">
-            <span class="shield-input-icon suffix clearable" onclick="sgClearInput(this)"><svg class="shield-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span>
+            <button type="button" class="shield-input-icon suffix clearable" aria-label="Clear" onclick="sgClearInput(this)"><svg class="shield-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></button>
           </span>
         </div>
         <div class="demo-row"><span class="demo-label">Error state</span>
           <div>
-            <span class="shield-input-wrap field"><input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="in-err"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="in-err" role="tooltip">Enter a valid email address.</span></span></span>
+            <span class="shield-input-wrap field"><input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="in-err"><span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span>
+            <div class="shield-field-hint bad" id="in-err"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">TextArea</span>
@@ -750,48 +753,48 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row"><span class="demo-label">Single, searchable</span>
           <div class="shield-select field-wide" id="sel-single">
             <div class="shield-select-box">
-              <input class="shield-select-search" placeholder="Select a catalog…" autocomplete="off" oninput="sgSelectFilter('sel-single', this)" onfocus="sgSelectOpen('sel-single')" onclick="sgSelectOpen('sel-single')">
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-single-list" aria-autocomplete="list" placeholder="Select a catalog…" autocomplete="off" oninput="sgSelectFilter('sel-single', this)" onfocus="sgSelectOpen('sel-single')" onclick="sgSelectOpen('sel-single')">
               <span class="shield-select-arrow"><svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></span>
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-option" data-value="mt" data-label="Mass Tort Intake" onmousedown="event.preventDefault();sgSelectPick('sel-single','mt','Mass Tort Intake')">Mass Tort Intake</div>
-              <div class="shield-select-option selected" data-value="cf" data-label="Consumer Finance" onmousedown="event.preventDefault();sgSelectPick('sel-single','cf','Consumer Finance')">Consumer Finance</div>
-              <div class="shield-select-option" data-value="pl" data-label="Product Liability" onmousedown="event.preventDefault();sgSelectPick('sel-single','pl','Product Liability')">Product Liability</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-single-list" role="listbox">
+              <div class="shield-select-option" id="sel-single-list-mt" role="option" aria-selected="false" data-value="mt" data-label="Mass Tort Intake" onmousedown="event.preventDefault();sgSelectPick('sel-single','mt','Mass Tort Intake')">Mass Tort Intake</div>
+              <div class="shield-select-option selected" id="sel-single-list-cf" role="option" aria-selected="true" data-value="cf" data-label="Consumer Finance" onmousedown="event.preventDefault();sgSelectPick('sel-single','cf','Consumer Finance')">Consumer Finance</div>
+              <div class="shield-select-option" id="sel-single-list-pl" role="option" aria-selected="false" data-value="pl" data-label="Product Liability" onmousedown="event.preventDefault();sgSelectPick('sel-single','pl','Product Liability')">Product Liability</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Grouped options</span>
           <div class="shield-select field-wide" id="sel-grouped">
             <div class="shield-select-box">
-              <input class="shield-select-search" placeholder="Assign a role contact…" autocomplete="off" oninput="sgSelectFilter('sel-grouped', this)" onfocus="sgSelectOpen('sel-grouped')" onclick="sgSelectOpen('sel-grouped')">
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-grouped-list" aria-autocomplete="list" placeholder="Assign a role contact…" autocomplete="off" oninput="sgSelectFilter('sel-grouped', this)" onfocus="sgSelectOpen('sel-grouped')" onclick="sgSelectOpen('sel-grouped')">
               <span class="shield-select-arrow"><svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></span>
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-group-label">Business contacts</div>
-              <div class="shield-select-option" data-value="jt" data-label="J. Turner" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','jt','J. Turner')">J. Turner</div>
-              <div class="shield-select-option" data-value="mh" data-label="M. Harlow" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','mh','M. Harlow')">M. Harlow</div>
-              <div class="shield-select-group-label">Technical contacts</div>
-              <div class="shield-select-option" data-value="rv" data-label="R. Vance" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','rv','R. Vance')">R. Vance</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-grouped-list" role="listbox">
+              <div class="shield-select-group-label" role="presentation">Business contacts</div>
+              <div class="shield-select-option" id="sel-grouped-list-jt" role="option" aria-selected="false" data-value="jt" data-label="J. Turner" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','jt','J. Turner')">J. Turner</div>
+              <div class="shield-select-option" id="sel-grouped-list-mh" role="option" aria-selected="false" data-value="mh" data-label="M. Harlow" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','mh','M. Harlow')">M. Harlow</div>
+              <div class="shield-select-group-label" role="presentation">Technical contacts</div>
+              <div class="shield-select-option" id="sel-grouped-list-rv" role="option" aria-selected="false" data-value="rv" data-label="R. Vance" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','rv','R. Vance')">R. Vance</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Multiple: grows into chips</span>
           <div class="shield-select multiple field-wide" id="sel-multi">
             <div class="shield-select-box">
-              <span class="shield-select-tag" data-chip="funding">Funding partner <button type="button" class="shield-select-tag-remove" onclick="sgSelectRemoveChip('sel-multi','funding')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button></span>
-              <input class="shield-select-search" placeholder="Add co-counsel…" autocomplete="off" oninput="sgSelectFilter('sel-multi', this)" onfocus="sgSelectOpen('sel-multi')" onclick="sgSelectOpen('sel-multi')">
+              <span class="shield-select-tag" data-chip="funding">Funding partner <button type="button" class="shield-select-tag-remove" aria-label="Remove Funding partner" onclick="sgSelectRemoveChip('sel-multi','funding')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button></span>
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-multi-list" aria-autocomplete="list" placeholder="Add co-counsel…" autocomplete="off" oninput="sgSelectFilter('sel-multi', this)" onfocus="sgSelectOpen('sel-multi')" onclick="sgSelectOpen('sel-multi')">
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-option selected" data-value="funding" data-label="Funding partner" onmousedown="event.preventDefault();sgSelectPick('sel-multi','funding','Funding partner')">Funding partner</div>
-              <div class="shield-select-option" data-value="cocounsel" data-label="Co-counsel" onmousedown="event.preventDefault();sgSelectPick('sel-multi','cocounsel','Co-counsel')">Co-counsel</div>
-              <div class="shield-select-option" data-value="referring" data-label="Referring firm" onmousedown="event.preventDefault();sgSelectPick('sel-multi','referring','Referring firm')">Referring firm</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-multi-list" role="listbox">
+              <div class="shield-select-option selected" id="sel-multi-list-funding" role="option" aria-selected="true" data-value="funding" data-label="Funding partner" onmousedown="event.preventDefault();sgSelectPick('sel-multi','funding','Funding partner')">Funding partner</div>
+              <div class="shield-select-option" id="sel-multi-list-cocounsel" role="option" aria-selected="false" data-value="cocounsel" data-label="Co-counsel" onmousedown="event.preventDefault();sgSelectPick('sel-multi','cocounsel','Co-counsel')">Co-counsel</div>
+              <div class="shield-select-option" id="sel-multi-list-referring" role="option" aria-selected="false" data-value="referring" data-label="Referring firm" onmousedown="event.preventDefault();sgSelectPick('sel-multi','referring','Referring firm')">Referring firm</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
-        <div class="spec"><code>panel → shadow-md</code><code>selected → blue-1 / brand-blue-dark</code><code>chips wrap the box</code></div>
+        <div class="spec"><code>panel → shadow-md</code><code>selected → selected-bg / brand-blue-dark</code><code>chips wrap the box</code></div>
       </div>
     </section>
 
@@ -799,21 +802,21 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css, each toggled by shield.js (sgToggleCheckbox, sgSelectRadio,
              sgToggleSwitch, sgSegPick). -->
     <section id="checkbox">
-      <h2>Checkbox, Radio &amp; Switch</h2>
+      <h2>Checkbox, radio &amp; switch</h2>
       <p class="lede">Checkbox for independent yes/no options, radio when exactly one option applies, switch for settings that take effect immediately. All use the Primary button blue when on.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Checkbox: click to toggle</span>
-          <label class="shield-check-row"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
-          <label class="shield-check-row"><span class="shield-checkbox is-on" role="checkbox" tabindex="0" aria-checked="true" onclick="sgToggleCheckbox(this)"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span>Checked</label>
-          <label class="shield-check-row disabled"><span class="shield-checkbox disabled" role="checkbox" aria-checked="false" aria-disabled="true"></span>Disabled</label>
+          <label class="shield-check-row"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)" aria-labelledby="lbl-unchecked"></span><span id="lbl-unchecked">Unchecked</span></label>
+          <label class="shield-check-row"><span class="shield-checkbox is-on" role="checkbox" tabindex="0" aria-checked="true" onclick="sgToggleCheckbox(this)" aria-labelledby="lbl-checked"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span><span id="lbl-checked">Checked</span></label>
+          <label class="shield-check-row disabled"><span class="shield-checkbox disabled" role="checkbox" aria-checked="false" aria-disabled="true" aria-labelledby="lbl-disabled"></span><span id="lbl-disabled">Disabled</span></label>
         </div>
         <div class="demo-row"><span class="demo-label">Radio: pick one</span>
-          <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
-          <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
+          <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)" aria-labelledby="lbl-standard-shipping"></span><span id="lbl-standard-shipping">Standard shipping</span></label>
+          <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="ship" onclick="sgSelectRadio(this)" aria-labelledby="lbl-expedited-shipping"></span><span id="lbl-expedited-shipping">Expedited shipping</span></label>
         </div>
         <div class="demo-row"><span class="demo-label">Switch: default &amp; small</span>
           <button type="button" class="shield-switch-track is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
-          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false" aria-label="Notifications (off)"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false" aria-label="Email digest"><span class="shield-switch-thumb"></span></button>
           <button type="button" class="shield-switch-track small is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
           <button type="button" class="shield-switch-track is-on" disabled role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
         </div>
@@ -823,7 +826,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
             <button type="button" onclick="sgSegPick(this)">Grid</button>
           </div>
         </div>
-        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → blue-7</code></div>
+        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → brand-blue-dark</code></div>
       </div>
     </section>
 
@@ -835,16 +838,16 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="demo">
         <div class="demo-row stack"><span class="demo-label">Vertical, with descriptions</span>
           <div class="shield-radio-group" role="radiogroup" aria-label="Delivery method">
-            <label class="shield-check-row has-desc"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Standard<span class="shield-radio-desc">Delivered within 5 business days.</span></span></label>
-            <label class="shield-check-row has-desc"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Expedited<span class="shield-radio-desc">Next business day.</span></span></label>
-            <label class="shield-check-row has-desc disabled"><span class="shield-radio disabled" role="radio" aria-checked="false" aria-disabled="true"></span><span class="shield-radio-text">Same day<span class="shield-radio-desc">Not available for this partner group.</span></span></label>
+            <label class="shield-check-row has-desc"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)" aria-labelledby="lbl-standard" aria-describedby="desc-standard"></span><span class="shield-radio-text"><span id="lbl-standard">Standard</span><span class="shield-radio-desc" id="desc-standard">Delivered within 5 business days.</span></span></label>
+            <label class="shield-check-row has-desc"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)" aria-labelledby="lbl-expedited" aria-describedby="desc-expedited"></span><span class="shield-radio-text"><span id="lbl-expedited">Expedited</span><span class="shield-radio-desc" id="desc-expedited">Next business day.</span></span></label>
+            <label class="shield-check-row has-desc disabled"><span class="shield-radio disabled" role="radio" aria-checked="false" aria-disabled="true" aria-labelledby="lbl-same-day" aria-describedby="desc-same-day"></span><span class="shield-radio-text"><span id="lbl-same-day">Same day</span><span class="shield-radio-desc" id="desc-same-day">Not available for this partner group.</span></span></label>
           </div>
         </div>
         <div class="demo-row stack"><span class="demo-label">Horizontal</span>
           <div class="shield-radio-group horizontal" role="radiogroup" aria-label="Contact type">
-            <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="contact" onclick="sgSelectRadio(this)"></span>Business</label>
-            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Technical</label>
-            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Accounts payable</label>
+            <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-business"></span><span id="lbl-business">Business</span></label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-technical"></span><span id="lbl-technical">Technical</span></label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-accounts-payable"></span><span id="lbl-accounts-payable">Accounts payable</span></label>
           </div>
         </div>
         <div class="spec"><code>16×16 radio</code><code>whole row is the click target</code><code>Tab: chosen radio · Arrows: move + pick</code><code>group needs a name (aria-label)</code></div>
@@ -867,7 +870,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Error</span>
-          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-err">Signed on</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input error" id="d-err" type="date" aria-invalid="true" aria-describedby="d-err-h"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon after-native" tabindex="0" role="img" aria-label="Error: Choose the date the agreement was signed."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="d-err-h" role="tooltip">Choose the date the agreement was signed.</span></span></span></div>
+          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-err">Signed on</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input error" id="d-err" type="date" aria-invalid="true" aria-describedby="d-err-h"><span class="shield-input-error-icon after-native" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span><div class="shield-field-hint bad" id="d-err-h"><span class="shield-sr-only">Error: </span>Enter the date the agreement was signed.</div></div>
         </div>
         <div class="spec"><code>height 32</code><code>shown as MM/DD/YYYY</code><code>value read by code: YYYY-MM-DD</code></div>
       </div>
@@ -906,7 +909,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <li><b style="color:var(--text)">Required fields</b> get a red asterisk before the label.</li>
         <li><b style="color:var(--text)">Help text</b> goes under the field, short.</li>
         <li><b style="color:var(--text)">Check a field</b> when the person leaves it and again on submit, not on every keystroke.</li>
-        <li><b style="color:var(--text)">Errors:</b> the field border turns red and a red error icon appears at the right end of the field. Hover or focus the icon to read what is wrong.</li>
+        <li><b style="color:var(--text)">Errors:</b> the field border turns red, a red icon marks the field, and the message appears in text directly under the field, with a hidden "Error:" prefix for screen readers. It says what to enter ("Enter a date after the effective date"), never "invalid", "please", "sorry" or a code. Hover is never the only way to read it. Keep what the person typed.</li>
+        <li><b style="color:var(--text)">On submit with errors,</b> show an error <a href="#alert">Alert</a> at the top of the form that lists each problem, links to its field, and takes focus, using the same words as the inline messages.</li>
+        <li><b style="color:var(--text)">Never ask twice.</b> In a multi-step flow, anything the person already entered is filled in or offered for selection, not typed again (WCAG 2.2 SC 3.3.7).</li>
         <li><b style="color:var(--text)">Buttons:</b> primary action on the right, Cancel beside it.</li>
       </ul>
       <div class="demo">
@@ -918,7 +923,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
           <div class="shield-field">
             <label class="shield-field-label" for="f-email"><span class="shield-field-required" aria-hidden="true">*</span>Primary contact email</label>
-            <span class="shield-input-wrap"><input class="shield-input error has-suffix" id="f-email" type="email" required aria-invalid="true" aria-describedby="f-email-h" value="accounts@meridian"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address, like name@firm.com."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="f-email-h" role="tooltip">Enter a valid email address, like name@firm.com.</span></span></span>
+            <span class="shield-input-wrap"><input class="shield-input error has-suffix" id="f-email" type="email" required aria-invalid="true" aria-describedby="f-email-h" value="accounts@meridian"><span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span>
+            <div class="shield-field-hint bad" id="f-email-h"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
           </div>
           <div class="shield-field">
             <label class="shield-field-label" for="f-cat">Catalog</label>
@@ -927,7 +933,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
           <div class="shield-field">
             <span class="shield-field-label">System integration</span>
-            <label class="shield-check-row"><button type="button" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleSwitch(this)"><span class="shield-switch-thumb"></span></button>Requires system integration</label>
+            <label class="shield-check-row"><button type="button" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleSwitch(this)" aria-labelledby="lbl-requires-system-integration"><span class="shield-switch-thumb"></span></button><span id="lbl-requires-system-integration">Requires system integration</span></label>
           </div>
           <div class="shield-field span-all">
             <label class="shield-field-label" for="f-notes">Notes</label>
@@ -947,11 +953,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. The × remove and checkable-toggle behavior come from shield.js's
              sgRemoveTag() and sgToggleCheckableTag(). -->
     <section id="tag">
-      <h2>Tag &amp; Pill</h2>
+      <h2>Tag &amp; pill</h2>
       <p class="lede">Small labels for status or category, using the four functional colors so a color means the same thing on every screen. Tags are rectangular, pills are rounder with a status dot, and checkable tags work as toggle filters.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Tag: colors, click × to remove</span>
-          <span class="shield-tag">Mass Tort <button onclick="sgRemoveTag(this)">×</button></span>
+          <span class="shield-tag">Mass Tort <button type="button" aria-label="Remove Mass Tort" onclick="sgRemoveTag(this)">×</button></span>
           <span class="shield-tag success">Active</span>
           <span class="shield-tag warning">Paused</span>
           <span class="shield-tag error">Rejected</span>
@@ -978,7 +984,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="shield-tag warning">Paused</span>
           <span class="shield-tag success">Completed</span>
         </div>
-        <div class="spec"><code>tag → bg/border/text triple</code><code>gold → one-off, not in the functional set</code></div>
+        <div class="spec"><code>tag → bg/border/text triple</code><code>gold → accent only, not a status (see Status display below)</code></div>
       </div>
     </section>
 
@@ -986,7 +992,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              avatar/icon in .shield-badge-wrap), and .shield-badge-count (a plain inline chip, used
              again in the Menu section below). Static. -->
     <section id="avatar">
-      <h2>Avatar &amp; Badge</h2>
+      <h2>Avatar &amp; badge</h2>
       <p class="lede">An <b style="color:var(--text)">avatar</b> is a colored circle with initials. A <b style="color:var(--text)">dot badge</b> on its corner means "needs attention". A <b style="color:var(--text)">count badge</b> is a small number, such as an unread count beside a menu item.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Avatar: sizes</span>
@@ -1036,7 +1042,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              scroll horizontally instead of breaking the page layout. Static. -->
     <section id="table">
       <h2>Table</h2>
-      <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens.</p>
+      <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens. Write header text in sentence case in the markup ("Partner group"); the uppercase is CSS, so screen readers hear words, not letters. Columns of numbers or money get <code>num</code> on the header and the cells: right-aligned, tabular figures, the same number of decimals down the column.</p>
 <h3 class="sub">Sorting, selection and bulk actions</h3>
       <p class="lede">For long working lists. <b style="color:var(--text)">Sort</b> by clicking a column heading; the arrow and <code>aria-sort</code> show the direction, and the change is announced. <b style="color:var(--text)">Select</b> rows with the checkboxes in the first column; the header checkbox selects all and shows a dash when only some are chosen. When anything is selected, a <b style="color:var(--text)">bulk bar</b> appears above the table with the count and the actions that apply to every selected row.</p>
       <div class="demo" style="padding:0">
@@ -1054,15 +1060,15 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
               <th class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select all orders" onclick="sgTableToggleAll(this)"></span></th>
               <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Order</button></th>
               <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Partner group</button></th>
-              <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Value</button></th>
+              <th aria-sort="none" class="num"><button class="shield-sort" onclick="sgTableSort(this)">Value</button></th>
               <th>Status</th>
             </tr></thead>
             <tbody>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-501" onclick="sgTableToggleRow(this)"></span></td><td>ORD-501</td><td>Harlow &amp; Vance</td><td data-value="48200">$48,200</td><td><span class="shield-tag success">Active</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-498" onclick="sgTableToggleRow(this)"></span></td><td>ORD-498</td><td>Meridian Legal Group</td><td data-value="12750">$12,750</td><td><span class="shield-tag warning">Paused</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-493" onclick="sgTableToggleRow(this)"></span></td><td>ORD-493</td><td>Consumer Finance Direct</td><td data-value="31000">$31,000</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-487" onclick="sgTableToggleRow(this)"></span></td><td>ORD-487</td><td>Archer Systems</td><td data-value="9400">$9,400</td><td><span class="shield-tag success">Approved</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-482" onclick="sgTableToggleRow(this)"></span></td><td>ORD-482</td><td>Bailey &amp; Glasser</td><td data-value="22300">$22,300</td><td><span class="shield-tag error">Rejected</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-501" onclick="sgTableToggleRow(this)"></span></td><td>ORD-501</td><td>Harlow &amp; Vance</td><td class="num" data-value="48200">$48,200</td><td><span class="shield-tag success">Active</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-498" onclick="sgTableToggleRow(this)"></span></td><td>ORD-498</td><td>Meridian Legal Group</td><td class="num" data-value="12750">$12,750</td><td><span class="shield-tag warning">Paused</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-493" onclick="sgTableToggleRow(this)"></span></td><td>ORD-493</td><td>Consumer Finance Direct</td><td class="num" data-value="31000">$31,000</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-487" onclick="sgTableToggleRow(this)"></span></td><td>ORD-487</td><td>Archer Systems</td><td class="num" data-value="9400">$9,400</td><td><span class="shield-tag success">Approved</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-482" onclick="sgTableToggleRow(this)"></span></td><td>ORD-482</td><td>Bailey &amp; Glasser</td><td class="num" data-value="22300">$22,300</td><td><span class="shield-tag error">Rejected</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1074,14 +1080,14 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              showing one record's details. Static. -->
     <section id="descriptions">
       <h2>Descriptions</h2>
-      <p class="lede">A read-only list of labels and values, such as the details of an offer or order.</p>
+      <p class="lede">A read-only list of labels and values, such as the details of an offer or order. It is a real <code>&lt;dl&gt;</code> with <code>&lt;dt&gt;</code> / <code>&lt;dd&gt;</code> pairs, so the label-to-value relationship is in the markup, not only in the layout (WCAG 2.2 SC 1.3.1). Values follow the <a href="#formats">Data formats</a> rules.</p>
       <div class="demo">
-        <div class="shield-description">
-          <div class="shield-description-row"><div class="shield-description-label">Order ID</div><div class="shield-description-value">ORD-501</div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Partner</div><div class="shield-description-value">Harlow &amp; Vance</div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Status</div><div class="shield-description-value"><span class="shield-tag success">Active</span></div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Created</div><div class="shield-description-value">2026-09-12</div></div>
-        </div>
+        <dl class="shield-description">
+          <div class="shield-description-row"><dt class="shield-description-label">Order ID</dt><dd class="shield-description-value">ORD-501</dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Partner</dt><dd class="shield-description-value">Harlow &amp; Vance</dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Status</dt><dd class="shield-description-value"><span class="shield-tag success">Active</span></dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Created</dt><dd class="shield-description-value">Sep 12, 2026</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -1091,9 +1097,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">A vertical list of events in time order, such as the history of an offer.</p>
       <div class="demo">
         <div class="shield-timeline">
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 9:04 AM</span></div></div>
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Sent for internal review</b> · <span class="shield-text tertiary">Sep 14, 2:10 PM</span></div></div>
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Partner signature requested</b> · <span class="shield-text tertiary">Sep 18, 11:30 AM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 2026, 9:04 AM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Sent for internal review</b> · <span class="shield-text tertiary">Sep 14, 2026, 2:10 PM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Partner signature requested</b> · <span class="shield-text tertiary">Sep 18, 2026, 11:30 AM</span></div></div>
         </div>
       </div>
     </section>
@@ -1102,12 +1108,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css). Static. -->
     <section id="statistic">
       <h2>Statistic</h2>
-      <p class="lede">Key numbers at the top of a screen. Each tile is only as wide as its content (180px minimum) and never stretches to fill the row; tiles that do not fit wrap onto the next line. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red.</p>
+      <p class="lede">Key numbers at the top of a screen. Each tile is only as wide as its content (180px minimum) and never stretches to fill the row; tiles that do not fit wrap onto the next line. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red. Color is never the only cue (WCAG 2.2 SC 1.4.1): a colored number always has a sign, an arrow or a word in the line under it that says which way it moved.</p>
       <div class="demo" style="background:var(--bg-layout)">
         <div class="shield-stats">
           <div class="shield-stat highlighted"><div class="shield-stat-label">Active orders</div><div class="shield-stat-value">128</div><div class="shield-stat-sub">+12 this week</div></div>
-          <div class="shield-stat"><div class="shield-stat-label">Conversion rate</div><div class="shield-stat-value positive">34<small>%</small></div></div>
-          <div class="shield-stat"><div class="shield-stat-label">Blocked offers</div><div class="shield-stat-value negative">7</div><div class="shield-stat-extra">3 waiting on partner signature</div></div>
+          <div class="shield-stat"><div class="shield-stat-label">Conversion rate</div><div class="shield-stat-value positive">34<small>%</small></div><div class="shield-stat-sub">+2 points vs last month</div></div>
+          <div class="shield-stat"><div class="shield-stat-label">Blocked offers</div><div class="shield-stat-value negative">7</div><div class="shield-stat-sub">Up 2 since last week</div><div class="shield-stat-extra">3 waiting on partner signature</div></div>
           <div class="shield-stat"><div class="shield-stat-label">Leads in system</div><div class="shield-stat-value">276<small>total</small></div><div class="shield-stat-sub">47 qualified</div></div>
         </div>
       </div>
@@ -1122,10 +1128,10 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">A banner that stays until dismissed, in four moods: info, success, warning and error. Use a Toast for a quick confirmation instead.</p>
       <div class="demo">
         <div class="demo-row stack">
-          <div class="shield-alert success"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Order activated successfully.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert warning"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">This campaign is nearing capacity.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert error"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Unable to save changes</div><div class="shield-alert-description">Check the highlighted fields and try again.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert info"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Sample data, nothing here is saved.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert success"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Order activated successfully.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert warning"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">This campaign is nearing capacity.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert error"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Unable to save changes</div><div class="shield-alert-description">Check the highlighted fields and try again.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert info"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Sample data, nothing here is saved.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
         </div>
       </div>
     </section>
@@ -1188,11 +1194,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <aside class="shield-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-basic-title">
           <div class="shield-drawer-head"><h3 id="drawer-basic-title">ORD-501</h3><button class="shield-drawer-close" aria-label="Close" onclick="sgCloseDrawer('drawer-basic')">×</button></div>
           <div class="shield-drawer-body">
-            <div class="shield-description">
-              <div class="shield-description-row"><div class="shield-description-label">Partner group</div><div class="shield-description-value">Harlow &amp; Vance</div></div>
-              <div class="shield-description-row"><div class="shield-description-label">Status</div><div class="shield-description-value"><span class="shield-tag success">Active</span></div></div>
-              <div class="shield-description-row"><div class="shield-description-label">Created</div><div class="shield-description-value">2026-09-12</div></div>
-            </div>
+            <dl class="shield-description">
+              <div class="shield-description-row"><dt class="shield-description-label">Partner group</dt><dd class="shield-description-value">Harlow &amp; Vance</dd></div>
+              <div class="shield-description-row"><dt class="shield-description-label">Status</dt><dd class="shield-description-value"><span class="shield-tag success">Active</span></dd></div>
+              <div class="shield-description-row"><dt class="shield-description-label">Created</dt><dd class="shield-description-value">Sep 12, 2026</dd></div>
+            </dl>
           </div>
           <div class="shield-drawer-foot"><button class="shield-button shield-button-default" onclick="sgCloseDrawer('drawer-basic')">Close</button><button class="shield-button shield-button-primary">Open order</button></div>
         </aside>
@@ -1203,11 +1209,13 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates the .shield-empty placeholder shown in place of an empty list/table. Static. -->
     <section id="empty">
       <h2>Empty</h2>
-      <p class="lede">Shown in place of a list or table that has nothing to display.</p>
+      <p class="lede">Shown in place of a list or table that has nothing to display. An empty state is never blank: it says <i>why</i> the space is empty, what will appear here, and gives the one next step. There are three kinds, and the words differ for each: <b style="color:var(--text)">nothing yet</b> (a new account or an empty catalog: explain and offer to add the first item), <b style="color:var(--text)">no matches</b> (filters or a search excluded everything: say so and offer to clear them), and <b style="color:var(--text)">cannot show</b> (an error or no permission: say what happened in plain words and who to ask). Add <code>shield-empty-title</code> above the description when the space is large, and one Default button as the action.</p>
       <div class="demo">
         <div class="shield-empty">
           <svg class="shield-empty-icon" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M97.5 400l50-160 379.4 0-50 160-379.4 0zm190.7 48L477 448c21 0 39.6-13.6 45.8-33.7l50-160c9.7-30.9-13.4-62.3-45.8-62.3l-379.4 0c-21 0-39.6 13.6-45.8 33.7L80.2 294.4 80.2 96c0-8.8 7.2-16 16-16l138.7 0c3.5 0 6.8 1.1 9.6 3.2L282.9 112c13.8 10.4 30.7 16 48 16l117.3 0c8.8 0 16 7.2 16 16l48 0c0-35.3-28.7-64-64-64L330.9 80c-6.9 0-13.7-2.2-19.2-6.4L273.3 44.8C262.2 36.5 248.8 32 234.9 32L96.2 32c-35.3 0-64 28.7-64 64l0 288c0 35.3 28.7 64 64 64l192 0z"/></svg>
-          <div class="shield-empty-description">No orders match these filters.</div>
+          <div class="shield-empty-title">No orders match these filters</div>
+          <div class="shield-empty-description">Try a wider date range, or clear the filters to see all 118 orders.</div>
+          <div class="shield-empty-action"><button class="shield-button shield-button-default small">Clear filters</button></div>
         </div>
       </div>
     </section>
@@ -1216,7 +1224,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              sweep and the spin are both plain CSS @keyframes animations in components.css,
              no JS timer involved. -->
     <section id="skeleton">
-      <h2>Skeleton &amp; Spin</h2>
+      <h2>Skeleton &amp; spin</h2>
       <p class="lede">Loading states. A <b style="color:var(--text)">skeleton</b> is a placeholder shaped like the content that is loading. A <b style="color:var(--text)">spinner</b> shows an action in progress, and inside a button it takes the button's text color.</p>
       <div class="demo">
         <div class="demo-row stack">
@@ -1237,7 +1245,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              shield.js is loaded) and removes it again after 3 seconds. -->
     <section id="toast">
       <h2>Toast</h2>
-      <p class="lede">A brief confirmation, for example "Saved". Pushed from code with <code>useToast()</code>, shown top-center, and gone after 3 seconds. Use an Alert if the message needs to stay.</p>
+      <p class="lede">A brief confirmation, for example "Saved". Pushed from code with <code>sgPushToast()</code> (or your framework's equivalent), shown top-center, and gone after 3 seconds. The stack is a polite live region, so screen readers hear each toast without losing their place. Use an Alert if the message needs to stay, and never make a toast the only record of an error the person has to act on: that is an Alert or a Modal.</p>
       <div class="demo">
         <div class="demo-row">
           <button class="shield-button shield-button-default" onclick="sgPushToast('success','Order activated.')">Trigger success</button>
@@ -1335,17 +1343,17 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              sgShowTab(), which shows the matching panel and hides the others. -->
     <section id="tabs">
       <h2>Tabs</h2>
-      <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline.</p>
+      <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline. It follows the WAI-ARIA tabs pattern: a <code>tablist</code> of <code>tab</code> buttons, each pointing at its <code>tabpanel</code> with <code>aria-controls</code>; Tab lands on the active tab, Left and Right arrows move and activate the neighbour (automatic activation), Home and End jump to the ends.</p>
       <div class="demo">
         <div class="shield-tabs-bar" id="tabs-demo" role="tablist" aria-label="Offer sections">
-          <button class="shield-tab is-on" role="tab" aria-selected="true" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
-          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
-          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
+          <button class="shield-tab is-on" role="tab" id="tab-pipeline" aria-selected="true" aria-controls="panel-pipeline" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
+          <button class="shield-tab" role="tab" id="tab-documents" aria-selected="false" aria-controls="panel-documents" tabindex="-1" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
+          <button class="shield-tab" role="tab" id="tab-contacts" aria-selected="false" aria-controls="panel-contacts" tabindex="-1" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
         </div>
         <div class="shield-tab-panel">
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="shield-text secondary">Offer stages, blockers, and the current gate.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="documents" class="shield-text secondary" style="display:none">Retainer agreements and supporting files.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="contacts" class="shield-text secondary" style="display:none">Business and technical contacts for this offer.</div>
+          <div role="tabpanel" id="panel-pipeline" aria-labelledby="tab-pipeline" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="shield-text secondary">Offer stages, blockers, and the current gate.</div>
+          <div role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="documents" class="shield-text secondary" hidden>Retainer agreements and supporting files.</div>
+          <div role="tabpanel" id="panel-contacts" aria-labelledby="tab-contacts" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="contacts" class="shield-text secondary" hidden>Business and technical contacts for this offer.</div>
         </div>
       </div>
     </section>
@@ -1371,19 +1379,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              a page-wide listener in shield.js closes it on an outside click or Escape. -->
     <section id="dropdown">
       <h2>Dropdown</h2>
-      <p class="lede">A small menu of actions opened from a button, often at the end of a table row. Items marked <code>danger</code> are red so destructive choices stand out.</p>
+      <p class="lede">A small menu of actions opened from a button, often at the end of a table row. Items marked <code>danger</code> are red so destructive choices stand out. It follows the WAI-ARIA menu button pattern: the trigger has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>, the panel is a <code>menu</code> of <code>menuitem</code>s with a <code>separator</code> between groups. Down arrow (or Enter) opens it and puts focus on the first item, Up and Down move with wrap, Home and End jump, Escape closes and returns focus to the button.</p>
       <div class="demo">
         <div class="demo-row">
           <div class="shield-dropdown">
-            <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
-            <div class="shield-dropdown-panel">
-              <button class="shield-dropdown-item">Duplicate offer</button>
-              <button class="shield-dropdown-item">Export as PDF</button>
-              <hr class="shield-divider" style="margin:4px 0">
-              <button class="shield-dropdown-item danger">Cancel offer</button>
+            <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-actions" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
+            <div class="shield-dropdown-panel" id="menu-actions" role="menu" aria-label="Offer actions">
+              <button class="shield-dropdown-item" role="menuitem">Duplicate offer</button>
+              <button class="shield-dropdown-item" role="menuitem">Export as PDF</button>
+              <hr class="shield-divider" role="separator" style="margin:4px 0">
+              <button class="shield-dropdown-item danger" role="menuitem">Cancel offer</button>
             </div>
           </div>
-          <span class="shield-text tertiary" style="font-size:12.5px">Click trigger, outside click or Escape closes it</span>
+          <span class="shield-text tertiary" style="font-size:12.5px">Click or Down arrow opens; Up/Down move, Home/End jump, Escape closes and returns focus</span>
         </div>
         <div class="spec"><code>panel → shadow-md, top-right anchored</code></div>
       </div>
@@ -1434,14 +1442,14 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Splits a long list into pages. Always show the first and last page, the current page and its neighbors, with an ellipsis for the gap, plus Previous and Next and a plain "1–10 of 118" summary. Use it for tables and lists that are too long to scroll comfortably; for a short list, show everything. After changing page, focus stays on the control and the summary is announced to screen readers.</p>
       <div class="demo">
         <nav class="shield-pagination" id="pager-demo" aria-label="Pagination" data-total-pages="12" data-total="118" data-per-page="10"></nav>
-        <div class="spec"><code>button 32 · current blue-7</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
+        <div class="spec"><code>button 32 · current brand-blue-dark</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
       </div>
     </section>
 
   </main>
 </div>
-<div class="shield-toast-stack"></div>
-<footer>Shield Engineering style guide v0.8 (pre-1.0 draft) for the Shield Legal Operations Platform. Tokens are in <code>tokens.css</code> and components in <code>components.css</code>.</footer>
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
+<footer>Shield Engineering style guide <span data-sg-version>v0.9.0</span> (release candidate) for the Shield Legal Operations Platform. Tokens are in <code>tokens.css</code> and components in <code>components.css</code>.</footer>
 <script src="snippets.js"></script>
 <script src="shield.js"></script>
 </body>

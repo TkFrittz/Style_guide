@@ -57,13 +57,14 @@ const SG_THEME_KEY = "sg-theme-mode";
 // <html> element is what flips every CSS variable in tokens.css over to
 // its dark-mode value (see the :root[data-theme="dark"] block there) —
 // this one line is the entire theming mechanism.
-function sgApplyTheme(mode) {
+function sgApplyTheme(mode, remember = true) {
   document.documentElement.dataset.theme = mode;
-  // Remember the choice so a page reload keeps the same theme. Wrapped in
+  // Remember the choice so a page reload keeps the same theme (not when the
+  // theme merely followed the OS setting: that is not a choice). Wrapped in
   // try/catch because some browsers block localStorage (private/incognito
   // windows, strict privacy settings) — if that happens we just don't
   // persist the choice, instead of crashing the page.
-  try { localStorage.setItem(SG_THEME_KEY, mode); } catch {}
+  if (remember) { try { localStorage.setItem(SG_THEME_KEY, mode); } catch {} }
   // Move the "is-on" highlight to whichever Light/Dark button matches.
   document.querySelectorAll("[data-theme-seg] button").forEach((b) => {
     b.classList.toggle("is-on", b.dataset.mode === mode);
@@ -73,13 +74,22 @@ function sgApplyTheme(mode) {
   document.querySelectorAll("iframe[data-sg-frame]").forEach(sgFrameTheme);
 }
 
-// Runs once when the page first loads: reads the saved theme (defaulting
-// to light if none was saved, or if localStorage isn't available) and
-// applies it. Called once at the very bottom of this file.
+// Runs once when the page first loads. A saved choice wins; otherwise the
+// page follows the operating system's light/dark setting
+// (prefers-color-scheme), and keeps following it until a choice is made.
+// Called once at the very bottom of this file.
 function sgInitTheme() {
-  let mode = "light";
-  try { mode = localStorage.getItem(SG_THEME_KEY) === "dark" ? "dark" : "light"; } catch {}
-  sgApplyTheme(mode);
+  let saved = null;
+  try { saved = localStorage.getItem(SG_THEME_KEY); } catch {}
+  const system = window.matchMedia("(prefers-color-scheme: dark)");
+  const fromSystem = () => (system.matches ? "dark" : "light");
+  if (saved === "dark" || saved === "light") { sgApplyTheme(saved); return; }
+  sgApplyTheme(fromSystem(), false);
+  system.addEventListener("change", () => {
+    let still = null;
+    try { still = localStorage.getItem(SG_THEME_KEY); } catch {}
+    if (!still) sgApplyTheme(fromSystem(), false);
+  });
 }
 
 // Called by the Light/Dark buttons: onclick="sgSetTheme('light')" / 'dark'.
@@ -156,12 +166,26 @@ function sgToggleSwitch(el) {
    which is how one shared set of functions can drive every Select on
    the page without getting them mixed up with each other. */
 
+// The one place the open/closed state is written. Besides the .open class
+// the CSS draws from, it keeps the combobox's aria-expanded in step and,
+// on close, drops the keyboard highlight and aria-activedescendant so a
+// screen reader is not left pointing at a hidden option.
+function sgSelectSetOpen(root, open) {
+  root.classList.toggle("open", open);
+  const search = root.querySelector(".shield-select-search");
+  if (search) search.setAttribute("aria-expanded", open);
+  if (!open) {
+    root.querySelectorAll(".shield-select-option.active").forEach((o) => o.classList.remove("active"));
+    if (search) search.removeAttribute("aria-activedescendant");
+  }
+}
+
 // Closes every open select dropdown except the one passed in as `except`
 // (pass nothing to close all of them). Used so opening one select closes
 // any other one that happened to be open.
 function sgCloseAllSelects(except) {
   document.querySelectorAll(".shield-select.open").forEach((s) => {
-    if (s !== except) s.classList.remove("open");
+    if (s !== except) sgSelectSetOpen(s, false);
   });
 }
 
@@ -171,7 +195,7 @@ function sgSelectOpen(id) {
   const root = document.getElementById(id);
   const wasOpen = root.classList.contains("open");
   sgCloseAllSelects(root);
-  if (!wasOpen) root.classList.add("open");
+  if (!wasOpen) sgSelectSetOpen(root, true);
 }
 
 // Called on every keystroke in a select's search input
@@ -180,7 +204,7 @@ function sgSelectOpen(id) {
 // "No matches" message if everything got filtered out.
 function sgSelectFilter(id, input) {
   const root = document.getElementById(id);
-  root.classList.add("open");
+  sgSelectSetOpen(root, true);
   sgCloseAllSelects(root);
   const q = input.value.trim().toLowerCase();
   let anyVisible = false;
@@ -208,19 +232,33 @@ function sgSelectPick(id, value, label) {
     const chip = document.createElement("span");
     chip.className = "shield-select-tag";
     chip.dataset.chip = value;
-    // The × button inside the chip calls sgSelectRemoveChip when clicked.
-    chip.innerHTML = label + ' <button type="button" class="shield-select-tag-remove" onclick="sgSelectRemoveChip(\'' + id + '\',\'' + value + '\')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button>';
+    // The label goes in as text (never innerHTML: in a product it comes from
+    // data). The × button inside the chip calls sgSelectRemoveChip when clicked.
+    chip.append(document.createTextNode(label + " "));
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "shield-select-tag-remove";
+    remove.setAttribute("aria-label", "Remove " + label);
+    remove.innerHTML = '<svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>';
+    remove.onclick = () => sgSelectRemoveChip(id, value);
+    chip.appendChild(remove);
     box.insertBefore(chip, box.querySelector(".shield-select-search"));
-    root.querySelector('.shield-select-option[data-value="' + value + '"]').classList.add("selected");
+    const opt = root.querySelector('.shield-select-option[data-value="' + value + '"]');
+    opt.classList.add("selected");
+    opt.setAttribute("aria-selected", "true");
     const search = root.querySelector(".shield-select-search");
     search.value = "";
     search.focus();
   } else {
-    root.querySelectorAll(".shield-select-option").forEach((o) => o.classList.toggle("selected", o.dataset.value === value));
+    root.querySelectorAll(".shield-select-option").forEach((o) => {
+      const on = o.dataset.value === value;
+      o.classList.toggle("selected", on);
+      o.setAttribute("aria-selected", on);
+    });
     const search = root.querySelector(".shield-select-search");
     search.value = label;
     search.dataset.picked = label; // remembers the chosen label (see focusout handler below)
-    root.classList.remove("open");
+    sgSelectSetOpen(root, false);
   }
 }
 
@@ -229,7 +267,8 @@ function sgSelectPick(id, value, label) {
 function sgSelectRemoveChip(id, value) {
   const root = document.getElementById(id);
   root.querySelector('.shield-select-tag[data-chip="' + value + '"]')?.remove();
-  root.querySelector('.shield-select-option[data-value="' + value + '"]')?.classList.remove("selected");
+  const opt = root.querySelector('.shield-select-option[data-value="' + value + '"]');
+  if (opt) { opt.classList.remove("selected"); opt.setAttribute("aria-selected", "false"); }
 }
 
 // Clears every chip/selection in a multi-select. (Not currently wired to
@@ -239,7 +278,7 @@ function sgSelectClear(e, id) {
   e.stopPropagation();
   const root = document.getElementById(id);
   root.querySelectorAll(".shield-select-tag").forEach((t) => t.remove());
-  root.querySelectorAll(".shield-select-option.selected").forEach((o) => o.classList.remove("selected"));
+  root.querySelectorAll(".shield-select-option.selected").forEach((o) => { o.classList.remove("selected"); o.setAttribute("aria-selected", "false"); });
   const search = root.querySelector(".shield-select-search");
   search.value = "";
   search.dataset.picked = "";
@@ -285,7 +324,7 @@ function sgShowTab(groupId, tabId) {
     if (t.getAttribute("role") === "tab") { t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; } // roving tabindex: only the active tab is a Tab stop
   });
   document.querySelectorAll('[data-tabpanel-group="' + groupId + '"]').forEach((p) => {
-    p.style.display = p.dataset.tabpanel === tabId ? "" : "none";
+    p.hidden = p.dataset.tabpanel !== tabId; // the hidden attribute also removes the panel from the accessibility tree
   });
 }
 
@@ -294,21 +333,69 @@ function sgShowTab(groupId, tabId) {
 
 // Called by onclick="sgDropdownToggle(this)" on the trigger button.
 // Closes any other open dropdown, then opens this one (or closes it, if
-// it was already open — a second click toggles it shut).
-function sgDropdownToggle(el) {
+// it was already open — a second click toggles it shut). Pass focusFirst
+// to put keyboard focus on the first menu item (the APG menu-button
+// pattern does this when the menu is opened from the keyboard).
+function sgDropdownToggle(el, focusFirst) {
   const root = el.closest(".shield-dropdown");
   const wasOpen = root.classList.contains("open");
-  document.querySelectorAll(".shield-dropdown.open").forEach((d) => d.classList.remove("open"));
-  if (!wasOpen) root.classList.add("open");
-  el.setAttribute("aria-expanded", !wasOpen);
+  sgDropdownCloseAll();
+  if (!wasOpen) {
+    root.classList.add("open");
+    el.setAttribute("aria-expanded", "true");
+    if (focusFirst) { const first = root.querySelector('[role="menuitem"]'); if (first) first.focus(); }
+  }
 }
+function sgDropdownCloseAll() {
+  document.querySelectorAll(".shield-dropdown.open").forEach((d) => {
+    d.classList.remove("open");
+    const t = d.querySelector("[aria-expanded]");
+    if (t) t.setAttribute("aria-expanded", "false");
+  });
+}
+
+// Keyboard for the menu button and its menu (WAI-ARIA APG "Menu button"
+// and "Menu"): Down/Enter/Space on the trigger open and focus the first
+// item (Up opens and focuses the last); inside the menu Up/Down move with
+// wrap, Home/End jump, Tab closes, and a letter jumps to the next item
+// starting with it. Escape is handled with the other overlays below.
+document.addEventListener("keydown", (e) => {
+  const trigger = e.target.closest && e.target.closest('.shield-dropdown > [aria-haspopup="menu"]');
+  if (trigger && (e.key === "ArrowDown" || e.key === "ArrowUp" || ((e.key === "Enter" || e.key === " ") && trigger.getAttribute("aria-expanded") !== "true"))) {
+    e.preventDefault();
+    const root = trigger.closest(".shield-dropdown");
+    if (!root.classList.contains("open")) sgDropdownToggle(trigger, false);
+    const items = Array.from(root.querySelectorAll('[role="menuitem"]'));
+    if (items.length) items[e.key === "ArrowUp" ? items.length - 1 : 0].focus();
+    return;
+  }
+  const item = e.target.closest && e.target.closest('.shield-dropdown.open [role="menuitem"]');
+  if (!item) return;
+  const items = Array.from(item.closest(".shield-dropdown").querySelectorAll('[role="menuitem"]'));
+  const i = items.indexOf(item);
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); items[(i + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length].focus(); }
+  else if (e.key === "Home") { e.preventDefault(); items[0].focus(); }
+  else if (e.key === "End") { e.preventDefault(); items[items.length - 1].focus(); }
+  else if (e.key === "Tab") { sgDropdownCloseAll(); }
+  else if (e.key.length === 1 && /\S/.test(e.key)) {
+    const k = e.key.toLowerCase();
+    const next = items.slice(i + 1).concat(items.slice(0, i + 1)).find((it) => it.textContent.trim().toLowerCase().startsWith(k));
+    if (next) next.focus();
+  }
+});
 
 // Page-wide listener: click anywhere outside a .shield-dropdown and close
 // whichever one is open. Same "click outside" pattern as the Select above.
 document.addEventListener("mousedown", (e) => {
-  if (!e.target.closest(".shield-dropdown")) {
-    document.querySelectorAll(".shield-dropdown.open").forEach((d) => d.classList.remove("open"));
-  }
+  if (!e.target.closest(".shield-dropdown")) sgDropdownCloseAll();
+});
+// Choosing an item closes the menu and returns focus to the button.
+document.addEventListener("click", (e) => {
+  const item = e.target.closest && e.target.closest('.shield-dropdown.open [role="menuitem"]');
+  if (!item) return;
+  const trigger = item.closest(".shield-dropdown").querySelector("[aria-expanded]");
+  sgDropdownCloseAll();
+  if (trigger) trigger.focus();
 });
 
 
@@ -332,7 +419,9 @@ document.addEventListener("keydown", (e) => {
   if (!open.length) return;
   const top = open[open.length - 1];
   if (e.key === "Escape") {
-    if (document.querySelector(".shield-popover.open")) return; // a popover inside the dialog closes first (see Popover)
+    // Anything floating inside the dialog (a popover, a dropdown menu, an open
+    // select) closes first; the dialog itself closes on the next Escape.
+    if (document.querySelector(".shield-popover.open, .shield-dropdown.open, .shield-select.open")) return;
     sgOverlayClose(top);
     return;
   }
@@ -463,13 +552,22 @@ function sgClearInput(btn) {
   btn.style.display = "none";
 }
 
-// Called by the eye icon on a password field. Flips the input between
-// type="password" (dots) and type="text" (plain), and swaps the emoji
-// to show which state you'll get if you click again.
+// The two Font Awesome glyphs the password toggle swaps between (Eye and
+// Eye slash, from the Icons section), kept here so the toggle never falls
+// back to an emoji that would break the one-icon-set rule.
+const SG_EYE_SVG = '<svg class="shield-icon" width="15.75" height="14" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>';
+const SG_EYE_SLASH_SVG = '<svg class="shield-icon" width="17.5" height="14" viewBox="0 0 640 512" fill="currentColor" aria-hidden="true"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg>';
+
+// Called by the eye button on a password field. Flips the input between
+// type="password" (dots) and type="text" (plain), swaps the icon, and
+// updates aria-pressed and the label so a screen reader hears the state.
 function sgTogglePassword(btn) {
   const input = btn.closest(".shield-input-wrap").querySelector("input");
-  input.type = input.type === "password" ? "text" : "password";
-  btn.textContent = input.type === "password" ? "👁" : "🙈";
+  const showing = input.type === "password";
+  input.type = showing ? "text" : "password";
+  btn.innerHTML = showing ? SG_EYE_SLASH_SVG : SG_EYE_SVG;
+  btn.setAttribute("aria-pressed", showing);
+  btn.setAttribute("aria-label", showing ? "Hide password" : "Show password");
 }
 
 
@@ -537,17 +635,24 @@ let sgToastId = 0;
 // Called by onclick="sgPushToast('success', 'Some message')" (or
 // 'error' in place of 'success'). Creates a toast element, appends it to
 // the fixed-position stack at the bottom of index.html, and schedules it
-// to fade out and remove itself after 3 seconds.
+// to fade out and remove itself after 3 seconds. The message goes in with
+// textContent, never innerHTML: in a product the text may come from data,
+// and this is the helper engineers copy.
 function sgPushToast(type, msg) {
   const stack = document.querySelector(".shield-toast-stack");
   const id = "toast-" + ++sgToastId;
   const el = document.createElement("div");
   el.className = "shield-toast " + type;
   el.id = id;
+  // The stack itself is role="status" aria-live="polite" (index.html), so
+  // adding a toast to it is announced without stealing focus.
   const icon = type === "success"
-    ? '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg>'
-    : '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>';
-  el.innerHTML = icon + "<span>" + msg + "</span>";
+    ? '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg>'
+    : '<svg class="shield-icon" width="14" height="14" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>';
+  el.innerHTML = icon;
+  const text = document.createElement("span");
+  text.textContent = msg;
+  el.appendChild(text);
   stack.appendChild(el);
   setTimeout(() => {
     el.style.transition = "opacity .2s";
@@ -558,7 +663,7 @@ function sgPushToast(type, msg) {
 
 
 /* =====================================================================
-   v0.8 additions
+   v0.8 additions (the v0.9 ARIA and version helpers are at the end)
    ===================================================================== */
 
 
@@ -727,11 +832,14 @@ document.addEventListener("keydown", (e) => {
       const next = e.key === "ArrowDown" ? (cur + 1) % opts.length : (cur - 1 + opts.length) % opts.length;
       opts[next].classList.add("active");
       opts[next].scrollIntoView({ block: "nearest" });
+      // Tell the screen reader which option the highlight is on. Every option
+      // needs an id for this; sgInitSelects gives one to any option without.
+      if (opts[next].id) search.setAttribute("aria-activedescendant", opts[next].id);
     } else if (e.key === "Enter") {
       const active = root.querySelector(".shield-select-option.active");
       if (active && root.classList.contains("open")) { e.preventDefault(); sgSelectPick(root.id, active.dataset.value, active.dataset.label); active.classList.remove("active"); }
     } else if (e.key === "Escape") {
-      root.classList.remove("open");
+      sgSelectSetOpen(root, false);
     }
     return;
   }
@@ -748,9 +856,9 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     const open = document.querySelector(".shield-dropdown.open");
     if (open) {
-      open.classList.remove("open");
       const t = open.querySelector("[aria-expanded]");
-      if (t) { t.setAttribute("aria-expanded", "false"); t.focus(); }
+      sgDropdownCloseAll();
+      if (t) t.focus();
     }
   }
 });
@@ -1055,13 +1163,101 @@ function sgInitEngineer() {
 }
 
 
+/* ---------- Accessible names and ARIA wiring (v0.9) ----------
+   Two safety nets that run once at load. The demo markup already carries
+   the right attributes; these exist so a control that was copied without
+   them still has a name and a role, and so the pattern is enforced in one
+   place rather than remembered in forty.
+
+   sgInitNames: a <label> element only names NATIVE form controls, so a
+   <span role="checkbox"> inside <label class="shield-check-row"> has no
+   accessible name on its own (WCAG 4.1.2 Name, Role, Value). For every
+   checkbox / radio / switch in a .shield-check-row that has neither
+   aria-label nor aria-labelledby, this gives the row's label text an id
+   and points the control at it; a .shield-radio-desc line becomes its
+   aria-describedby.
+
+   sgInitSelects: the hand-rolled Select is a combobox (WAI-ARIA APG
+   "Combobox with list autocomplete"). The search input gets
+   role="combobox", aria-expanded, aria-controls and aria-autocomplete=
+   "list"; the panel gets role="listbox" and an id; each option gets
+   role="option", aria-selected and an id (so aria-activedescendant can
+   point at it); group labels become role="presentation". */
+let sgNameId = 0;
+function sgInitNames() {
+  document.querySelectorAll(".shield-check-row").forEach((row) => {
+    const control = row.querySelector('[role="checkbox"], [role="radio"], [role="switch"]');
+    if (!control || control.hasAttribute("aria-label") || control.hasAttribute("aria-labelledby")) return;
+    // The label text is either a .shield-radio-text block (title + description) or the row's bare text nodes.
+    const text = row.querySelector(".shield-radio-text");
+    let labelEl;
+    if (text) {
+      labelEl = text.firstChild && text.firstChild.nodeType === Node.TEXT_NODE ? sgWrapText(text.firstChild) : text;
+      const desc = text.querySelector(".shield-radio-desc");
+      if (desc) { if (!desc.id) desc.id = "sg-desc-" + ++sgNameId; control.setAttribute("aria-describedby", desc.id); }
+    } else {
+      const node = Array.from(row.childNodes).find((n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      if (!node) return;
+      labelEl = sgWrapText(node);
+    }
+    if (!labelEl.id) labelEl.id = "sg-name-" + ++sgNameId;
+    control.setAttribute("aria-labelledby", labelEl.id);
+  });
+}
+// Wraps a bare text node in a <span> so it can carry an id.
+function sgWrapText(node) {
+  const span = document.createElement("span");
+  node.parentNode.insertBefore(span, node);
+  span.appendChild(node);
+  return span;
+}
+function sgInitSelects() {
+  document.querySelectorAll(".shield-select").forEach((root) => {
+    const search = root.querySelector(".shield-select-search");
+    const panel = root.querySelector(".shield-select-panel");
+    if (!search || !panel) return;
+    if (!panel.id) panel.id = (root.id || "sg-select-" + ++sgNameId) + "-list";
+    panel.setAttribute("role", "listbox");
+    if (root.classList.contains("multiple")) panel.setAttribute("aria-multiselectable", "true");
+    search.setAttribute("role", "combobox");
+    search.setAttribute("aria-controls", panel.id);
+    search.setAttribute("aria-autocomplete", "list");
+    search.setAttribute("aria-expanded", root.classList.contains("open"));
+    root.querySelectorAll(".shield-select-option").forEach((o, i) => {
+      if (!o.id) o.id = panel.id + "-" + (o.dataset.value || i);
+      o.setAttribute("role", "option");
+      o.setAttribute("aria-selected", o.classList.contains("selected"));
+    });
+    root.querySelectorAll(".shield-select-group-label").forEach((g) => g.setAttribute("role", "presentation"));
+    root.querySelectorAll(".shield-select-empty").forEach((g) => g.setAttribute("role", "presentation"));
+  });
+}
+
+
+/* ---------- Version ----------
+   The guide's version is written once here and stamped into every
+   [data-sg-version] element (sidebar, cover badge, footer), so a release
+   is one edit. Bump it by the rules in the "How this guide changes"
+   section of index.html: patch for copy and fixes, minor for a new
+   component, token or section, major for a renamed or removed token or
+   class. Keep CHANGELOG.md in step. */
+const SG_VERSION = "0.9.0";
+function sgStampVersion() {
+  document.querySelectorAll("[data-sg-version]").forEach((el) => { el.textContent = "v" + SG_VERSION; });
+}
+
+
 /* ---------- Startup ----------
    Everything above just defines functions — nothing runs until the lines
    below: apply the saved theme the moment the page loads, build the
-   Engineer Mode code panels, draw the pagination
-   demo, and make every sidebar link close the mobile menu. */
+   Engineer Mode code panels, draw the pagination demo, wire the ARIA
+   safety nets, stamp the version, and make every sidebar link close the
+   mobile menu. */
 sgInitTheme();
 sgInitEngineer();
+sgInitNames();
+sgInitSelects();
+sgStampVersion();
 document.querySelectorAll("[data-steps]").forEach(sgStepsRender);
 sgPaginationRender(document.getElementById("pager-demo"), 1);
 document.querySelectorAll(".side-nav a").forEach((a) => a.addEventListener("click", () => sgGuideNav(false)));
