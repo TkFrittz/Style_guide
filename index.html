@@ -129,6 +129,7 @@ h3.sub{font-family:var(--font-heading);font-size:16px;margin:28px 0 12px;color:v
 .m-top .mark{font-family:var(--font-heading);font-size:17px;font-weight:700;color:var(--text)}
 .m-top .mark span{color:var(--brand-blue-dark)}
 @media (max-width: 900px){
+  html{scroll-padding-top:64px} /* the sticky top bar is 56px: keep a focused or linked element below it (WCAG 2.4.11) */
   .shell{display:block}
   .side{position:fixed;left:0;top:0;z-index:var(--z-drawer);max-width:85vw;transform:translateX(-100%);visibility:hidden;transition:transform var(--duration-base) var(--ease),visibility 0s linear var(--duration-base)}
   body.nav-open .side{transform:none;visibility:visible;transition-delay:0s;box-shadow:var(--shadow-md)}
@@ -195,7 +196,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <img class="brand-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering">
       <div>
         <div class="mark">Shield<span>Engineering</span></div>
-        <div class="sub">Style guide · v0.8</div>
+        <div class="sub">Style guide · <span data-sg-version>v0.9.0</span></div>
       </div>
     </div>
     <div class="side-theme">
@@ -224,22 +225,26 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#motion">Motion</a>
       <a href="#icons">Icons</a>
       <a href="#logo">Logo &amp; brand</a>
+      <div class="grp">Content</div>
+      <a href="#writing">Writing</a>
+      <a href="#formats">Data formats</a>
       <div class="grp">Layout</div>
-      <a href="#layout">Grid &amp; Space</a>
+      <a href="#layout">Grid &amp; space</a>
       <a href="#responsive">Responsive behavior</a>
+      <a href="#patterns">Page patterns</a>
       <div class="grp">General</div>
       <a href="#button">Button</a>
       <div class="grp">Data entry</div>
       <a href="#input">Input</a>
       <a href="#select">Select</a>
-      <a href="#checkbox">Checkbox, Radio &amp; Switch</a>
+      <a href="#checkbox">Checkbox, radio &amp; switch</a>
       <a href="#radio">Radio group</a>
       <a href="#datepicker">Date picker</a>
       <a href="#upload">File upload</a>
       <a href="#forms">Form layout</a>
       <div class="grp">Data display</div>
-      <a href="#tag">Tag &amp; Pill</a>
-      <a href="#avatar">Avatar &amp; Badge</a>
+      <a href="#tag">Tag &amp; pill</a>
+      <a href="#avatar">Avatar &amp; badge</a>
       <a href="#card">Card</a>
       <a href="#table">Table</a>
       <a href="#descriptions">Descriptions</a>
@@ -250,7 +255,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#modal">Modal</a>
       <a href="#drawer">Drawer</a>
       <a href="#empty">Empty</a>
-      <a href="#skeleton">Skeleton &amp; Spin</a>
+      <a href="#skeleton">Skeleton &amp; spin</a>
       <a href="#toast">Toast</a>
       <a href="#tooltip">Tooltip</a>
       <a href="#popover">Popover</a>
@@ -262,16 +267,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <a href="#menu">Menu</a>
       <a href="#breadcrumb">Breadcrumb</a>
       <a href="#pagination">Pagination</a>
+      <div class="grp">Standards</div>
+      <a href="#accessibility">Accessibility conformance</a>
+      <a href="#governance">How this guide changes</a>
     </div>
   </nav>
 
   <main class="main" id="main" tabindex="-1">
     <div class="cover" id="overview">
-      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:#000" title="brand">brand</div><div style="flex:3;background:var(--blue-7);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-8);color:#fff" title="link">link</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
+      <div class="swatches" title="Palette: follows the light/dark toggle"><div style="flex:2;background:var(--text);color:var(--bg-container)" title="text">text</div><div style="flex:2;background:var(--bg-layout);color:var(--text)" title="page">page</div><div style="flex:2;background:var(--bg-container);color:var(--text)" title="card">card</div><div style="flex:3;background:var(--blue-6);color:var(--blue-10)" title="brand">brand</div><div style="flex:3;background:var(--blue-8);color:#fff" title="action">action</div><div style="flex:2;background:var(--blue-9);color:#fff" title="pressed">pressed</div><div style="flex:2;background:var(--success-bg);color:var(--text)" title="success">success</div><div style="flex:2;background:var(--warning-bg);color:var(--text)" title="warning">warning</div><div style="flex:2;background:var(--error-bg);color:var(--text)" title="error">error</div><div style="flex:2;background:var(--info-bg);color:var(--text)" title="info">info</div></div>
       <img class="cover-logo" src="source_images/Shield_Engineering_Icon.png" alt="Shield Engineering logo">
       <h1>Shield Engineering</h1>
       <div class="tagline">The visual language for Shield Legal's operations software: modern, professional, and a little bit warm.</div>
-      <div class="cover-meta"><span class="live-badge new">v0.8 · pre-1.0 draft</span><span>Close to 1.0, not there yet.</span></div>
+      <div class="cover-meta"><span class="live-badge new"><span data-sg-version>v0.9.0</span> · release candidate</span><span>Close to 1.0. What is still open is listed under <a href="#accessibility">Accessibility conformance</a>; how a change gets in is under <a href="#governance">How this guide changes</a>.</span></div>
     </div>
 
     <!-- Intro copy for the whole page, no components demoed here, just the overview text. -->
@@ -290,11 +298,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Modern and professional, with a hint of warmth. The page is a faint warm white (<code>#FFFBF7</code>), like the pages of a novel or an old legal pad, and cards stay pure white so content sits on the page like sheets of paper. Text is solid black, like ink. The warmth stays subtle so it never looks yellowed in a modern technical product.</p>
 
       <h3 class="sub">Dark mode</h3>
-      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes.</p>
+      <p class="lede">Modern and technical, but not harsh. The goal is comfort: think of a well-lit night under a full moon, not a terminal. The page is a deep midnight blue (<code>#0B1220</code>) instead of black, cards sit just above it in a slightly lighter navy, and text is a warm off-white (<code>#FFFBF7</code>) that stays easy to read, so long sessions stay easy on the eyes. The guide follows the operating system's light or dark setting until a visitor picks one in the sidebar; products should do the same.</p>
 
       <h3 class="sub">How it is built</h3>
       <p class="lede">Plain HTML, CSS and JavaScript, no UI framework and no build step. <code>tokens.css</code> holds the values (colors, fonts, spacing, radius, shadow, motion) and <code>components.css</code> holds the components that use them. <code>shield.js</code> adds the interactions on this page. Classes are prefixed <code>shield-</code>. Everything below is a working component: open the select, flip the switch, dismiss a tag, push a toast.</p>
       <p class="lede" style="margin-top:12px"><b style="color:var(--text)">Engineers:</b> switch on <b style="color:var(--text)">Engineer Mode</b> at the top of the sidebar. A code panel appears at the end of each section with copy-paste HTML and the tokens involved.</p>
+      <p class="lede" style="margin-top:12px"><b style="color:var(--text)">Beyond components:</b> <a href="#writing">Writing</a> and <a href="#formats">Data formats</a> say how words, dates and numbers are shaped; <a href="#patterns">Page patterns</a> says how a whole screen is put together; <a href="#accessibility">Accessibility conformance</a> is the WCAG 2.2 AA statement for everything here; and <a href="#governance">How this guide changes</a> is the contract for changing it.</p>
     </section>
 
     <!-- Demonstrates the color tokens from tokens.css (the --blue-* ramp, neutrals, and the
@@ -309,12 +318,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="sw"><div class="fill" style="background:var(--blue-4)"></div><div class="meta"><b>blue-4</b><span>#6BDAFF · 1.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-5)"></div><div class="meta"><b>blue-5</b><span>#41C6FA · 2.0:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-6)"></div><div class="meta"><b>blue-6 · base</b><span>#18ABED · 2.6:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · buttons &amp; checked</b><span>#0A85C7 · 4.0:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action</b><span>#0063A1 · 6.4:1</span></div></div>
-        <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9</b><span>#00477A · 9.6:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-7)"></div><div class="meta"><b>blue-7 · accents, never text</b><span>#0A85C7 · 4.0:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-8)"></div><div class="meta"><b>blue-8 · action: buttons, links, on</b><span>#0063A1 · 6.4:1</span></div></div>
+        <div class="sw"><div class="fill" style="background:var(--blue-9)"></div><div class="meta"><b>blue-9 · hover / pressed</b><span>#00477A · 9.6:1</span></div></div>
         <div class="sw"><div class="fill" style="background:var(--blue-10)"></div><div class="meta"><b>blue-10</b><span>#002E54 · 13.8:1</span></div></div>
       </div>
-      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings and selected menu items, tabs and options. Buttons and on/checked controls use <b style="color:var(--text)">blue-7</b> (step 7).</p>
+      <p class="lede">Blue means "you can act on this" everywhere. <b style="color:var(--text)">brand-blue</b> (step 6) is for logos and large graphics only (2.6:1, not text-safe). <b style="color:var(--text)">brand-blue-dark</b> (step 8) colors links, focus rings, selected menu items, tabs and options, and the Primary button and every on/checked control, so one blue means one thing and white text on it clears 4.5:1 everywhere. <b style="color:var(--text)">blue-9</b> is the hover and pressed shade. <b style="color:var(--text)">blue-7</b> (4.0:1) is kept for non-text accents only.</p>
 
       <h3 class="sub">Neutral colors: light / dark</h3>
       <div class="neutral-grid">
@@ -335,9 +344,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="func-card"><div class="head" style="background:var(--success-bg);color:var(--success)">Success</div><div class="body"><div>text #114100</div><div>bg #91DD61</div><div>border #80D842</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--warning-bg);color:var(--warning)">Warning</div><div class="body"><div>text #5C3400</div><div>bg #FFD84C</div><div>border #FFE58F</div></div></div>
         <div class="func-card"><div class="head" style="background:var(--error-bg);color:var(--error)">Error</div><div class="body"><div>text #4C0107</div><div>bg #F6675D</div><div>border #FFA39E</div></div></div>
-        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text = blue-9</div><div>bg = blue-5</div><div>border = blue-3</div></div></div>
+        <div class="func-card"><div class="head" style="background:var(--info-bg);color:var(--info)">Info</div><div class="body"><div>text blue-9 · dark blue-4</div><div>bg blue-5 · dark #0B2D4A</div><div>border blue-3</div></div></div>
       </div>
-      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode only success clears it (4.8:1); warning (3.4:1), error (2.7:1) and info (3.2:1) do not and should be revisited. Info uses <code>blue-9</code> text in light mode and <code>blue-8</code> in dark.</p>
+      <p class="lede">Four status colors that mean the same thing everywhere. <b style="color:var(--text)">Success</b>: approved, active, completed. <b style="color:var(--text)">Warning</b>: waiting on someone, such as a signature or addendum. <b style="color:var(--text)">Error</b>: rejected, canceled, destructive. <b style="color:var(--text)">Info</b>: internal work in progress, such as review or pricing. Each has a text color, a background and a border, used together. In light mode, text on its background measures 7.2:1 (success), 7.8:1 (warning), 5.3:1 (error) and 4.9:1 (info), all above the 4.5:1 readability target. In dark mode each mood flips to a deep background with light text and measures 4.8:1 (success), 4.8:1 (warning), 6.0:1 (error) and 8.8:1 (info). Info uses <code>blue-9</code> text on <code>blue-5</code> in light mode and <code>blue-4</code> text on a deep blue in dark. <code>node tools/check.mjs</code> re-measures all eight pairs in both themes and fails below 4.5:1, so these numbers cannot drift from the tokens.</p>
     </section>
 
     <!-- Demonstrates .shield-title and .shield-text from components.css, plus the Fraunces/Satoshi
@@ -364,6 +373,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="type-row"><span class="tagcell">h4</span><span class="sample shield-title h4">Card &amp; panel titles</span><span class="meta">20 / 28 · 600</span></div>
       <div class="type-row"><span class="tagcell">h5</span><span class="sample shield-title h5">Inline emphasis titles</span><span class="meta">18 / 24 · 600</span></div>
       <h3 class="sub">Text: <code>shield-text</code> variants, all at the 16px body size</h3>
+      <p class="lede">In light mode all three text levels are solid black on purpose: ink on paper. The hierarchy comes from size and weight, not from shades of gray, which keeps every caption readable. Dark mode steps the levels down in opacity because off-white at full strength glows and tires the eyes. The three class names exist so markup says what a line is <i>for</i>, and so a future theme can separate them without touching a component. <code>text-quaternary</code> is the one lighter value in light mode (placeholders, group labels, disabled text) and it still measures 4.9:1 on white.</p>
       <div class="type-row"><span class="tagcell">default</span><span class="sample shield-text">Default body copy</span><span class="meta">16 / 24 · 400</span></div>
       <div class="type-row"><span class="tagcell">secondary</span><span class="sample shield-text secondary">Secondary: captions, helper text</span><span class="meta">light: solid black · dark: .85 off-white</span></div>
       <div class="type-row"><span class="tagcell">tertiary</span><span class="sample shield-text tertiary">Tertiary: placeholders, timestamps</span><span class="meta">light: solid black · dark: .7 off-white</span></div>
@@ -524,7 +534,30 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         </div>
         <div class="spec"><code>height 512, width varies</code><code>fill currentColor</code><code>single path</code><code>no stroke</code></div>
       </div>
+      <h3 class="sub">Sizes</h3>
+      <p class="lede">Icons come in five heights. Pick the height from this scale and let the width follow the glyph's own ratio (a 448-wide glyph at height 16 is 14 wide), so every icon on a row shares a height and none is stretched. Icons sit centered on the text line, not on the baseline. Anything clickable has a hit area of at least 24 by 24 px (WCAG 2.2 SC 2.5.8), 44 px where touch is expected: add padding to the button, never scale the glyph.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th class="num">Height</th><th>Use</th><th>Sits with</th></tr></thead>
+          <tbody>
+            <tr><td class="num">12</td><td>Dense marks: a chip's ×, the Select chevron, the icon in a Pill</td><td>13px captions</td></tr>
+            <tr><td class="num">16</td><td>Inline with controls and body text: buttons, inputs, alerts, menu items, the info icon, the error icon</td><td>14 to 16px text</td></tr>
+            <tr><td class="num">20</td><td>Navigation, the upload dropzone, toolbar icons, the grid above</td><td>15 to 16px labels, or alone</td></tr>
+            <tr><td class="num">24</td><td>Page header and card header marks</td><td>20px titles</td></tr>
+            <tr><td class="num">48</td><td>The Empty-state illustration</td><td>centered above a title</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">A few demos on this page still set 13 to 15px to match a control's text; they round to 16 in a patch release, and new work uses the scale.</p>
       <p class="lede"><b style="color:var(--text)">Adding an icon:</b> find it at <a href="https://fontawesome.com/icons/packs/classic" target="_blank" rel="noopener">fontawesome.com</a> (free Solid style only) or in the <code>@fortawesome/fontawesome-free</code> package's <code>sprites/solid.svg</code>. Copy the <code>viewBox</code> and path exactly into an inline <code>&lt;svg class="shield-icon"&gt;</code> and add it to the grid above. Do not redraw icons.</p>
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/elements/icons/usage/" target="_blank" rel="noopener">Icons usage</a>: the 16/20/24/32 size set, pairing icon size with type size, consistent size per context, center alignment.</li>
+        <li>Google Fonts, <a href="https://developers.google.com/fonts/docs/material_symbols" target="_blank" rel="noopener">Material Symbols guide</a>: optical sizes 20 to 48 with 24 as the default, and reduced detail at small sizes.</li>
+        <li>Microsoft Fluent 2, <a href="https://fluent2.microsoft.design/iconography" target="_blank" rel="noopener">Iconography</a>: regular versus filled, 12px for informational use only, match the size to the control.</li>
+        <li>W3C, <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">WCAG 2.2 SC 2.5.8 Target Size (Minimum)</a>: the 24 by 24 CSS pixel minimum for pointer targets.</li>
+        <li>Font Awesome, <a href="https://fontawesome.com/license/free" target="_blank" rel="noopener">Free license</a>: icons are CC BY 4.0; attribution is kept in this section.</li>
+      </ul>
     </section>
 
     <!-- Logo usage. The one asset is source_images/Shield_Engineering_Icon.png (1254 x 1254, transparent).
@@ -557,12 +590,197 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     </section>
 
 
+    <!-- Writing: the rules the copy in every other section follows. No components, just words. -->
+    <section id="writing">
+      <h2>Writing</h2>
+      <p class="lede">Words are part of the interface. A label one word too long, an error that scolds, a date that reads two ways: each one costs a person who is reviewing documents with legal weight. These rules apply to everything a product shows, from a button to a notification email. The copy on this page follows them, and the <a href="#governance">review</a> for a new screen checks them.</p>
+
+      <h3 class="sub">Voice</h3>
+      <ul class="sg-steps-list">
+        <li><b style="color:var(--text)">Plain, direct, calm.</b> Short sentences, active voice, present tense. Say what happens, not how the system feels about it. No exclamation marks.</li>
+        <li><b style="color:var(--text)">Talk to the person.</b> "You" for the reader, "we" for Shield. Instructions are imperative ("Choose a catalog"); completed actions are past tense ("Offer sent").</li>
+        <li><b style="color:var(--text)">Use the word the agreement uses.</b> A partner group is not a client, an offer is not an order, a change request is not an edit. The <a href="#glossary">glossary</a> below is the list; add to it rather than inventing a synonym.</li>
+        <li><b style="color:var(--text)">Never blame, never apologize.</b> "The file is larger than 25 MB", not "You uploaded a file that is too large". No "please", "sorry" or "oops".</li>
+      </ul>
+
+      <h3 class="sub">Capitalization</h3>
+      <p class="lede">Sentence case everywhere: headings, titles, labels, buttons, menu items, tabs, tags and table headers. Capitalize the first word and proper nouns (Shield, Fraunces, Harlow &amp; Vance) and nothing else. No Title Case and no typed capitals: the small uppercase table headers and group labels on this page are produced by CSS from sentence-case text, so screen readers hear words rather than letters and the style can change without touching content.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Write</th><th>Not</th></tr></thead>
+          <tbody>
+            <tr><td>Partner groups</td><td>Partner Groups · PARTNER GROUPS</td></tr>
+            <tr><td>Send for signature</td><td>Send For Signature · SEND</td></tr>
+            <tr><td>Internal review</td><td>Internal Review</td></tr>
+            <tr><td>Mass tort intake (a catalog name, not a proper noun)</td><td>Mass Tort Intake</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">Exception: a legal or product name that is a proper noun keeps its own capitals (Harlow &amp; Vance, Shield Engineering). The StatusTag words in <a href="#tag">Tag &amp; pill</a> are sentence case for the same reason: "Partner signature", not "Partner Signature".</p>
+
+      <h3 class="sub">Buttons and labels</h3>
+      <ul class="sg-steps-list">
+        <li><b style="color:var(--text)">A button starts with a verb and names the object:</b> "Onboard partner group", "Create change request", "Export as PDF". Universally understood single words stay single: Save, Cancel, Close, Delete, Done.</li>
+        <li><b style="color:var(--text)">No articles</b> in buttons, labels or headings: "Add product", not "Add a product".</li>
+        <li><b style="color:var(--text)">Never "Click here", "Submit" or "OK"</b> for anything with a consequence. The label says what will happen, so a person can decide from the button alone.</li>
+        <li><b style="color:var(--text)">One Primary per screen</b> (<a href="#button">Button</a>). A Danger button is red because it destroys something that is hard to undo; its label still names what it destroys ("Delete partner group"), and the red is never the only signal.</li>
+        <li><b style="color:var(--text)">Field labels are nouns,</b> two or three words, no colon: "Effective date", "Primary contact email". The hint under the field, not the label, carries the format or the example.</li>
+        <li><b style="color:var(--text)">Mark the minority.</b> On a form where most fields are required, mark optional ones "(optional)" in the label; on a form where most are optional, mark the required ones with the asterisk. Use one convention across the product. This guide's forms are mostly required, so they use the asterisk.</li>
+      </ul>
+
+      <h3 class="sub">Errors</h3>
+      <p class="lede">An error message has three parts: what stopped, why, and what to do. For a single field, "what to do" is the whole message: tell the person what to enter. For a page or an action, a title of three or four words names what stopped, then one or two sentences give the reason, the action to take and what happens if nothing is done. An error the person must act on is never only a toast; it is an <a href="#alert">Alert</a> or a <a href="#modal">Modal</a>.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Where</th><th>Write</th><th>Not</th></tr></thead>
+          <tbody>
+            <tr><td>Field</td><td>Enter an email address in the form name@firm.com.</td><td>Invalid email. · Please enter a valid email!</td></tr>
+            <tr><td>Field</td><td>Enter a date after the effective date.</td><td>Date error. · End date must be greater than start date</td></tr>
+            <tr><td>Field</td><td>Choose at least one catalog.</td><td>Required field</td></tr>
+            <tr><td>Page</td><td><b>Offer not sent</b><br>The partner group has no role contact for signatures. Add one on the Contacts tab, then send again.</td><td>An error occurred (code 422).</td></tr>
+            <tr><td>Page</td><td><b>Connection lost</b><br>Your changes are kept on this page. Check the network and try again; nothing is sent until you do.</td><td>Oops! Something went wrong.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="sg-steps-list" style="margin-top:12px">
+        <li><b style="color:var(--text)">Words not used in an error:</b> please, sorry, oops, valid, invalid, forbidden, illegal, and codes a person cannot act on (keep the code on a copyable detail line for support).</li>
+        <li><b style="color:var(--text)">Keep what the person typed.</b> Never clear a field to show an error.</li>
+        <li><b style="color:var(--text)">Check when they leave the field and again on submit,</b> not on every keystroke (<a href="#forms">Form layout</a>); on submit, the error Alert at the top lists every problem and links to the field.</li>
+        <li><b style="color:var(--text)">Same words everywhere:</b> the inline message, the summary and the announcement to a screen reader use one sentence, not three.</li>
+      </ul>
+
+      <h3 class="sub">Punctuation</h3>
+      <ul class="sg-steps-list">
+        <li>Full sentences end with a period: body copy, hints, alert bodies, empty-state descriptions. Headings, titles, labels, buttons, tooltips, menu items and table cells do not.</li>
+        <li>No colon at the end of a heading or a label. One space after a period.</li>
+        <li>Use the real characters: an ellipsis (…) not three periods, an en dash (–) in ranges, a minus sign (−) for negatives, a multiplication sign (×) for dimensions, curly quotes in prose.</li>
+        <li>Ampersand only inside a name that uses it (Harlow &amp; Vance) and in a section title where space is tight; "and" in sentences.</li>
+      </ul>
+
+      <h3 class="sub">Numbers, money and abbreviations</h3>
+      <ul class="sg-steps-list">
+        <li>Numerals in the interface ("3 waiting", not "three waiting"), commas from four digits (1,024), a leading zero before a decimal (0.5). The full rules, with dates and currency, are in <a href="#formats">Data formats</a>.</li>
+        <li>Spell an abbreviation out on first use unless everyone knows it (PDF, NDA, ID, UTC). No periods in abbreviations. Months and days are full words in prose and three letters without a period where space is tight (Sep, Mon).</li>
+        <li>"Percent" is the symbol with a numeral (34%); a change in a percentage is in points (+2 points), never "+2%".</li>
+      </ul>
+
+      <h3 class="sub" id="glossary">Glossary</h3>
+      <p class="lede">The terms this guide's own examples use, with the word they replace. Confirm each against the product's data model before 1.0, then this table is the standard.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Term</th><th>Means</th><th>Not</th></tr></thead>
+          <tbody>
+            <tr><td>Partner group</td><td>An external law firm or funding partner onboarded to Shield: the legal entity an offer is made to.</td><td>client, customer, account, firm (unless it is a law firm and the sentence needs that)</td></tr>
+            <tr><td>Role contact</td><td>The person at a partner group who handles business or technical matters for one offer. Roles (Law Firm, Co-Counsel, Funding Partner) are assigned per offer.</td><td>user, owner, rep</td></tr>
+            <tr><td>Catalog</td><td>A family of products: Mass tort intake, Consumer finance, Product liability.</td><td>category, vertical, line</td></tr>
+            <tr><td>Product</td><td>One item in a catalog that can be offered.</td><td>SKU, item, service</td></tr>
+            <tr><td>Offer</td><td>The priced proposal to a partner group. It moves through Draft, Internal review, Partner signature and Approved (or Rejected); it is frozen once signed.</td><td>quote, proposal, deal, contract</td></tr>
+            <tr><td>Change request</td><td>The only way to alter a signed offer. It creates a new priced version; the signed version stays in history.</td><td>edit, amendment, revision</td></tr>
+            <tr><td>Order</td><td>An accepted offer in delivery (ORD-501). Can be Active, Paused or Completed.</td><td>job, engagement, project</td></tr>
+            <tr><td>Campaign</td><td>A time-bounded run of delivery against an order, with a start and end date.</td><td>batch, drop, run</td></tr>
+            <tr><td>Status words</td><td>Draft · Internal review · Partner signature · Approved · Rejected · Active · Paused · Completed. Exact spellings, sentence case, mapped to colors in <a href="#tag">Tag &amp; pill</a>.</td><td>pending, in progress, done, live, cancelled (use Rejected or Paused)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>Microsoft Writing Style Guide, <a href="https://learn.microsoft.com/en-us/style-guide/capitalization" target="_blank" rel="noopener">Capitalization</a>: sentence-style capitalization everywhere, no all caps.</li>
+        <li>Microsoft Writing Style Guide, <a href="https://learn.microsoft.com/en-us/style-guide/numbers" target="_blank" rel="noopener">Numbers</a>: numerals in UI, commas, ranges, decimals.</li>
+        <li>GOV.UK Design System, <a href="https://design-system.service.gov.uk/components/button/" target="_blank" rel="noopener">Button</a>: verb-first sentence-case labels, one primary action.</li>
+        <li>GOV.UK Design System, <a href="https://design-system.service.gov.uk/components/error-message/" target="_blank" rel="noopener">Error message</a>: placement, the hidden "Error:" prefix, "tell the user what to enter", and the words to avoid.</li>
+        <li>GOV.UK Design System, <a href="https://design-system.service.gov.uk/components/error-summary/" target="_blank" rel="noopener">Error summary</a>: the summary at the top of the form, focus moved to it, each item linking to its field.</li>
+        <li>GOV.UK, <a href="https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/style-guides/a-to-z-style-guide/" target="_blank" rel="noopener">A to Z style guide</a>: sentence case, abbreviations, numbers, money, per cent.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/guidelines/content/overview/" target="_blank" rel="noopener">Content overview</a>: sentence-style capitalization and the link to the IBM Style guide.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/button/usage/" target="_blank" rel="noopener">Button usage</a>: {verb} + {noun} labels, one primary, danger buttons.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/patterns/forms-pattern/" target="_blank" rel="noopener">Forms pattern</a>: labels above fields, mark the minority (required or optional), validation timing.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/notification/usage/" target="_blank" rel="noopener">Notification usage</a>: title and body rules, a user action is mandatory for every error.</li>
+        <li>Atlassian Design System, <a href="https://atlassian.design/foundations/content/language-and-grammar" target="_blank" rel="noopener">Language and grammar</a>: sentence case, no articles in buttons, punctuation, numbers.</li>
+        <li>Atlassian Design System, <a href="https://atlassian.design/foundations/content/designing-messages/error-messages" target="_blank" rel="noopener">Error messages</a>: three-to-four-word titles, reason + action + consequence, tone.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/error-message-guidelines/" target="_blank" rel="noopener">Error-Message Guidelines</a>: visible, human-readable, constructive, never blaming, preserve what was typed, not shown prematurely.</li>
+        <li>W3C, <a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noopener">WCAG 2.2 SC 3.3.1 Error Identification</a>: the error is described to the user in text.</li>
+      </ul>
+    </section>
+
+    <!-- Data formats: one shape for every date, time, number, amount and identifier, and the one place in code that makes it. -->
+    <section id="formats">
+      <h2>Data formats</h2>
+      <p class="lede">Shield records are evidence: when an offer was signed, how much an order is worth, which partner group an identifier belongs to. A value that can be read two ways is a defect, not a style choice. These rules give every kind of value one shape, and one place in code that produces it: the browser's <code>Intl</code> formatters, which carry Unicode CLDR locale data, with the product locale and the record's time zone passed in. Nobody builds a date string by hand.</p>
+
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Value</th><th>Format</th><th>Example</th><th>Rules</th></tr></thead>
+          <tbody>
+            <tr><td>Date</td><td>Mon D, YYYY</td><td>Sep 12, 2026</td><td>Always the year. Three-letter month without a period. Never numeric only: 9/12/2026 reads two ways.</td></tr>
+            <tr><td>Date and time</td><td>Mon D, YYYY, h:mm AM ZONE</td><td>Sep 12, 2026, 9:04 AM EDT</td><td>A space before AM/PM, uppercase, no periods. The zone is shown whenever the reader may be in another zone or the moment has legal weight (a signature, a deadline, an audit entry): the short zone name, or an offset (UTC−5) where there is none.</td></tr>
+            <tr><td>Time alone</td><td>h:mm AM</td><td>9:04 AM</td><td>Only when the date is already on screen. "Noon" and "midnight" in prose rather than 12:00 PM and 12:00 AM.</td></tr>
+            <tr><td>Relative time</td><td>N units ago</td><td><time datetime="2026-10-05T14:30:00Z" title="Oct 5, 2026, 10:30 AM EDT">2 hours ago</time></td><td>Only in fast-moving feeds, and never alone: wrap it in <code>&lt;time datetime title&gt;</code> so hover and assistive technology get the absolute value. A record of legal weight never uses it.</td></tr>
+            <tr><td>Date range</td><td>Mon D – Mon D, YYYY</td><td>Oct 1 – Dec 31, 2026</td><td>En dash with spaces when either side contains a space; "to" in a sentence. Two <a href="#datepicker">date fields</a> for entry.</td></tr>
+            <tr><td>Time range</td><td>h:mm–h:mm AM</td><td>8:00–10:30 AM</td><td>One AM/PM when both ends share it; an en dash with no spaces.</td></tr>
+            <tr><td>Number</td><td>1,234</td><td>48,200 · 0.5 · −12</td><td>Commas from four digits. A leading zero before a decimal. A minus sign (−), not a hyphen. Tabular figures and right alignment in a <a href="#table">table</a> column (<code>num</code>).</td></tr>
+            <tr><td>Money</td><td>$1,234.56</td><td>$48,200 · $75.50 · −$1,200</td><td>Currency symbol, no decimals unless there are cents, but the same number of decimals down a column. Negative amounts take a minus sign, not parentheses. Never K, M or B for money.</td></tr>
+            <tr><td>Percent</td><td>34%</td><td>34% · +2 points</td><td>Numeral and symbol with no space. A change in a percentage is in points.</td></tr>
+            <tr><td>Large number</td><td>1,250,000</td><td>1,250,000 · 1.3M</td><td>The full number by default. Compact notation only in a <a href="#statistic">Statistic</a> tile or a chart where space forces it, never for money or a count that will be quoted.</td></tr>
+            <tr><td>Identifier</td><td>PREFIX-NNN</td><td><span class="shield-text code">ORD-501</span> · <span class="shield-text code">OFF-2041</span></td><td>Uppercase prefix, hyphen, digits. The mono style in tables and headers; never wrapped or hyphenated across lines; copyable on click or with a Copy button. A partial identifier is redacted with bullets (•••• 1234).</td></tr>
+            <tr><td>File size</td><td>N.N MB</td><td>2.4 MB · 480 KB</td><td>A space before the unit; one decimal above 1 MB, none below. This is what <code>sgFormatFileSize</code> in shield.js produces.</td></tr>
+            <tr><td>Empty value</td><td>—</td><td>—</td><td>An em dash. Never blank, "null", "N/A" or a 0 standing in for unknown.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">In a table</h3>
+      <div class="demo" style="padding:0">
+        <div class="shield-table-scroll">
+          <table class="shield-table">
+            <caption class="shield-sr-only">Orders with formatted values</caption>
+            <thead><tr><th>Order</th><th>Partner group</th><th class="num">Value</th><th>Signed</th><th>Last activity</th></tr></thead>
+            <tbody>
+              <tr><td><span class="shield-text code">ORD-501</span></td><td>Harlow &amp; Vance</td><td class="num">$48,200.00</td><td><time datetime="2026-09-12T13:04:00Z">Sep 12, 2026, 9:04 AM EDT</time></td><td><time datetime="2026-10-05T14:30:00Z" title="Oct 5, 2026, 10:30 AM EDT">2 hours ago</time></td></tr>
+              <tr><td><span class="shield-text code">ORD-498</span></td><td>Meridian Legal Group</td><td class="num">$12,750.50</td><td>—</td><td><time datetime="2026-10-03T20:15:00Z">Oct 3, 2026, 4:15 PM EDT</time></td></tr>
+              <tr><td><span class="shield-text code">ORD-493</span></td><td>Consumer Finance Direct</td><td class="num">−$1,200.00</td><td><time datetime="2026-08-21T15:00:00Z">Aug 21, 2026, 11:00 AM EDT</time></td><td><time datetime="2026-09-30T13:00:00Z">Sep 30, 2026, 9:00 AM EDT</time></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="spec">Hover "2 hours ago" for the absolute time. The Value column carries <code>num</code>: right-aligned, tabular figures, two decimals throughout because one amount has cents.</p>
+
+      <h3 class="sub">In code</h3>
+      <ul class="sg-steps-list">
+        <li><b style="color:var(--text)">Store and send ISO 8601 in UTC</b> (<code>2026-09-12T13:04:00Z</code>) and format at the edge, in the person's locale and the record's IANA time zone.</li>
+        <li><b style="color:var(--text)">Format through <code>Intl</code>,</b> never by concatenation. The browser carries the locale data, so month names, separators and AM/PM are right without a library.</li>
+        <li><b style="color:var(--text)">Put the machine value in <code>&lt;time datetime&gt;</code></b> so a column can sort on it, a person can copy it, and a screen reader can read it.</li>
+      </ul>
+      <pre class="sg-pane" style="margin:8px 0 0;max-height:none"><code>const when = new Date("2026-09-12T13:04:00Z");
+new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short",
+  timeZone: "America/New_York", timeZoneName: "short" }).format(when);   // "Sep 12, 2026, 9:04 AM EDT"
+new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(when);   // "Sep 12, 2026"
+new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(48200);   // "$48,200.00"
+new Intl.NumberFormat("en-US", { notation: "compact" }).format(1250000);                // "1.3M" (tiles only)</code></pre>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>Microsoft Writing Style Guide, <a href="https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/term-collections/date-time-terms" target="_blank" rel="noopener">Date and time terms</a>: month day, year; AM and PM; time zones and UTC offsets.</li>
+        <li>Microsoft Writing Style Guide, <a href="https://learn.microsoft.com/en-us/style-guide/numbers" target="_blank" rel="noopener">Numbers</a>: commas, ranges, decimals, compact forms only when space forces them.</li>
+        <li>GitLab Pajamas, <a href="https://design.gitlab.com/content/date-and-time" target="_blank" rel="noopener">Date and time</a>: absolute dates by default, relative time only where recency matters, and the audit-log rule.</li>
+        <li>AWS Cloudscape, <a href="https://cloudscape.design/patterns/general/timestamps/" target="_blank" rel="noopener">Timestamps</a>: relative versus absolute, the zone in the string, and the <code>&lt;time&gt;</code> element behind a relative time.</li>
+        <li>Google Material Design (archive), <a href="https://m1.material.io/patterns/data-formats.html" target="_blank" rel="noopener">Data formats</a>: AM/PM, when the year is shown, ranges, approximate versus absolute, redaction with bullets.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/date-picker/usage/" target="_blank" rel="noopener">Date picker usage</a>: AM/PM, time zone and localization rules.</li>
+        <li>GOV.UK, <a href="https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/style-guides/a-to-z-style-guide/" target="_blank" rel="noopener">A to Z style guide</a>: money, per cent, dates and times in prose.</li>
+        <li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat" target="_blank" rel="noopener">Intl.DateTimeFormat</a>: locale-aware date and time formatting with an explicit time zone.</li>
+        <li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat" target="_blank" rel="noopener">Intl.NumberFormat</a>: currency, percent, grouping and compact notation.</li>
+        <li>MDN Web Docs, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric" target="_blank" rel="noopener">font-variant-numeric</a>: tabular figures for columns of numbers.</li>
+        <li>Unicode Consortium, <a href="https://cldr.unicode.org/" target="_blank" rel="noopener">Common Locale Data Repository (CLDR)</a>: the locale data behind <code>Intl</code>.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/date-input/" target="_blank" rel="noopener">Date-Input Form Fields</a>: when a picker helps, flexible parsing, and the 10/11 ambiguity of numeric dates.</li>
+      </ul>
+    </section>
+
+
 
     <!-- Demonstrates the .shield-row/.shield-col 24-unit responsive grid and the .shield-space/
              .shield-divider helpers, all from components.css. Resize the window to see the grid
              breakpoints (defined in components.css) fall back. -->
     <section id="layout">
-      <h2>Grid &amp; Space</h2>
+      <h2>Grid &amp; space</h2>
       <p class="lede">A 24-column responsive grid (<code>shield-row</code>, <code>shield-col</code>) with five breakpoints (<code>xs / sm / md / lg / xl</code>), plus <code>Space</code> and <code>Divider</code>. Column widths come from <code>--col-xs/sm/md/lg/xl</code>, so a layout can be one column on a phone and several on a monitor. Resize the window to see it.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Row · Col span=24/12/8/6 (resize to see breakpoints fall back)</span></div>
@@ -665,11 +883,123 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     </section>
 
 
+    <!-- Page patterns: how whole screens are composed from the components below. The page header is a real
+         component (shield-page-header in components.css); the list and record anatomies are rules. -->
+    <section id="patterns">
+      <h2>Page patterns</h2>
+      <p class="lede">Components say what a button or a table looks like. Patterns say how a whole screen is put together, so two engineers building two list pages produce the same page. Three patterns cover nearly every screen in Shield's operations software: the page header every page starts with, the list page, and the record page. Each also says what the screen shows while it loads, when it is empty, and when something has gone wrong.</p>
+
+      <h3 class="sub">Page header</h3>
+      <p class="lede">Every full page opens the same way: a <a href="#breadcrumb">breadcrumb</a> when the page is two or more levels deep; the page title as the page's only <code>h1</code>, kept to one line (the full text goes in <code>title</code> when it truncates); an optional <a href="#tooltip">info icon</a> for the one sentence that explains the page; and the page actions right-aligned, with at most one Primary. A record page adds up to four key facts under the title: the status as a Tag, and the three values a person needs before reading further. <a href="#tabs">Tabs</a>, if the page has them, sit directly below the header.</p>
+      <div class="demo" style="background:var(--bg-layout)">
+        <div class="demo-row stack"><span class="demo-label">List page header</span>
+          <header class="shield-page-header" style="margin-bottom:0">
+            <nav class="shield-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#patterns">Partners</a></li><li aria-current="page">Partner groups</li></ol></nav>
+            <div class="shield-page-header-row">
+              <h2 class="shield-title h3" title="Partner groups">Partner groups</h2>
+              <span class="shield-info-tip" tabindex="0" aria-label="About this page" aria-describedby="tip-ph-list"><svg aria-hidden="true" class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg><span class="shield-info-tip-body" id="tip-ph-list" role="tooltip">External partner groups must be onboarded here before they can be added to an offer.</span></span>
+              <div class="shield-page-header-actions"><button class="shield-button shield-button-default">Export</button><button class="shield-button shield-button-primary">New partner group</button></div>
+            </div>
+          </header>
+        </div>
+        <div class="demo-row stack" style="margin-top:20px"><span class="demo-label">Record page header</span>
+          <header class="shield-page-header" style="margin-bottom:0">
+            <nav class="shield-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#patterns">Offers</a></li><li aria-current="page">OFF-2041</li></ol></nav>
+            <div class="shield-page-header-row">
+              <h2 class="shield-title h3" title="OFF-2041 · Harlow &amp; Vance mass tort intake">OFF-2041 · Harlow &amp; Vance mass tort intake</h2>
+              <div class="shield-page-header-actions"><button class="shield-button shield-button-default">Edit</button><button class="shield-button shield-button-default shield-button-danger">Reject</button><button class="shield-button shield-button-primary">Send for signature</button></div>
+            </div>
+            <dl class="shield-page-header-facts">
+              <div><dt>Status</dt><dd><span class="shield-tag processing">Internal review</span></dd></div>
+              <div><dt>Partner group</dt><dd>Harlow &amp; Vance</dd></div>
+              <div><dt>Value</dt><dd>$48,200</dd></div>
+              <div><dt>Created</dt><dd><time datetime="2026-09-12">Sep 12, 2026</time></dd></div>
+            </dl>
+          </header>
+        </div>
+        <div class="spec"><code>title: h1 in a real page (h2 here so this guide keeps one h1)</code><code>one line, title attribute when truncated</code><code>actions: one Primary, the next step in the record's life</code><code>facts: at most four, status first</code></div>
+      </div>
+
+      <h3 class="sub">List page</h3>
+      <p class="lede">A list page answers "what needs my attention, and where is the one I am looking for". Top to bottom:</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Part</th><th>What it is</th><th>Built from</th></tr></thead>
+          <tbody>
+            <tr><td>1 · Page header</td><td>The title is the plural noun ("Orders"). The one Primary creates a new record ("New order"); export and settings are Default buttons or live in a Dropdown.</td><td>Page header, Button</td></tr>
+            <tr><td>2 · Key numbers</td><td>Optional. Up to five tiles for the counts that decide what to do next; the most important one is <code>highlighted</code>.</td><td><a href="#statistic">Statistic</a></td></tr>
+            <tr><td>3 · Toolbar</td><td>Search on the left; filters as a Select or checkable Tags; at most five actions on the right, the rest in a Dropdown. It is one row tall, the same height as a table row. While rows are selected, the bulk bar replaces it and per-row actions are disabled until the selection is cleared.</td><td><a href="#input">Input</a>, <a href="#select">Select</a>, <a href="#tag">Tag</a>, <a href="#dropdown">Dropdown</a>, <a href="#table">Table</a> bulk bar</td></tr>
+            <tr><td>4 · Table</td><td>One row density per screen. Headers are one or two words in sentence case. Numbers and money in <code>num</code> columns. Status as a Tag. The row's own actions in the last column: one or two buttons, or a Dropdown. Clicking the row opens the record; a Drawer shows a preview without leaving the list.</td><td><a href="#table">Table</a>, <a href="#tag">Tag</a>, <a href="#dropdown">Dropdown</a>, <a href="#drawer">Drawer</a></td></tr>
+            <tr><td>5 · Pagination</td><td>Below the table with the "1–10 of 118" summary. The page size is one product-wide default; a person may change it for a session.</td><td><a href="#pagination">Pagination</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Record page</h3>
+      <p class="lede">A record page answers "what is this, what state is it in, and what happens next". Top to bottom:</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Part</th><th>What it is</th><th>Built from</th></tr></thead>
+          <tbody>
+            <tr><td>1 · Page header with facts</td><td>Identifier and name in the title; status, partner group, value and created date as the facts. The Primary is the next step in the record's lifecycle ("Send for signature"); a destructive action is the outlined Danger button or lives in the Dropdown, and always confirms (type-to-confirm for deletes).</td><td>Page header, Tag, Button, Modal</td></tr>
+            <tr><td>2 · Stages</td><td>When the record moves through stages, Steps sit directly under the header and show each stage's own state.</td><td><a href="#steps">Steps</a></td></tr>
+            <tr><td>3 · Sections as tabs</td><td>The first tab is the summary: a Descriptions list of the record's fields. Then related records (a Table), documents (File upload and the file list), and History last.</td><td><a href="#tabs">Tabs</a>, <a href="#descriptions">Descriptions</a>, <a href="#table">Table</a>, <a href="#upload">File upload</a></td></tr>
+            <tr><td>4 · Editing</td><td>Either a Drawer or Modal for one group of fields, or an edit mode for the whole page with a footer bar (Cancel, Save) that stays in view. One or the other on a page, never both. Nothing is lost on Cancel without a confirmation.</td><td><a href="#drawer">Drawer</a>, <a href="#modal">Modal</a>, <a href="#forms">Form layout</a></td></tr>
+            <tr><td>5 · History</td><td>Every state change with who, what and when (date, time and zone), newest first. A record of legal weight shows absolute times, never "2 hours ago".</td><td><a href="#timeline">Timeline</a>, <a href="#formats">Data formats</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">The four states of a data region</h3>
+      <p class="lede">A table, a card, a description list or a whole page is always in one of four states, and each is designed, not left to chance.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>State</th><th>Show</th><th>Rules</th></tr></thead>
+          <tbody>
+            <tr><td>Loading</td><td>A <a href="#skeleton">Skeleton</a> shaped like the content for tables, cards and description lists; a Spinner inside the button for an action in progress.</td><td>The skeleton appears at once and is replaced in place, so nothing jumps. Never skeleton a button, toast, menu or modal. A full-page loader only when the whole page is blocked.</td></tr>
+            <tr><td>Empty</td><td>The <a href="#empty">Empty</a> component with a title, the reason and one action.</td><td>Three kinds with different words: nothing yet, no matches, cannot show. Never a blank area and never a table with no rows and no message.</td></tr>
+            <tr><td>Error</td><td>For a region: the "cannot show" Empty with a Retry action. For the page: an error <a href="#alert">Alert</a> at the top of the content with the three-part message from <a href="#writing">Writing</a>.</td><td>Plain words, no codes in the headline, what to do next. Never only a toast. Keep whatever the person had entered.</td></tr>
+            <tr><td>Loaded</td><td>The content.</td><td>A change that arrives without a page change (a status flip, a new row) is announced through a live region, the way the toast stack and the table sort are.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Which component carries a message</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>The message is</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>A confirmation of something that just worked ("Saved", "Order activated")</td><td><a href="#toast">Toast</a>, 3 seconds. If the person must read it, a success Alert instead.</td></tr>
+            <tr><td>Something to know while the page still works (a campaign near capacity, sample data)</td><td>Info or warning <a href="#alert">Alert</a> at the top of the region it is about.</td></tr>
+            <tr><td>An action failed and the person must do something</td><td>Error Alert at the top of the content, or a Modal if nothing else can proceed. Never a toast alone.</td></tr>
+            <tr><td>A system-wide notice (maintenance, a signing service down)</td><td>Alert at the very top of the app shell, dismissible only once resolved.</td></tr>
+            <tr><td>A decision before continuing</td><td><a href="#modal">Modal</a>; destructive decisions use type-to-confirm.</td></tr>
+            <tr><td>A hint about a control</td><td><a href="#tooltip">Tooltip</a>. An explanation with a next step is a <a href="#popover">Popover</a>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/data-table/usage/" target="_blank" rel="noopener">Data table usage</a>: title and description, toolbar with search, filters and at most five actions, batch actions replacing the toolbar, header length, row densities.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/button/usage/" target="_blank" rel="noopener">Button usage</a>: one primary per page, button placement in dialogs and wizards.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/patterns/loading-pattern/" target="_blank" rel="noopener">Loading pattern</a>: skeleton versus spinner, full-screen versus inline, what never gets a skeleton.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/patterns/empty-states-pattern/" target="_blank" rel="noopener">Empty states pattern</a>: anatomy (title, body, action) and the three types.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/components/notification/usage/" target="_blank" rel="noopener">Notification usage</a>: which notification carries which message, toast timing, a user action for every error.</li>
+        <li>Atlassian Design System, <a href="https://atlassian.design/foundations/content/designing-messages" target="_blank" rel="noopener">Designing messages</a>: message types and the component that carries each.</li>
+        <li>Atlassian Design System, <a href="https://atlassian.design/components/page-layout/usage" target="_blank" rel="noopener">Page layout</a>: landmark labels and the skip link in an application shell.</li>
+        <li>Salesforce Lightning Design System (v1), <a href="https://v1.lightningdesignsystem.com/components/page-headers/" target="_blank" rel="noopener">Page headers</a>: the record-home header with title, key facts and actions, and the object-home (list) header.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/empty-state-interface-design/" target="_blank" rel="noopener">Empty States</a>: say the status, teach what will appear, give a direct next step.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/complex-application-design/" target="_blank" rel="noopener">8 Design Guidelines for Complex Applications</a>: no lost work, non-linear flows, a record of actions, secondary detail in context, salience of the critical.</li>
+      </ul>
+    </section>
+
+
     <!-- Demonstrates the .shield-button component, variants, sizes, and states, from
              components.css. Static; clicking these buttons doesn't do anything. -->
     <section id="button">
       <h2>Button</h2>
-      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>blue-7</code> (<code>#0A85C7</code>), darkening to <code>blue-8</code> on hover. White text on <code>blue-7</code> measures 4.0:1, a little under the 4.5:1 target. Colors come from <code>tokens.css</code>.</p>
+      <p class="lede">Use <b style="color:var(--text)">Primary</b> (solid blue) once per screen for the main action. <b style="color:var(--text)">Default</b> is for ordinary actions, <b style="color:var(--text)">Dashed</b> for "add something", <b style="color:var(--text)">Text</b> for low-emphasis actions like Cancel, <b style="color:var(--text)">Link</b> for text-style navigation, and <b style="color:var(--text)">Danger</b> for destructive actions (Danger (default) is the quieter outline version). Buttons are pill-shaped (42px), and only Primary and solid Danger have a soft shadow. Primary is <code>brand-blue-dark</code> (<code>#0063A1</code>, blue-8), darkening to <code>blue-9</code> on hover; white text on it measures 6.4:1. Solid Danger is <code>error-fill</code> (<code>#CF1322</code>), 5.6:1 with white text, darkening on hover. Colors come from <code>tokens.css</code>.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Variants</span>
           <button class="shield-button shield-button-primary">Primary</button>
@@ -695,13 +1025,13 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     </section>
 
     <!-- Demonstrates .shield-input/.shield-textarea from components.css. The clear (×) and
-             password-reveal (👁) behavior is wired to shield.js's sgClearInput() and
+             password-reveal (eye icon) behavior is wired to shield.js's sgClearInput() and
              sgTogglePassword(). The File upload block below is a PROPOSED component (see its
              own "Proposed" badge) driven by shield.js's sgHandleUpload/sgHandleDrop/
              sgRenderUploadFiles. -->
     <section id="input">
       <h2>Input</h2>
-      <p class="lede">Text fields are 32px tall. The border turns light blue on hover, glows brand blue while typing, and turns red on error. Use <code>shield-input-wrap</code> when an icon sits inside the field.</p>
+      <p class="lede">Text fields are 32px tall. The border turns light blue on hover, glows brand blue while typing, and turns red on error. Use <code>shield-input-wrap</code> when an icon sits inside the field. An error is always described <i>in text</i> under the field (<code>shield-field-hint bad</code>, pointed to by <code>aria-describedby</code>); the red border and icon are extra cues, never the only ones (WCAG 2.2 SC 3.3.1). Say what to enter, not what was wrong: "Enter an email address in the form name@firm.com", not "Invalid email".</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Basic</span>
           <span class="shield-input-wrap field"><input class="shield-input" placeholder="Type here"></span>
@@ -716,18 +1046,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row"><span class="demo-label">Password: suffix toggle</span>
           <span class="shield-input-wrap field">
             <input class="shield-input has-suffix" type="password" value="hunter2" id="pw-demo">
-            <span class="shield-input-icon suffix clearable" style="pointer-events:auto;cursor:pointer" onclick="sgTogglePassword(this)">👁</span>
+            <button type="button" class="shield-input-icon suffix clearable" aria-label="Show password" aria-pressed="false" aria-controls="pw-demo" onclick="sgTogglePassword(this)"><svg class="shield-icon" width="15.75" height="14" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></button>
           </span>
         </div>
         <div class="demo-row"><span class="demo-label">Clearable</span>
           <span class="shield-input-wrap field">
             <input class="shield-input has-suffix" value="Consumer Finance" oninput="this.nextElementSibling.style.display = this.value ? '' : 'none'">
-            <span class="shield-input-icon suffix clearable" onclick="sgClearInput(this)"><svg class="shield-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span>
+            <button type="button" class="shield-input-icon suffix clearable" aria-label="Clear" onclick="sgClearInput(this)"><svg class="shield-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></button>
           </span>
         </div>
         <div class="demo-row"><span class="demo-label">Error state</span>
           <div>
-            <span class="shield-input-wrap field"><input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="in-err"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="in-err" role="tooltip">Enter a valid email address.</span></span></span>
+            <span class="shield-input-wrap field"><input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="in-err"><span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span>
+            <div class="shield-field-hint bad" id="in-err"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">TextArea</span>
@@ -750,48 +1081,48 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <div class="demo-row"><span class="demo-label">Single, searchable</span>
           <div class="shield-select field-wide" id="sel-single">
             <div class="shield-select-box">
-              <input class="shield-select-search" placeholder="Select a catalog…" autocomplete="off" oninput="sgSelectFilter('sel-single', this)" onfocus="sgSelectOpen('sel-single')" onclick="sgSelectOpen('sel-single')">
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-single-list" aria-autocomplete="list" placeholder="Select a catalog…" autocomplete="off" oninput="sgSelectFilter('sel-single', this)" onfocus="sgSelectOpen('sel-single')" onclick="sgSelectOpen('sel-single')">
               <span class="shield-select-arrow"><svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></span>
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-option" data-value="mt" data-label="Mass Tort Intake" onmousedown="event.preventDefault();sgSelectPick('sel-single','mt','Mass Tort Intake')">Mass Tort Intake</div>
-              <div class="shield-select-option selected" data-value="cf" data-label="Consumer Finance" onmousedown="event.preventDefault();sgSelectPick('sel-single','cf','Consumer Finance')">Consumer Finance</div>
-              <div class="shield-select-option" data-value="pl" data-label="Product Liability" onmousedown="event.preventDefault();sgSelectPick('sel-single','pl','Product Liability')">Product Liability</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-single-list" role="listbox">
+              <div class="shield-select-option" id="sel-single-list-mt" role="option" aria-selected="false" data-value="mt" data-label="Mass Tort Intake" onmousedown="event.preventDefault();sgSelectPick('sel-single','mt','Mass Tort Intake')">Mass Tort Intake</div>
+              <div class="shield-select-option selected" id="sel-single-list-cf" role="option" aria-selected="true" data-value="cf" data-label="Consumer Finance" onmousedown="event.preventDefault();sgSelectPick('sel-single','cf','Consumer Finance')">Consumer Finance</div>
+              <div class="shield-select-option" id="sel-single-list-pl" role="option" aria-selected="false" data-value="pl" data-label="Product Liability" onmousedown="event.preventDefault();sgSelectPick('sel-single','pl','Product Liability')">Product Liability</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Grouped options</span>
           <div class="shield-select field-wide" id="sel-grouped">
             <div class="shield-select-box">
-              <input class="shield-select-search" placeholder="Assign a role contact…" autocomplete="off" oninput="sgSelectFilter('sel-grouped', this)" onfocus="sgSelectOpen('sel-grouped')" onclick="sgSelectOpen('sel-grouped')">
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-grouped-list" aria-autocomplete="list" placeholder="Assign a role contact…" autocomplete="off" oninput="sgSelectFilter('sel-grouped', this)" onfocus="sgSelectOpen('sel-grouped')" onclick="sgSelectOpen('sel-grouped')">
               <span class="shield-select-arrow"><svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></span>
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-group-label">Business contacts</div>
-              <div class="shield-select-option" data-value="jt" data-label="J. Turner" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','jt','J. Turner')">J. Turner</div>
-              <div class="shield-select-option" data-value="mh" data-label="M. Harlow" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','mh','M. Harlow')">M. Harlow</div>
-              <div class="shield-select-group-label">Technical contacts</div>
-              <div class="shield-select-option" data-value="rv" data-label="R. Vance" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','rv','R. Vance')">R. Vance</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-grouped-list" role="listbox">
+              <div class="shield-select-group-label" role="presentation">Business contacts</div>
+              <div class="shield-select-option" id="sel-grouped-list-jt" role="option" aria-selected="false" data-value="jt" data-label="J. Turner" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','jt','J. Turner')">J. Turner</div>
+              <div class="shield-select-option" id="sel-grouped-list-mh" role="option" aria-selected="false" data-value="mh" data-label="M. Harlow" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','mh','M. Harlow')">M. Harlow</div>
+              <div class="shield-select-group-label" role="presentation">Technical contacts</div>
+              <div class="shield-select-option" id="sel-grouped-list-rv" role="option" aria-selected="false" data-value="rv" data-label="R. Vance" onmousedown="event.preventDefault();sgSelectPick('sel-grouped','rv','R. Vance')">R. Vance</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Multiple: grows into chips</span>
           <div class="shield-select multiple field-wide" id="sel-multi">
             <div class="shield-select-box">
-              <span class="shield-select-tag" data-chip="funding">Funding partner <button type="button" class="shield-select-tag-remove" onclick="sgSelectRemoveChip('sel-multi','funding')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button></span>
-              <input class="shield-select-search" placeholder="Add co-counsel…" autocomplete="off" oninput="sgSelectFilter('sel-multi', this)" onfocus="sgSelectOpen('sel-multi')" onclick="sgSelectOpen('sel-multi')">
+              <span class="shield-select-tag" data-chip="funding">Funding partner <button type="button" class="shield-select-tag-remove" aria-label="Remove Funding partner" onclick="sgSelectRemoveChip('sel-multi','funding')"><svg class="shield-icon" width="6.75" height="9" viewBox="0 0 384 512" fill="currentColor"><path d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg></button></span>
+              <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-multi-list" aria-autocomplete="list" placeholder="Add co-counsel…" autocomplete="off" oninput="sgSelectFilter('sel-multi', this)" onfocus="sgSelectOpen('sel-multi')" onclick="sgSelectOpen('sel-multi')">
             </div>
-            <div class="shield-select-panel">
-              <div class="shield-select-option selected" data-value="funding" data-label="Funding partner" onmousedown="event.preventDefault();sgSelectPick('sel-multi','funding','Funding partner')">Funding partner</div>
-              <div class="shield-select-option" data-value="cocounsel" data-label="Co-counsel" onmousedown="event.preventDefault();sgSelectPick('sel-multi','cocounsel','Co-counsel')">Co-counsel</div>
-              <div class="shield-select-option" data-value="referring" data-label="Referring firm" onmousedown="event.preventDefault();sgSelectPick('sel-multi','referring','Referring firm')">Referring firm</div>
-              <div class="shield-select-empty" style="display:none">No matches</div>
+            <div class="shield-select-panel" id="sel-multi-list" role="listbox">
+              <div class="shield-select-option selected" id="sel-multi-list-funding" role="option" aria-selected="true" data-value="funding" data-label="Funding partner" onmousedown="event.preventDefault();sgSelectPick('sel-multi','funding','Funding partner')">Funding partner</div>
+              <div class="shield-select-option" id="sel-multi-list-cocounsel" role="option" aria-selected="false" data-value="cocounsel" data-label="Co-counsel" onmousedown="event.preventDefault();sgSelectPick('sel-multi','cocounsel','Co-counsel')">Co-counsel</div>
+              <div class="shield-select-option" id="sel-multi-list-referring" role="option" aria-selected="false" data-value="referring" data-label="Referring firm" onmousedown="event.preventDefault();sgSelectPick('sel-multi','referring','Referring firm')">Referring firm</div>
+              <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
             </div>
           </div>
         </div>
-        <div class="spec"><code>panel → shadow-md</code><code>selected → blue-1 / brand-blue-dark</code><code>chips wrap the box</code></div>
+        <div class="spec"><code>panel → shadow-md</code><code>selected → selected-bg / brand-blue-dark</code><code>chips wrap the box</code></div>
       </div>
     </section>
 
@@ -799,21 +1130,21 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css, each toggled by shield.js (sgToggleCheckbox, sgSelectRadio,
              sgToggleSwitch, sgSegPick). -->
     <section id="checkbox">
-      <h2>Checkbox, Radio &amp; Switch</h2>
+      <h2>Checkbox, radio &amp; switch</h2>
       <p class="lede">Checkbox for independent yes/no options, radio when exactly one option applies, switch for settings that take effect immediately. All use the Primary button blue when on.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Checkbox: click to toggle</span>
-          <label class="shield-check-row"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)"></span>Unchecked</label>
-          <label class="shield-check-row"><span class="shield-checkbox is-on" role="checkbox" tabindex="0" aria-checked="true" onclick="sgToggleCheckbox(this)"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span>Checked</label>
-          <label class="shield-check-row disabled"><span class="shield-checkbox disabled" role="checkbox" aria-checked="false" aria-disabled="true"></span>Disabled</label>
+          <label class="shield-check-row"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)" aria-labelledby="lbl-unchecked"></span><span id="lbl-unchecked">Unchecked</span></label>
+          <label class="shield-check-row"><span class="shield-checkbox is-on" role="checkbox" tabindex="0" aria-checked="true" onclick="sgToggleCheckbox(this)" aria-labelledby="lbl-checked"><svg width="2.19" height="2.5" viewBox="0 0 448 512" fill="#fff"><path d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg></span><span id="lbl-checked">Checked</span></label>
+          <label class="shield-check-row disabled"><span class="shield-checkbox disabled" role="checkbox" aria-checked="false" aria-disabled="true" aria-labelledby="lbl-disabled"></span><span id="lbl-disabled">Disabled</span></label>
         </div>
         <div class="demo-row"><span class="demo-label">Radio: pick one</span>
-          <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)"></span>Standard shipping</label>
-          <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="ship" onclick="sgSelectRadio(this)"></span>Expedited shipping</label>
+          <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)" aria-labelledby="lbl-standard-shipping"></span><span id="lbl-standard-shipping">Standard shipping</span></label>
+          <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="ship" onclick="sgSelectRadio(this)" aria-labelledby="lbl-expedited-shipping"></span><span id="lbl-expedited-shipping">Expedited shipping</span></label>
         </div>
         <div class="demo-row"><span class="demo-label">Switch: default &amp; small</span>
           <button type="button" class="shield-switch-track is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
-          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false" aria-label="Notifications (off)"><span class="shield-switch-thumb"></span></button>
+          <button type="button" class="shield-switch-track" onclick="sgToggleSwitch(this)" role="switch" aria-checked="false" aria-label="Email digest"><span class="shield-switch-thumb"></span></button>
           <button type="button" class="shield-switch-track small is-on" onclick="sgToggleSwitch(this)" role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
           <button type="button" class="shield-switch-track is-on" disabled role="switch" aria-checked="true" aria-label="Notifications"><span class="shield-switch-thumb"></span></button>
         </div>
@@ -823,7 +1154,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
             <button type="button" onclick="sgSegPick(this)">Grid</button>
           </div>
         </div>
-        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → blue-7</code></div>
+        <div class="spec"><code>16×16 (checkbox/radio)</code><code>44×22 (switch)</code><code>on → brand-blue-dark</code></div>
       </div>
     </section>
 
@@ -835,16 +1166,16 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <div class="demo">
         <div class="demo-row stack"><span class="demo-label">Vertical, with descriptions</span>
           <div class="shield-radio-group" role="radiogroup" aria-label="Delivery method">
-            <label class="shield-check-row has-desc"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Standard<span class="shield-radio-desc">Delivered within 5 business days.</span></span></label>
-            <label class="shield-check-row has-desc"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)"></span><span class="shield-radio-text">Expedited<span class="shield-radio-desc">Next business day.</span></span></label>
-            <label class="shield-check-row has-desc disabled"><span class="shield-radio disabled" role="radio" aria-checked="false" aria-disabled="true"></span><span class="shield-radio-text">Same day<span class="shield-radio-desc">Not available for this partner group.</span></span></label>
+            <label class="shield-check-row has-desc"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)" aria-labelledby="lbl-standard" aria-describedby="desc-standard"></span><span class="shield-radio-text"><span id="lbl-standard">Standard</span><span class="shield-radio-desc" id="desc-standard">Delivered within 5 business days.</span></span></label>
+            <label class="shield-check-row has-desc"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)" aria-labelledby="lbl-expedited" aria-describedby="desc-expedited"></span><span class="shield-radio-text"><span id="lbl-expedited">Expedited</span><span class="shield-radio-desc" id="desc-expedited">Next business day.</span></span></label>
+            <label class="shield-check-row has-desc disabled"><span class="shield-radio disabled" role="radio" aria-checked="false" aria-disabled="true" aria-labelledby="lbl-same-day" aria-describedby="desc-same-day"></span><span class="shield-radio-text"><span id="lbl-same-day">Same day</span><span class="shield-radio-desc" id="desc-same-day">Not available for this partner group.</span></span></label>
           </div>
         </div>
         <div class="demo-row stack"><span class="demo-label">Horizontal</span>
           <div class="shield-radio-group horizontal" role="radiogroup" aria-label="Contact type">
-            <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="contact" onclick="sgSelectRadio(this)"></span>Business</label>
-            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Technical</label>
-            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)"></span>Accounts payable</label>
+            <label class="shield-check-row"><span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-business"></span><span id="lbl-business">Business</span></label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-technical"></span><span id="lbl-technical">Technical</span></label>
+            <label class="shield-check-row"><span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="contact" onclick="sgSelectRadio(this)" aria-labelledby="lbl-accounts-payable"></span><span id="lbl-accounts-payable">Accounts payable</span></label>
           </div>
         </div>
         <div class="spec"><code>16×16 radio</code><code>whole row is the click target</code><code>Tab: chosen radio · Arrows: move + pick</code><code>group needs a name (aria-label)</code></div>
@@ -867,7 +1198,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
         </div>
         <div class="demo-row"><span class="demo-label">Error</span>
-          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-err">Signed on</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input error" id="d-err" type="date" aria-invalid="true" aria-describedby="d-err-h"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon after-native" tabindex="0" role="img" aria-label="Error: Choose the date the agreement was signed."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="d-err-h" role="tooltip">Choose the date the agreement was signed.</span></span></span></div>
+          <div class="shield-field" style="margin:0"><label class="shield-field-label" for="d-err">Signed on</label><span class="shield-input-wrap" style="width:190px"><input class="shield-input error" id="d-err" type="date" aria-invalid="true" aria-describedby="d-err-h"><span class="shield-input-error-icon after-native" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span><div class="shield-field-hint bad" id="d-err-h"><span class="shield-sr-only">Error: </span>Enter the date the agreement was signed.</div></div>
         </div>
         <div class="spec"><code>height 32</code><code>shown as MM/DD/YYYY</code><code>value read by code: YYYY-MM-DD</code></div>
       </div>
@@ -906,7 +1237,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <li><b style="color:var(--text)">Required fields</b> get a red asterisk before the label.</li>
         <li><b style="color:var(--text)">Help text</b> goes under the field, short.</li>
         <li><b style="color:var(--text)">Check a field</b> when the person leaves it and again on submit, not on every keystroke.</li>
-        <li><b style="color:var(--text)">Errors:</b> the field border turns red and a red error icon appears at the right end of the field. Hover or focus the icon to read what is wrong.</li>
+        <li><b style="color:var(--text)">Errors:</b> the field border turns red, a red icon marks the field, and the message appears in text directly under the field, with a hidden "Error:" prefix for screen readers. It says what to enter ("Enter a date after the effective date"), never "invalid", "please", "sorry" or a code. Hover is never the only way to read it. Keep what the person typed.</li>
+        <li><b style="color:var(--text)">On submit with errors,</b> show an error <a href="#alert">Alert</a> at the top of the form that lists each problem, links to its field, and takes focus, using the same words as the inline messages.</li>
+        <li><b style="color:var(--text)">Never ask twice.</b> In a multi-step flow, anything the person already entered is filled in or offered for selection, not typed again (WCAG 2.2 SC 3.3.7).</li>
         <li><b style="color:var(--text)">Buttons:</b> primary action on the right, Cancel beside it.</li>
       </ul>
       <div class="demo">
@@ -918,7 +1251,8 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
           <div class="shield-field">
             <label class="shield-field-label" for="f-email"><span class="shield-field-required" aria-hidden="true">*</span>Primary contact email</label>
-            <span class="shield-input-wrap"><input class="shield-input error has-suffix" id="f-email" type="email" required aria-invalid="true" aria-describedby="f-email-h" value="accounts@meridian"><span class="shield-input-error shield-tooltip top"><span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address, like name@firm.com."><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><span class="shield-tooltip-body" id="f-email-h" role="tooltip">Enter a valid email address, like name@firm.com.</span></span></span>
+            <span class="shield-input-wrap"><input class="shield-input error has-suffix" id="f-email" type="email" required aria-invalid="true" aria-describedby="f-email-h" value="accounts@meridian"><span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span></span>
+            <div class="shield-field-hint bad" id="f-email-h"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
           </div>
           <div class="shield-field">
             <label class="shield-field-label" for="f-cat">Catalog</label>
@@ -927,7 +1261,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           </div>
           <div class="shield-field">
             <span class="shield-field-label">System integration</span>
-            <label class="shield-check-row"><button type="button" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleSwitch(this)"><span class="shield-switch-thumb"></span></button>Requires system integration</label>
+            <label class="shield-check-row"><button type="button" class="shield-switch-track" role="switch" aria-checked="false" onclick="sgToggleSwitch(this)" aria-labelledby="lbl-requires-system-integration"><span class="shield-switch-thumb"></span></button><span id="lbl-requires-system-integration">Requires system integration</span></label>
           </div>
           <div class="shield-field span-all">
             <label class="shield-field-label" for="f-notes">Notes</label>
@@ -947,11 +1281,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css. The × remove and checkable-toggle behavior come from shield.js's
              sgRemoveTag() and sgToggleCheckableTag(). -->
     <section id="tag">
-      <h2>Tag &amp; Pill</h2>
+      <h2>Tag &amp; pill</h2>
       <p class="lede">Small labels for status or category, using the four functional colors so a color means the same thing on every screen. Tags are rectangular, pills are rounder with a status dot, and checkable tags work as toggle filters.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Tag: colors, click × to remove</span>
-          <span class="shield-tag">Mass Tort <button onclick="sgRemoveTag(this)">×</button></span>
+          <span class="shield-tag">Mass Tort <button type="button" aria-label="Remove Mass Tort" onclick="sgRemoveTag(this)">×</button></span>
           <span class="shield-tag success">Active</span>
           <span class="shield-tag warning">Paused</span>
           <span class="shield-tag error">Rejected</span>
@@ -978,15 +1312,43 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
           <span class="shield-tag warning">Paused</span>
           <span class="shield-tag success">Completed</span>
         </div>
-        <div class="spec"><code>tag → bg/border/text triple</code><code>gold → one-off, not in the functional set</code></div>
+        <div class="spec"><code>tag → bg/border/text triple</code><code>gold → accent only, not a status (see Status display below)</code></div>
+        <h3 class="sub">Status: dot + word</h3>
+        <div class="demo-row">
+          <span class="shield-status success">Active</span>
+          <span class="shield-status warning">Paused</span>
+          <span class="shield-status error">Rejected</span>
+          <span class="shield-status info">Internal review</span>
+          <span class="shield-status">Draft</span>
+        </div>
+        <p class="spec">For a state word inside a sentence or a dense row where a filled tag is too loud. The word carries the meaning; the dot only reinforces it.</p>
       </div>
+      <h3 class="sub">Status display: which one to use</h3>
+      <p class="lede">Three components show a state, and a screen that mixes them for the same meaning teaches people nothing. One shape per meaning, and color is never the only cue: every one of them has a word, and the Pill has an icon as well.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Need</th><th>Use</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>The lifecycle status of a record: in a table cell, a list, a description value, a page header</td><td><b>Tag</b> with the StatusTag mapping above</td><td>Rectangular and filled, read at a glance, always a word; the same seven words everywhere.</td></tr>
+            <tr><td>A health or sync indicator that is not a lifecycle status (Synced, Needs review, Idle)</td><td><b>Pill</b> with its icon</td><td>Rounder and carrying an icon, so it does not read as a record status.</td></tr>
+            <tr><td>A state word inside a sentence, a timeline entry, or a dense row</td><td><b>Status</b> (dot + word)</td><td>Quiet; the word does the work.</td></tr>
+            <tr><td>Priority or a one-off emphasis that is not a status</td><td><b>Tag gold</b></td><td>The one accent outside the four moods. Never use it to mean good, bad or waiting.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">Keep to five or six distinct statuses on one screen. A Pill is never used for a lifecycle status, and a Tag is never used for sync.</p>
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/patterns/status-indicator-pattern/" target="_blank" rel="noopener">Status indicator pattern</a>: color paired with a shape or icon and a text label, one shape per meaning, five or six statuses per screen.</li>
+        <li>W3C, <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" target="_blank" rel="noopener">WCAG 2.2 SC 1.4.1 Use of Color</a>: color is never the only visual means of conveying information.</li>
+      </ul>
     </section>
 
     <!-- Demonstrates .shield-avatar, .shield-badge-dot (corner-overlay, no number, wrap it and an
              avatar/icon in .shield-badge-wrap), and .shield-badge-count (a plain inline chip, used
              again in the Menu section below). Static. -->
     <section id="avatar">
-      <h2>Avatar &amp; Badge</h2>
+      <h2>Avatar &amp; badge</h2>
       <p class="lede">An <b style="color:var(--text)">avatar</b> is a colored circle with initials. A <b style="color:var(--text)">dot badge</b> on its corner means "needs attention". A <b style="color:var(--text)">count badge</b> is a small number, such as an unread count beside a menu item.</p>
       <div class="demo">
         <div class="demo-row"><span class="demo-label">Avatar: sizes</span>
@@ -1036,7 +1398,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              scroll horizontally instead of breaking the page layout. Static. -->
     <section id="table">
       <h2>Table</h2>
-      <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens.</p>
+      <p class="lede">For dense, scannable data. Headers are small, gray and uppercase, rows are separated by thin lines and highlight on hover. Wrap tables in the scroll container so wide ones scroll sideways on small screens. Write header text in sentence case in the markup ("Partner group"); the uppercase is CSS, so screen readers hear words, not letters. Columns of numbers or money get <code>num</code> on the header and the cells: right-aligned, tabular figures, the same number of decimals down the column.</p>
 <h3 class="sub">Sorting, selection and bulk actions</h3>
       <p class="lede">For long working lists. <b style="color:var(--text)">Sort</b> by clicking a column heading; the arrow and <code>aria-sort</code> show the direction, and the change is announced. <b style="color:var(--text)">Select</b> rows with the checkboxes in the first column; the header checkbox selects all and shows a dash when only some are chosen. When anything is selected, a <b style="color:var(--text)">bulk bar</b> appears above the table with the count and the actions that apply to every selected row.</p>
       <div class="demo" style="padding:0">
@@ -1054,15 +1416,15 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
               <th class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select all orders" onclick="sgTableToggleAll(this)"></span></th>
               <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Order</button></th>
               <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Partner group</button></th>
-              <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Value</button></th>
+              <th aria-sort="none" class="num"><button class="shield-sort" onclick="sgTableSort(this)">Value</button></th>
               <th>Status</th>
             </tr></thead>
             <tbody>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-501" onclick="sgTableToggleRow(this)"></span></td><td>ORD-501</td><td>Harlow &amp; Vance</td><td data-value="48200">$48,200</td><td><span class="shield-tag success">Active</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-498" onclick="sgTableToggleRow(this)"></span></td><td>ORD-498</td><td>Meridian Legal Group</td><td data-value="12750">$12,750</td><td><span class="shield-tag warning">Paused</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-493" onclick="sgTableToggleRow(this)"></span></td><td>ORD-493</td><td>Consumer Finance Direct</td><td data-value="31000">$31,000</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-487" onclick="sgTableToggleRow(this)"></span></td><td>ORD-487</td><td>Archer Systems</td><td data-value="9400">$9,400</td><td><span class="shield-tag success">Approved</span></td></tr>
-              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-482" onclick="sgTableToggleRow(this)"></span></td><td>ORD-482</td><td>Bailey &amp; Glasser</td><td data-value="22300">$22,300</td><td><span class="shield-tag error">Rejected</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-501" onclick="sgTableToggleRow(this)"></span></td><td>ORD-501</td><td>Harlow &amp; Vance</td><td class="num" data-value="48200">$48,200</td><td><span class="shield-tag success">Active</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-498" onclick="sgTableToggleRow(this)"></span></td><td>ORD-498</td><td>Meridian Legal Group</td><td class="num" data-value="12750">$12,750</td><td><span class="shield-tag warning">Paused</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-493" onclick="sgTableToggleRow(this)"></span></td><td>ORD-493</td><td>Consumer Finance Direct</td><td class="num" data-value="31000">$31,000</td><td><span class="shield-tag processing">Internal Review</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-487" onclick="sgTableToggleRow(this)"></span></td><td>ORD-487</td><td>Archer Systems</td><td class="num" data-value="9400">$9,400</td><td><span class="shield-tag success">Approved</span></td></tr>
+              <tr><td class="shield-table-select"><span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-label="Select ORD-482" onclick="sgTableToggleRow(this)"></span></td><td>ORD-482</td><td>Bailey &amp; Glasser</td><td class="num" data-value="22300">$22,300</td><td><span class="shield-tag error">Rejected</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1074,14 +1436,14 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              showing one record's details. Static. -->
     <section id="descriptions">
       <h2>Descriptions</h2>
-      <p class="lede">A read-only list of labels and values, such as the details of an offer or order.</p>
+      <p class="lede">A read-only list of labels and values, such as the details of an offer or order. It is a real <code>&lt;dl&gt;</code> with <code>&lt;dt&gt;</code> / <code>&lt;dd&gt;</code> pairs, so the label-to-value relationship is in the markup, not only in the layout (WCAG 2.2 SC 1.3.1). Values follow the <a href="#formats">Data formats</a> rules.</p>
       <div class="demo">
-        <div class="shield-description">
-          <div class="shield-description-row"><div class="shield-description-label">Order ID</div><div class="shield-description-value">ORD-501</div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Partner</div><div class="shield-description-value">Harlow &amp; Vance</div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Status</div><div class="shield-description-value"><span class="shield-tag success">Active</span></div></div>
-          <div class="shield-description-row"><div class="shield-description-label">Created</div><div class="shield-description-value">2026-09-12</div></div>
-        </div>
+        <dl class="shield-description">
+          <div class="shield-description-row"><dt class="shield-description-label">Order ID</dt><dd class="shield-description-value">ORD-501</dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Partner</dt><dd class="shield-description-value">Harlow &amp; Vance</dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Status</dt><dd class="shield-description-value"><span class="shield-tag success">Active</span></dd></div>
+          <div class="shield-description-row"><dt class="shield-description-label">Created</dt><dd class="shield-description-value">Sep 12, 2026</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -1091,9 +1453,9 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">A vertical list of events in time order, such as the history of an offer.</p>
       <div class="demo">
         <div class="shield-timeline">
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 9:04 AM</span></div></div>
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Sent for internal review</b> · <span class="shield-text tertiary">Sep 14, 2:10 PM</span></div></div>
-          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Partner signature requested</b> · <span class="shield-text tertiary">Sep 18, 11:30 AM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 2026, 9:04 AM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Sent for internal review</b> · <span class="shield-text tertiary">Sep 14, 2026, 2:10 PM</span></div></div>
+          <div class="shield-timeline-item"><div class="shield-timeline-content"><b class="shield-text strong">Partner signature requested</b> · <span class="shield-text tertiary">Sep 18, 2026, 11:30 AM</span></div></div>
         </div>
       </div>
     </section>
@@ -1102,12 +1464,12 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              components.css). Static. -->
     <section id="statistic">
       <h2>Statistic</h2>
-      <p class="lede">Key numbers at the top of a screen. Each tile is only as wide as its content (180px minimum) and never stretches to fill the row; tiles that do not fit wrap onto the next line. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red.</p>
+      <p class="lede">Key numbers at the top of a screen. Each tile is only as wide as its content (180px minimum) and never stretches to fill the row; tiles that do not fit wrap onto the next line. Use <code>highlighted</code> on the most important tile, and <code>positive</code> or <code>negative</code> to color a number green or red. Color is never the only cue (WCAG 2.2 SC 1.4.1): a colored number always has a sign, an arrow or a word in the line under it that says which way it moved.</p>
       <div class="demo" style="background:var(--bg-layout)">
         <div class="shield-stats">
           <div class="shield-stat highlighted"><div class="shield-stat-label">Active orders</div><div class="shield-stat-value">128</div><div class="shield-stat-sub">+12 this week</div></div>
-          <div class="shield-stat"><div class="shield-stat-label">Conversion rate</div><div class="shield-stat-value positive">34<small>%</small></div></div>
-          <div class="shield-stat"><div class="shield-stat-label">Blocked offers</div><div class="shield-stat-value negative">7</div><div class="shield-stat-extra">3 waiting on partner signature</div></div>
+          <div class="shield-stat"><div class="shield-stat-label">Conversion rate</div><div class="shield-stat-value positive">34<small>%</small></div><div class="shield-stat-sub">+2 points vs last month</div></div>
+          <div class="shield-stat"><div class="shield-stat-label">Blocked offers</div><div class="shield-stat-value negative">7</div><div class="shield-stat-sub">Up 2 since last week</div><div class="shield-stat-extra">3 waiting on partner signature</div></div>
           <div class="shield-stat"><div class="shield-stat-label">Leads in system</div><div class="shield-stat-value">276<small>total</small></div><div class="shield-stat-sub">47 qualified</div></div>
         </div>
       </div>
@@ -1122,10 +1484,10 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">A banner that stays until dismissed, in four moods: info, success, warning and error. Use a Toast for a quick confirmation instead.</p>
       <div class="demo">
         <div class="demo-row stack">
-          <div class="shield-alert success"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Order activated successfully.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert warning"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">This campaign is nearing capacity.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert error"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Unable to save changes</div><div class="shield-alert-description">Check the highlighted fields and try again.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
-          <div class="shield-alert info"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Sample data, nothing here is saved.</div></div><button class="shield-alert-close" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert success"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Order activated successfully.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert warning"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">This campaign is nearing capacity.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert error"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c9.4-9.4 24.6-9.4 33.9 0l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Unable to save changes</div><div class="shield-alert-description">Check the highlighted fields and try again.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
+          <div class="shield-alert info"><span class="shield-alert-icon"><svg class="shield-icon" width="16" height="16" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM224 160a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm-8 64l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg></span><div class="shield-alert-body"><div class="shield-alert-title">Sample data, nothing here is saved.</div></div><button type="button" class="shield-alert-close" aria-label="Dismiss" onclick="sgDismissAlert(this)">×</button></div>
         </div>
       </div>
     </section>
@@ -1188,11 +1550,11 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
         <aside class="shield-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-basic-title">
           <div class="shield-drawer-head"><h3 id="drawer-basic-title">ORD-501</h3><button class="shield-drawer-close" aria-label="Close" onclick="sgCloseDrawer('drawer-basic')">×</button></div>
           <div class="shield-drawer-body">
-            <div class="shield-description">
-              <div class="shield-description-row"><div class="shield-description-label">Partner group</div><div class="shield-description-value">Harlow &amp; Vance</div></div>
-              <div class="shield-description-row"><div class="shield-description-label">Status</div><div class="shield-description-value"><span class="shield-tag success">Active</span></div></div>
-              <div class="shield-description-row"><div class="shield-description-label">Created</div><div class="shield-description-value">2026-09-12</div></div>
-            </div>
+            <dl class="shield-description">
+              <div class="shield-description-row"><dt class="shield-description-label">Partner group</dt><dd class="shield-description-value">Harlow &amp; Vance</dd></div>
+              <div class="shield-description-row"><dt class="shield-description-label">Status</dt><dd class="shield-description-value"><span class="shield-tag success">Active</span></dd></div>
+              <div class="shield-description-row"><dt class="shield-description-label">Created</dt><dd class="shield-description-value">Sep 12, 2026</dd></div>
+            </dl>
           </div>
           <div class="shield-drawer-foot"><button class="shield-button shield-button-default" onclick="sgCloseDrawer('drawer-basic')">Close</button><button class="shield-button shield-button-primary">Open order</button></div>
         </aside>
@@ -1203,11 +1565,13 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
     <!-- Demonstrates the .shield-empty placeholder shown in place of an empty list/table. Static. -->
     <section id="empty">
       <h2>Empty</h2>
-      <p class="lede">Shown in place of a list or table that has nothing to display.</p>
+      <p class="lede">Shown in place of a list or table that has nothing to display. An empty state is never blank: it says <i>why</i> the space is empty, what will appear here, and gives the one next step. There are three kinds, and the words differ for each: <b style="color:var(--text)">nothing yet</b> (a new account or an empty catalog: explain and offer to add the first item), <b style="color:var(--text)">no matches</b> (filters or a search excluded everything: say so and offer to clear them), and <b style="color:var(--text)">cannot show</b> (an error or no permission: say what happened in plain words and who to ask). Add <code>shield-empty-title</code> above the description when the space is large, and one Default button as the action.</p>
       <div class="demo">
         <div class="shield-empty">
           <svg class="shield-empty-icon" viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M97.5 400l50-160 379.4 0-50 160-379.4 0zm190.7 48L477 448c21 0 39.6-13.6 45.8-33.7l50-160c9.7-30.9-13.4-62.3-45.8-62.3l-379.4 0c-21 0-39.6 13.6-45.8 33.7L80.2 294.4 80.2 96c0-8.8 7.2-16 16-16l138.7 0c3.5 0 6.8 1.1 9.6 3.2L282.9 112c13.8 10.4 30.7 16 48 16l117.3 0c8.8 0 16 7.2 16 16l48 0c0-35.3-28.7-64-64-64L330.9 80c-6.9 0-13.7-2.2-19.2-6.4L273.3 44.8C262.2 36.5 248.8 32 234.9 32L96.2 32c-35.3 0-64 28.7-64 64l0 288c0 35.3 28.7 64 64 64l192 0z"/></svg>
-          <div class="shield-empty-description">No orders match these filters.</div>
+          <div class="shield-empty-title">No orders match these filters</div>
+          <div class="shield-empty-description">Try a wider date range, or clear the filters to see all 118 orders.</div>
+          <div class="shield-empty-action"><button class="shield-button shield-button-default small">Clear filters</button></div>
         </div>
       </div>
     </section>
@@ -1216,7 +1580,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              sweep and the spin are both plain CSS @keyframes animations in components.css,
              no JS timer involved. -->
     <section id="skeleton">
-      <h2>Skeleton &amp; Spin</h2>
+      <h2>Skeleton &amp; spin</h2>
       <p class="lede">Loading states. A <b style="color:var(--text)">skeleton</b> is a placeholder shaped like the content that is loading. A <b style="color:var(--text)">spinner</b> shows an action in progress, and inside a button it takes the button's text color.</p>
       <div class="demo">
         <div class="demo-row stack">
@@ -1237,7 +1601,7 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              shield.js is loaded) and removes it again after 3 seconds. -->
     <section id="toast">
       <h2>Toast</h2>
-      <p class="lede">A brief confirmation, for example "Saved". Pushed from code with <code>useToast()</code>, shown top-center, and gone after 3 seconds. Use an Alert if the message needs to stay.</p>
+      <p class="lede">A brief confirmation, for example "Saved". Pushed from code with <code>sgPushToast()</code> (or your framework's equivalent), shown top-center, and gone after 3 seconds. The stack is a polite live region, so screen readers hear each toast without losing their place. Use an Alert if the message needs to stay, and never make a toast the only record of an error the person has to act on: that is an Alert or a Modal.</p>
       <div class="demo">
         <div class="demo-row">
           <button class="shield-button shield-button-default" onclick="sgPushToast('success','Order activated.')">Trigger success</button>
@@ -1335,17 +1699,17 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              sgShowTab(), which shows the matching panel and hides the others. -->
     <section id="tabs">
       <h2>Tabs</h2>
-      <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline.</p>
+      <p class="lede">Switches between related views of the same record without leaving the page. The active tab is blue with an underline. It follows the WAI-ARIA tabs pattern: a <code>tablist</code> of <code>tab</code> buttons, each pointing at its <code>tabpanel</code> with <code>aria-controls</code>; Tab lands on the active tab, Left and Right arrows move and activate the neighbour (automatic activation), Home and End jump to the ends.</p>
       <div class="demo">
         <div class="shield-tabs-bar" id="tabs-demo" role="tablist" aria-label="Offer sections">
-          <button class="shield-tab is-on" role="tab" aria-selected="true" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
-          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
-          <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
+          <button class="shield-tab is-on" role="tab" id="tab-pipeline" aria-selected="true" aria-controls="panel-pipeline" data-tab="pipeline" onclick="sgShowTab('tabs-demo','pipeline')">Pipeline</button>
+          <button class="shield-tab" role="tab" id="tab-documents" aria-selected="false" aria-controls="panel-documents" tabindex="-1" data-tab="documents" onclick="sgShowTab('tabs-demo','documents')">Documents</button>
+          <button class="shield-tab" role="tab" id="tab-contacts" aria-selected="false" aria-controls="panel-contacts" tabindex="-1" data-tab="contacts" onclick="sgShowTab('tabs-demo','contacts')">Contacts</button>
         </div>
         <div class="shield-tab-panel">
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="shield-text secondary">Offer stages, blockers, and the current gate.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="documents" class="shield-text secondary" style="display:none">Retainer agreements and supporting files.</div>
-          <div data-tabpanel-group="tabs-demo" data-tabpanel="contacts" class="shield-text secondary" style="display:none">Business and technical contacts for this offer.</div>
+          <div role="tabpanel" id="panel-pipeline" aria-labelledby="tab-pipeline" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="pipeline" class="shield-text secondary">Offer stages, blockers, and the current gate.</div>
+          <div role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="documents" class="shield-text secondary" hidden>Retainer agreements and supporting files.</div>
+          <div role="tabpanel" id="panel-contacts" aria-labelledby="tab-contacts" tabindex="0" data-tabpanel-group="tabs-demo" data-tabpanel="contacts" class="shield-text secondary" hidden>Business and technical contacts for this offer.</div>
         </div>
       </div>
     </section>
@@ -1371,19 +1735,19 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
              a page-wide listener in shield.js closes it on an outside click or Escape. -->
     <section id="dropdown">
       <h2>Dropdown</h2>
-      <p class="lede">A small menu of actions opened from a button, often at the end of a table row. Items marked <code>danger</code> are red so destructive choices stand out.</p>
+      <p class="lede">A small menu of actions opened from a button, often at the end of a table row. Items marked <code>danger</code> are red so destructive choices stand out. It follows the WAI-ARIA menu button pattern: the trigger has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>, the panel is a <code>menu</code> of <code>menuitem</code>s with a <code>separator</code> between groups. Down arrow (or Enter) opens it and puts focus on the first item, Up and Down move with wrap, Home and End jump, Escape closes and returns focus to the button.</p>
       <div class="demo">
         <div class="demo-row">
           <div class="shield-dropdown">
-            <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
-            <div class="shield-dropdown-panel">
-              <button class="shield-dropdown-item">Duplicate offer</button>
-              <button class="shield-dropdown-item">Export as PDF</button>
-              <hr class="shield-divider" style="margin:4px 0">
-              <button class="shield-dropdown-item danger">Cancel offer</button>
+            <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-actions" onclick="sgDropdownToggle(this)">Actions <svg class="shield-icon" width="8.75" height="10" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></button>
+            <div class="shield-dropdown-panel" id="menu-actions" role="menu" aria-label="Offer actions">
+              <button class="shield-dropdown-item" role="menuitem">Duplicate offer</button>
+              <button class="shield-dropdown-item" role="menuitem">Export as PDF</button>
+              <hr class="shield-divider" role="separator" style="margin:4px 0">
+              <button class="shield-dropdown-item danger" role="menuitem">Cancel offer</button>
             </div>
           </div>
-          <span class="shield-text tertiary" style="font-size:12.5px">Click trigger, outside click or Escape closes it</span>
+          <span class="shield-text tertiary" style="font-size:12.5px">Click or Down arrow opens; Up/Down move, Home/End jump, Escape closes and returns focus</span>
         </div>
         <div class="spec"><code>panel → shadow-md, top-right anchored</code></div>
       </div>
@@ -1434,14 +1798,183 @@ footer{padding:32px 48px;color:var(--text-tertiary);font-size:12px;border-top:1p
       <p class="lede">Splits a long list into pages. Always show the first and last page, the current page and its neighbors, with an ellipsis for the gap, plus Previous and Next and a plain "1–10 of 118" summary. Use it for tables and lists that are too long to scroll comfortably; for a short list, show everything. After changing page, focus stays on the control and the summary is announced to screen readers.</p>
       <div class="demo">
         <nav class="shield-pagination" id="pager-demo" aria-label="Pagination" data-total-pages="12" data-total="118" data-per-page="10"></nav>
-        <div class="spec"><code>button 32 · current blue-7</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
+        <div class="spec"><code>button 32 · current brand-blue-dark</code><code>10 rows per page in this demo</code><code>aria-current="page"</code></div>
       </div>
+    </section>
+
+
+    <!-- Accessibility conformance: the WCAG 2.2 AA statement for the guide itself. -->
+    <section id="accessibility">
+      <h2>Accessibility conformance</h2>
+      <p class="lede">Shield products meet the W3C Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA, and every component follows the WAI-ARIA Authoring Practices Guide (APG) pattern for its role. This is the conformance statement for the guide itself: which criteria matter for a component library, how each is met, and what is still open. <b style="color:var(--text)">Met</b> means the demos on this page do it and a rule or <code>tools/check.mjs</code> keeps it true. <b style="color:var(--text)">Open</b> means the guide knows and has not yet decided. A product screen built from these components inherits the "met" rows and still has to be checked as a whole (the checklist below).</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Criterion</th><th>Requires</th><th>How this guide meets it</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html" target="_blank" rel="noopener">1.3.1 Info and Relationships</a> (A)</td><td>Structure is in the markup, not only in the look.</td><td>Native <code>table</code>/<code>th</code>, a <code>dl</code> for Descriptions, <code>label for</code>, an <code>ol</code> breadcrumb, <code>details</code>/<code>summary</code>, one <code>h1</code> per page.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" target="_blank" rel="noopener">1.4.1 Use of Color</a> (A)</td><td>Color is never the only cue.</td><td>A word on every Tag and Status; an icon and text on every error; an arrow on sort; a sign or word under every colored stat value; links in a distinct color and underlined on hover.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener">1.4.3 Contrast (Minimum)</a> (AA)</td><td>4.5:1 for text, 3:1 for large text.</td><td>Every text/background pair in both themes is measured by <code>tools/check.mjs</code> on every push (<a href="#color">Color</a>).</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/reflow.html" target="_blank" rel="noopener">1.4.10 Reflow</a> (AA)</td><td>Usable at 320 CSS px without two-way scrolling.</td><td><a href="#responsive">Responsive behavior</a>; tables scroll inside their wrapper.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" target="_blank" rel="noopener">1.4.11 Non-text Contrast</a> (AA)</td><td>3:1 for the parts of a control that identify it and its state.</td><td>Focus ring 6.4:1 light and 8.8:1 dark; error icon 5.6:1; switch off-track 4.9:1; checked fills 6.4:1. The resting border of inputs and checkboxes uses <code>--border</code> (22% black, about 1.5:1 on white), softened on purpose in v0.8 for the look; the control is still identified by its label, its hover color and its focus ring.</td><td><span class="shield-tag warning">Open</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html" target="_blank" rel="noopener">1.4.13 Content on Hover or Focus</a> (AA)</td><td>Dismissible, hoverable, persistent.</td><td><a href="#tooltip">Tooltip</a> and <a href="#popover">Popover</a>: Escape dismisses, the bubble stays while hovered.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html" target="_blank" rel="noopener">2.1.1 Keyboard</a> (A)</td><td>Everything works from the keyboard.</td><td>Every interactive section lists its keys; Select, Dropdown, Tabs, Radio group, Modal, Drawer and Popover are wired in shield.js.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" target="_blank" rel="noopener">2.4.3 Focus Order</a> (A)</td><td>A meaningful order; dialogs return focus.</td><td>Modal and Drawer trap Tab and return focus to the opener; Popover and Dropdown return focus to their trigger.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" target="_blank" rel="noopener">2.4.7 Focus Visible</a> (AA)</td><td>A visible focus indicator.</td><td>The <code>:focus-visible</code> ring in tokens.css, round on round controls, drawn on the dropzone for the hidden file input.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html" target="_blank" rel="noopener">2.4.11 Focus Not Obscured (Minimum)</a> (AA)</td><td>Sticky bars never fully cover the focused element.</td><td>Rule: a product with a sticky header sets <code>scroll-padding-top</code> to its height (this guide does, under 900px). The toast stack is top-center and never covers a control for long.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html" target="_blank" rel="noopener">2.5.3 Label in Name</a> (A)</td><td>The accessible name contains the visible text; a switch's label does not change with state.</td><td><code>aria-label</code>s mirror the visible text; checkbox, radio and switch names come from their visible label through <code>aria-labelledby</code>.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">2.5.8 Target Size (Minimum)</a> (AA)</td><td>Pointer targets at least 24 by 24 CSS px.</td><td>Small buttons are 24px tall; icon buttons take padding to 24 (<a href="#icons">Icons</a>), 44 where touch is expected.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/consistent-help.html" target="_blank" rel="noopener">3.2.6 Consistent Help</a> (A)</td><td>Help is in the same place on every page.</td><td>Rule: two help places, always in the same position: the info icon beside the page title (<a href="#patterns">Page patterns</a>) and the help or support link in the app shell top bar.</td><td><span class="shield-tag success">Met by rule</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noopener">3.3.1 Error Identification</a> (A)</td><td>The error is described in text.</td><td><a href="#input">Input</a> and <a href="#forms">Form layout</a>: the message is visible under the field with a hidden "Error:" prefix; the red border and icon are extra cues.</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" target="_blank" rel="noopener">3.3.2 Labels or Instructions</a> (A)</td><td>Labels, and format instructions where needed.</td><td>Label above every field; the hint carries the format (<a href="#datepicker">Date picker</a>).</td><td><span class="shield-tag success">Met</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html" target="_blank" rel="noopener">3.3.7 Redundant Entry</a> (A)</td><td>Do not ask for the same information twice in a process.</td><td>Rule in <a href="#forms">Form layout</a>: already-entered values are filled in or offered for selection.</td><td><span class="shield-tag success">Met by rule</span></td></tr>
+            <tr><td><a href="https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html" target="_blank" rel="noopener">4.1.2 Name, Role, Value</a> (A)</td><td>Custom controls expose name, role and state.</td><td>Combobox, listbox and option on Select; menu and menuitem on Dropdown; tablist, tab and tabpanel; switch; <code>aria-labelledby</code> on span controls; live regions for toasts and sorting.</td><td><span class="shield-tag success">Met</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="spec">The one open row is a decision, not an oversight: a 3:1 border is about <code>rgba(78, 76, 76, 0.5)</code>, and the owner decides whether the soft border stays with the stated rationale or the token moves. Either way the row is updated.</p>
+
+      <h3 class="sub">Patterns each component follows</h3>
+      <p class="lede">The role, states and keys for each interactive component come from the APG pattern named here, so an engineer can check the component against the pattern rather than against this page.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Component</th><th>APG pattern</th><th>Component</th><th>APG pattern</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#select">Select</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">Combobox (editable, list autocomplete)</a></td><td><a href="#dropdown">Dropdown</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener">Menu button</a> and <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/" target="_blank" rel="noopener">Menu</a></td></tr>
+            <tr><td><a href="#checkbox">Checkbox</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank" rel="noopener">Checkbox</a> (with <code>mixed</code> for select-all)</td><td><a href="#tabs">Tabs</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">Tabs</a> (automatic activation)</td></tr>
+            <tr><td><a href="#radio">Radio group</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/radio/" target="_blank" rel="noopener">Radio group</a></td><td><a href="#modal">Modal</a>, <a href="#drawer">Drawer</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">Dialog (modal)</a></td></tr>
+            <tr><td><a href="#checkbox">Switch</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/" target="_blank" rel="noopener">Switch</a></td><td><a href="#collapse">Collapse</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" target="_blank" rel="noopener">Disclosure</a> (native details/summary)</td></tr>
+            <tr><td><a href="#tooltip">Tooltip</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" target="_blank" rel="noopener">Tooltip</a></td><td><a href="#breadcrumb">Breadcrumb</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/" target="_blank" rel="noopener">Breadcrumb</a></td></tr>
+            <tr><td><a href="#table">Table</a></td><td><a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/" target="_blank" rel="noopener">Table</a> with the sortable example</td><td><a href="#popover">Popover</a></td><td>Non-modal dialog (<a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">Dialog</a> without <code>aria-modal</code>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Review checklist for a screen</h3>
+      <p class="lede">Before a screen built from these components ships, someone who did not build it goes through this list. It is Nielsen's ten heuristics in Shield's words, plus the mechanical checks.</p>
+      <ol class="sg-steps-list">
+        <li><b style="color:var(--text)">Status is visible.</b> The person can always tell what state the record is in and what the system is doing (a Tag, a skeleton, a spinner, a toast).</li>
+        <li><b style="color:var(--text)">Words match the work.</b> Terms come from the <a href="#glossary">glossary</a>; dates and amounts follow <a href="#formats">Data formats</a>.</li>
+        <li><b style="color:var(--text)">There is a way back.</b> Cancel closes without saving, destructive actions confirm, nothing is lost on a mistake.</li>
+        <li><b style="color:var(--text)">It looks like the rest of Shield.</b> One Primary, the <a href="#patterns">page pattern</a> it belongs to, the status components it should use.</li>
+        <li><b style="color:var(--text)">Mistakes are prevented</b> before they are reported: formats in hints, disabled until valid, type-to-confirm.</li>
+        <li><b style="color:var(--text)">Nothing has to be remembered</b> from another screen: key facts in the header, values filled in rather than asked again.</li>
+        <li><b style="color:var(--text)">Experts can go fast:</b> keyboard for everything, bulk actions, search.</li>
+        <li><b style="color:var(--text)">Nothing is there that does not earn its place.</b></li>
+        <li><b style="color:var(--text)">Errors say what to do,</b> in text, next to the problem, in the words from <a href="#writing">Writing</a>.</li>
+        <li><b style="color:var(--text)">Help is where it always is:</b> the info icon by the title, the support link in the top bar.</li>
+        <li><b style="color:var(--text)">Mechanical:</b> <code>node tools/check.mjs</code> passes; Tab through the whole screen; read it with a screen reader once; switch to dark mode; turn on the OS "Increase contrast" and "Reduce motion" settings; resize to 320px.</li>
+      </ol>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.2</a>: the standard; each criterion above links to its Understanding page.</li>
+        <li>W3C, <a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noopener">WAI-ARIA Authoring Practices Guide: Patterns</a>: the roles, states and keyboard interaction for each component, linked in the table above.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/ten-usability-heuristics/" target="_blank" rel="noopener">10 Usability Heuristics for User Interface Design</a>: the ten points behind the review checklist.</li>
+        <li>Nielsen Norman Group, <a href="https://www.nngroup.com/articles/tooltip-guidelines/" target="_blank" rel="noopener">Tooltip Guidelines</a>: tooltips never carry information needed to finish the task, open on focus, and label every unlabelled icon.</li>
+        <li>Apple, <a href="https://developer.apple.com/design/human-interface-guidelines/dark-mode" target="_blank" rel="noopener">Human Interface Guidelines: Dark Mode</a>: at least 4.5:1 in both appearances, aim for 7:1 for small colored text, test with Increase Contrast, follow the system setting.</li>
+        <li>Material Components for Android, <a href="https://github.com/material-components/material-components-android/blob/master/docs/theming/Dark.md" target="_blank" rel="noopener">Dark theme</a>: dark surfaces that are not black, lighter elevated surfaces, brand and status colors adjusted for dark.</li>
+      </ul>
+    </section>
+
+    <!-- How this guide changes: ownership, proposals, review, versioning, deprecation, releases, and what 1.0 means. -->
+    <section id="governance">
+      <h2>How this guide changes</h2>
+      <p class="lede">A style guide that cannot change is ignored; one that changes without warning breaks products. This section is the contract: who owns the guide, how a change is proposed and approved, how versions are numbered, how something is retired, and what 1.0 means. The short version for a pull request is <code>CONTRIBUTING.md</code> in the repository.</p>
+
+      <h3 class="sub">Who</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Role</th><th>Does</th></tr></thead>
+          <tbody>
+            <tr><td>Owner</td><td>Keeps the guide coherent: merges, releases, writes the changelog, says no. One named person, listed in <code>.github/CODEOWNERS</code> once the repository is under the organization.</td></tr>
+            <tr><td>Design reviewer</td><td>Approves that a rule is the right rule for Shield: it fits the principles in the Overview and the people reviewing documents with legal weight.</td></tr>
+            <tr><td>Engineering reviewer</td><td>Approves that the rule can be built as written, the check passes, and the demo and snippet match.</td></tr>
+            <tr><td>Product teams</td><td>Consume the guide: pin a version, read the changelog on upgrade, and open an issue when a screen needs something the guide does not have. They do not fork a component locally.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Proposing a change</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Kind of change</th><th>Path</th><th>Approvals</th></tr></thead>
+          <tbody>
+            <tr><td>A wording fix, a comment, a typo</td><td>Pull request.</td><td>One (the owner or either reviewer).</td></tr>
+            <tr><td>A new value, component, modifier, pattern or section</td><td>An issue first: the problem, where it shows up in a product, the proposed rule, and the sources it rests on. Then a pull request with the demo, the snippet, the tokens, the copy and a changelog line.</td><td>Two: design and engineering.</td></tr>
+            <tr><td>A rename or removal of a token, class or rule</td><td>The deprecation path below. It is announced in a minor release and lands in the next major.</td><td>Two, plus the owner.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lede">Every pull request: <code>node tools/check.mjs</code> passes; both themes were looked at; the demo in <code>index.html</code> and the entry in <code>snippets.js</code> agree; any copy that quotes a number was updated; a line was added under <b style="color:var(--text)">Unreleased</b> in <code>CHANGELOG.md</code>; a new rule ends with a Sources list like the ones on this page.</p>
+
+      <h3 class="sub">Versions</h3>
+      <p class="lede">The guide follows semantic versioning. The number lives in one place, <code>SG_VERSION</code> in shield.js, and is stamped into the sidebar, the cover and the footer; the check fails if it and the newest changelog entry disagree. Each release is a git tag <code>vX.Y.Z</code>.</p>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Bump</th><th>When</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Patch (0.9.0 → 0.9.1)</td><td>Copy, comments, a fix that changes no token value, class name or behavior a product depends on.</td><td>Correcting a contrast figure in the Color caption.</td></tr>
+            <tr><td>Minor (0.9.0 → 0.10.0)</td><td>A new component, token, modifier, pattern or section. Everything that existed keeps working.</td><td>Adding the Status display table; adding <code>--brand-fill</code>.</td></tr>
+            <tr><td>Major (0.x → 1.0.0, 1.x → 2.0.0)</td><td>A token or class is renamed or removed, or a value changes in a way products must react to: a spacing step, a breakpoint, the primary fill.</td><td>Moving Primary from blue-7 to blue-8 would have been a major after 1.0; before 1.0 it is a minor with a loud changelog entry.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Retiring something</h3>
+      <ol class="sg-steps-list">
+        <li><b style="color:var(--text)">Mark it deprecated in a minor release:</b> a comment on the rule ("Deprecated in 0.10, use <code>--brand-fill</code>"), a note in the guide beside the demo, and a line under <b>Deprecated</b> in the changelog that names the replacement.</li>
+        <li><b style="color:var(--text)">Keep it working for at least one minor release,</b> so a product team can upgrade and migrate on its own schedule.</li>
+        <li><b style="color:var(--text)">Remove it in the next major,</b> with the migration written in the changelog (old name → new name, and why). Where it can be done with a search and replace, say so.</li>
+      </ol>
+      <p class="spec">The guide has done this informally before: <code>.convert</code> / <code>.bad</code> became <code>.positive</code> / <code>.negative</code>, and the blue-7 fills became <code>--brand-fill</code> in 0.9. From here on it is written down.</p>
+
+      <h3 class="sub">Releases</h3>
+      <p class="lede">While the guide is 0.y.z, a minor release goes out every two weeks if there is anything to ship, and a patch any time. After 1.0, a minor goes out monthly and a major no more than once a year, announced at least a month ahead with its migration notes. A release is the tag, the changelog entry and the stamped version; nothing else needs to be built. The GitHub Action runs the check on every push, so the main branch is always releasable.</p>
+
+      <h3 class="sub">What 1.0 means</h3>
+      <ul class="sg-steps-list">
+        <li>Every <b style="color:var(--text)">Open</b> row in <a href="#accessibility">Accessibility conformance</a> is decided.</li>
+        <li>The brand assets listed under <a href="#logo">Logo &amp; brand</a> exist.</li>
+        <li>The glossary is confirmed against the product's data model.</li>
+        <li>The React components in Shield's products read <code>tokens.css</code> (or the <code>tokens.json</code> export) directly, and this guide renders those same components, so the guide and the product cannot drift apart.</li>
+        <li>Two real product screens have been built from <a href="#patterns">Page patterns</a> and reviewed with the checklist.</li>
+        <li>The repository lives under the organization, with <code>CODEOWNERS</code> and the check required to merge.</li>
+      </ul>
+
+      <h3 class="sub">Where the tokens live</h3>
+      <p class="lede"><code>tokens.css</code> is the source of truth and has three tiers. The palette (<code>--blue-1</code> to <code>--blue-10</code>) is never read by a component. The role and alias tokens (<code>--brand-fill</code>, <code>--text-secondary</code>, <code>--error-bg</code>, <code>--space-4</code>) are the public API: components and products read these, and choose them by meaning, never because the color happens to match, or dark mode breaks. Component-specific values are local rules in <code>components.css</code>. <code>node tools/export-tokens.mjs</code> writes the same tokens to <code>tokens.json</code> in the Design Tokens Community Group format, so design tools and other platforms read the values the browser reads.</p>
+
+      <h3 class="sub">What the guide is built on</h3>
+      <div class="shield-table-scroll">
+        <table class="shield-table">
+          <thead><tr><th>Dependency</th><th>Status</th><th>Since</th></tr></thead>
+          <tbody>
+            <tr><td>Ant Design (the original component library)</td><td>Removed. Components were rebuilt by hand; the ten-step blue ramp its algorithm produced was kept as data.</td><td>Sep 28, 2026</td></tr>
+            <tr><td>Feather Icons</td><td>Replaced by Font Awesome Classic Solid (Free, CC BY 4.0), inlined as paths.</td><td>Sep 28, 2026</td></tr>
+            <tr><td>Fraunces (SIL OFL) and Satoshi (Fontshare FFL)</td><td>Self-hosted variable fonts in <code>fonts/</code>. See <code>LICENSES.md</code> for the one license point to confirm.</td><td>Oct 1, 2026</td></tr>
+            <tr><td>Bootstrap 5.3 breakpoints</td><td>Numbers adopted, no code.</td><td>Oct 5, 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Sources</h3>
+      <ul class="sg-steps-list">
+        <li>Tom Preston-Werner, <a href="https://semver.org/" target="_blank" rel="noopener">Semantic Versioning 2.0.0</a>: MAJOR.MINOR.PATCH, 0.y.z before a stable API, deprecate in a minor before removing in a major.</li>
+        <li>Olivier Lacan, <a href="https://keepachangelog.com/en/1.1.0/" target="_blank" rel="noopener">Keep a Changelog 1.1.0</a>: an Unreleased section, one entry per version, Added / Changed / Deprecated / Removed / Fixed, ISO dates.</li>
+        <li>Design Tokens Community Group, <a href="https://www.designtokens.org/TR/drafts/format/" target="_blank" rel="noopener">Design Tokens Format Module</a>: the <code>$value</code> / <code>$type</code> JSON format and alias syntax that <code>tokens.json</code> follows; first stable version 2025.10.</li>
+        <li>IBM Carbon Design System, <a href="https://carbondesignsystem.com/elements/color/tokens/" target="_blank" rel="noopener">Color tokens</a>: core versus component token layers and role-based names.</li>
+        <li>Atlassian Design System, <a href="https://atlassian.design/foundations/tokens/design-tokens" target="_blank" rel="noopener">Design tokens</a>: choose a token by meaning, foundation.property.modifier names.</li>
+        <li>Atlassian (Forge documentation), <a href="https://developer.atlassian.com/platform/forge/design-tokens-and-theming/" target="_blank" rel="noopener">Design tokens and theming</a>: the token lifecycle: deprecated, then soft-deleted, then deleted.</li>
+        <li>Shopify Polaris, <a href="https://github.com/Shopify/polaris-react/blob/main/documentation/Deprecation%20guidelines.md" target="_blank" rel="noopener">Deprecation guidelines</a>: mark, document, provide a migration, announce before the major.</li>
+        <li>IBM Carbon Design System, <a href="https://github.com/carbon-design-system/carbon/blob/main/docs/release-schedule.md" target="_blank" rel="noopener">Release schedule</a>: release phases and the regular minor cadence.</li>
+        <li>Brad Frost, <a href="https://atomicdesign.bradfrost.com/chapter-5/" target="_blank" rel="noopener">Atomic Design, chapter 5: Maintaining design systems</a>: the system as a living product with a roadmap, a changelog and named makers and users.</li>
+      </ul>
     </section>
 
   </main>
 </div>
-<div class="shield-toast-stack"></div>
-<footer>Shield Engineering style guide v0.8 (pre-1.0 draft) for the Shield Legal Operations Platform. Tokens are in <code>tokens.css</code> and components in <code>components.css</code>.</footer>
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
+<footer>Shield Engineering style guide <span data-sg-version>v0.9.0</span> (release candidate) for the Shield Legal Operations Platform. Tokens are in <code>tokens.css</code> and components in <code>components.css</code>.</footer>
 <script src="snippets.js"></script>
 <script src="shield.js"></script>
 </body>

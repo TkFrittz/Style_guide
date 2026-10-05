@@ -22,21 +22,6 @@
    plain English. State classes that JavaScript switches on and off
    while someone uses the page start with "is-" (e.g. .is-on).
 
-   NAMING MAP (short form -> spelled-out form used in this file)
-     sl-            -> shield-            (prefix on every component)
-     -btn           -> -button            (.sl-btn-primary -> .shield-button-primary)
-     -sk            -> -skeleton          (.sl-sk -> .shield-skeleton)
-     -seg           -> -segmented         (.sl-seg -> .shield-segmented)
-     -opt           -> -option            (.sl-select-opt -> .shield-select-option)
-     -desc          -> -description       (.sl-desc-row, .sl-alert-desc, .sl-empty-desc)
-     .sm            -> .small
-     .lg            -> .large
-     .on            -> .is-on             (checked / selected / active state)
-     .shield-pill .ok / .warn / .idle   -> .success / .warning / .neutral
-     .shield-stat-value .convert / .bad -> .positive / .negative
-     .shield-stat .hero                 -> .highlighted
-   Everything else (e.g. .open, .done, .current, .success) is unchanged.
-
    HOW TO MAKE A SIMPLE EDIT
    - To change how an EXISTING component looks everywhere it's used
      (e.g. make all buttons a bit taller), edit the rule for its class
@@ -47,7 +32,9 @@
      use that new class name in index.html.
    - Never hardcode a color/size directly — use var(--token-name) and
      pick the token from tokens.css that matches what you need, so
-     light/dark theming and spacing stay consistent.
+     light/dark theming and spacing stay consistent. `node tools/check.mjs`
+     flags any raw hex or rgb() color in this file, apart from the
+     allowlisted #fff on solid fills and the pure-black shadows.
    ===================================================================== */
 
 /* ---------- Typography ----------
@@ -179,9 +166,12 @@
 :root[data-theme="dark"] .shield-button-danger:not(.shield-button-default):hover:not(:disabled) { box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.55); }
 .shield-button:disabled { box-shadow: none !important; }
 
-/* PRIMARY: solid blue-7. Use once per screen for the main action. */
-.shield-button-primary { background: var(--blue-7); color: #fff; }
-.shield-button-primary:hover:not(:disabled) { background: var(--blue-8); }
+/* PRIMARY: solid --brand-fill (blue-8 in both themes), the action color
+   tokens.css names for fills that carry white text. White on it measures
+   6.4:1, readable at every button size. (It was blue-7 until v0.9: 4.0:1,
+   under the 4.5:1 target.) Use once per screen for the main action. */
+.shield-button-primary { background: var(--brand-fill); color: #fff; }
+.shield-button-primary:hover:not(:disabled) { background: var(--blue-9); }
 
 /* DEFAULT: white with a gray outline. For ordinary secondary actions. */
 .shield-button-default { background: var(--bg-container); color: var(--text); border-color: var(--border); }
@@ -197,11 +187,14 @@
 
 /* LINK: looks like a hyperlink (blue text, no padding) but still behaves like a button. */
 .shield-button-link { background: transparent; color: var(--brand-blue-dark); border-color: transparent; padding-inline: 0; height: auto; }
-.shield-button-link:hover:not(:disabled) { color: var(--blue-7); }
+.shield-button-link:hover:not(:disabled) { color: var(--blue-9); }
 
-/* DANGER: solid red, for destructive actions like "Delete". */
-.shield-button-danger { background: var(--error); color: #fff; }
-.shield-button-danger:hover:not(:disabled) { background: #e84749; }
+/* DANGER: solid red, for destructive actions like "Delete". The fill is
+   --error-fill, a true red that white text clears at 5.6:1. (--error is
+   the dark TEXT color meant for use on --error-bg; as a button fill it
+   rendered near-black in light mode.) */
+.shield-button-danger { background: var(--error-fill); color: #fff; }
+.shield-button-danger:hover:not(:disabled) { background: var(--error-fill-hover); }
 /* Danger + Default together = an OUTLINED danger button (red text/border
    on a plain background) instead of the solid-red .shield-button-danger above —
    used for a less alarming "destructive but secondary" action. */
@@ -253,13 +246,13 @@
 /* HOVER: border turns light blue when the mouse is over the box. */
 .shield-input:hover, .shield-textarea:hover { border-color: var(--blue-5); }
 /* FOCUS: brand-blue border plus a soft glow while the user is typing in it. */
-.shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+.shield-input:focus, .shield-textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 2px var(--brand-tint); }
 /* DISABLED: gray fill, no typing allowed. */
 .shield-input:disabled, .shield-textarea:disabled { background: var(--fill-tertiary); color: var(--text-quaternary); cursor: not-allowed; }
 /* ERROR: red border. Add the class .error to the input when validation fails, and add the red
    error icon (.shield-input-error, defined with the tooltip rules below) so the message is available on hover or focus. */
 .shield-input.error, .shield-textarea.error { border-color: var(--error-solid); }
-.shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px rgba(207, 19, 34, 0.12); }
+.shield-input.error:focus, .shield-textarea.error:focus { box-shadow: 0 0 0 2px var(--error-tint); }
 /* An icon placed inside an input. pointer-events: none lets clicks pass through to the input underneath. */
 .shield-input-icon { position: absolute; color: var(--text-quaternary); display: flex; pointer-events: none; }
 /* .prefix = icon on the left inside the box, .suffix = icon on the right. */
@@ -267,6 +260,9 @@
 .shield-input-icon.suffix { right: 10px; pointer-events: auto; } /* re-enables clicks for a clear/eye-toggle button */
 .shield-input-icon.suffix.clearable { cursor: pointer; }
 .shield-input-icon.suffix.clearable:hover { color: var(--text-secondary); }
+/* A clickable icon (clear ×, password eye) is a real <button>, so it has a name, a focus ring and keyboard
+   support for free; this strips the browser's button chrome so it still reads as an icon. */
+button.shield-input-icon { background: none; border: none; padding: 0; margin: 0; font: inherit; line-height: 0; border-radius: var(--radius-xs); }
 
 /* ---------- Select (hand-rolled combobox) ----------
    Not a native <select> — see sgSelectOpen/sgSelectFilter/sgSelectPick
@@ -299,7 +295,7 @@
 }
 /* Hover and open/focused states for the select box. */
 .shield-select-box:hover { border-color: var(--blue-5); }
-.shield-select.open .shield-select-box, .shield-select-box.focused { border-color: var(--brand-blue); box-shadow: 0 0 0 2px rgba(24, 171, 237, 0.15); }
+.shield-select.open .shield-select-box, .shield-select-box.focused { border-color: var(--brand-blue); box-shadow: 0 0 0 2px var(--brand-tint); }
 .shield-select-box .shield-input-icon.prefix { position: static; margin-right: 2px; }
 /* The text field inside the box where the user types to filter options. Borderless so it blends in. */
 .shield-select-search {
@@ -404,8 +400,7 @@
 }
 /* Hover highlight, and the blue "chosen" highlight for the selected option. */
 .shield-select-option:hover, .shield-select-option.active { background: var(--fill-secondary); }
-.shield-select-option.selected { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
-:root[data-theme="dark"] .shield-select-option.selected { background: rgba(24, 171, 237, 0.16); } /* blue-1 reads too light on a dark background, so dark mode gets its own translucent highlight instead */
+.shield-select-option.selected { background: var(--selected-bg); color: var(--brand-blue-dark); font-weight: 600; } /* --selected-bg is blue-1 in light mode and a translucent blue in dark (tokens.css) */
 /* The "No matches" message shown when the search filters out every option. */
 .shield-select-empty { padding: 14px 10px; font-size: var(--font-size-small); color: var(--text-tertiary); text-align: center; font-weight: var(--weight-small); }
 /* A small caption that says how many options matched the search. */
@@ -417,7 +412,11 @@
    itself is a plain <span>/<button> (no native <input type="checkbox">
    under the hood) — shield.js toggles an "is-on" class to show the
    checked/active state; see sgToggleCheckbox / sgSelectRadio /
-   sgToggleSwitch / sgSegPick in shield.js. */
+   sgToggleSwitch / sgSegPick in shield.js. Because a <label> only names
+   NATIVE form controls, the control needs its own accessible name: give
+   the label text an id and point the control at it with aria-labelledby
+   (the demos do this; sgInitNames in shield.js fills it in for any row
+   that forgot). */
 /* One clickable row: the checkbox/radio plus its label text. */
 .shield-check-row { display: flex; align-items: center; gap: 8px; font-size: var(--font-size-control); color: var(--text); cursor: pointer; user-select: none; }
 .shield-check-row.disabled { cursor: not-allowed; color: var(--text-quaternary); }
@@ -436,7 +435,7 @@
   transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
 }
 .shield-checkbox svg { display: none; width: 10px; height: 10px; } /* the checkmark icon, hidden until .is-on is added */
-.shield-checkbox.is-on { background: var(--blue-7); border-color: var(--blue-7); }
+.shield-checkbox.is-on { background: var(--brand-fill); border-color: var(--brand-fill); }
 .shield-checkbox.is-on svg { display: block; }
 .shield-checkbox.disabled { background: var(--fill-tertiary); }
 
@@ -454,8 +453,8 @@
   transition: border-color var(--duration-fast) var(--ease-standard);
 }
 .shield-radio:focus-visible { border-radius: 50%; } /* keep the keyboard focus ring round on a round control */
-.shield-radio.is-on { border-color: var(--blue-7); }
-.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-7); } /* the filled center dot */
+.shield-radio.is-on { border-color: var(--brand-fill); }
+.shield-radio.is-on::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-fill); } /* the filled center dot */
 
 /* The switch (on/off toggle). The track is the pill-shaped background; the thumb is the white circle that slides. */
 .shield-switch-track {
@@ -474,7 +473,7 @@
 }
 /* Small switch variant, plus the colors for the on and disabled states. */
 .shield-switch-track.small { width: 32px; height: 16px; }
-.shield-switch-track.is-on { background: var(--blue-7); }
+.shield-switch-track.is-on { background: var(--brand-fill); }
 .shield-switch-track:disabled { opacity: 0.4; cursor: not-allowed; }
 /* The white circle that slides left (off) and right (on). */
 .shield-switch-thumb {
@@ -519,7 +518,7 @@
 }
 /* Hover color, and the filled blue look for the currently selected button. */
 .shield-segmented button:hover { color: var(--text); background: var(--fill-secondary); }
-.shield-segmented button.is-on { background: var(--blue-7); color: #fff; }
+.shield-segmented button.is-on { background: var(--brand-fill); color: #fff; }
 
 /* ---------- Tag / Pill ----------
    .shield-tag = the base tag; add a mood class (.success/.warning/.error/
@@ -549,10 +548,10 @@
 .shield-tag.warning { background: var(--warning-bg); border-color: var(--warning-border); color: var(--warning); }
 .shield-tag.error { background: var(--error-bg); border-color: var(--error-border); color: var(--error); }
 .shield-tag.processing { background: var(--info-bg); border-color: var(--info-border); color: var(--info); }
-.shield-tag.gold { background: rgba(154, 123, 47, 0.1); border-color: rgba(154, 123, 47, 0.35); color: #9a7b2f; } /* a one-off accent color, not part of the four-mood functional set above */
+.shield-tag.gold { background: var(--gold-bg); border-color: var(--gold-border); color: var(--gold); } /* a single accent for priority, not one of the four status moods (see the Status display table in index.html) */
 /* Toggleable tag: clickable, and turns solid blue once .checked is added. */
 .shield-tag.checkable { cursor: pointer; user-select: none; }
-.shield-tag.checkable.checked { background: var(--blue-7); border-color: var(--blue-7); color: #fff; }
+.shield-tag.checkable.checked { background: var(--brand-fill); border-color: var(--brand-fill); color: #fff; }
 
 /* A fully rounded status label, typically paired with a colored dot. */
 .shield-pill {
@@ -630,6 +629,9 @@ table.shield-table tr:last-child td { border-bottom: none; }
 table.shield-table tbody tr { transition: background-color var(--duration-instant) var(--ease-standard); }
 table.shield-table tbody tr.clickable { cursor: pointer; }
 table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
+/* A column of numbers or money: add .num to the header and every cell. Right-aligned so magnitudes line up,
+   tabular figures so digits share a width, and keep the same number of decimals down the column. */
+table.shield-table th.num, table.shield-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 /* ---------- Modal ----------
    .shield-modal-backdrop is the fixed, full-screen dark overlay — it's
@@ -708,7 +710,9 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* Centered, faint "nothing here" placeholder. */
 .shield-empty { padding: 48px 24px; text-align: center; color: var(--text-tertiary); }
 .shield-empty-icon { margin: 0 auto 10px; opacity: 0.5; width: 48px; height: 48px; }
-.shield-empty-description { font-size: var(--font-size-small); font-weight: var(--weight-small); }
+.shield-empty-title { font-family: var(--font-heading); font-size: var(--font-size-body); font-weight: 600; color: var(--text); margin-bottom: 4px; } /* why the space is empty, in a few words */
+.shield-empty-description { font-size: var(--font-size-small); font-weight: var(--weight-small); max-width: 42ch; margin: 0 auto; }
+.shield-empty-action { margin-top: var(--space-4); } /* the one next step: a single Default button */
 
 /* ---------- Steps / Rail ----------
    A horizontal row of numbered steps connected by lines, driven by
@@ -740,10 +744,10 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   background: var(--bg-container);
 }
 /* Step states: done = filled blue circle, current = blue outline. Titles darken for both. */
-.shield-step.done .shield-step-dot { background: var(--brand-blue-dark); border-color: var(--brand-blue-dark); color: #fff; }
-.shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); box-shadow: 0 0 0 3px rgba(24, 171, 237, 0.2); }
+.shield-step.done .shield-step-dot { background: var(--brand-fill); border-color: var(--brand-fill); color: #fff; }
+.shield-step.current .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--brand-blue-dark); box-shadow: 0 0 0 3px var(--brand-tint); }
 /* Started but not finished: the dot is half tinted, with the number still readable on top. */
-.shield-step.partial .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--text); background: conic-gradient(rgba(24, 171, 237, 0.45) 50%, var(--bg-container) 0); }
+.shield-step.partial .shield-step-dot { border-color: var(--brand-blue-dark); color: var(--text); background: conic-gradient(var(--brand-tint-strong) 50%, var(--bg-container) 0); }
 .shield-step.done.current .shield-step-dot { color: #fff; } /* a finished step you are looking at keeps its white check */
 .shield-step-title { line-height: 24px; font-size: var(--font-size-small); color: var(--text-tertiary); white-space: nowrap; font-weight: var(--weight-small); }
 .shield-step.done .shield-step-title, .shield-step.current .shield-step-title, .shield-step.partial .shield-step-title { color: var(--text); font-weight: 700; }
@@ -751,20 +755,23 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 .shield-step-sub { font-size: var(--font-size-caption); color: var(--text-tertiary); font-weight: var(--weight-small); white-space: nowrap; }
 /* The connector line between two steps; turns blue once the step before it is done. */
 .shield-step-line { width: 24px; height: 1px; background: var(--border); flex: none; margin: 12px 2px 0; align-self: flex-start; } /* 12px = half the dot, so the line meets the dots whatever the label height */
-.shield-step-line.done { background: var(--brand-blue-dark); }
+.shield-step-line.done { background: var(--brand-fill); }
 .shield-steps.compact .shield-step-title, .shield-steps.compact .shield-step-sub { display: none; }
 .shield-steps.compact .shield-step-line { margin-top: 9px; }
 .shield-steps.compact .shield-step-dot { width: 18px; height: 18px; font-size: 10px; }
 
 /* ---------- Descriptions ----------
    A simple label/value key-value list — like a read-only form, for
-   showing a record's details (order id, partner, status, etc). */
+   showing a record's details (order id, partner, status, etc). The
+   markup is a real <dl>: each .shield-description-row holds a <dt>
+   label and a <dd> value, so the pairing is in the structure (WCAG
+   1.3.1), and the <dl>/<dd> default margins are reset here. */
 /* The outer bordered box of the key/value list. */
-.shield-description { width: 100%; border: 1px solid var(--border-secondary); border-radius: var(--radius-md); overflow: hidden; }
+.shield-description { width: 100%; margin: 0; border: 1px solid var(--border-secondary); border-radius: var(--radius-md); overflow: hidden; }
 .shield-description-row { display: flex; border-bottom: 1px solid var(--border-secondary); }
 .shield-description-row:last-child { border-bottom: none; }
-.shield-description-label { width: 160px; flex: none; padding: 10px 14px; background: var(--fill-quaternary); font-size: var(--font-size-caption); font-weight: 600; color: var(--text-secondary); }
-.shield-description-value { flex: 1; padding: 10px 14px; font-size: var(--font-size-small); color: var(--text); font-weight: var(--weight-small); }
+.shield-description-label { width: 160px; flex: none; margin: 0; padding: 10px 14px; background: var(--fill-quaternary); font-size: var(--font-size-caption); font-weight: 600; color: var(--text-secondary); }
+.shield-description-value { flex: 1; margin: 0; padding: 10px 14px; font-size: var(--font-size-small); color: var(--text); font-weight: var(--weight-small); }
 
 /* ---------- Timeline ----------
    A vertical list of events, each with a small dot and a connecting
@@ -908,7 +915,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   font-family: var(--font-body);
   font-weight: var(--weight-small);
 }
-.shield-dropdown-item:hover { background: var(--fill-secondary); }
+.shield-dropdown-item:hover, .shield-dropdown-item:focus-visible { background: var(--fill-secondary); outline: none; } /* arrow-key focus looks like hover; the panel itself shows the item is active */
 .shield-dropdown-item.danger { color: var(--error); }
 
 /* ---------- Avatar / Badge ----------
@@ -923,7 +930,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 /* A colored circle for initials or an icon. */
 .shield-avatar {
   border-radius: 50%;
-  background: var(--brand-blue-dark);
+  background: var(--brand-fill);
   color: #fff;
   font-weight: 600;
   display: inline-flex;
@@ -934,7 +941,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 }
 /* Wrapper so a badge dot can sit on the corner of whatever is inside. */
 .shield-badge-wrap { position: relative; display: inline-flex; }
-.shield-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--error); position: absolute; top: -1px; right: -1px; border: 1px solid var(--bg-container); }
+.shield-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--error-solid); position: absolute; top: -1px; right: -1px; border: 1px solid var(--bg-container); }
 /* A small gray number bubble, e.g. an unread count. */
 .shield-badge-count {
   min-width: 18px;
@@ -949,7 +956,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   font-variant-numeric: tabular-nums;
   font-weight: var(--weight-small);
 }
-.shield-badge-count.on-dark { background: rgba(255, 255, 255, 0.15); color: #fff; } /* for use on top of a dark/colored surface instead of the default page background */
+.shield-badge-count.on-dark { background: var(--fill-inverse); color: #fff; } /* for use on top of a dark/colored surface instead of the default page background */
 
 /* ---------- Menu (sidebar nav) ----------
    The same component used for this very style guide's own left sidebar
@@ -988,8 +995,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 }
 /* Hover color, and the blue highlight for the current page (.is-on). */
 .shield-menu-item:hover { background: var(--fill-secondary); color: var(--text); }
-.shield-menu-item.is-on { background: var(--blue-1); color: var(--brand-blue-dark); font-weight: 600; }
-:root[data-theme="dark"] .shield-menu-item.is-on { background: rgba(24, 171, 237, 0.16); } /* same dark-mode override reason as .shield-select-option.selected above */
+.shield-menu-item.is-on { background: var(--selected-bg); color: var(--brand-blue-dark); font-weight: 600; }
 .shield-menu-item .shield-menu-item-main { display: flex; align-items: center; gap: 10px; min-width: 0; }
 /* Keeps icons from shrinking and slightly softens them. */
 .shield-menu-item svg { flex-shrink: 0; opacity: 0.85; }
@@ -1058,6 +1064,22 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    index.html for the full set and how to add a new one. */
 .shield-icon { display: block; flex-shrink: 0; }
 
+/* ---------- Page header ----------
+   The top of every full page (see the Page patterns section): an optional
+   breadcrumb, then one row with the h1 (truncated to one line, full text
+   in the title attribute), an optional info icon, and the page actions
+   right-aligned with at most one Primary; then up to four "key facts" for
+   a record page. Tabs, if any, sit directly under it. */
+.shield-page-header { display: flex; flex-direction: column; gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-secondary); margin-bottom: var(--space-6); }
+.shield-page-header-row { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.shield-page-header-row .shield-title { flex: 1 1 200px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shield-page-header-actions { display: flex; gap: var(--space-2); margin-left: auto; flex-wrap: wrap; }
+.shield-page-header-facts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); margin: 0; font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text-secondary); }
+.shield-page-header-facts div { display: flex; gap: 6px; }
+.shield-page-header-facts dt { margin: 0; }
+.shield-page-header-facts dt::after { content: ":"; }
+.shield-page-header-facts dd { margin: 0; color: var(--text); font-weight: 600; }
+
 /* ---------- Misc app-shell bits reused across pages ---------- */
 /* A small uppercase label that sits above a heading (e.g. "SETTINGS"). */
 .shield-eyebrow {
@@ -1091,7 +1113,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    on the wrapper: .top opens upward, .end right-aligns the bubble so it
    doesn't run off the right edge of the screen. The bubble stays open
    while the pointer is over it (the invisible ::before bridges the gap),
-   and Escape dismisses it (sgTooltipKeys in shield.js). */
+   and Escape dismisses it (the Tooltip keydown listener in shield.js). */
 .shield-tooltip, .shield-info-tip { position: relative; display: inline-flex; }
 .shield-info-tip { color: var(--brand-blue-dark); cursor: help; border-radius: 50%; }
 .shield-tooltip-body, .shield-info-tip-body {
@@ -1190,7 +1212,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
   transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
 }
 .shield-page:hover:not(:disabled):not(.is-on) { background: var(--fill-secondary); }
-.shield-page.is-on { background: var(--blue-7); color: #fff; }
+.shield-page.is-on { background: var(--brand-fill); color: #fff; }
 .shield-page:disabled { color: var(--text-quaternary); cursor: not-allowed; }
 .shield-page-ellipsis { min-width: 32px; text-align: center; color: var(--text-tertiary); user-select: none; }
 .shield-page-summary { margin-left: var(--space-3); font-size: var(--font-size-small); font-weight: var(--weight-small); color: var(--text-tertiary); }
@@ -1215,7 +1237,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    .shield-status is the inline "dot + word" for a state in a list or
    table cell: the word always carries the meaning, the dot only
    reinforces it. */
-.shield-badge-count.corner { position: absolute; top: -8px; right: -10px; background: var(--error); color: #fff; box-shadow: 0 0 0 2px var(--bg-container); }
+.shield-badge-count.corner { position: absolute; top: -8px; right: -10px; background: var(--error-fill); color: #fff; box-shadow: 0 0 0 2px var(--bg-container); }
 .shield-badge-dot.success { background: var(--success); }
 .shield-badge-dot.warning { background: var(--warning); }
 .shield-badge-dot.info { background: var(--info); }
@@ -1253,8 +1275,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    sgHandleDrop / sgRenderUploadFiles in shield.js. */
 .shield-upload-input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 .shield-upload-dropzone { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 20px; border: 1px dashed var(--border); border-radius: var(--radius-lg); background: var(--bg-container); cursor: pointer; text-align: center; transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
-.shield-upload-dropzone:hover, .shield-upload-dropzone.drag { border-color: var(--brand-blue); background: var(--blue-1); }
-:root[data-theme="dark"] .shield-upload-dropzone:hover, :root[data-theme="dark"] .shield-upload-dropzone.drag { background: rgba(24, 171, 237, 0.16); } /* blue-1 is a pale tint that washes out light text in dark mode, so hover uses the same soft translucent blue as the selected Select option and Menu item */
+.shield-upload-dropzone:hover, .shield-upload-dropzone.drag { border-color: var(--brand-blue); background: var(--selected-bg); } /* the same "chosen" tint as a selected option or menu item, in both themes */
 .shield-upload-input:focus-visible + .shield-upload-dropzone { outline: 2px solid var(--brand-blue-dark); outline-offset: 2px; } /* keyboard focus lands on the hidden input, so the ring is drawn on the dropzone */
 .shield-upload-dropzone svg { color: var(--text-tertiary); }
 .shield-upload-title { font-size: var(--font-size-small); color: var(--text); }

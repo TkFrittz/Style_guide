@@ -12,8 +12,9 @@
        tokens  the tokens.css variables the component reads from
 
    HOW TO EDIT
-   Every class and token named here is checked against components.css and
-   tokens.css, so a typo shows up. Where a snippet needs an icon it says
+   `node tools/check.mjs` checks every shield- class and every token named
+   here against components.css and tokens.css, so a typo fails the check
+   (and the GitHub Action that runs it). Where a snippet needs an icon it says
    "<!-- icon -->" instead of repeating a long SVG path: copy a real one
    from the Icons section. Handlers like onclick="sgToggleSwitch(this)"
    are plain-JS helpers defined in shield.js. Copy the function along with
@@ -156,7 +157,7 @@ const SG_SNIPPETS = {
 
 <!-- Icon-only buttons need a label for screen readers -->
 <button class="shield-button shield-button-default" aria-label="Edit order"><!-- icon --></button>`,
-    tokens: ["--blue-7", "--blue-8", "--error", "--border", "--text", "--bg-container", "--font-size-control", "--duration-fast"],
+    tokens: ["--brand-fill", "--blue-9", "--error-fill", "--error-fill-hover", "--error", "--error-border", "--border", "--text", "--bg-container", "--font-size-control", "--duration-fast"],
   },
 
   /* ------------------------------ Data entry ------------------------------ */
@@ -172,75 +173,83 @@ const SG_SNIPPETS = {
   <input class="shield-input has-prefix" placeholder="Search partner groups…">
 </span>
 
-<!-- Error: add .error and .has-suffix to the input, plus the red error icon.
-     Hover or focus the icon to read the message. aria-describedby points at the message. -->
+<!-- Error: add .error and .has-suffix to the input and the red icon as a second cue, and ALWAYS
+     the message in text under the field, pointed to by aria-describedby (WCAG 3.3.1). Say what to enter. -->
 <span class="shield-input-wrap">
   <input class="shield-input error has-suffix" value="invalid@" aria-invalid="true" aria-describedby="email-err">
-  <span class="shield-input-error shield-tooltip top">
-    <span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address.">
-      <svg class="shield-icon" aria-hidden="true"><!-- close-circle icon --></svg>
-    </span>
-    <span class="shield-tooltip-body" id="email-err" role="tooltip">Enter a valid email address.</span>
-  </span>
+  <span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon"><!-- close-circle icon --></svg></span>
+</span>
+<div class="shield-field-hint bad" id="email-err"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
+
+<!-- Password: the eye is a real <button> (name, focus ring, keyboard for free); sgTogglePassword swaps the icon and aria-pressed -->
+<span class="shield-input-wrap">
+  <input class="shield-input has-suffix" type="password" id="pw">
+  <button type="button" class="shield-input-icon suffix clearable" aria-label="Show password" aria-pressed="false" aria-controls="pw" onclick="sgTogglePassword(this)"><!-- icon: Eye --></button>
 </span>
 
 <textarea class="shield-textarea" placeholder="Notes…"></textarea>
 <span class="shield-input-wrap" style="width:120px"><input class="shield-input" type="number" min="0" step="1"></span>`,
-    tokens: ["--bg-container", "--border", "--blue-5", "--brand-blue", "--error", "--radius-md", "--font-size-control"],
+    tokens: ["--bg-container", "--border", "--blue-5", "--brand-blue", "--brand-tint", "--error-solid", "--error-tint", "--radius-md", "--font-size-control"],
   },
 
   select: {
-    html: `<div class="shield-select" id="sel-1">
+    html: `<!-- A combobox (WAI-ARIA APG pattern): the input carries role, aria-expanded and aria-controls,
+     the panel is the listbox, each option has role="option", aria-selected and an id.
+     shield.js keeps aria-expanded, aria-selected and aria-activedescendant in step as you type. -->
+<div class="shield-select" id="sel-1">
   <div class="shield-select-box">
-    <input class="shield-select-search" placeholder="Select a catalog…" autocomplete="off"
+    <input class="shield-select-search" role="combobox" aria-expanded="false" aria-controls="sel-1-list" aria-autocomplete="list"
+           placeholder="Select a catalog…" autocomplete="off"
            oninput="sgSelectFilter('sel-1', this)" onfocus="sgSelectOpen('sel-1')" onclick="sgSelectOpen('sel-1')">
     <span class="shield-select-arrow"><!-- icon --></span>
   </div>
-  <div class="shield-select-panel">
-    <div class="shield-select-group-label">Business contacts</div>
-    <div class="shield-select-option" data-value="mt" data-label="Mass Tort Intake"
+  <div class="shield-select-panel" id="sel-1-list" role="listbox">
+    <div class="shield-select-group-label" role="presentation">Business contacts</div>
+    <div class="shield-select-option" id="sel-1-list-mt" role="option" aria-selected="false" data-value="mt" data-label="Mass Tort Intake"
          onmousedown="event.preventDefault();sgSelectPick('sel-1','mt','Mass Tort Intake')">Mass Tort Intake</div>
-    <div class="shield-select-empty" style="display:none">No matches</div>
+    <div class="shield-select-empty" role="presentation" style="display:none">No matches</div>
   </div>
 </div>
-<!-- Multiple: add class "multiple" to .shield-select and use .shield-select-tag chips. -->`,
-    tokens: ["--bg-elevated", "--border-secondary", "--shadow-md", "--radius-lg", "--blue-1", "--brand-blue-dark", "--z-dropdown"],
+<!-- Multiple: add class "multiple" to .shield-select (the listbox gets aria-multiselectable) and use .shield-select-tag chips. -->`,
+    tokens: ["--bg-elevated", "--border-secondary", "--shadow-md", "--radius-lg", "--selected-bg", "--brand-blue-dark", "--brand-tint", "--z-dropdown"],
   },
 
   checkbox: {
-    html: `<label class="shield-check-row">
-  <span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" onclick="sgToggleCheckbox(this)"></span>
-  Send me a copy
+    html: `<!-- A <label> only names NATIVE inputs, so the span control needs aria-labelledby pointing at its text
+     (WCAG 4.1.2). sgInitNames in shield.js adds it for any row that forgot, but write it in. -->
+<label class="shield-check-row">
+  <span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-labelledby="lbl-copy" onclick="sgToggleCheckbox(this)"></span>
+  <span id="lbl-copy">Send me a copy</span>
 </label>
 
 <label class="shield-check-row">
-  <span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="ship" onclick="sgSelectRadio(this)"></span>
-  Standard shipping
+  <span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" aria-labelledby="lbl-standard" data-group="ship" onclick="sgSelectRadio(this)"></span>
+  <span id="lbl-standard">Standard shipping</span>
 </label>
 
 <button type="button" class="shield-switch-track is-on" role="switch" aria-checked="true"
         aria-label="Email notifications" onclick="sgToggleSwitch(this)"><span class="shield-switch-thumb"></span></button>
 
-<div class="shield-segmented">
-  <button type="button" class="is-on" onclick="sgSegPick(this)">List</button>
-  <button type="button" onclick="sgSegPick(this)">Grid</button>
+<div class="shield-segmented" role="group" aria-label="View">
+  <button type="button" class="is-on" aria-pressed="true" onclick="sgSegPick(this)">List</button>
+  <button type="button" aria-pressed="false" onclick="sgSegPick(this)">Grid</button>
 </div>`,
-    tokens: ["--blue-7", "--border", "--bg-container", "--fill-tertiary", "--radius-full"],
+    tokens: ["--brand-fill", "--border", "--bg-container", "--fill-tertiary", "--text-quaternary", "--radius-full"],
   },
 
   radio: {
     html: `<div class="shield-radio-group" role="radiogroup" aria-label="Delivery method">
   <label class="shield-check-row has-desc">
-    <span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" data-group="delivery" onclick="sgSelectRadio(this)"></span>
-    <span class="shield-radio-text">Standard<span class="shield-radio-desc">Delivered within 5 business days.</span></span>
+    <span class="shield-radio is-on" role="radio" tabindex="0" aria-checked="true" aria-labelledby="lbl-std" aria-describedby="desc-std" data-group="delivery" onclick="sgSelectRadio(this)"></span>
+    <span class="shield-radio-text"><span id="lbl-std">Standard</span><span class="shield-radio-desc" id="desc-std">Delivered within 5 business days.</span></span>
   </label>
   <label class="shield-check-row has-desc">
-    <span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" data-group="delivery" onclick="sgSelectRadio(this)"></span>
-    <span class="shield-radio-text">Expedited<span class="shield-radio-desc">Next business day.</span></span>
+    <span class="shield-radio" role="radio" tabindex="-1" aria-checked="false" aria-labelledby="lbl-exp" aria-describedby="desc-exp" data-group="delivery" onclick="sgSelectRadio(this)"></span>
+    <span class="shield-radio-text"><span id="lbl-exp">Expedited</span><span class="shield-radio-desc" id="desc-exp">Next business day.</span></span>
   </label>
 </div>
 <!-- Row layout: add class "horizontal" to .shield-radio-group. -->`,
-    tokens: ["--blue-7", "--border", "--text-tertiary", "--font-size-caption"],
+    tokens: ["--brand-fill", "--border", "--text-tertiary", "--font-size-caption"],
   },
 
   datepicker: {
@@ -271,7 +280,7 @@ const SG_SNIPPETS = {
   <span class="shield-upload-hint">Retainer agreements, PDFs, up to 25MB each.</span>
 </label>
 <div class="shield-upload-list" id="upload-list"></div>`,
-    tokens: ["--border", "--brand-blue", "--blue-1", "--bg-container", "--text-tertiary", "--error"],
+    tokens: ["--border", "--brand-blue", "--selected-bg", "--bg-container", "--text-tertiary", "--error"],
   },
 
   forms: {
@@ -288,13 +297,9 @@ const SG_SNIPPETS = {
     <label class="shield-field-label" for="f-email">Primary contact email</label>
     <span class="shield-input-wrap">
       <input class="shield-input error has-suffix" id="f-email" type="email" aria-invalid="true" aria-describedby="f-email-hint">
-      <span class="shield-input-error shield-tooltip top">
-        <span class="shield-input-error-icon" tabindex="0" role="img" aria-label="Error: Enter a valid email address.">
-          <svg class="shield-icon" aria-hidden="true"><!-- close-circle icon --></svg>
-        </span>
-        <span class="shield-tooltip-body" id="f-email-hint" role="tooltip">Enter a valid email address.</span>
-      </span>
+      <span class="shield-input-error-icon" aria-hidden="true"><svg class="shield-icon"><!-- close-circle icon --></svg></span>
     </span>
+    <div class="shield-field-hint bad" id="f-email-hint"><span class="shield-sr-only">Error: </span>Enter an email address in the form name@firm.com.</div>
   </div>
   <div class="shield-field span-all">
     <label class="shield-field-label" for="f-notes">Notes</label>
@@ -316,7 +321,7 @@ const SG_SNIPPETS = {
 <span class="shield-tag checkable checked" onclick="sgToggleCheckableTag(this)">Consumer Finance</span>
 
 <span class="shield-pill success"><!-- icon -->Synced</span>   <!-- warning | neutral -->`,
-    tokens: ["--success", "--success-bg", "--success-border", "--warning", "--error", "--info", "--radius-sm"],
+    tokens: ["--success", "--success-bg", "--success-border", "--warning", "--error", "--info", "--gold", "--gold-bg", "--gold-border", "--radius-sm"],
   },
 
   avatar: {
@@ -333,7 +338,7 @@ const SG_SNIPPETS = {
 
 <!-- State in a list: the word carries the meaning, the dot reinforces it -->
 <span class="shield-status success">Active</span>   <!-- warning | error | info -->`,
-    tokens: ["--brand-blue-dark", "--error", "--error-bg", "--fill-secondary", "--text-secondary"],
+    tokens: ["--brand-fill", "--error", "--error-bg", "--fill-secondary", "--text-secondary"],
   },
 
   card: {
@@ -355,6 +360,9 @@ const SG_SNIPPETS = {
   </table>
 </div>
 
+<!-- Numbers and money: .num on the header and the cells (right-aligned, tabular figures) -->
+<th class="num">Value</th>  …  <td class="num" data-value="48200">$48,200</td>
+
 <!-- Sortable header -->
 <th aria-sort="none"><button class="shield-sort" onclick="sgTableSort(this)">Order</button></th>
 <!-- Selectable row: first cell holds a checkbox; the <tr> gets .is-selected -->
@@ -365,22 +373,27 @@ const SG_SNIPPETS = {
   },
 
   descriptions: {
-    html: `<div class="shield-description">
+    html: `<!-- A real definition list: the label/value pairing is in the markup. -->
+<dl class="shield-description">
   <div class="shield-description-row">
-    <div class="shield-description-label">Order ID</div>
-    <div class="shield-description-value">ORD-501</div>
+    <dt class="shield-description-label">Order ID</dt>
+    <dd class="shield-description-value">ORD-501</dd>
   </div>
-</div>`,
+  <div class="shield-description-row">
+    <dt class="shield-description-label">Created</dt>
+    <dd class="shield-description-value"><time datetime="2026-09-12">Sep 12, 2026</time></dd>
+  </div>
+</dl>`,
     tokens: ["--border-secondary", "--text-tertiary"],
   },
 
   timeline: {
     html: `<div class="shield-timeline">
   <div class="shield-timeline-item">
-    <div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 9:04 AM</span></div>
+    <div class="shield-timeline-content"><b class="shield-text strong">Offer created</b> · <span class="shield-text tertiary">Sep 12, 2026, 9:04 AM</span></div>
   </div>
 </div>`,
-    tokens: ["--border", "--blue-7", "--text-tertiary"],
+    tokens: ["--border-secondary", "--brand-blue-dark", "--text-tertiary"],
   },
 
   statistic: {
@@ -449,11 +462,14 @@ const SG_SNIPPETS = {
   },
 
   empty: {
-    html: `<div class="shield-empty">
+    html: `<!-- Three kinds, different words: nothing yet / no matches / cannot show. Title, reason, one action. -->
+<div class="shield-empty">
   <!-- icon -->
-  <div class="shield-empty-description">No orders match these filters.</div>
+  <div class="shield-empty-title">No orders match these filters</div>
+  <div class="shield-empty-description">Try a wider date range, or clear the filters to see all 118 orders.</div>
+  <div class="shield-empty-action"><button class="shield-button shield-button-default small">Clear filters</button></div>
 </div>`,
-    tokens: ["--text-tertiary"],
+    tokens: ["--text", "--text-tertiary", "--font-heading", "--space-4"],
   },
 
   skeleton: {
@@ -465,8 +481,8 @@ const SG_SNIPPETS = {
   },
 
   toast: {
-    html: `<!-- one stack per page, just before </body> -->
-<div class="shield-toast-stack"></div>
+    html: `<!-- one stack per page, just before </body>; it is the live region, so each toast is announced -->
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
 
 <script>
   sgPushToast("success", "Order activated.");   // or "error"; disappears after 3 seconds
@@ -537,17 +553,18 @@ const SG_SNIPPETS = {
   </div>
 </div>
 <!-- Dots only: add class "compact" to .shield-steps -->`,
-    tokens: ["--brand-blue-dark", "--border", "--bg-container", "--text", "--text-tertiary"],
+    tokens: ["--brand-fill", "--brand-blue-dark", "--brand-tint", "--brand-tint-strong", "--border", "--bg-container", "--text", "--text-tertiary"],
   },
 
   tabs: {
-    html: `<div class="shield-tabs-bar" id="tabs-1" role="tablist" aria-label="Offer sections">
-  <button class="shield-tab is-on" role="tab" aria-selected="true" data-tab="a" onclick="sgShowTab('tabs-1','a')">Pipeline</button>
-  <button class="shield-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="b" onclick="sgShowTab('tabs-1','b')">Documents</button>
+    html: `<!-- WAI-ARIA tabs: each tab controls its panel, each panel is labelled by its tab. Automatic activation. -->
+<div class="shield-tabs-bar" id="tabs-1" role="tablist" aria-label="Offer sections">
+  <button class="shield-tab is-on" role="tab" id="tab-a" aria-selected="true" aria-controls="panel-a" data-tab="a" onclick="sgShowTab('tabs-1','a')">Pipeline</button>
+  <button class="shield-tab" role="tab" id="tab-b" aria-selected="false" aria-controls="panel-b" tabindex="-1" data-tab="b" onclick="sgShowTab('tabs-1','b')">Documents</button>
 </div>
 <div class="shield-tab-panel">
-  <div data-tabpanel-group="tabs-1" data-tabpanel="a">Offer stages and the current gate.</div>
-  <div data-tabpanel-group="tabs-1" data-tabpanel="b" style="display:none">Retainer agreements.</div>
+  <div role="tabpanel" id="panel-a" aria-labelledby="tab-a" tabindex="0" data-tabpanel-group="tabs-1" data-tabpanel="a">Offer stages and the current gate.</div>
+  <div role="tabpanel" id="panel-b" aria-labelledby="tab-b" tabindex="0" data-tabpanel-group="tabs-1" data-tabpanel="b" hidden>Retainer agreements.</div>
 </div>`,
     tokens: ["--brand-blue-dark", "--border-secondary"],
   },
@@ -561,12 +578,14 @@ const SG_SNIPPETS = {
   },
 
   dropdown: {
-    html: `<div class="shield-dropdown">
-  <button class="shield-button shield-button-default" aria-haspopup="menu" onclick="sgDropdownToggle(this)">Actions <!-- icon --></button>
-  <div class="shield-dropdown-panel">
-    <button class="shield-dropdown-item">Duplicate offer</button>
-    <hr class="shield-divider" style="margin:4px 0">
-    <button class="shield-dropdown-item danger">Cancel offer</button>
+    html: `<!-- WAI-ARIA menu button: the trigger says it opens a menu, the panel IS the menu.
+     shield.js adds Down/Enter to open on the first item, Up/Down/Home/End inside, Escape to close. -->
+<div class="shield-dropdown">
+  <button class="shield-button shield-button-default" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-1" onclick="sgDropdownToggle(this)">Actions <!-- icon --></button>
+  <div class="shield-dropdown-panel" id="menu-1" role="menu" aria-label="Offer actions">
+    <button class="shield-dropdown-item" role="menuitem">Duplicate offer</button>
+    <hr class="shield-divider" role="separator" style="margin:4px 0">
+    <button class="shield-dropdown-item danger" role="menuitem">Cancel offer</button>
   </div>
 </div>`,
     tokens: ["--bg-elevated", "--border-secondary", "--shadow-md", "--error", "--z-dropdown"],
@@ -580,7 +599,7 @@ const SG_SNIPPETS = {
     <span class="shield-badge-count">12</span>
   </button>
 </nav>`,
-    tokens: ["--sider-bg", "--blue-1", "--brand-blue-dark", "--fill-secondary"],
+    tokens: ["--sider-bg", "--selected-bg", "--brand-blue-dark", "--fill-secondary"],
   },
 
   breadcrumb: {
@@ -593,6 +612,128 @@ const SG_SNIPPETS = {
 </nav>`,
     tokens: ["--text-secondary", "--text-tertiary", "--brand-blue-dark"],
   },
+
+  /* ------------------------------ Content ------------------------------ */
+
+  writing: {
+    html: `<!-- The rules in one glance. Sentence case; verb + object; no articles; say what to enter. -->
+<button class="shield-button shield-button-primary">Send for signature</button>   <!-- not "Submit", not "Send For Signature" -->
+<label class="shield-field-label" for="eff">Effective date</label>              <!-- a noun, no colon -->
+
+<!-- Field error: what to enter, in text, with the hidden prefix -->
+<div class="shield-field-hint bad" id="eff-err"><span class="shield-sr-only">Error: </span>Enter a date after the effective date.</div>
+
+<!-- Page error: title of three or four words, then reason + action + consequence -->
+<div class="shield-alert error" role="alert">
+  <div class="shield-alert-body">
+    <div class="shield-alert-title">Offer not sent</div>
+    <div class="shield-alert-description">The partner group has no role contact for signatures. Add one on the Contacts tab, then send again.</div>
+  </div>
+</div>
+
+<!-- Never: please · sorry · oops · valid · invalid · forbidden · illegal · "Click here" · "OK" for a consequence -->`,
+    tokens: [],
+  },
+
+  formats: {
+    html: `<!-- Store and send ISO 8601 in UTC; format at the edge through Intl with the record's zone. -->
+const when = new Date("2026-09-12T13:04:00Z");
+const dateTime = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short",
+  timeZone: "America/New_York", timeZoneName: "short" });       // "Sep 12, 2026, 9:04 AM EDT"
+const date = new Intl.DateTimeFormat("en-US", { dateStyle: "medium" });   // "Sep 12, 2026"
+const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });   // "$48,200.00"
+const count = new Intl.NumberFormat("en-US");                                          // "1,250,000"
+
+<!-- The machine value travels with the text -->
+<time datetime="2026-09-12T13:04:00Z">Sep 12, 2026, 9:04 AM EDT</time>
+<time datetime="2026-10-05T14:30:00Z" title="Oct 5, 2026, 10:30 AM EDT">2 hours ago</time>   <!-- feeds only -->
+
+<!-- Numbers and money in a table: .num on the header and the cells -->
+<th class="num">Value</th>  …  <td class="num" data-value="48200">$48,200.00</td>
+<!-- Identifiers in mono, never wrapped -->
+<span class="shield-text code">ORD-501</span>
+<!-- Unknown -->
+<td>—</td>`,
+    tokens: ["--font-mono", "--font-size-small", "--fill-tertiary"],
+  },
+
+  /* ------------------------------ Page patterns ------------------------------ */
+
+  patterns: {
+    html: `<!-- Page header: breadcrumb (2+ levels deep), the h1 on one line, an optional info icon, actions with one Primary -->
+<header class="shield-page-header">
+  <nav class="shield-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/offers">Offers</a></li><li aria-current="page">OFF-2041</li></ol></nav>
+  <div class="shield-page-header-row">
+    <h1 class="shield-title h3" title="OFF-2041 · Harlow &amp; Vance mass tort intake">OFF-2041 · Harlow &amp; Vance mass tort intake</h1>
+    <div class="shield-page-header-actions">
+      <button class="shield-button shield-button-default">Edit</button>
+      <button class="shield-button shield-button-primary">Send for signature</button>
+    </div>
+  </div>
+  <!-- Record page only: up to four key facts, status first -->
+  <dl class="shield-page-header-facts">
+    <div><dt>Status</dt><dd><span class="shield-tag processing">Internal review</span></dd></div>
+    <div><dt>Partner group</dt><dd>Harlow &amp; Vance</dd></div>
+    <div><dt>Value</dt><dd>$48,200</dd></div>
+    <div><dt>Created</dt><dd><time datetime="2026-09-12">Sep 12, 2026</time></dd></div>
+  </dl>
+</header>
+<!-- then: Steps (if the record has stages) · Tabs · the first tab is a Descriptions list -->
+
+<!-- List page order: page header → Statistic tiles → toolbar (search, filters, ≤5 actions) → Table → Pagination.
+     Every data region has four states: loading (Skeleton), empty (Empty with an action), error (Alert), loaded. -->`,
+    tokens: ["--border-secondary", "--space-2", "--space-3", "--space-4", "--space-6", "--font-size-small", "--text-secondary", "--text"],
+  },
+
+  /* ------------------------------ Standards ------------------------------ */
+
+  accessibility: {
+    html: `<!-- The pieces a screen needs so the "met" rows stay met -->
+
+<!-- One h1, landmarks with names, a skip link first -->
+<a href="#main" class="shield-skip-link">Skip to content</a>
+<nav aria-label="Main"> … </nav>
+<main id="main" tabindex="-1"> … </main>
+
+<!-- A span control needs its own name: aria-labelledby, not a wrapping <label> -->
+<span class="shield-checkbox" role="checkbox" tabindex="0" aria-checked="false" aria-labelledby="lbl-1"></span><span id="lbl-1">Send me a copy</span>
+
+<!-- Announce what changes without a page change -->
+<span class="shield-sr-only" role="status" id="live"></span>
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
+
+<!-- Color plus a second cue -->
+<span class="shield-tag error">Rejected</span>                      <!-- the word -->
+<div class="shield-stat-value negative">7</div><div class="shield-stat-sub">Up 2 since last week</div>
+
+<!-- A sticky header never hides what the page scrolls to -->
+html { scroll-padding-top: 64px; }
+
+<!-- Before shipping: node tools/check.mjs · Tab through · screen reader once · dark mode · Increase contrast · Reduce motion · 320px -->`,
+    tokens: ["--brand-blue-dark", "--error-solid", "--bg-elevated", "--shadow-md", "--z-toast"],
+  },
+
+  governance: {
+    html: `<!-- 1. Bump the version in shield.js -->
+const SG_VERSION = "0.10.0";
+
+<!-- 2. Move the Unreleased notes in CHANGELOG.md under the version and today's date -->
+## [0.10.0] - 2026-10-19
+### Added
+- Status display table in Tag & pill.
+### Deprecated
+- '--blue-7' as a fill; use '--brand-fill'. Removed in 1.0.0.
+
+<!-- 3. Check, then tag -->
+node tools/check.mjs
+node tools/export-tokens.mjs
+git tag v0.10.0
+
+<!-- Patch: copy and fixes · Minor: anything new · Major: a rename, a removal, a value products must react to -->`,
+    tokens: [],
+  },
+
+  /* ------------------------------ Navigation ------------------------------ */
 
   pagination: {
     html: `<nav class="shield-pagination" id="pager-1" aria-label="Pagination"
@@ -609,7 +750,7 @@ const SG_SNIPPETS = {
   <button class="shield-page" data-go="2" aria-label="Next page" onclick="sgPaginationGo(this)">›</button>
   <span class="shield-page-summary" aria-live="polite">1–10 of 118</span>
 </nav>`,
-    tokens: ["--blue-7", "--fill-secondary", "--text-tertiary", "--text-quaternary", "--radius-md"],
+    tokens: ["--brand-fill", "--fill-secondary", "--text-tertiary", "--text-quaternary", "--radius-md"],
   },
 
 };

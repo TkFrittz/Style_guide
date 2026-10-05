@@ -52,9 +52,9 @@
           <table class="shield-table">
             <thead><tr><th>Name</th><th>Count</th><th>Status</th><th>Date</th><th>Owner</th></tr></thead>
             <tbody>
-              <tr><td>Sample row one</td><td>9</td><td><span class="shield-tag success">Active</span></td><td>2026-09-30</td><td>Person A</td></tr>
-              <tr><td>Sample row two</td><td>0</td><td><span class="shield-tag success">Active</span></td><td>2026-09-12</td><td>Person B</td></tr>
-              <tr><td>Sample row three</td><td>1</td><td><span class="shield-tag warning">Paused</span></td><td>2026-08-21</td><td>Person C</td></tr>
+              <tr><td>Sample row one</td><td>9</td><td><span class="shield-tag success">Active</span></td><td>Sep 30, 2026</td><td>Person A</td></tr>
+              <tr><td>Sample row two</td><td>0</td><td><span class="shield-tag success">Active</span></td><td>Sep 12, 2026</td><td>Person B</td></tr>
+              <tr><td>Sample row three</td><td>1</td><td><span class="shield-tag warning">Paused</span></td><td>Aug 21, 2026</td><td>Person C</td></tr>
             </tbody>
           </table>
         </div>
@@ -74,7 +74,7 @@
     <div class="shield-modal-foot"><button class="shield-button shield-button-default" onclick="sgCloseModal('m')">Cancel</button><button class="shield-button shield-button-primary" onclick="sgCloseModal('m')">Save</button></div>
   </div>
 </div>
-<div class="shield-toast-stack"></div>
+<div class="shield-toast-stack" role="status" aria-live="polite"></div>
 <script src="shield.js"></script>
 <script>
   // Menu button: at 768px and below it opens the real drawer (sgShellToggle); wider, it slides the navigation out and in.
