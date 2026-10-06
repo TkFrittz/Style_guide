@@ -722,7 +722,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
    or "Done" in words. Add .compact on the outer .shield-steps to hide
    the text labels and show dots only, for dense rows. */
 /* The row holding all steps. It scrolls sideways if there are too many to fit. */
-.shield-steps { display: flex; align-items: flex-start; gap: 4px; overflow-x: auto; }
+.shield-steps { display: flex; align-items: flex-start; gap: 4px; overflow-x: auto; padding: 4px; margin: -4px; } /* the padding gives the current step's soft ring room, because overflow-x: auto would otherwise clip it into a square; the negative margin cancels the space */
 .shield-step { display: flex; align-items: flex-start; gap: 8px; flex: none; min-width: 0; }
 .shield-step-button { display: flex; align-items: flex-start; gap: 8px; background: none; border: none; padding: 0; cursor: default; font: inherit; }
 .shield-step-button.clickable { cursor: pointer; }
@@ -1076,7 +1076,7 @@ table.shield-table tbody tr:hover { background: var(--fill-quaternary); }
 
 
 /* =====================================================================
-   v0.8 additions — new components, in the same order they appear in the
+   v0.5.0 additions — new components, in the same order they appear in the
    guide: Tooltip, Popover, Radio group, Pagination, Breadcrumb,
    Badge extras, Drawer, File upload, Date picker, Form fields, Table
    patterns, App shell. Everything below reads from tokens.css only.

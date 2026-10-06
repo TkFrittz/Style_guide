@@ -1,10 +1,10 @@
 /* =====================================================================
-   Shield Engineering — copy-paste snippets for Engineer Mode
+   Shield Engineering — copy-paste snippets for See Code
    =====================================================================
 
    WHAT THIS FILE IS
    One entry per section of the guide, keyed by that section's id in
-   index.html. When Engineer Mode is switched on (the toggle at the top of
+   index.html. When See Code is switched on (the toggle at the top of
    the sidebar), sgBuildCodeBlocks() in shield.js reads this object and
    adds a code panel to the end of each section with up to two tabs:
 

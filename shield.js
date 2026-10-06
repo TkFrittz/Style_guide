@@ -33,8 +33,8 @@
    These functions are plain-JS helpers: copy one with its markup, or
    replace it with your own state handling.
 
-   ENGINEER MODE
-   The Engineer Mode switch at the top of the sidebar reveals a code
+   SEE CODE
+   The See Code switch at the top of the sidebar reveals a code
    panel under every section. The panels are built here (see "Engineer
    Mode" near the bottom) from the SG_SNIPPETS object in snippets.js,
    which is loaded before this file.
@@ -558,7 +558,7 @@ function sgPushToast(type, msg) {
 
 
 /* =====================================================================
-   v0.8 additions
+   v0.5.0 additions
    ===================================================================== */
 
 
@@ -705,7 +705,7 @@ document.addEventListener("click", (e) => {
 
 
 /* ---------- Keyboard support for Select, Tabs and Dropdown ----------
-   Added in v0.8. Each is one delegated listener, so it works for every
+   Added in v0.5.0. Each is one delegated listener, so it works for every
    instance on the page without any extra attributes.
      Select:   Arrow Up/Down move a highlight through the visible options,
                Enter picks the highlighted one, Escape closes the list.
@@ -932,7 +932,7 @@ function sgReplayMotion(btn) {
   });
 }
 
-/* ---------- Engineer Mode ----------
+/* ---------- See Code ----------
    One switch (top of the sidebar) that reveals a code panel at the end of
    every section listed in SG_SNIPPETS (snippets.js). The panels are always
    in the page; CSS in index.html shows them only while <html
@@ -940,7 +940,7 @@ function sgReplayMotion(btn) {
 
 const SG_ENGINEER_KEY = "sg-engineer-mode";
 
-// Turns Engineer Mode on or off: flips the attribute CSS keys off, syncs
+// Turns See Code on or off: flips the attribute CSS keys off, syncs
 // the switch's own look and aria-checked, and remembers the choice (in a
 // try/catch, same as the theme, in case localStorage is blocked).
 function sgApplyEngineer(on) {
@@ -1058,7 +1058,7 @@ function sgInitEngineer() {
 /* ---------- Startup ----------
    Everything above just defines functions — nothing runs until the lines
    below: apply the saved theme the moment the page loads, build the
-   Engineer Mode code panels, draw the pagination
+   See Code panels, draw the pagination
    demo, and make every sidebar link close the mobile menu. */
 sgInitTheme();
 sgInitEngineer();
